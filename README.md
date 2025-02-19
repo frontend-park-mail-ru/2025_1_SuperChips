@@ -14,7 +14,7 @@
  - [Jira]()
 
 ### Правила оформления Pull Requests
-  1. Ветка создается с названием `PINTEREST-###`, где ### - номер задачи в jira.
-  2. Название Pull Request'а соответствует названию задачки в jira: `PINTEREST-###: description`, где description - название из jira.
+  1. Ветка создается с названием `FLOW-###`, где ### - номер задачи в jira.
+  2. Название Pull Request'а соответствует названию задачки в jira: `FLOW-###: description`, где description - название из jira.
   3. При создании Pull Request'а нужно указать в описании ссылку на задачу в jira.
   4. Для того, чтобы залить изменения в ветку main нужен апрув от [Кости](https://t.me/PassPort_Guardian)
