@@ -1,0 +1,134 @@
+@font-face {
+    font-family: 'FuturaPT';
+    src: url('../fonts/FuturaPT-Book.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FuturaPT';
+    src: url('../fonts/futura-pt-demi.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: FuturaPT, sans-serif;
+    font-size: 16px;
+}
+
+body {
+    background-color: #020202;
+    /*backdrop-color: #f7f7f7;*/
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+label {
+    color: #666666;
+}
+
+.login-container {
+    display: grid;
+    position: relative;
+    height: 100%;
+    width: 572px;
+    grid-template-rows: 526px auto;
+    margin-left: auto;
+}
+
+.input-container, .input-container__field, .input-container--invalid {
+    width: 440px;
+    height: 44px;
+    border-radius: 20px;
+    background-color: #f8f8f8;
+}
+
+.input-container {
+    margin-top: 6px;
+    position: relative;
+    display: inline-block;
+}
+
+.input-container__field {
+    border: none;
+    padding: 10px;
+}
+
+.input-container--invalid {
+    border: 2px solid red;
+}
+
+.input-container__error {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+.forgot-password {
+    float: right;
+    color: black;
+    text-decoration: underline;
+}
+
+.forgot-password:hover {
+    text-decoration: none;
+}
+
+
+.login-button, .register-button, .g-button {
+    width: 440px;
+    height: 44px;
+    border-radius: 20px;
+    color: white;
+    border: none;
+}
+
+.login-button {
+    margin-top: 44px;
+    background-color: black;
+    opacity: 25%;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.login-button:hover {
+    opacity: 60%;
+}
+
+.register-button {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+
+.login-box-1 {
+    padding: 94px 66px 0 66px;
+    background-color: white;
+}
+
+.login-box-2 {
+    padding: 18px 66px 0 66px;
+    background-color: #f7f7f7;
+}
+
+.error-message {
+    color: red;
+    font-size: 15px;
+    justify-self: right;
+}
+
+.hidden {
+    visibility: hidden;
+}
