@@ -1,0 +1,50 @@
+.register-form {
+    margin-top: 16px
+}
+
+.register-container {
+    display: grid;
+    position: relative;
+    height: 100%;
+    width: 572px;
+    grid-template-rows: 614px auto;
+    margin-left: auto;
+}
+
+.register-box-1 {
+    padding: 32px 66px 0 66px;
+    background-color: white;
+}
+
+.register-box-2 {
+    padding: 18px 66px 0 66px;
+    background-color: #f7f7f7;
+}
+
+
+.register-redirect {
+    float: right;
+    font-size: 20px;
+    color: #333;
+}
+
+.register-button {
+    width: 440px;
+    height: 44px;
+    color: white;
+    background-color: black;
+    opacity: 25%;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    font-size: 20px;
+}
+
+.register-button:hover {
+    opacity: 60%;
+}
+
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none; /* Скрывает значок календаря в WebKit-браузерах (Chrome, Edge, Safari) */
+}

@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: FuturaPT, sans-serif;
+    font-size: 16px;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+
+.register-page__logo, .login-page__logo {
+    position: absolute;
+    top: 62px;
+    left: 100px;
+    opacity: 80%;
+}
+
+.register-page, .login-page {
+    background: linear-gradient(to bottom, #141414, #303030);
+    display: flex;
+    height: 100vh;
+    position: relative;
+}
+
+.background-vector {
+    overflow: hidden;
+}
+
+
+.input-container, .input-container__field, .input-container--invalid {
+    height: 44px;
+    border-radius: 20px;
+    background-color: #EEE;
+    color: #666;
+}
+
+.input-container {
+    width: 440px;
+    margin-top: 6px;
+    position: relative;
+}
+
+.input-container__field:focus {
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+.input-container__field {
+    width: 440px;
+    border: none;
+    padding: 10px;
+}
+
+.input-container--invalid {
+    width: 440px;
+    border: 2px solid red;
+    appearance: none;
+}
+
+.input-container__error {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+

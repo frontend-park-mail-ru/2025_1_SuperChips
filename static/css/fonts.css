@@ -1,0 +1,53 @@
+@font-face {
+    font-family: 'FuturaPT';
+    src: url('../fonts/FuturaPT-Book.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FuturaPT';
+    src: url('../fonts/futura-pt-demi.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+.header {
+    font-size: 36px;
+    color: #000;
+}
+
+.subheader {
+    font-size: 18px;
+    color: #666;
+}
+
+.label {
+    font-size: 20px;
+    color: #333;
+}
+
+.bold {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.link-label {
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+}
+
+.input-text {
+    font-size: 14px;
+}
+
+.input-field-label {
+    font-size: 16px;
+}
+
+.error-label {
+    font-size: 14px;
+    color: #FF4A4A;
+}

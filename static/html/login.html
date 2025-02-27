@@ -1,43 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style-login-register.css">
-    <title>Flow</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="../css/common.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <title>Flow</title>
 </head>
 
-<!--justify-content: center; align-items: center;-->
-<body style="display: flex;  height: 100vh;">
-    <div style="height: 400px; width: 400px; position: relative; margin-right: 40px">
-        <img src="../img/logo.png" alt="site logo" style="position: absolute; top: 62px; left: 100px; opacity: 80%;">
-        <img src="../img/line-1.png" aria-hidden="true" alt="">
-    </div>
+<body class="login-page">
+    <img src="../img/logo.png" class="register-page__logo" alt="site logo">
+    <img src="../img/line-1.png" class="background-vector" aria-hidden="true" alt="">
 
-    <div class="login-container">
+    <form class="login-container">
         <div class="login-box-1">
-            <h1>Вход</h1>
-            <label style="font-size: 18px;">Добро пожаловать в flow!</label>
+            <h1 class="header">Вход</h1>
+            <label class="subheader">Добро пожаловать в flow!</label>
 
-            <div style="margin-top: 54px">
-                <label for="email">Email</label>
+            <div class="login-form">
+                <label for="email" class="input-field-label">Email</label>
                 <div class="input-container">
                     <input type="text" class="input-container__field" id="email" placeholder="Введите email">
-                    <span class="input-container__error hidden" aria-hidden="true">⚠️</span>
+                    <img src="../icons/error-icon.svg" class="input-container__error hidden" aria-hidden="true" alt="">
                 </div>
-                <p class="error-message hidden" id="email-error">Неверный формат email</p>
+                <p class="error-message error-label hidden" id="email-error">Неверный формат email</p>
 
-                <label for="password">Пароль</label>
+                <label for="password" class="input-field-label">Пароль</label>
                 <div class="input-container">
                     <input type="password" class="input-container__field  input-container--invalid" id="password" placeholder="Введите пароль">
-                    <span class="input-container__error" aria-hidden="true">⚠️</span>
+                    <img src="../icons/error-icon.svg" class="input-container__error" aria-hidden="true" alt="">
                 </div>
-                <p class="error-message" id="password-error">Неверный пароль или почта</p>
+                <p class="error-message error-label" id="password-error">Неверный пароль или почта</p>
             </div>
-
-
-            <a href="#" class="forgot-password" >забыли пароль?</a>
             <button type="submit" class="login-button">Вход</button>
         </div>
 
@@ -48,11 +44,11 @@
             </div>
             <div class="g_id_signin" data-type="standard"></div>
 
-            <div style="float: right; margin-top:16px">
-                Ещё нет аккаунта?
-                <a href="#" class="register-button">Регистрация</a>
+            <div class="login-redirect">
+                Еще нет аккаунта?
+                <a href="register.html" class="label bold">Регистрация</a>
             </div>
         </div>
-    </div>
+    </form>
 </body>
 </html>
