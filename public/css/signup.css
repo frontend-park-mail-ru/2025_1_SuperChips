@@ -1,0 +1,31 @@
+.signup-form {
+    margin-top: 50px
+}
+
+.signup-container {
+    padding: 32px 66px 0 66px;
+    position: relative;
+    height: 100%;
+    width: 572px;
+    margin-left: auto;
+    background-color: white;
+}
+
+.signup-header {
+    margin-top: 32px;
+    font-size: 36px;
+    color: #000;
+}
+
+.signup-redirect {
+    margin-top: 10px;
+    float: right;
+    font-size: 20px;
+    color: #333;
+}
+
+
+/* Скрывает значок календаря в WebKit-браузерах (Chrome, Edge, Safari) */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+}

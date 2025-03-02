@@ -1,4 +1,5 @@
 .login-container {
+    background-color: white;
     display: grid;
     position: relative;
     height: 100%;
@@ -12,8 +13,7 @@
 }
 
 .login-box-1 {
-    padding: 48px 66px 0 66px;
-    background-color: white;
+    padding: 112px 66px 0 66px;
 }
 
 .login-box-2 {
@@ -31,22 +31,3 @@
     justify-self: right;
     height: 15px;
 }
-
-
-.login-button {
-    margin-top: 44px;
-    width: 440px;
-    height: 44px;
-    color: white;
-    background-color: black;
-    opacity: 25%;
-    cursor: pointer;
-    border: none;
-    border-radius: 20px;
-    font-size: 20px;
-}
-
-.login-button:hover {
-    opacity: 60%;
-}
-

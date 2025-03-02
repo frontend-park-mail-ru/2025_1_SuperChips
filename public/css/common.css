@@ -11,14 +11,14 @@
 }
 
 
-.register-page__logo, .login-page__logo {
+.signup-page__logo, .login-page__logo {
     position: absolute;
     top: 62px;
     left: 100px;
     opacity: 80%;
 }
 
-.register-page, .login-page {
+.signup-page, .login-page {
     background: linear-gradient(to bottom, #141414, #303030);
     display: flex;
     height: 100vh;
@@ -67,4 +67,23 @@
     transform: translateY(-50%);
 }
 
+.button {
+    width: 440px;
+    height: 44px;
+    color: white;
+    background-color: black;
+    opacity: 25%;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    font-size: 20px;
+    margin-top: 30px;
+}
 
+.button:hover {
+    opacity: 60%;
+}
+
+.sidebar-button:hover {
+    cursor: pointer;
+}

@@ -2,28 +2,30 @@
     display: grid;
     grid-template-columns: 80px 1fr;
     grid-template-rows: 112px 1fr;
-    background: linear-gradient(to bottom, #141414, #303030) fixed;
+    background: linear-gradient(to bottom, #141414, #252525) fixed;
 }
 
 
-.header {
+.navbar {
     position: fixed;
-    background: linear-gradient(to bottom, #141414, #303030) fixed;
+    background: linear-gradient(to bottom, #141414, #252525) fixed;
     display: flex;
     width: 100%;
     height: 112px;
     padding: 32px 0;
     align-items: center;
     justify-content: space-between;
+    z-index: 100;
 }
 
-.header-logo {
+.navbar-logo {
     align-self: center;
     margin: 0 10px;
+    float: left;
 }
 
 .search-form {
-    width: 90%;
+    flex-grow: 1;
     height: 48px;
     margin-right: 20px;
     padding: 10px;
@@ -34,8 +36,9 @@
 .profile-picture {
     width: 48px;
     height: 48px;
+    flex-shrink: 0;
     overflow: hidden;
-    border-radius: 100%;
+    border-radius: 50%;
     margin-right: 20px;
     display: flex;
     background-color: white;
@@ -53,6 +56,7 @@
 
 
 .sidebar {
+    background: linear-gradient(to bottom, #141414, #252525) fixed;
     position: fixed;
     height: 100%;
     width: 80px;
@@ -75,36 +79,29 @@
 .feed {
     grid-row-start: 2;
     grid-column-start: 2;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(1, 1fr);
-    column-gap: 32px;
-    row-gap: 32px;
-    padding: 0 32px 0 0;
+    min-height: calc(100vh - 112px);
+    width: 100%;
+    padding-right: 4px;
 }
 
 
-/*Это решение временное, будет генерироваться
-определенное количество колонок, в зависимости от ширины экрана */
-.div1, .div2, .div3, .div4, .div5 {
-    width: 205px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-}
-
-.skeleton-rectangle, .skeleton-square {
+.skeleton-1, .skeleton-2, .skeleton-3 {
     width: 205px;
     border-radius: 20px;
     background-color: #303030;
     margin-bottom: 32px;
+    /*margin-right: 32px;*/
 }
 
-.skeleton-rectangle {
-    height: 365px;
-}
-
-.skeleton-square {
+.skeleton-1 {
     height: 205px;
+}
+
+.skeleton-2 {
+    height: 285px;
+}
+
+.skeleton-3 {
+    height: 365px;
 }
 
