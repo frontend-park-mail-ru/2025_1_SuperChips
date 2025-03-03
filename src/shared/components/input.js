@@ -1,8 +1,7 @@
-import {validateEmail} from "../validation/emailValidation.js";
-import {validateNickname} from "../validation/nicknameValidation.js";
-import {validateBirthday} from "../validation/birthdayValidation.js";
-import {validatePassword} from "../validation/passwordValidation.js";
-
+import { validateEmail } from "../validation/emailValidation.js";
+import { validateNickname } from "../validation/nicknameValidation.js";
+import { validateBirthday } from "../validation/birthdayValidation.js";
+import { validatePassword } from "../validation/passwordValidation.js";
 
 /**
  * Создает инпут с иконкой ошибки и сообщением об ошибке
@@ -29,11 +28,11 @@ export const createInput = ({type, id, inputLabel, errorMessage}) => {
 		const inputData = inputField.value;
 		let valid = true;
 
-		switch (id) {
+		switch (type) {
 			case 'email':
 				valid = validateEmail(inputData);
 				break;
-			case 'nickname':
+			case 'text':
 				valid = validateNickname(inputData);
 				break;
 			case 'date':
@@ -51,13 +50,8 @@ export const createInput = ({type, id, inputLabel, errorMessage}) => {
 		if (!valid && inputData !== '') {
 			icon.classList.remove('hidden');
 			message.classList.remove('hidden');
-			return;
-		}
-
-		if (!icon.classList.contains('hidden')) {
+		} else {
 			icon.classList.add('hidden');
-		}
-		if (!message.classList.contains('hidden')) {
 			message.classList.add('hidden');
 		}
 	});

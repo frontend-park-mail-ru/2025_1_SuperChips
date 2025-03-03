@@ -38,8 +38,8 @@ export const goToPage = (page) => {
 
 	const element = config.menu[page].render();
 
-	// history.pushState(config.menu[page].href, '', config.menu[page].href);
-	// document.title = config.menu[page].title;
+	history.pushState(config.menu[page].href, '', config.menu[page].href);
+	document.title = config.menu[page].title;
 
 	root.appendChild(element);
 	if (page === 'feed') {

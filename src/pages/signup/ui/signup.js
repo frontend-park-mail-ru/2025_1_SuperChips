@@ -1,7 +1,7 @@
-import {renderBackground} from "../../../shared/components/background.js";
-import {createInput} from "../../../shared/components/input.js";
-import {goToPage} from "../../../shared/router.js";
-import {validateSignup} from "../../../shared/validation/signupValidation.js";
+import { renderBackground } from "../../../shared/components/background.js";
+import { createInput } from "../../../shared/components/input.js";
+import { goToPage } from "../../../shared/router.js";
+import { validateSignup } from "../../../shared/validation/signupValidation.js";
 
 /**
  * Генерирует страницу регистрации
@@ -34,7 +34,7 @@ export const renderSignup = () => {
 		{type: 'text', id: 'nickname', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято'},
 		{type: 'date', id: 'birthday', inputLabel: 'Дата рождения', errorMessage: 'Неправильный формат даты'},
 		{type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов'},
-		{type: 'password', id: 'password-confirm', inputLabel: 'Пароль еще раз', errorMessage: 'Пароли не совпадают'},
+		{type: 'password', id: 'password-confirm', inputLabel: 'Повторите пароль', errorMessage: 'Пароли не совпадают'},
 	];
 
 	inputs.forEach((item) => {
@@ -42,24 +42,10 @@ export const renderSignup = () => {
 		signupForm.appendChild(input);
 	});
 
-	const passwordConfirm = signupForm.querySelector('#password-confirm');
-	passwordConfirm.addEventListener('change', () => {
-		const passwordValue = signupForm.querySelector('#password').value;
-		const value = passwordConfirm.value;
-
-		// const container = signupForm.querySelector('#password-confirm-container');
-		// const image = container.querySelector('img');
-		// const message = container.querySelector('#password-confirm-error');
-
-		if (passwordValue === value) {
-			goToPage('feed');
-		}
-	});
-
 	const submitBtn = document.createElement('button');
 	submitBtn.classList.add('button');
 	submitBtn.type = 'submit';
-	submitBtn.textContent = 'Регистрация';
+	submitBtn.textContent = 'Зарегистрироваться';
 	signupForm.appendChild(submitBtn);
 
 	submitBtn.addEventListener('click', (event) => {
@@ -98,6 +84,26 @@ export const renderSignup = () => {
 	redirectBtn.addEventListener('click', (event) => {
 		event.preventDefault();
 		goToPage('login');
+	});
+
+	signupForm.addEventListener('change', (event) => {
+		if (event.target.id !== 'password' && event.target.id !== 'password-confirm') { return; }
+
+		const password = signupForm.querySelector('#password').value;
+		const confirm = signupForm.querySelector('#password-confirm').value;
+
+		const container = signupForm.querySelector('#password-confirm-container');
+		const icon = container.querySelector('img');
+		const message = signupForm.querySelector('#password-confirm-error');
+
+		if (password !== confirm) {
+			icon.classList.remove('hidden');
+			message.classList.remove('hidden');
+		} else {
+			icon.classList.add('hidden');
+			message.classList.add('hidden');
+
+		}
 	});
 
 	return page;

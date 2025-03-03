@@ -19,9 +19,11 @@
 
 .signup-redirect {
     margin-top: 10px;
-    float: right;
     font-size: 20px;
     color: #333;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
 }
 
 

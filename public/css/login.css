@@ -9,7 +9,7 @@
 }
 
 .login-form {
-    margin-top: 54px
+    margin-top: 54px;
 }
 
 .login-box-1 {
@@ -22,7 +22,9 @@
 }
 
 .login-redirect {
-    float: right;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
     margin-top:12px;
     font-size: 20px;
 }
