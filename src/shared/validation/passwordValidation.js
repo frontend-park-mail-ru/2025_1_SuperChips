@@ -1,6 +1,6 @@
 /**
- *
- * @param {string} password
+ * Валидация пароля
+ * @param {string} password пароль
  * @returns {boolean}
  */
 export const validatePassword = (password) => {

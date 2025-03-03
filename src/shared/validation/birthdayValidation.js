@@ -1,6 +1,6 @@
 /**
- *
- * @param {string} birthday
+ * Валидация даты рождения
+ * @param {string} birthday дата рождения
  * @returns {boolean}
  */
 export const validateBirthday = (birthday) => {

@@ -1,13 +1,13 @@
 @font-face {
     font-family: 'FuturaPT';
-    src: url('/public/fonts/futura-pt-book.woff2') format('woff2');
+    src: url('../fonts/futura-pt-book.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'FuturaPT';
-    src: url('/public/fonts/futura-pt-demi.woff2') format('woff2');
+    src: url('../fonts/futura-pt-demi.woff2') format('woff2');
     font-weight: bold;
     font-style: normal;
 }
@@ -28,19 +28,14 @@
     color: #333;
 }
 
-.bold {
-    font-weight: bold;
-    text-decoration: none;
-}
-
 .link-label {
     font-size: 16px;
-    color: #333;
     text-decoration: none;
 }
 
 .input-text {
     font-size: 14px;
+    color: #fff;
 }
 
 .input-field-label {
@@ -50,4 +45,9 @@
 .error-label {
     font-size: 14px;
     color: #FF4A4A;
+}
+
+.bold {
+    font-weight: bold;
+    text-decoration: none;
 }

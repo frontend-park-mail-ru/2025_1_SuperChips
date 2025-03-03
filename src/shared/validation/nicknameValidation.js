@@ -1,6 +1,8 @@
 /**
- *
- * @param {string} nickname
+ * Валидация имени пользователя
+ * @param {string} nickname имя пользователя
  * @returns {boolean}
  */
-export
+export const validateNickname = (nickname) => {
+    return nickname !== '';
+}

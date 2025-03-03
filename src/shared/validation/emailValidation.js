@@ -1,6 +1,6 @@
 /**
- *
- * @param {string} email
+ * Валидация почты
+ * @param {string} email - почта
  * @returns {boolean}
  */
 export const validateEmail = (email) => {

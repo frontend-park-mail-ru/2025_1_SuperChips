@@ -1,0 +1,92 @@
+* {
+    color: #fff;
+}
+
+
+.post {
+    grid-area: page;
+    background: linear-gradient(to bottom, #141414, #252525) fixed;
+    min-height: calc(100vh - 112px);
+    display: flex;
+    padding-bottom: 36px;
+}
+
+.post-picture {
+    max-width: 384px;
+    max-height: 100%;
+    border-radius: 20px;
+    background-color: #303030;
+    align-self: center;
+    display: flex;
+    overflow: hidden;
+}
+
+.flex-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+.one-pin {
+    width: 100%;
+    margin: 0 86px;
+}
+
+.menu {
+    max-height: 24px;
+    min-width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu-button:hover {
+    cursor: pointer;
+}
+
+.button-container {
+    display: flex;
+    align-content: center;
+}
+
+.counter {
+    transform: translateY(20%);
+    margin: 0 36px 0 16px;
+}
+
+.back-to-feed p {
+    transform: translateY(-40%);
+    display: inline-block;
+    color: #fff;
+    font-size: 16px;
+}
+
+.pin-text-field {
+    margin-top: 28px;
+    width: 278px;
+}
+
+.pin-text {
+    margin-top: 14px;
+}
+
+.nickname {
+    transform: translateY(25%);
+}
+
+.author-container {
+    display: flex;
+    margin: 22px 0 26px 0;
+}
+
+.commentary {
+    margin: 18px 18px 2px 0;
+    width: 95%;
+    border: 1px solid #474747;
+    border-radius: 20px;
+    padding: 18px;
+}
+
+.commentary-text {
+    margin-top: 12px;
+}
