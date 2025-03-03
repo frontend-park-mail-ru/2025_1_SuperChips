@@ -1,0 +1,23 @@
+{
+  "name": "2025_1_superchips",
+  "version": "1.0.0",
+  "description": "Репозиторий фронтенда команды Суперчипс с проектом Pinterest",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2025_1_SuperChips.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2025_1_SuperChips/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2025_1_SuperChips#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
