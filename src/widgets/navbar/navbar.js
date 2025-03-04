@@ -1,6 +1,5 @@
 import './navbar.css'
 import navbarTemplate from './navbar.hbs'
-import Handlebars from 'handlebars'
 
 /**
  * Генерирует навбар для основных страниц (ленты, профиля и тд)

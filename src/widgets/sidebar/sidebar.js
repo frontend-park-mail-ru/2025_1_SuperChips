@@ -17,17 +17,3 @@ export const createSidebar = () => {
 	sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({buttons}));
 	return sidebar;
 }
-
-function createSidebarButton({id, source, alt}) {
-	const button = document.createElement('a');
-	button.id = id;
-	button.classList.add('sidebar-button');
-
-	const image = document.createElement('img');
-	image.src = source;
-	image.alt = alt;
-
-	button.appendChild(image);
-
-	return button;
-}
