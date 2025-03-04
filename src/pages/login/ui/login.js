@@ -3,7 +3,7 @@ import {createInput} from "../../../shared/components/input.js";
 import {validateEmail} from "../../../shared/validation/emailValidation.js";
 import {validatePassword} from "../../../shared/validation/passwordValidation.js";
 import {goToPage} from "../../../shared/router.js";
-
+import {pictureBox} from "../../../shared/components/pictureBox.js";
 
 /**
  * Генерирует страницу логина
@@ -13,6 +13,9 @@ export const renderLogin = () => {
 	const page = document.createElement('div');
 	page.classList.add('login-page');
 	renderBackground(page);
+
+	const pictures = pictureBox();
+	page.innerHTML += pictures;
 
 	const container = document.createElement('div');
 	container.classList.add('login-container');

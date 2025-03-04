@@ -6,6 +6,7 @@
     width: 572px;
     grid-template-rows: 526px auto;
     margin-left: auto;
+    z-index: 100;
 }
 
 .login-form {

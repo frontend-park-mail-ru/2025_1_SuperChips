@@ -2,6 +2,7 @@ import { renderBackground } from "../../../shared/components/background.js";
 import { createInput } from "../../../shared/components/input.js";
 import { goToPage } from "../../../shared/router.js";
 import { validateSignup } from "../../../shared/validation/signupValidation.js";
+import {pictureBox} from "../../../shared/components/pictureBox.js";
 
 /**
  * Генерирует страницу регистрации
@@ -11,6 +12,9 @@ export const renderSignup = () => {
 	const page = document.createElement('div');
 	page.classList.add('signup-page')
 	renderBackground(page);
+
+	const pictures = pictureBox();
+	page.innerHTML += pictures;
 
 	const container = document.createElement('div');
 	container.classList.add('signup-container');
@@ -30,11 +34,11 @@ export const renderSignup = () => {
 	signupBox.appendChild(signupForm);
 
 	const inputs = [
-		{type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты'},
-		{type: 'text', id: 'nickname', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято'},
-		{type: 'date', id: 'birthday', inputLabel: 'Дата рождения', errorMessage: 'Неправильный формат даты'},
-		{type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов'},
-		{type: 'password', id: 'password-confirm', inputLabel: 'Повторите пароль', errorMessage: 'Пароли не совпадают'},
+		{type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты', isstarred: true},
+		{type: 'text', id: 'nickname', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято', isstarred: true},
+		{type: 'date', id: 'birthday', inputLabel: 'Дата рождения', errorMessage: 'Неправильный формат даты', isstarred: true},
+		{type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов', isstarred: true},
+		{type: 'password', id: 'password-confirm', inputLabel: 'Повторите пароль', errorMessage: 'Пароли не совпадают', isstarred: true},
 	];
 
 	inputs.forEach((item) => {

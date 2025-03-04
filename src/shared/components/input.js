@@ -9,12 +9,13 @@ import { validatePassword } from "../validation/passwordValidation.js";
  * @param id ID которое будет присвоено блоку
  * @param inputLabel подпись для инпута
  * @param errorMessage сообщение об ошибке
+ * @param isstarred нужно ли добавлять * к подписи
  * @returns {HTMLDivElement}
  */
-export const createInput = ({type, id, inputLabel, errorMessage}) => {
+export const createInput = ({type, id, inputLabel, errorMessage, isstarred}) => {
 	const inputContainer = document.createElement('div');
 	inputContainer.innerHTML = `
-        <label for=${id}>${inputLabel}</label>
+        <label for=${id}>${inputLabel} ${isstarred ? '*' : ''}</label>
         <div class='input-container' id="${id}-container">
             <input type=${type} class='input-container__field' id=${id}>
             <img src='/icons/error.svg' class='input-container__error hidden' aria-hidden='true' alt=''>
