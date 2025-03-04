@@ -1,0 +1,15 @@
+.page-logo {
+    margin: 62px 10px 20px 94px;
+    opacity: 80%;
+    width: 300px;
+    height: 160px;
+    -webkit-user-drag: none;
+}
+
+.background-vector {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(110deg) translateY(20%) translateX(15%);
+    -webkit-user-drag: none;
+}

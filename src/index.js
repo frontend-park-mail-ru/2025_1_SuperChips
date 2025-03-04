@@ -1,4 +1,3 @@
-import { goToPage } from "./shared/router.js";
+import { init } from './app/app'
 
-export const root = document.getElementById('root');
-goToPage('login');
+init();

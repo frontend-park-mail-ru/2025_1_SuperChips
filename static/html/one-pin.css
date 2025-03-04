@@ -90,3 +90,33 @@
 .commentary-text {
     margin-top: 12px;
 }
+
+.profile-container {
+    display: flex;
+}
+
+.scrollable-area {
+    overflow-y: auto;
+    overflow-x: clip;
+    width: 100%;
+    max-height: calc(100vh - 112px - 36px - 36px);
+}
+
+.scrollable-area::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 10px;
+}
+
+.scrollable-area::-webkit-scrollbar-track {
+    background: linear-gradient(to bottom, #141414, #252525) fixed;
+}
+
+.scrollable-area::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+.scrollable-area::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+

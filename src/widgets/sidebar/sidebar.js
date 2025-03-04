@@ -1,15 +1,12 @@
+import sidebarTemplate from './sidebar.hbs'
+import './sidebar.css'
+
 /**
  * Генерирует сайдбар для главных страниц (лента, профиль и тд)
  * @returns {HTMLDivElement}
  */
 export const createSidebar = () => {
 	const sidebar = document.createElement('div');
-	sidebar.classList.add('sidebar');
-	sidebar.id = 'sidebar';
-
-	const sidebarButtons = document.createElement('div');
-	sidebarButtons.classList.add('sidebar__button-container');
-	sidebar.appendChild(sidebarButtons);
 
 	const buttons = [
 		{id: 'newPin', source: '/icons/new-pin.svg', alt: 'add new pin'},
@@ -17,11 +14,7 @@ export const createSidebar = () => {
 		{id: 'logout', source: '/icons/log-out.svg', alt: 'logout'}
 	];
 
-	buttons.forEach((item) => {
-		const button = createSidebarButton(item);
-		sidebarButtons.appendChild(button);
-	});
-
+	sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({buttons}));
 	return sidebar;
 }
 

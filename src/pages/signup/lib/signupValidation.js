@@ -1,7 +1,7 @@
-import {validateEmail} from "./emailValidation.js";
-import {validateNickname} from "./nicknameValidation.js";
-import {validateBirthday} from "./birthdayValidation.js";
-import {validatePassword} from "./passwordValidation.js";
+import {validateEmail} from "../../../shared/validation/emailValidation.js";
+import {validateNickname} from "../../../shared/validation/nicknameValidation.js";
+import {validateBirthday} from "../../../shared/validation/birthdayValidation.js";
+import {validatePassword} from "../../../shared/validation/passwordValidation.js";
 
 
 /**

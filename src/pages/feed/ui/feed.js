@@ -1,7 +1,7 @@
-import { createNavbar } from "../../../shared/components/navbar.js";
-import { createSidebar } from "../../../shared/components/sidebar.js";
+import { createNavbar } from "../../../widgets/navbar/navbar.js";
+import { createSidebar } from "../../../widgets/sidebar/sidebar.js";
 import { goToPage } from "../../../shared/router.js";
-
+import './feed.css'
 
 /**
  * Генерирует страницу ленты
@@ -25,7 +25,6 @@ export const renderFeed = () => {
 	const logout = page.querySelector('#logout');
 	logout.addEventListener('click', (event) => {
 		event.preventDefault();
-
 		goToPage('login');
 	});
 

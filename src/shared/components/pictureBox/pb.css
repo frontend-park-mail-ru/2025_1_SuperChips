@@ -1,0 +1,26 @@
+.login-page__pictures {
+    display: grid;
+    max-width: calc(100vw - 92px - 572px);
+    max-height: calc(100vh - 242px);
+    position: absolute;
+    left: 92px;
+    top: 282px;
+    grid-template-columns: repeat(5, 205px);
+    gap: 32px;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.col-1, .col-2, .col-3 {
+    display: flex;
+    flex-direction: column;
+}
+
+.col-1 {
+    margin-top: 46px;
+}
+
+.col-3 {
+    margin-top: 100px;
+}

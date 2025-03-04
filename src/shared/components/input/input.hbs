@@ -1,0 +1,27 @@
+<div class="input-container">
+    <label for="{{id}}">
+        {{inputLabel}}
+        {{#if isStarred}}<span class="required">*</span>{{/if}}
+    </label>
+
+    <div class="input">
+        <input
+                type="{{type}}"
+                class="input__field"
+                id="{{id}}"
+        />
+
+        <img
+                src="/icons/error.svg"
+                class="input__error hidden"
+                aria-hidden="true"
+        />
+    </div>
+
+    <p
+            class="error-message error-label hidden"
+            id="{{id}}-error"
+    >
+        {{errorMessage}}
+    </p>
+</div>

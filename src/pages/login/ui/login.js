@@ -1,10 +1,11 @@
-import {renderBackground} from "../../../shared/components/background.js";
-import {createInput} from "../../../shared/components/input.js";
+import {renderBackground} from "../../../shared/components/background/background.js";
+import {createInput} from "../../../shared/components/input/input.js";
 import {validateEmail} from "../../../shared/validation/emailValidation.js";
 import {validatePassword} from "../../../shared/validation/passwordValidation.js";
 import {goToPage} from "../../../shared/router.js";
-import {pictureBox} from "../../../shared/components/pictureBox.js";
+import {pictureBox} from "../../../shared/components/pictureBox/pictureBox.js";
 
+import './login.css'
 /**
  * Генерирует страницу логина
  * @returns {HTMLDivElement}
@@ -49,6 +50,17 @@ export const renderLogin = () => {
 	submitBtn.textContent = 'Вход';
 	loginForm.appendChild(submitBtn);
 
+	const redirect = document.createElement('div');
+
+	redirect.classList.add('login-redirect');
+	redirect.textContent = 'Еще нет аккаунта?'
+	loginForm.appendChild(redirect)
+	const redirectBtn = document.createElement('a');
+
+	redirectBtn.classList.add('label', 'bold', 'redirect');
+	redirect.appendChild(redirectBtn);
+	redirectBtn.text = ' Регистрация';
+
 	submitBtn.addEventListener('click', (event) => {
 		event.preventDefault();
 
@@ -59,20 +71,12 @@ export const renderLogin = () => {
 		}
 	});
 
-	const redirect = document.createElement('div');
-	redirect.classList.add('login-redirect');
-	redirect.textContent = 'Еще нет аккаунта?'
-	loginForm.appendChild(redirect)
-
-	const redirectBtn = document.createElement('a');
-	redirectBtn.classList.add('label', 'bold', 'redirect');
-	redirect.appendChild(redirectBtn);
-	redirectBtn.text = ' Регистрация';
-
 	redirectBtn.addEventListener('click', (event) => {
 		event.preventDefault();
 		goToPage('signup');
-	});
+});
 
 	return page
 }
+
+
