@@ -1,0 +1,28 @@
+.feed {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    min-height: calc(100vh - 112px);
+    width: 100%;
+    padding-right: 4px;
+}
+
+
+.skeleton-1, .skeleton-2, .skeleton-3 {
+    width: 205px;
+    border-radius: 20px;
+    background-color: #303030;
+    margin-bottom: 32px;
+}
+
+.skeleton-1 {
+    height: 205px;
+}
+
+.skeleton-2 {
+    height: 285px;
+}
+
+.skeleton-3 {
+    height: 365px;
+}
+
