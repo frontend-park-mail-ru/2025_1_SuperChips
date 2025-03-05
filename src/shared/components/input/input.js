@@ -22,8 +22,10 @@ export const createInput = (data) => {
 }
 
 const inputHandler = (event) => {
-	const inputField = event.target;
-	const inputData = inputField.value;
+	const container = event.target.closest('.input-container');
+	const message = container.querySelector('.error-message');
+	const input = container.querySelector('.input__field');
+	const icon = container.querySelector('.input__error');
 
 	const validators = {
 		email: validateEmail,
@@ -32,14 +34,8 @@ const inputHandler = (event) => {
 		password: validatePassword,
 	};
 
-	const valid = validators[inputField.type]?.(inputData) ?? true;
-
-
-	const container = inputField.closest('.input-container');
-	const icon = container.querySelector('.input__error');
-	const message = container.querySelector('.error-label');
-
-	const showError = !valid && inputData !== '';
+	const valid = true;
+	const showError = !valid && input.value !== '';
 	icon.classList.toggle('hidden', !showError);
 	message.classList.toggle('hidden', !showError);
 }

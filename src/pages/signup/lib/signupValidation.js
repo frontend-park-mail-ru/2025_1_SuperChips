@@ -15,32 +15,12 @@ import {validatePassword} from "../../../shared/validation/passwordValidation.js
  */
 export const validateSignup = ({email, nickname, birthday, password, passwordConfirm}) => {
 	const result = {
-		email: true,
-		nickname: true,
-		birthday: true,
-		password: true,
-		passwordConfirm: true
-	}
+		email: validateEmail(email),
+		nickname: validateNickname(nickname),
+		birthday: validateBirthday(birthday),
+		password: validatePassword(password),
+		passwordConfirm: password === passwordConfirm && password !== ''
+	};
 
-	if (!validateEmail(email)) {
-		result.email = false;
-	}
-
-	if (!validateNickname(nickname)) {
-		result.nickname = false;
-	}
-
-	if (!validateBirthday(birthday)) {
-		result.birthday = false;
-	}
-
-	if (!validatePassword(password)) {
-		result.password = false;
-	}
-
-	if (password !== passwordConfirm) {
-		result.passwordConfirm = false;
-	}
-
-	return result;
+	return Object.values(result).every(Boolean);
 }

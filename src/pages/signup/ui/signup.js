@@ -1,9 +1,12 @@
 import { renderBackground } from "../../../shared/components/background/background.js";
-import {createInput} from "../../../shared/components/input/input.js";
+import { createInput } from "../../../shared/components/input/input.js";
 import { goToPage } from "../../../shared/router.js";
 import { validateSignup } from "../lib/signupValidation.js";
-import {pictureBox} from "../../../shared/components/pictureBox/pictureBox.js";
 import './signup.css'
+import {debounce} from "../../../shared/utils/debounce";
+import Handlebars from "handlebars"
+import {loadPartials} from "../../../shared/utils/loadPartials";
+
 /**
  * Генерирует страницу регистрации
  * @returns {HTMLDivElement}
@@ -12,9 +15,6 @@ export const renderSignup = () => {
 	const page = document.createElement('div');
 	page.classList.add('signup-page')
 	renderBackground(page);
-
-	const pictures = pictureBox();
-	page.innerHTML += pictures;
 
 	const container = document.createElement('div');
 	container.classList.add('signup-container');
@@ -29,16 +29,17 @@ export const renderSignup = () => {
     <label class="subheader">Еще пару шагов и Вы с flow!</label>
     `
 
-	const signupForm = document.createElement('div');
+	const signupForm = document.createElement('form');
 	signupForm.classList.add('signup-form');
 	signupBox.appendChild(signupForm);
+
 
 	const inputs = [
 		{type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты', isStarred: true},
 		{type: 'text', id: 'nickname', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято', isStarred: true},
 		{type: 'date', id: 'birthday', inputLabel: 'Дата рождения', errorMessage: 'Неправильный формат даты', isStarred: true},
 		{type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов', isStarred: true},
-		{type: 'password', id: 'password-confirm', inputLabel: 'Повторите пароль', errorMessage: 'Пароли не совпадают', isStarred: true},
+		{type: 'password', id: 'passwordConfirm', inputLabel: 'Повторите пароль', errorMessage: 'Пароли не совпадают', isStarred: true},
 	];
 
 	inputs.forEach((item) => {
@@ -51,29 +52,6 @@ export const renderSignup = () => {
 	submitBtn.type = 'submit';
 	submitBtn.textContent = 'Зарегистрироваться';
 	signupForm.appendChild(submitBtn);
-
-	submitBtn.addEventListener('click', (event) => {
-		event.preventDefault();
-
-		const inputData = {
-			email: document.getElementById('email').value,
-			nickname: document.getElementById('nickname').value,
-			birthday: document.getElementById('birthday').value,
-			password: document.getElementById('password').value,
-			passwordConfirm: document.getElementById('password-confirm').value
-		};
-
-		for (let key in inputData) {
-			console.log(inputData[key]);
-		}
-
-		const pass = validateSignup(inputData);
-		if (Object.values(pass).every(item => item)) {
-			goToPage('feed');
-		} else {
-			alert('validation not passed')
-		}
-	});
 
 	const redirect = document.createElement('div');
 	redirect.classList.add('signup-redirect');
@@ -90,25 +68,44 @@ export const renderSignup = () => {
 		goToPage('login');
 	});
 
-	signupForm.addEventListener('change', (event) => {
-		if (event.target.id !== 'password' && event.target.id !== 'password-confirm') { return; }
-
-		const password = signupForm.querySelector('#password').value;
-		const confirm = signupForm.querySelector('#password-confirm').value;
-
-		const container = signupForm.querySelector('#password-confirm-container');
-		const icon = container.querySelector('img');
-		const message = signupForm.querySelector('#password-confirm-error');
-
-		if (password !== confirm) {
-			icon.classList.remove('hidden');
-			message.classList.remove('hidden');
-		} else {
-			icon.classList.add('hidden');
-			message.classList.add('hidden');
-
-		}
-	});
+	signupForm.addEventListener('submit', handleSubmit);
+	signupForm.addEventListener('input', debouncedPasswordHandler);
 
 	return page;
 }
+
+const handlePassword = (event) => {
+	if (event.target.id !== 'password' && event.target.id !== 'password-confirm') { return; }
+
+	const signupForm = document.querySelector('.signup-form');
+	const password = signupForm.querySelector('#password').value;
+	const confirm = signupForm.querySelector('#passwordConfirm').value;
+
+	const message = signupForm.querySelector('#passwordConfirm-error');
+	const icon = signupForm.querySelector('#passwordConfirm-error-icon');
+
+	const showError = password !== confirm;
+	icon.classList.toggle('hidden', !showError);
+	message.classList.toggle('hidden', !showError);
+}
+
+const debouncedPasswordHandler = debounce(handlePassword, 300);
+
+const handleSubmit = (event) => {
+	event.preventDefault();
+
+	const form = document.querySelector('.signup-form');
+
+	const inputData = {};
+	const inputs = form.querySelectorAll('.input__field');
+	inputs.forEach(input => {
+		inputData[input.id] = input.value;
+	});
+
+	if (validateSignup(inputData)) {
+		goToPage('feed');
+	}
+}
+
+
+

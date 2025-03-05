@@ -15,8 +15,8 @@ export const renderLogin = () => {
 	page.classList.add('login-page');
 	renderBackground(page);
 
-	const pictures = pictureBox();
-	page.innerHTML += pictures;
+	// const pictures = pictureBox();
+	// page.innerHTML += pictures;
 
 	const container = document.createElement('div');
 	container.classList.add('login-container');

@@ -1,5 +1,5 @@
-import bgTemplate from './bg.hbs'
-import './bg.css'
+import bgTemplate from './background.hbs'
+import './background.css'
 /**
  * Генерирует фон для страницы входа
  * @param page
