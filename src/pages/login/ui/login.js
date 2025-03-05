@@ -32,6 +32,7 @@ export const renderLogin = () => {
 	const form = page.querySelector('.login-form');
 	form.addEventListener('submit', handleSubmit);
 	form.addEventListener('input', debouncedInputHandler);
+	form.addEventListener('change', buttonHandler);
 
 	const eye = form.querySelector('.input__toggle-password');
 	eye.addEventListener('click', togglePasswordHandler);
@@ -65,5 +66,12 @@ const handleSubmit = (event) => {
 			break;
 	}
 
+}
+
+const buttonHandler = () => {
+	if (validateUser()) {
+		const button = document.querySelector('.button');
+		button.style.opacity = '100%';
+	}
 }
 

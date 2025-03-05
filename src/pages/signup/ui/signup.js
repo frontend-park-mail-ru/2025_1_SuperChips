@@ -6,6 +6,7 @@ import signupTemplate  from '../../login/ui/authPage.hbs';
 import '../../../shared/components/input/input.css';
 import './signup.css'
 import {togglePasswordHandler} from "../../../shared/handlers/passwordToggle";
+import {validateUser} from "../../login/lib/validateUser";
 
 
 /**
@@ -88,5 +89,12 @@ const handleSignup = (event) => {
 
 	if (validateSignup(inputData)) {
 		goToPage('feed');
+	}
+}
+
+const buttonHandler = () => {
+	if (validateUser()) {
+		const button = document.querySelector('.button');
+		button.style.opacity = '100%';
 	}
 }

@@ -65,3 +65,7 @@
     transform: rotate(110deg) translateY(20%) translateX(15%);
     -webkit-user-drag: none;
 }
+
+.background {
+    min-width: 0;
+}
