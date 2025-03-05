@@ -1,81 +1,70 @@
-import {createInput} from "../../../shared/components/input/input";
-import {validateEmail} from "../../../shared/validation/emailValidation.js";
-import {validatePassword} from "../../../shared/validation/passwordValidation.js";
-import {goToPage} from "../../../shared/router.js";
+import { goToPage } from "../../../shared/router";
+import { validateUser } from '../lib/validateUser';
+import { togglePasswordHandler } from "../../../shared/handlers/passwordToggle";
+import loginTemplate from './authPage.hbs';
+import '../../../shared/components/input/input.css';
+import './login.css';
+import {debouncedInputHandler} from "../../../shared/handlers/inputHandler";
 
-import './login.css'
 /**
  * Генерирует страницу логина
  * @returns {HTMLDivElement}
  */
 export const renderLogin = () => {
 	const page = document.createElement('div');
-	page.classList.add('login-page');
 
-	page.innerHTML += `
-		<img src="img/logo.png" class="page-logo" alt="site logo">
-        <img src="img/line-1.png" class="background-vector" aria-hidden="true" alt="">
-	`;
+	const config = {
+		inputs: [
+			{type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты'},
+			{type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Неправильный пароль или почта', isPassword: true}
+		],
+		page: 'login',
+		redirectText: 'Еще нет аккаунта?',
+		redirectBtn: 'Регистрация',
+		submitBtn: 'Вход',
+		header: 'Вход',
+		subheader: 'Добро пожаловать в flow!'
+	};
 
-	const container = document.createElement('div');
-	container.classList.add('login-container');
-	page.appendChild(container);
+	const html = loginTemplate(config);
+	page.insertAdjacentHTML('beforeend', html);
 
-	const loginBox = document.createElement('form');
-	loginBox.classList.add('login-box-1');
-	loginBox.innerHTML += `
-    <h1 class="header">Вход</h1>
-    <label class="subheader">Добро пожаловать в flow!</label>
-    `
-	container.appendChild(loginBox);
+	const form = page.querySelector('.login-form');
+	form.addEventListener('submit', handleSubmit);
+	form.addEventListener('input', debouncedInputHandler);
 
-	const loginForm = document.createElement('form');
-	loginForm.classList.add('login-form');
-	loginBox.appendChild(loginForm)
+	const eye = form.querySelector('.input__toggle-password');
+	eye.addEventListener('click', togglePasswordHandler);
 
-	const inputs = [
-		{type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты'},
-		{type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Неправильный пароль или почта'}
-	];
-
-	inputs.forEach((item) => {
-		const input = createInput(item);
-		loginForm.appendChild(input);
-	})
-
-	const submitBtn = document.createElement('button');
-	submitBtn.classList.add('button');
-	submitBtn.type = 'submit';
-	submitBtn.textContent = 'Вход';
-	loginForm.appendChild(submitBtn);
-
-	const redirect = document.createElement('div');
-
-	redirect.classList.add('login-redirect');
-	redirect.textContent = 'Еще нет аккаунта?'
-	loginForm.appendChild(redirect)
-	const redirectBtn = document.createElement('a');
-
-	redirectBtn.classList.add('label', 'bold', 'redirect');
-	redirect.appendChild(redirectBtn);
-	redirectBtn.text = ' Регистрация';
-
-	submitBtn.addEventListener('click', (event) => {
-		event.preventDefault();
-
-		const email = document.getElementById('email').value;
-		const password = document.getElementById('password').value;
-		if (validateEmail(email) && validatePassword(password)) {
-			goToPage('feed');
-		}
-	});
-
+	const redirectBtn = page.querySelector('.redirect');
 	redirectBtn.addEventListener('click', (event) => {
 		event.preventDefault();
 		goToPage('signup');
-});
+	});
 
-	return page
+
+	return page;
 }
 
+
+const handleSubmit = (event) => {
+	const inputData = {};
+	const inputs = event.target.querySelectorAll('.input__field');
+	inputs.forEach(input => {
+		inputData[input.id] = input.value;
+	});
+
+	switch (validateUser(inputData)) {
+		case '200':
+			goToPage('feed');
+			break;
+		case '403':
+			alert('Неправильный пароль');
+			break;
+		case '404':
+			alert('Такого пользователя не существует');
+			break;
+	}
+
+}
 

@@ -2,93 +2,33 @@ import { debouncedInputHandler } from "../../../shared/handlers/inputHandler";
 import { validateSignup } from "../lib/signupValidation.js";
 import { debounce } from "../../../shared/utils/debounce";
 import { goToPage } from "../../../shared/router.js";
+import signupTemplate  from '../../login/ui/authPage.hbs';
+import '../../../shared/components/input/input.css';
 import './signup.css'
+
 
 /**
  * Генерирует страницу регистрации
  * @returns {HTMLDivElement}
  */
-// export const renderSignup = () => {
-// 	const page = document.createElement('div');
-// 	page.classList.add('signup-page')
-// 	renderBackground(page);
-//
-// 	const container = document.createElement('div');
-// 	container.classList.add('signup-container');
-// 	page.appendChild(container);
-//
-// 	const signupBox = document.createElement('div');
-// 	signupBox.classList.add('signup-box-1');
-// 	container.appendChild(signupBox);
-//
-// 	signupBox.innerHTML += `
-//     <h1 class="header">Регистрация</h1>
-//     <label class="subheader">Еще пару шагов и Вы с flow!</label>
-//     `
-//
-// 	const signupForm = document.createElement('form');
-// 	signupForm.classList.add('signup-form');
-// 	signupBox.appendChild(signupForm);
-//
-//
-// 	const inputs = [
-// 		{type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты', isStarred: true},
-// 		{type: 'text', id: 'nickname', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято', isStarred: true},
-// 		{type: 'date', id: 'birthday', inputLabel: 'Дата рождения', errorMessage: 'Неправильный формат даты', isStarred: true},
-// 		{type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов', isStarred: true},
-// 		{type: 'password', id: 'passwordConfirm', inputLabel: 'Повторите пароль', errorMessage: 'Пароли не совпадают', isStarred: true},
-// 	];
-//
-// 	inputs.forEach((item) => {
-// 		const input = createInput(item);
-// 		signupForm.appendChild(input);
-// 	});
-//
-// 	const submitBtn = document.createElement('button');
-// 	submitBtn.classList.add('button');
-// 	submitBtn.type = 'submit';
-// 	submitBtn.textContent = 'Зарегистрироваться';
-// 	signupForm.appendChild(submitBtn);
-//
-// 	const redirect = document.createElement('div');
-// 	redirect.classList.add('signup-redirect');
-// 	redirect.textContent = 'Уже есть аккаунт?'
-// 	signupForm.appendChild(redirect)
-//
-// 	const redirectBtn = document.createElement('a');
-// 	redirectBtn.classList.add('label', 'bold', 'redirect');
-// 	redirect.appendChild(redirectBtn);
-// 	redirectBtn.text = ' Войти';
-//
-// 	redirectBtn.addEventListener('click', (event) => {
-// 		event.preventDefault();
-// 		goToPage('login');
-// 	});
-//
-// 	signupForm.addEventListener('submit', handleSubmit);
-// 	signupForm.addEventListener('input', debouncedPasswordHandler);
-//
-// 	return page;
-// }
-
-
-import Handlebars from 'handlebars';
-import inputTemplate from '../../../shared/components/input/input.hbs'
-import signupTemplate  from './signup.hbs';
-
 export const renderSignup = () => {
-	const inputs = [
-		{type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты', isStarred: true},
-		{type: 'text', id: 'nickname', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято', isStarred: true},
-		{type: 'date', id: 'birthday', inputLabel: 'Дата рождения', errorMessage: 'Неправильный формат даты', isStarred: true},
-		{type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов', isStarred: true},
-		{type: 'password', id: 'passwordConfirm', inputLabel: 'Повторите пароль', errorMessage: 'Пароли не совпадают', isStarred: true},
-	];
+	const config = {
+		page: 'signup',
+		redirectText: 'есть аккаунт?',
+		redirectBtn: 'Войти',
+		submitBtn: 'Зарегистрироваться',
+		header: 'Регистрация',
+		subheader: 'Еще пару шагов и Вы с flow!',
+		inputs: [
+			{type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты', isStarred: true},
+			{type: 'text', id: 'nickname', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято', isStarred: true},
+			{type: 'date', id: 'birthday', inputLabel: 'Дата рождения', errorMessage: 'Неправильный формат даты', isStarred: true},
+			{type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов', isStarred: true, isPassword: true},
+			{type: 'password', id: 'passwordConfirm', inputLabel: 'Повторите пароль', errorMessage: 'Пароли не совпадают', isStarred: true,  isPassword: true},
+		]
+	}
 
-	Handlebars.registerPartial('input', inputTemplate);
-
-	const html = signupTemplate({inputs});
-
+	const html = signupTemplate(config);
 	const page = document.createElement('div');
 	page.insertAdjacentHTML('beforeend', html);
 

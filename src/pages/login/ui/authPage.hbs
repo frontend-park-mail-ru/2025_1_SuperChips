@@ -1,0 +1,25 @@
+<div class="{{page}}-page">
+    <div>
+        <img src="img/logo.png" class="page-logo" alt="site logo">
+        <img src="img/line-1.png" class="background-vector" aria-hidden="true" alt="">
+    </div>
+    <div class="{{page}}-container">
+        <div class="{{page}}-box-1">
+            <h1 class="header">{{header}}</h1>
+            <label class="subheader">{{subheader}}</label>
+
+            <form class="{{page}}-form">
+                {{#each inputs}}
+                    {{> ../../../shared/components/input/input this}}
+                {{/each}}
+
+                <button type="submit" class="button">{{submitBtn}}</button>
+
+                <div class="{{page}}-redirect">
+                    {{redirectText}}
+                    <a class="label bold redirect">{{redirectBtn}}</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

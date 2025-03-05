@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="input.css">
 <div class="input-container">
     <label for="{{id}}">
         {{inputLabel}}
@@ -7,6 +6,9 @@
 
     <div class="input">
         <input type="{{type}}" class="input__field" id="{{id}}" >
+        {{#if isPassword}}
+            <img src="icons/eye-off.svg" class="input__toggle-password" alt="Показать пароль" data-password-toggle>
+        {{/if}}
         <img src="icons/error.svg" class="input__error hidden" aria-hidden="true" alt="" id="{{id}}-error-icon">
     </div>
 

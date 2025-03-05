@@ -42,7 +42,7 @@
     margin-top: 30px;
 }
 
-.button:hover {
+.button:hover, .button:focus {
     opacity: 60%;
 }
 
