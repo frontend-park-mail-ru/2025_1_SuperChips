@@ -4,8 +4,6 @@ import { goToPage } from "../../../shared/router.js";
 import { validateSignup } from "../lib/signupValidation.js";
 import './signup.css'
 import {debounce} from "../../../shared/utils/debounce";
-import Handlebars from "handlebars"
-import {loadPartials} from "../../../shared/utils/loadPartials";
 
 /**
  * Генерирует страницу регистрации

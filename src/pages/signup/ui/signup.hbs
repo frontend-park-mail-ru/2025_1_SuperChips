@@ -1,0 +1,24 @@
+<!-- signup.hbs -->
+<div class="signup-page">
+    {{> background}}
+
+    <div class="signup-container">
+        <div class="signup-box-1">
+            <h1 class="header">Регистрация</h1>
+            <label class="subheader">Еще пару шагов и Вы с flow!</label>
+
+            <form class="signup-form">
+                {{#each inputs}}
+                    {{> input this}}
+                {{/each}}
+
+                <button type="submit" class="button">Зарегистрироваться</button>
+
+                <div class="signup-redirect">
+                    Уже есть аккаунт?
+                    <a class="label bold redirect">Войти</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -34,7 +34,8 @@ const inputHandler = (event) => {
 		password: validatePassword,
 	};
 
-	const valid = true;
+	const valid = validators[input.type]?.(input.value) ?? true;
+
 	const showError = !valid && input.value !== '';
 	icon.classList.toggle('hidden', !showError);
 	message.classList.toggle('hidden', !showError);
