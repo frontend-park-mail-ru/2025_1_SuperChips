@@ -21,7 +21,7 @@ const inputHandler = (event) => {
 
 	const [valid, error] = validators[input.id]?.(input.value) ?? true;
 
-	const showError = !valid;
+	const showError = !valid && input.value !== '';
 	icon.classList.toggle('hidden', !showError);
 	message.classList.toggle('hidden', !showError);
 	message.textContent = error;

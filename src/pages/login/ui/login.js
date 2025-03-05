@@ -36,15 +36,11 @@ export const renderLogin = () => {
 	const eye = form.querySelector('.input__toggle-password');
 	eye.addEventListener('click', togglePasswordHandler);
 
-	// const passwordInput = form.querySelector('#password');
-	// passwordInput.addEventListener('input', passwordHandler);
-
 	const redirectBtn = page.querySelector('.redirect');
 	redirectBtn.addEventListener('click', (event) => {
 		event.preventDefault();
 		goToPage('signup');
 	});
-
 
 	return page;
 }
