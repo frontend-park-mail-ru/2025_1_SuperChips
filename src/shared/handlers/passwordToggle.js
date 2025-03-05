@@ -1,6 +1,7 @@
 export const togglePasswordHandler = (event) => {
 	const img = event.target;
-	const input = document.querySelector('#password');
+	const container = img.closest('.input');
+	const input = container.querySelector('.input__field');
 
 	if (input.type === 'password') {
 		input.type = 'text';

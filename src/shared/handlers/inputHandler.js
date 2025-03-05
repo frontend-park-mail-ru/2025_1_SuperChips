@@ -1,6 +1,7 @@
 import { validateNickname } from "../validation/nicknameValidation.js";
 import { validateBirthday } from "../validation/birthdayValidation.js";
 import { validatePassword } from "../validation/passwordValidation.js";
+import { validatePasswordConfirm } from "../validation/passwordConfirmation";
 import { validateEmail } from "../validation/emailValidation.js";
 import { debounce } from "../utils/debounce.js";
 
@@ -12,17 +13,27 @@ const inputHandler = (event) => {
 
 	const validators = {
 		email: validateEmail,
-		text: validateNickname,
+		nickname: validateNickname,
 		date: validateBirthday,
 		password: validatePassword,
+		passwordConfirm: validatePasswordConfirm,
 	};
 
-	const [valid, error] = validators[input.type]?.(input.value) ?? true;
+	const [valid, error] = validators[input.id]?.(input.value) ?? true;
 
-	const showError = !valid && input.value !== '';
+	const showError = !valid;
 	icon.classList.toggle('hidden', !showError);
 	message.classList.toggle('hidden', !showError);
 	message.textContent = error;
+
+	const eye = container.querySelector('.input__toggle-password');
+	if (eye !== null) {
+		if (showError) {
+			eye.style.right = '36px';
+		} else {
+			eye.style.right = '12px'
+		}
+	}
 }
 
 export const debouncedInputHandler = debounce(inputHandler, 300);

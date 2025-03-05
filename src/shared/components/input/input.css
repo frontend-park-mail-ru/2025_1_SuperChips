@@ -19,7 +19,7 @@
 .input__field {
     width: 440px;
     border: none;
-    padding: 10px;
+    padding: 10px 60px 10px 10px;
 }
 
 .input--invalid {
@@ -42,7 +42,6 @@
 .input__toggle-password {
     position: absolute;
     right: 12px;
-    /*float: right;*/
     transform: translateY(45%);
     cursor: pointer;
     width: 24px;
