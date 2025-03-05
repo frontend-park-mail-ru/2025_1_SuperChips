@@ -14,7 +14,7 @@ const inputHandler = (event) => {
 	const validators = {
 		email: validateEmail,
 		nickname: validateNickname,
-		date: validateBirthday,
+		birthday: validateBirthday,
 		password: validatePassword,
 		passwordConfirm: validatePasswordConfirm,
 	};

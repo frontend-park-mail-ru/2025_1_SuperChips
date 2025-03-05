@@ -6,7 +6,6 @@ import signupTemplate  from '../../login/ui/authPage.hbs';
 import '../../../shared/components/input/input.css';
 import './signup.css'
 import {togglePasswordHandler} from "../../../shared/handlers/passwordToggle";
-import {validateUser} from "../../login/lib/validateUser";
 
 
 /**
@@ -44,6 +43,7 @@ export const renderSignup = () => {
 	form.addEventListener('submit', handleSignup);
 	form.addEventListener('input', debouncedInputHandler);
 	form.addEventListener('input', debouncedPasswordConfirm);
+	form.addEventListener('change', buttonHandler);
 
 	const eye = form.querySelectorAll('.input__toggle-password');
 	eye.forEach(item => item.addEventListener('click', togglePasswordHandler));
@@ -93,7 +93,15 @@ const handleSignup = (event) => {
 }
 
 const buttonHandler = () => {
-	if (validateUser()) {
+	const form = document.querySelector('.signup-form');
+
+	const inputData = {};
+	const inputs = form.querySelectorAll('.input__field');
+	inputs.forEach(input => {
+		inputData[input.id] = input.value;
+	});
+
+	if (validateSignup(inputData)) {
 		const button = document.querySelector('.button');
 		button.style.opacity = '100%';
 	}
