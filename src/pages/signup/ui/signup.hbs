@@ -1,7 +1,8 @@
-<!-- signup.hbs -->
 <div class="signup-page">
-    {{> background}}
-
+    <div>
+        <img src="img/logo.png" class="page-logo" alt="site logo">
+        <img src="img/line-1.png" class="background-vector" aria-hidden="true" alt="">
+    </div>
     <div class="signup-container">
         <div class="signup-box-1">
             <h1 class="header">Регистрация</h1>
@@ -9,7 +10,7 @@
 
             <form class="signup-form">
                 {{#each inputs}}
-                    {{> input this}}
+                    {{> ../../../shared/components/input/input this}}
                 {{/each}}
 
                 <button type="submit" class="button">Зарегистрироваться</button>

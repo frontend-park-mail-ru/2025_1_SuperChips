@@ -1,9 +1,7 @@
-import {renderBackground} from "../../../shared/components/background/background.js";
-import {createInput} from "../../../shared/components/input/input.js";
+import {createInput} from "../../../shared/components/input/input";
 import {validateEmail} from "../../../shared/validation/emailValidation.js";
 import {validatePassword} from "../../../shared/validation/passwordValidation.js";
 import {goToPage} from "../../../shared/router.js";
-import {pictureBox} from "../../../shared/components/pictureBox/pictureBox.js";
 
 import './login.css'
 /**
@@ -13,10 +11,11 @@ import './login.css'
 export const renderLogin = () => {
 	const page = document.createElement('div');
 	page.classList.add('login-page');
-	renderBackground(page);
 
-	// const pictures = pictureBox();
-	// page.innerHTML += pictures;
+	page.innerHTML += `
+		<img src="img/logo.png" class="page-logo" alt="site logo">
+        <img src="img/line-1.png" class="background-vector" aria-hidden="true" alt="">
+	`;
 
 	const container = document.createElement('div');
 	container.classList.add('login-container');

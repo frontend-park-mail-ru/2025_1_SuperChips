@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="input.css">
 <div class="input-container">
     <label for="{{id}}">
         {{inputLabel}}
@@ -5,25 +6,11 @@
     </label>
 
     <div class="input">
-        <input
-            type="{{type}}"
-            class="input__field"
-            id="{{id}}"
-        />
-
-        <img
-            src="icons/error.svg"
-            class="input__error hidden"
-            aria-hidden="true"
-            alt=""
-            id="{{id}}-error-icon"
-        />
+        <input type="{{type}}" class="input__field" id="{{id}}" >
+        <img src="icons/error.svg" class="input__error hidden" aria-hidden="true" alt="" id="{{id}}-error-icon">
     </div>
 
-    <p
-            class="error-message error-label hidden"
-            id="{{id}}-error"
-        >
+    <p class="error-message error-label hidden" id="{{id}}-error">
         {{errorMessage}}
     </p>
 </div>
