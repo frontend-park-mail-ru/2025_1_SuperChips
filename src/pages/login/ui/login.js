@@ -1,5 +1,5 @@
 import { goToPage } from "../../../shared/router";
-import { validateUser } from '../lib/validateUser';
+import { userValidation } from '../lib/userValidation';
 import { togglePasswordHandler } from "../../../shared/handlers/passwordToggle";
 import loginTemplate from './authPage.hbs';
 import '../../../shared/components/input/input.css';
@@ -54,7 +54,7 @@ const handleSubmit = (event) => {
 		inputData[input.id] = input.value;
 	});
 
-	switch (validateUser(inputData)) {
+	switch (userValidation(inputData)) {
 		case '200':
 			goToPage('feed');
 			break;
@@ -69,9 +69,11 @@ const handleSubmit = (event) => {
 }
 
 const buttonHandler = () => {
-	if (validateUser()) {
+	if (userValidation()) {
 		const button = document.querySelector('.button');
 		button.style.opacity = '100%';
+	} else {
+		button.style.opacity = '25%'
 	}
 }
 

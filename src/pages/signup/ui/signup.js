@@ -101,8 +101,10 @@ const buttonHandler = () => {
 		inputData[input.id] = input.value;
 	});
 
+	const button = document.querySelector('.button');
 	if (validateSignup(inputData)) {
-		const button = document.querySelector('.button');
 		button.style.opacity = '100%';
+	} else {
+		button.style.opacity = '25%'
 	}
 }
