@@ -1,3 +1,3 @@
 export const constants = {
-	apiBaseUrl: '',
+	apiBaseUrl: '/api/v1/',
 };

@@ -1,5 +1,8 @@
 export const createSkeletonFeed = (numElements) => {
 	const feed = document.createElement('div');
+	feed.classList.add('feed');
+	feed.id = 'feed';
+
 
 	const classes = ['skeleton-1', 'skeleton-2', 'skeleton-3'];
 	function randInt(min, max) {

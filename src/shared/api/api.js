@@ -1,191 +1,95 @@
-class Api {
-	constructor(apiBaseUrl, getCsrfToken) {
-		this.apiBaseUrl = apiBaseUrl;
-		this.getCsrfToken = getCsrfToken;
+import { constants } from '../config/constants';
+import { csrf } from '../CSRF/CSRF';
+
+export class Api {
+	#apiBaseUrl;
+	#CSRF;
+	constructor() {
+		this.#apiBaseUrl = constants.apiBaseUrl;
+		this.#CSRF = csrf;
 	}
 
 	/**
-	 * Получение данных пользователя
-	 * @returns {Promise<any>}
+	 * Шаблон запроса к API
+	 * @param {string} method метод запроса
+	 * @param {string} path url запроса (прим '/feed' '/user')
+	 * @param {string} headers HTTP заголовки
+	 * @param {object} body тело запроса, если есть
+	 * @returns {json} ответ от сервера
 	 */
-	async getUserData() {
-		const url = `${this.apiBaseUrl}/api/v1/auth/user`;
-		const response = await fetch(url, {
-			method: 'GET',
-			credentials: 'include',
-			headers: {
-				'X-XSRF-TOKEN': this.getCsrfToken(),
-			},
-		});
-
-		if (!response.ok) {
-			if (response.status === 401) {
-				throw new Error('Unauthorized: Invalid or missing credentials');
-			}
-			const errorData = await response.json().catch(() => ({}));
-			throw new Error(errorData.error || 'Failed to fetch user data');
-		}
-
-		return await response.json();
-	}
-
-	/**
-	 * Вход пользователя
-	 * @param {string} email
-	 * @param {string} password
-	 * @returns {Promise<boolean>}
-	 */
-	async login(email, password) {
-		const url = `${this.apiBaseUrl}/api/v1/auth/login`;
-		const response = await fetch(url, {
-			method: 'POST',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-XSRF-TOKEN': this.getCsrfToken(),
-			},
-			body: JSON.stringify({ email, password }),
-		});
-
-		if (!response.ok) {
-			if (response.status === 400 || response.status === 403) {
-				const errorData = await response.json().catch(() => ({}));
-				throw new Error(errorData.error || 'Authentication failed');
-			}
-			throw new Error('Internal server error');
-		}
-
-		return true;
-	}
-
-	/**
-	 * Регистрация нового пользователя
-	 * @param {Object} userData
-	 * @param {string} userData.username
-	 * @param {string} userData.password
-	 * @param {string} userData.birthday - в формате YYYY-MM-DD
-	 * @param {string} userData.email
-	 * @returns {Promise<boolean>} - true при успешной регистрации
-	 */
-	async register({ username, password, birthday, email }) {
-		const url = `${this.apiBaseUrl}/api/v1/auth/registration`;
-		const response = await fetch(url, {
-			method: 'POST',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-XSRF-TOKEN': this.getCsrfToken(),
-			},
-			body: JSON.stringify({ username, password, birthday, email }),
-		});
-
-		if (!response.ok) {
-			if (response.status === 409) {
-				const errorData = await response.json().catch(() => ({}));
-				throw new Error(`Conflict: ${errorData.error || 'User already exists'}`);
-			}
-			if (response.status === 400) {
-				const errorData = await response.json().catch(() => ({}));
-				throw new Error(`Validation error: ${errorData.error || 'Invalid data'}`);
-			}
-			throw new Error('Registration failed');
-		}
-
-		return true;
-	}
-
-	/**
-	 * Выход пользователя
-	 * @returns {Promise<boolean>} - true при успешном выходе
-	 */
-	async logout() {
-		const url = `${this.apiBaseUrl}/api/v1/auth/logout`;
-		const response = await fetch(url, {
-			method: 'POST',
-			credentials: 'include',
-			headers: {
-				'X-XSRF-TOKEN': this.getCsrfToken(),
-			},
-		});
-
-		if (!response.ok) {
-			if (response.status === 401) {
-				throw new Error('Already logged out');
-			}
-			throw new Error('Logout failed');
-		}
-
-		return true;
-	}
-
-	/**
-	 * Проверяет валидность текущих кук авторизации
-	 * @returns {Promise<boolean>} - true если куки валидны
-	 */
-	async checkAuthStatus() {
+	async request(method, path, headers, body = null) {
 		try {
-			await this.getUserData();
-			return true;
-		} catch (error) {
-			if (error.message.includes('Unauthorized')) {
-				return false;
+			const url = this.#apiBaseUrl + path;
+			const state = {
+				method: method,
+				headers: headers,
+				mode: 'cors',
+				credentials: 'include',
+				body: body ? JSON.stringify(body) : null,
+			};
+
+			const response = await fetch(url, state);
+
+			const CSRFToken = response.headers.get('X-CSRF-TOKEN') ?? localStorage.getItem('csrf');
+			if (CSRFToken) {
+				csrf.set(CSRFToken);
 			}
-			throw error;
+
+			return await response.json()
+		} catch {
+			throw new Error('Could not fetch');
 		}
 	}
 
 	/**
-	 * Устанавливает куку в браузере
-	 * @param {string} name - Название куки
-	 * @param {string} value - Значение куки
-	 * @param {Object} options - Опции (path, domain, expires, secure, sameSite)
+	 * GET запрос
+	 * @param {string} url url запроса
+	 * @returns {json} ответ от сервера
 	 */
-	static setCookie(name, value, options = {}) {
-		const {
-			path = '/',
-			domain = '',
-			expires = '',
-			secure = false,
-			sameSite = 'Lax',
-		} = options;
-
-		let cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
-		cookie += `; path=${path}`;
-
-		if (domain) cookie += `; domain=${domain}`;
-		if (expires) cookie += `; expires=${expires}`;
-		if (secure) cookie += '; Secure';
-		cookie += `; SameSite=${sameSite}`;
-
-		document.cookie = cookie;
+	async get(url) {
+		const headers = {};
+		return this.request('GET', url, headers);
 	}
 
 	/**
-	 * Получает значение куки по имени
-	 * @param {string} name - Название куки
-	 * @returns {string|null} - Значение куки или null
+	 * POST запрос
+	 * @param {string} url url запроса
+	 * @param {object} body тело запроса
+	 * @returns {json} ответ от сервера
 	 */
-	static getCookie(name) {
-		const cookieName = encodeURIComponent(name) + '=';
-		const cookies = document.cookie.split(';').map(c => c.trim());
-
-		for (const cookie of cookies) {
-			if (cookie.startsWith(cookieName)) {
-				return decodeURIComponent(cookie.substring(cookieName.length));
-			}
+		async post(url, body = null) {
+			const headers = {
+				'Access-Control-Allow-Credentials': 'true',
+				'X-CSRF-Token': csrf.get(),
+				'Content-Type': 'application/json;charset=utf-8',
+			};
+			return this.request('POST', url, headers, body);
 		}
-		return null;
+
+	/**
+	 * PUT запрос
+	 * @param {string} url url запроса
+	 * @param {object} body тело запроса
+	 * @returns {json} ответ от сервера
+	 */
+	async put(url, body) {
+		const headers = {
+			'Access-Control-Allow-Credentials': 'true',
+			'X-CSRF-Token': csrf.get(),
+			'Content-Type': 'multipart/form-data',
+		};
+		return this.request('PUT', url, headers, body);
 	}
 
 	/**
-	 * Удаляет куку
-	 * @param {string} name - Название куки
-	 * @param {Object} options - Опции (path, domain)
+	 * POST запрос
+	 * @param {string} url url запроса
+	 * @returns {json} ответ от сервера
 	 */
-	static deleteCookie(name, options = {}) {
-		this.setCookie(name, '', {
-			...options,
-			expires: 'Thu, 01 Jan 1970 00:00:00 GMT',
-		});
+	async delete(url) {
+		const headers = {
+			'X-CSRF-Token': csrf.get(),
+		};
+		return this.request('DELETE', url, headers);
 	}
 }

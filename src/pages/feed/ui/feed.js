@@ -1,8 +1,7 @@
 import { createSkeletonFeed } from "../lib/skeleton";
 import { createNavbar } from "../../../widgets/navbar/navbar.js";
 import { createSidebar } from "../../../widgets/sidebar/sidebar.js";
-import './feed.css'
-
+import './feed.css';
 /**
  * Генерирует страницу ленты
  * @returns {HTMLDivElement}
@@ -18,8 +17,6 @@ export const renderFeed = () => {
 	page.appendChild(sidebar);
 
 	const feed = createSkeletonFeed(100);
-	feed.classList.add('feed');
-	feed.id = 'feed';
 	page.appendChild(feed);
 
 	return page;
