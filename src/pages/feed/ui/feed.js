@@ -19,7 +19,7 @@ export const renderFeed = () => {
 
 	const feed = document.createElement('div');
 	feed.classList.add('feed');
-	feed.id = 'masonry-container';
+	feed.id = 'feed';
 	page.appendChild(feed);
 
 	const logout = page.querySelector('#logout');

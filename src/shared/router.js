@@ -30,7 +30,7 @@ const appState = {
 };
 
 /**
- * Переходит на указанный URL (ex: 'feed', 'login')
+ * Переходит на указанный URL (прим: 'feed', 'login')
  * @param {string} page
  */
 export const goToPage = (page) => {
@@ -44,15 +44,4 @@ export const goToPage = (page) => {
 	document.title = config.menu[page].title;
 
 	root.appendChild(element);
-	if (page === 'feed') {
-		const container = element.querySelector('#masonry-container');
-		const msn = new Masonry(container, {
-			itemSelector: '.skeleton-1, .skeleton-2, .skeleton-3',
-			columnWidth: '.skeleton-1',
-			percentPosition: true,
-			gutter: 32,
-			transitionDuration: '0.3s'
-		});
-		root.addEventListener('DOMContentLoaded', () => {msn});
-	}
 }
