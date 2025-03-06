@@ -1,5 +1,6 @@
 import sidebarTemplate from './sidebar.hbs'
 import './sidebar.css'
+import {goToPage} from "../../shared/router";
 
 /**
  * Генерирует сайдбар для главных страниц (лента, профиль и тд)
@@ -15,5 +16,12 @@ export const createSidebar = () => {
 	];
 
 	sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({buttons}));
+
+	const logout = sidebar.querySelector('#logout');
+	logout.addEventListener('click', (event) => {
+		event.preventDefault();
+		goToPage('login');
+	});
+
 	return sidebar;
 }

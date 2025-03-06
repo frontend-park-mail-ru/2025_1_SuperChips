@@ -1,3 +1,11 @@
+.signup-page {
+    background: linear-gradient(to bottom, #141414, #303030);
+    display: flex;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
 .signup-form {
     margin-top: 50px
 }
@@ -24,10 +32,4 @@
     display: flex;
     justify-content: center;
     gap: 4px;
-}
-
-
-/* Скрывает значок календаря в WebKit-браузерах (Chrome, Edge, Safari) */
-input[type="date"]::-webkit-calendar-picker-indicator {
-    display: none;
 }

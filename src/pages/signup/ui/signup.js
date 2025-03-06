@@ -1,11 +1,11 @@
-import { debouncedInputHandler } from "../../../shared/handlers/inputHandler";
 import { validateSignup } from "../lib/signupValidation.js";
+import { createInput } from "../../../shared/components/input/input";
 import { debounce } from "../../../shared/utils/debounce";
 import { goToPage } from "../../../shared/router.js";
-import signupTemplate  from '../../login/ui/authPage.hbs';
+import signupTemplate  from '../../../shared/components/authPage/authPage.hbs';
 import '../../../shared/components/input/input.css';
+import '../../../shared/components/authPage/authPage.css';
 import './signup.css'
-import {togglePasswordHandler} from "../../../shared/handlers/passwordToggle";
 
 
 /**
@@ -40,13 +40,14 @@ export const renderSignup = () => {
 	});
 
 	const form = page.querySelector('.signup-form');
-	form.addEventListener('submit', handleSignup);
-	form.addEventListener('input', debouncedInputHandler);
-	form.addEventListener('input', debouncedPasswordConfirm);
-	form.addEventListener('change', buttonHandler);
+	const placeholders = form.querySelectorAll('.input-placeholder');
+	placeholders.forEach((item, index) => {
+		item.replaceWith(createInput(config.inputs[index]));
+	});
 
-	const eye = form.querySelectorAll('.input__toggle-password');
-	eye.forEach(item => item.addEventListener('click', togglePasswordHandler));
+	form.addEventListener('submit', signupHandler);
+	form.addEventListener('change', buttonHandler);
+	form.addEventListener('input', debouncedPasswordConfirm);
 
 	return page;
 }
@@ -76,7 +77,7 @@ const passwordConfirm = (event) => {
 
 const debouncedPasswordConfirm = debounce(passwordConfirm, 300);
 
-const handleSignup = (event) => {
+const signupHandler = (event) => {
 	event.preventDefault();
 
 	const form = document.querySelector('.signup-form');

@@ -1,29 +1,5 @@
 import { root } from "../app/app.js";
-import { renderFeed } from "../pages/feed/ui/feed.js";
-import { renderSignup } from "../pages/signup/ui/signup.js";
-import { renderLogin } from "../pages/login/ui/login.js";
-
-const config = {
-	menu: {
-		'feed': {
-			href: '/feed',
-			title: 'Лента',
-			render: renderFeed,
-			// authOnly: true,
-			// showSidebar: true
-		},
-		'login': {
-			href: '/login',
-			title: 'Авторизация',
-			render: renderLogin
-		},
-		'signup': {
-			href: '/signup',
-			title: 'Регистрация',
-			render: renderSignup
-		}
-	}
-};
+import { config } from "./config/router";
 
 const appState = {
 	activePageLink: null,

@@ -1,3 +1,14 @@
+.main-page {
+    background: linear-gradient(to bottom, #141414, #252525) fixed;
+    display: grid;
+    grid-template-columns: 92px auto;
+    grid-template-rows: 112px auto;
+    grid-template-areas:
+            "header header"
+            "sidebar page";
+    gap: 0;
+}
+
 .feed {
     grid-row-start: 2;
     grid-column-start: 2;

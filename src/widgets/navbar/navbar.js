@@ -8,5 +8,6 @@ import navbarTemplate from './navbar.hbs'
 export const createNavbar = () => {
 	const navbar = document.createElement('div');
 	navbar.insertAdjacentHTML('beforeend', navbarTemplate({}));
+
 	return navbar
 }

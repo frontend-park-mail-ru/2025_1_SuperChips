@@ -1,10 +1,12 @@
 import { goToPage } from "../../../shared/router";
-import { userValidation } from '../lib/userValidation';
-import { togglePasswordHandler } from "../../../shared/handlers/passwordToggle";
-import loginTemplate from './authPage.hbs';
+import { userValidation } from '../../../features/authorization/lib/userValidation';
+import { validatePassword } from "../../../shared/validation/passwordValidation";
+import { validateEmail } from "../../../shared/validation/emailValidation";
+import loginTemplate from '../../../shared/components/authPage/authPage.hbs';
 import '../../../shared/components/input/input.css';
+import '../../../shared/components/authPage/authPage.css';
 import './login.css';
-import {debouncedInputHandler} from "../../../shared/handlers/inputHandler";
+import {createInput} from "../../../shared/components/input/input";
 
 /**
  * Генерирует страницу логина
@@ -30,12 +32,13 @@ export const renderLogin = () => {
 	page.insertAdjacentHTML('beforeend', html);
 
 	const form = page.querySelector('.login-form');
-	form.addEventListener('submit', handleSubmit);
-	form.addEventListener('input', debouncedInputHandler);
-	form.addEventListener('change', buttonHandler);
+	const placeholders = form.querySelectorAll('.input-placeholder');
+	placeholders.forEach((item, index) => {
+		item.replaceWith(createInput(config.inputs[index]));
+	});
 
-	const eye = form.querySelector('.input__toggle-password');
-	eye.addEventListener('click', togglePasswordHandler);
+	form.addEventListener('submit', handleSubmit);
+	form.addEventListener('change', buttonHandler);
 
 	const redirectBtn = page.querySelector('.redirect');
 	redirectBtn.addEventListener('click', (event) => {
@@ -69,8 +72,13 @@ const handleSubmit = (event) => {
 }
 
 const buttonHandler = () => {
-	if (userValidation()) {
-		const button = document.querySelector('.button');
+	const password = document.querySelector('#password').value;
+	const email = document.querySelector('#email').value;
+
+	const valid = (validatePassword(password)[0] && validateEmail(email)[0]);
+
+	const button = document.querySelector('.button');
+	if (valid) {
 		button.style.opacity = '100%';
 	} else {
 		button.style.opacity = '25%'
