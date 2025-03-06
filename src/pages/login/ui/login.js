@@ -1,4 +1,5 @@
 import { goToPage } from "../../../shared/router";
+import {createInput} from "../../../shared/components/input/input";
 import { userValidation } from '../../../features/authorization/lib/userValidation';
 import { validatePassword } from "../../../shared/validation/passwordValidation";
 import { validateEmail } from "../../../shared/validation/emailValidation";
@@ -6,7 +7,6 @@ import loginTemplate from '../../../shared/components/authPage/authPage.hbs';
 import '../../../shared/components/input/input.css';
 import '../../../shared/components/authPage/authPage.css';
 import './login.css';
-import {createInput} from "../../../shared/components/input/input";
 
 /**
  * Генерирует страницу логина
@@ -50,25 +50,28 @@ export const renderLogin = () => {
 }
 
 
-const handleSubmit = (event) => {
+const handleSubmit = async (event) => {
 	const inputData = {};
 	const inputs = event.target.querySelectorAll('.input__field');
 	inputs.forEach(input => {
 		inputData[input.id] = input.value;
 	});
 
-	switch (userValidation(inputData)) {
-		case '200':
-			goToPage('feed');
-			break;
-		case '403':
-			alert('Неправильный пароль');
-			break;
-		case '404':
-			alert('Такого пользователя не существует');
-			break;
+	try {
+		const valid = await userValidation(inputData);
+		switch (valid) {
+			case '200':
+				goToPage('feed');
+				break;
+			case '403':
+				alert('Неправильный пароль');
+				break;
+			case '404':
+				alert('Такого пользователя не существует');
+				break;
+		}
+	} catch (error) {
 	}
-
 }
 
 const buttonHandler = () => {

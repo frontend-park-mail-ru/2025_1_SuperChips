@@ -1,6 +1,6 @@
-import {renderFeed} from "../../pages/feed/ui/feed";
-import {renderLogin} from "../../pages/login/ui/login";
-import {renderSignup} from "../../pages/signup/ui/signup";
+import { renderFeed } from "../../pages/feed/ui/feed";
+import { renderLogin } from "../../pages/login/ui/login";
+import { renderSignup } from "../../pages/signup/ui/signup";
 
 export const config = {
 	menu: {
@@ -21,5 +21,5 @@ export const config = {
 			title: 'Регистрация',
 			render: renderSignup
 		}
-	}
+	},
 };
