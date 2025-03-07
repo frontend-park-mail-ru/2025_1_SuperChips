@@ -1,4 +1,4 @@
-import { root } from '../app/app.js';
+import { root } from '../app/app';
 import { config } from './config/router';
 
 const appState = {

@@ -1,9 +1,9 @@
-import { Api } from '../../shared/api/api';
+import { API } from '../../shared/api/api';
 
 
-export class Auth {
+class auth {
     constructor() {
-        this.api = new Api();
+        this.API = API;
     }
 
     /**
@@ -12,15 +12,15 @@ export class Auth {
 	 * @param {string} password
 	 * @returns {json} Ответ от сервера
 	 */
-    async login(email, password) {
+    async login({email, password}) {
         try {
-            const response = await this.api.post('/api/v1/auth/login', { email, password });
+            const response = await this.API.post('/api/v1/auth/login', { email, password });
             if (response.error) {
-                throw new Error(response.error);
+                return new Error(response.error);
             }
             return response;
         } catch (error) {
-            throw new Error(`Login failed: ${error.message}`);
+            return new Error(`Login failed: ${error.message}`);
         }
     }
 
@@ -31,13 +31,13 @@ export class Auth {
 	 */
     async register(userData) {
         try {
-            const response = await this.api.post('/api/v1/auth/registration', userData);
+            const response = await this.API.post('/api/v1/auth/registration', userData);
             if (response.error) {
-                throw new Error(response.error);
+                return new Error(response.error);
             }
             return response;
         } catch (error) {
-            throw new Error(`Registration failed: ${error.message}`);
+            return new Error(`Registration failed: ${error.message}`);
         }
     }
 
@@ -47,9 +47,9 @@ export class Auth {
 	 */
     async logout() {
         try {
-            await this.api.post('/api/v1/auth/logout');
+            await this.API.post('/api/v1/auth/logout');
         } catch (error) {
-            throw new Error(`Logout failed: ${error.message}`);
+            return new Error(`Logout failed: ${error.message}`);
         }
     }
 
@@ -65,13 +65,13 @@ export class Auth {
 	 */
     async getUserData() {
         try {
-            const response = await this.api.get('/api/v1/auth/user');
+            const response = await this.API.get('/api/v1/auth/user');
             if (response.error) {
-                throw new Error(response.error);
+                return new Error(response.error);
             }
             return response;
         } catch (error) {
-            throw new Error(`Failed to fetch user data: ${error.message}`);
+            return new Error(`Failed to fetch user data: ${error.message}`);
         }
     }
 
@@ -87,7 +87,9 @@ export class Auth {
             if (error.status === 401) {
                 return false;
             }
-            throw error;
+            return error;
         }
     }
 }
+
+export const Auth = new auth();

@@ -1,9 +1,8 @@
+import { loginButtonHandler } from '../handlers/buttonHandler';
+import { handleSubmit } from '../handlers/submitHandler';
 import { goToPage } from '../../../shared/router';
-import {createInput} from '../../../shared/components/input/input';
-import { userValidation } from '../../../features/authorization/lib/userValidation';
-import { validatePassword } from '../../../shared/validation/passwordValidation';
-import { validateEmail } from '../../../shared/validation/emailValidation';
-import loginTemplate from '../../../shared/components/authPage/authPage.hbs';
+import { createInput } from '../../../shared/components/input/input';
+import loginTemplate from '../../../shared/components/authPage/authPageTemplate.hbs';
 import '../../../shared/components/input/input.css';
 import '../../../shared/components/authPage/authPage.css';
 import './login.css';
@@ -38,7 +37,7 @@ export const renderLogin = () => {
     });
 
     form.addEventListener('submit', handleSubmit);
-    form.addEventListener('change', buttonHandler);
+    form.addEventListener('change', loginButtonHandler);
 
     const redirectBtn = page.querySelector('.redirect');
     redirectBtn.addEventListener('click', (event) => {
@@ -48,43 +47,3 @@ export const renderLogin = () => {
 
     return page;
 };
-
-
-const handleSubmit = async (event) => {
-    const inputData = {};
-    const inputs = event.target.querySelectorAll('.input__field');
-    inputs.forEach(input => {
-        inputData[input.id] = input.value;
-    });
-
-    try {
-        const valid = await userValidation(inputData);
-        switch (valid) {
-        case '200':
-            goToPage('feed');
-            break;
-        case '403':
-            alert('Неправильный пароль');
-            break;
-        case '404':
-            alert('Такого пользователя не существует');
-            break;
-        }
-    } catch (error) {
-    }
-};
-
-const buttonHandler = () => {
-    const password = document.querySelector('#password').value;
-    const email = document.querySelector('#email').value;
-
-    const valid = (validatePassword(password)[0] && validateEmail(email)[0]);
-
-    const button = document.querySelector('.button');
-    if (valid) {
-        button.style.opacity = '100%';
-    } else {
-        button.style.opacity = '25%';
-    }
-};
-

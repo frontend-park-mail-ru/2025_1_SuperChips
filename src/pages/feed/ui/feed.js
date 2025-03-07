@@ -1,6 +1,6 @@
 import { createSkeletonFeed } from '../lib/skeleton';
-import { createNavbar } from '../../../widgets/navbar/navbar.js';
-import { createSidebar } from '../../../widgets/sidebar/sidebar.js';
+import { createNavbar } from '../../../widgets/navbar/navbar';
+import { createSidebar } from '../../../widgets/sidebar/sidebar';
 import './feed.css';
 /**
  * Генерирует страницу ленты

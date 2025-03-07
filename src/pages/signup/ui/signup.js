@@ -1,8 +1,9 @@
-import { validateSignup } from '../lib/signupValidation.js';
+import { debouncedPasswordConfirm } from '../handlers/passwordConfirm';
+import { signupHandler } from '../handlers/signupHandler';
+import { signupButtonHandler } from '../handlers/signupButtonHandler';
 import { createInput } from '../../../shared/components/input/input';
-import { debounce } from '../../../shared/utils/debounce';
-import { goToPage } from '../../../shared/router.js';
-import signupTemplate  from '../../../shared/components/authPage/authPage.hbs';
+import { goToPage } from '../../../shared/router';
+import signupTemplate  from '../../../shared/components/authPage/authPageTemplate.hbs';
 import '../../../shared/components/input/input.css';
 import '../../../shared/components/authPage/authPage.css';
 import './signup.css';
@@ -46,66 +47,8 @@ export const renderSignup = () => {
     });
 
     form.addEventListener('submit', signupHandler);
-    form.addEventListener('change', buttonHandler);
+    form.addEventListener('change', signupButtonHandler);
     form.addEventListener('input', debouncedPasswordConfirm);
 
     return page;
-};
-
-
-const passwordConfirm = (event) => {
-    if (event.target.id !== 'password' && event.target.id !== 'passwordConfirm') { return; }
-
-    const password = document.querySelector('#password').value;
-
-    const confirm = document.querySelector('#passwordConfirm').value;
-    const message = document.querySelector('#passwordConfirm-error');
-
-    const icon = document.querySelector('#passwordConfirm-error-icon');
-    const showError = password !== confirm;
-    icon.classList.toggle('hidden', !showError);
-    message.classList.toggle('hidden', !showError);
-    message.textContent = 'Пароли не совпадают';
-
-    const eye = document.querySelector('#passwordConfirm-eye');
-    if (showError) {
-        eye.style.right = '36px';
-    } else {
-        eye.style.right = '12px';
-    }
-};
-
-const debouncedPasswordConfirm = debounce(passwordConfirm, 300);
-
-const signupHandler = (event) => {
-    event.preventDefault();
-
-    const form = document.querySelector('.signup-form');
-
-    const inputData = {};
-    const inputs = form.querySelectorAll('.input__field');
-    inputs.forEach(input => {
-        inputData[input.id] = input.value;
-    });
-
-    if (validateSignup(inputData)) {
-        goToPage('feed');
-    }
-};
-
-const buttonHandler = () => {
-    const form = document.querySelector('.signup-form');
-
-    const inputData = {};
-    const inputs = form.querySelectorAll('.input__field');
-    inputs.forEach(input => {
-        inputData[input.id] = input.value;
-    });
-
-    const button = document.querySelector('.button');
-    if (validateSignup(inputData)) {
-        button.style.opacity = '100%';
-    } else {
-        button.style.opacity = '25%';
-    }
 };

@@ -1,19 +1,18 @@
-import { constants } from '../config/constants';
-import { csrf } from '../CSRF/CSRF';
+import {API_BASE_URL} from '../config/constants';
 
-export class Api {
+class Api {
     #apiBaseUrl;
-    #CSRF;
+    #csrf;
     constructor() {
-        this.#apiBaseUrl = constants.apiBaseUrl;
-        this.#CSRF = csrf;
+        this.#apiBaseUrl = API_BASE_URL;
+        this.#csrf = new CSRF();
     }
 
     /**
 	 * Шаблон запроса к API
 	 * @param {string} method метод запроса
 	 * @param {string} path url запроса (прим '/feed' '/user')
-	 * @param {string} headers HTTP заголовки
+	 * @param {object} headers HTTP заголовки
 	 * @param {object} body тело запроса, если есть
 	 * @returns {json} ответ от сервера
 	 */
@@ -32,12 +31,12 @@ export class Api {
 
             const CSRFToken = response.headers.get('X-CSRF-TOKEN') ?? localStorage.getItem('csrf');
             if (CSRFToken) {
-                csrf.set(CSRFToken);
+                this.#csrf.set(CSRFToken);
             }
 
             return await response.json();
         } catch {
-            throw new Error('Could not fetch');
+            return new Error('Could not fetch');
         }
     }
 
@@ -60,7 +59,7 @@ export class Api {
     async post(url, body = null) {
         const headers = {
             'Access-Control-Allow-Credentials': 'true',
-            'X-CSRF-Token': csrf.get(),
+            'X-CSRF-Token': this.#csrf.get(),
             'Content-Type': 'application/json;charset=utf-8',
         };
         return this.request('POST', url, headers, body);
@@ -75,7 +74,7 @@ export class Api {
     async put(url, body) {
         const headers = {
             'Access-Control-Allow-Credentials': 'true',
-            'X-CSRF-Token': csrf.get(),
+            'X-CSRF-Token': this.#csrf.get(),
             'Content-Type': 'multipart/form-data',
         };
         return this.request('PUT', url, headers, body);
@@ -88,8 +87,26 @@ export class Api {
 	 */
     async delete(url) {
         const headers = {
-            'X-CSRF-Token': csrf.get(),
+            'X-CSRF-Token': this.#csrf.get(),
         };
         return this.request('DELETE', url, headers);
     }
 }
+
+class CSRF {
+    #csrfToken;
+    constructor() {
+        this.#csrfToken = '';
+    }
+
+    get() {
+        return this.#csrfToken;
+    }
+
+    set(csrf) {
+        this.#csrfToken = csrf;
+    }
+}
+
+export const API = new Api();
+
