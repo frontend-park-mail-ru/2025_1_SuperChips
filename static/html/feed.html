@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../src/pages/feed/ui/feed.css">
+    <link rel="stylesheet" href="../../src/app/fonts.css">
+    <link rel="stylesheet" href="../../src/app/common.css">
+    <title>Flow</title>
+</head>
+
+<body>
+    <div class="index-container">
+        <div class="navbar">
+            <img src="../../public/icons/logo-small.svg" class="navbar-logo" alt="site logo">
+            <input type="text" class="search-form" placeholder="Text for search..." id="search">
+            <div class="profile-picture">
+                <img src="../../public/img/pfp1.jpg" alt="profile picture">
+            </div>
+            <a href="#" class="profile-popup">
+                <img src="../../public/icons/arrow-down.svg" aria-hidden="true" alt="">
+            </a>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar__button-container">
+                <a id="newPin">
+                    <img src="../../public/icons/new-pin.svg" alt="new pin">
+                </a>
+                <a id="chats">
+                    <img src="../../public/icons/chat.svg" alt="chats">
+                </a>
+                <a id="logout">
+                    <img src="../../public/icons/log-out.svg" alt="settings">
+                </a>
+            </div>
+        </div>
+
+        <div class="feed" id="masonry-container">
+            <div class="skeleton-3"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-3"></div>
+            <div class="skeleton-3"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-3"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-3"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-3"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-3"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-3"></div>
+            <div class="skeleton-3"></div>
+            <div class="skeleton-3"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-3"></div>
+            <div class="skeleton-3"></div>
+            <div class="skeleton-1"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-3"></div>
+            <div class="skeleton-2"></div>
+            <div class="skeleton-1"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            new Masonry('#masonry-container', {
+                // Селектор элементов сетки
+                itemSelector: '.skeleton-1, .skeleton-2, .skeleton-3',
+                // Ширина колонки (можно указать селектор элемента)
+                columnWidth: '.skeleton-1',
+                // Отступы между элементами
+                // gutter: 32,
+                // Позиционирование в процентах (для адаптивности)
+                percentPosition: true,
+                // Анимация перестроения
+                transitionDuration: '0.3s'
+            });
+        });
+    </script>
+</body>
+</html>

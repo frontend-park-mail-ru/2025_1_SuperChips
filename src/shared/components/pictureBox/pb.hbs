@@ -1,0 +1,9 @@
+<div class="login-page__pictures">
+    {{#each columns}}
+        <div class="col-{{this.columnClass}}">
+            {{#each this.items}}
+                <div class="skeleton-{{this}}"></div>
+            {{/each}}
+        </div>
+    {{/each}}
+</div>
