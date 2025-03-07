@@ -1,6 +1,6 @@
 import './pb.css';
 export const pictureBox = () => {
-	return `
+    return `
 	<div class="login-page__pictures">
         <div class="col-1">
             <div class="skeleton-2"></div>
@@ -23,4 +23,4 @@ export const pictureBox = () => {
         </div>
     </div>
 `;
-}
+};

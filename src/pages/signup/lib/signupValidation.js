@@ -1,7 +1,7 @@
-import {validateEmail} from "../../../shared/validation/emailValidation.js";
-import {validateNickname} from "../../../shared/validation/nicknameValidation.js";
-import {validateBirthday} from "../../../shared/validation/birthdayValidation.js";
-import {validatePassword} from "../../../shared/validation/passwordValidation.js";
+import {validateEmail} from '../../../shared/validation/emailValidation.js';
+import {validateNickname} from '../../../shared/validation/nicknameValidation.js';
+import {validateBirthday} from '../../../shared/validation/birthdayValidation.js';
+import {validatePassword} from '../../../shared/validation/passwordValidation.js';
 
 
 /**
@@ -14,13 +14,13 @@ import {validatePassword} from "../../../shared/validation/passwordValidation.js
  * @returns {boolean}
  */
 export const validateSignup = ({email, nickname, birthday, password, passwordConfirm}) => {
-	const result = {
-		email: validateEmail(email)[0],
-		nickname: validateNickname(nickname)[0],
-		birthday: validateBirthday(birthday)[0],
-		password: validatePassword(password)[0],
-		passwordConfirm: password === passwordConfirm && password !== ''
-	};
+    const result = {
+        email: validateEmail(email)[0],
+        nickname: validateNickname(nickname)[0],
+        birthday: validateBirthday(birthday)[0],
+        password: validatePassword(password)[0],
+        passwordConfirm: password === passwordConfirm && password !== ''
+    };
 
-	return Object.values(result).every(Boolean);
-}
+    return Object.values(result).every(Boolean);
+};

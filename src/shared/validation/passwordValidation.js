@@ -8,7 +8,7 @@ export const validatePassword = (password) => {
     if (password.length < 8) {
         return [false, 'Пароль должен быть не менее 8 символов'];
     } else if (!regex.test(password)) {
-        return [false, 'Пароль должен состоять из цифр или латинских букв']
+        return [false, 'Пароль должен состоять из цифр или латинских букв'];
     }
     return [true, ''];
-}
+};
