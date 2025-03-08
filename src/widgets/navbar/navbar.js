@@ -9,13 +9,13 @@ import {API} from '../../shared/api/api';
 export const createNavbar = async () => {
     const navbar = document.createElement('div');
 
-    // const userData = await API.get('/api/v1/auth/user');
-    const userData = {
-        username: 'Valekir',
-        avatar: 'img/pfp1.jpg',
-        birthday: '19.02.2006',
-        email: 'alexkir15@yandex.ru',
-    };
+    const userData = await API.get('/api/v1/auth/user');
+    // const userData = {
+    //     username: 'Valekir',
+    //     avatar: 'img/pfp1.jpg',
+    //     birthday: '19.02.2006',
+    //     email: 'alexkir15@yandex.ru',
+    // };
 
     navbar.insertAdjacentHTML('beforeend', navbarTemplate(userData));
 

@@ -11,16 +11,13 @@ export const handleSubmit = async (event) => {
     });
 
     const response = await Auth.login(inputData);
-    // const response = {status: '200'};
-    // alert(response.status);
-    // alert(Object.values(response).join('\n'));
 
     switch (response.description) {
     case 'OK':
         goToPage('feed');
         break;
     default: {
-        alert(response.description);
+        // alert(response.description);
         const icon = document.querySelector('#password-error-icon');
         const message = document.querySelector('#password-error');
         const eye = document.querySelector('#password-eye');

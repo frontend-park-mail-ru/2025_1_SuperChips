@@ -1,6 +1,7 @@
+import {Auth} from "../../features/authorization/auth";
 import sidebarTemplate from './sidebar.hbs';
-import './sidebar.css';
 import {goToPage} from '../../shared/router';
+import './sidebar.css';
 
 /**
  * Генерирует сайдбар для главных страниц (лента, профиль и тд)
@@ -20,7 +21,9 @@ export const createSidebar = () => {
     const logout = sidebar.querySelector('#logout');
     logout.addEventListener('click', (event) => {
         event.preventDefault();
-        goToPage('login');
+
+        Auth.logout();
+        // goToPage('login');
     });
 
     return sidebar;

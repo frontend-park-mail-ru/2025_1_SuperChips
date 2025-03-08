@@ -59,8 +59,8 @@ class Api {
     async post(url, body = null) {
         const headers = {
             // 'Access-Control-Allow-Credentials': 'true',
-            // 'X-CSRF-Token': this.#csrf.get(),
-            // 'Content-Type': 'application/json;charset=utf-8',
+            'X-CSRF-Token': this.#csrf.get(),
+            'Content-Type': 'application/json',
         };
         return this.request('POST', url, headers, body);
     }

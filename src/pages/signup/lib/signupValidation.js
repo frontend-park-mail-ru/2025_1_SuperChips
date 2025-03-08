@@ -22,6 +22,5 @@ export const validateSignup = ({email, username, birthday, password, passwordCon
         passwordConfirm: password === passwordConfirm && password !== ''
     };
 
-    alert(Object.values(result).join('\n'));
     return Object.values(result).every(Boolean);
 };

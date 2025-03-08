@@ -24,18 +24,10 @@ export const renderFeed = async () => {
     //     feed.appendChild(item.image);
     // });
 
-    alert(images);
 
     for (let i = 1; i <= 20; i++) {
         feed.appendChild(createSkeleton(`img/${i}.jpg`));
     }
-
-    document.addEventListener('click', () => {
-        const feed = page.querySelector('#feed');
-        for (let i=1; i<=20; i++) {
-            feed.appendChild(createSkeleton(`img/${i}.jpg`));
-        }
-    });
 
     return page;
 };

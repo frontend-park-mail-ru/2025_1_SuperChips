@@ -21,13 +21,12 @@ export const signupHandler = async (event) => {
     });
 
     if (!validateSignup(inputData)) {
-        alert(123);
         return;
     }
     delete inputData.passwordConfirm;
 
-    // const response = await Auth.register(inputData);
-    const response = {status: '409'};
+    const response = await Auth.register(inputData);
+    // const response = {status: '409'};
 
     switch (response.status) {
     case '200':
