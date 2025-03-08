@@ -1,7 +1,7 @@
-import './navbar.css';
-import navbarTemplate from './navbar.hbs';
-import {API} from '../../shared/api/api';
 import {goToPage} from '../../shared/router';
+import {API} from '../../shared/api/api';
+import navbarTemplate from './navbar.hbs';
+import './navbar.css';
 
 /**
  * Генерирует навбар для основных страниц (ленты, профиля и тд)
@@ -10,15 +10,10 @@ import {goToPage} from '../../shared/router';
 export const createNavbar = async () => {
     const navbar = document.createElement('div');
 
-    const userData = await API.get('/api/v1/auth/user');
-    // const userData = {
-    //     username: 'Valekir',
-    //     avatar: 'img/pfp1.jpg',
-    //     birthday: '19.02.2006',
-    //     email: 'alexkir15@yandex.ru',
-    // };
-
-    debugger;
+    const response = await API.get('/api/v1/auth/user');
+    const userData = response.ok
+        ? { ...response.data, authorized: true }
+        : { authorized: false };
 
     navbar.insertAdjacentHTML('beforeend', navbarTemplate(userData));
 

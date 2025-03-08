@@ -15,7 +15,7 @@ export const renderFeed = async () => {
     page.insertAdjacentHTML('beforeend', feedTemplate({}));
 
     page.querySelector('#navbar').replaceWith(await createNavbar());
-    page.querySelector('#sidebar').replaceWith(createSidebar());
+    page.querySelector('#sidebar').replaceWith(await createSidebar());
 
     const feed = page.querySelector('#feed');
 
