@@ -1,4 +1,4 @@
-import {Auth} from "../../features/authorization/auth";
+import {Auth} from '../../features/authorization/auth';
 import sidebarTemplate from './sidebar.hbs';
 import {goToPage} from '../../shared/router';
 import './sidebar.css';
@@ -21,9 +21,8 @@ export const createSidebar = () => {
     const logout = sidebar.querySelector('#logout');
     logout.addEventListener('click', (event) => {
         event.preventDefault();
-
         Auth.logout();
-        // goToPage('login');
+        goToPage('feed');
     });
 
     return sidebar;

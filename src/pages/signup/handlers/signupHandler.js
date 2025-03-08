@@ -26,13 +26,12 @@ export const signupHandler = async (event) => {
     delete inputData.passwordConfirm;
 
     const response = await Auth.register(inputData);
-    // const response = {status: '409'};
 
-    switch (response.status) {
-    case '200':
-        goToPage('feed');
+    switch (response.description) {
+    case 'OK':
+        await goToPage('feed');
         break;
-    case '409': {
+    default: {
         const emailIcon = document.querySelector('#email-error-icon');
         const message = document.querySelector('#email-error');
         const usernameIcon = document.querySelector('#username-error-icon');
@@ -43,7 +42,5 @@ export const signupHandler = async (event) => {
         usernameIcon.classList.remove('hidden');
         break;
     }
-    default:
-        break;
     }
 };

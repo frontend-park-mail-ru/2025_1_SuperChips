@@ -18,6 +18,10 @@ export const root = document.getElementById('root');
 //     }
 // };
 
+// export const init = () => {
+//     goToPage('login');
+// };
+
 export const init = () => {
-    goToPage('login');
+    goToPage('feed');
 };

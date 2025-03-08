@@ -25,6 +25,12 @@
     border: none;
 }
 
+.search-form:focus {
+    background-color: #f8f8f8;
+    color: #333;
+    outline: none;
+}
+
 .profile-picture {
     width: 48px;
     height: 48px;
@@ -44,4 +50,19 @@
 
 .profile-popup {
     margin-right: 16px;
+}
+
+.feed-redirect {
+    color: #fff;
+    background-color: #000;
+    border-radius: 20px;
+    border: none;
+    width: 94px;
+    height: 44px;
+    margin-right: 20px;
+}
+
+.feed-redirect:hover {
+    cursor: pointer;
+    opacity: 60%;
 }
