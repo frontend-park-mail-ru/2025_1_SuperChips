@@ -62,7 +62,7 @@ class Api {
             'X-CSRF-Token': this.#csrf.get(),
             'Content-Type': 'application/json;charset=utf-8',
         };
-		return this.request('POST', url, headers, body);
+        return this.request('POST', url, headers, body);
     }
 
     /**

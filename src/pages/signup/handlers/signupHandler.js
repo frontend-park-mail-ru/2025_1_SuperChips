@@ -1,7 +1,7 @@
-import {formatDateToISO} from "../../../shared/utils/formateDate";
-import {validateSignup} from "../lib/signupValidation";
+import {formatDateToISO} from '../../../shared/utils/formateDate';
+import {validateSignup} from '../lib/signupValidation';
 import {goToPage} from '../../../shared/router';
-import {Auth} from "../../../features/authorization/auth";
+import {Auth} from '../../../features/authorization/auth';
 
 
 export const signupHandler = async (event) => {
@@ -30,20 +30,21 @@ export const signupHandler = async (event) => {
     const response = {status: '409'};
 
     switch (response.status) {
-        case '200':
-            goToPage('feed');
-            break;
-        case '409':
-            const emailIcon = document.querySelector('#email-error-icon');
-            const message = document.querySelector('#email-error');
-            const usernameIcon = document.querySelector('#username-error-icon');
+    case '200':
+        goToPage('feed');
+        break;
+    case '409': {
+        const emailIcon = document.querySelector('#email-error-icon');
+        const message = document.querySelector('#email-error');
+        const usernameIcon = document.querySelector('#username-error-icon');
 
-            message.textContent = 'Пользователь с таким именем или почтой уже существует';
-            message.classList.remove('hidden');
-            emailIcon.classList.remove('hidden');
-            usernameIcon.classList.remove('hidden');
-            break;
-        default:
-            break;
+        message.textContent = 'Пользователь с таким именем или почтой уже существует';
+        message.classList.remove('hidden');
+        emailIcon.classList.remove('hidden');
+        usernameIcon.classList.remove('hidden');
+        break;
+    }
+    default:
+        break;
     }
 };

@@ -14,20 +14,21 @@ export const handleSubmit = async (event) => {
     const result = {status: '403'};
 
     switch (result.status) {
-        case '200':
-            goToPage('feed');
-            break;
-        case '403':
-            const icon = document.querySelector('#password-error-icon');
-            const message = document.querySelector('#password-error');
-            const eye = document.querySelector('#password-eye');
+    case '200':
+        goToPage('feed');
+        break;
+    case '403': {
+        const icon = document.querySelector('#password-error-icon');
+        const message = document.querySelector('#password-error');
+        const eye = document.querySelector('#password-eye');
 
-            message.textContent = 'Неправильный пароль или почта';
-            message.classList.remove('hidden');
-            icon.classList.remove('hidden');
-            eye.style.right = '36px';
-            break;
-        default:
-            break;
+        message.textContent = 'Неправильный пароль или почта';
+        message.classList.remove('hidden');
+        icon.classList.remove('hidden');
+        eye.style.right = '36px';
+        break;
+    }
+    default:
+        break;
     }
 };

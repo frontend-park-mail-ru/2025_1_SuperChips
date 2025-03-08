@@ -15,7 +15,7 @@ class auth {
     async login({email, password}) {
         try {
             const response = await this.API.post('/api/v1/auth/login',{ email, password });
-			if (response.error) {
+            if (response.error) {
                 return new Error(response.error);
             }
             return response;
