@@ -15,12 +15,13 @@
     />
 
     {{#if authorized}}
-    <img
-            src={{avatar}}
-            class="profile-picture"
-            alt="profile picture"
-            aria-label="User profile"
-    />
+    <div class="profile-picture">
+        <img
+                src={{avatar}}
+                alt="profile picture"
+                aria-label="User profile"
+        >
+    </div>
     {{else}}
     <button
         class="feed-redirect"

@@ -28,6 +28,7 @@ export const signupHandler = async (event) => {
     const response = await Auth.register(inputData);
 
     if (response.ok) {
+        await Auth.login(inputData);
         await goToPage('feed');
     }
     else {

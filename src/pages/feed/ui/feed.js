@@ -4,8 +4,8 @@ import {createSkeleton} from '../lib/skeleton/skeleton';
 import {API} from '../../../shared/api/api';
 import './feed.css';
 import feedTemplate from './feed.hbs';
-import {loadImages} from '../lib/loadImages';
-import {debouncedScroll} from '../lib/handleScroll';
+// import {loadImages} from '../lib/loadImages';
+// import {debouncedScroll, scrollHandler} from '../lib/handleScroll';
 
 /**
  * Генерирует страницу ленты
@@ -23,18 +23,10 @@ export const renderFeed = async () => {
 
     const feed = page.querySelector('#feed');
 
-    const response = await API.get(`/api/v1/feed?page=${pageNum++}`);
+    const response = await API.get(`/api/v1/feed?page${pageNum++}`);
     const images = JSON.parse(await response.text());
-    images.data.forEach((item) => {
+    images.data.forEach(item => {
         feed.appendChild(createSkeleton(item.image));
-    });
-
-    feed.addEventListener('click', async () => {
-        const response = await API.get(`/api/v1/feed?page=${pageNum++}`);
-        const images = JSON.parse(await response.text());
-        images.data.forEach((item) => {
-            feed.appendChild(createSkeleton(item.image));
-        });
     });
 
     return page;

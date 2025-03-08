@@ -13,7 +13,7 @@ import './signup.css';
  * Генерирует страницу регистрации
  * @returns {HTMLDivElement}
  */
-export const renderSignup = () => {
+export const renderSignup = async () => {
     const config = {
         page: 'signup',
         redirectText: 'есть аккаунт?',
@@ -35,9 +35,9 @@ export const renderSignup = () => {
     page.insertAdjacentHTML('beforeend', html);
 
     const redirectBtn = page.querySelector('.redirect');
-    redirectBtn.addEventListener('click', (event) => {
+    redirectBtn.addEventListener('click', async (event) => {
         event.preventDefault();
-        goToPage('login');
+        await goToPage('login');
     });
 
     const form = page.querySelector('.signup-form');

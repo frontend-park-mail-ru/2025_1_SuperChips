@@ -74,22 +74,6 @@ class auth {
             return new Error(`Failed to fetch user data: ${error.message}`);
         }
     }
-
-    /**
-	 * Проверяет, авторизован ли пользователь
-	 * @returns {boolean} Ответ от сервера
-	 */
-    async checkAuthStatus() {
-        try {
-            await this.getUserData();
-            return true;
-        } catch (error) {
-            if (error.status === 401) {
-                return false;
-            }
-            return error;
-        }
-    }
 }
 
 export const Auth = new auth();
