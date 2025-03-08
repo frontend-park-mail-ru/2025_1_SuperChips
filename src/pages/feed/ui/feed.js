@@ -1,14 +1,18 @@
 import {createNavbar} from '../../../widgets/navbar/navbar';
 import {createSidebar} from '../../../widgets/sidebar/sidebar';
-import {createSkeleton} from '../lib/skeleton';
+import {createSkeleton} from '../lib/skeleton/skeleton';
 import {API} from '../../../shared/api/api';
 import './feed.css';
 import feedTemplate from './feed.hbs';
+import {loadImages} from '../lib/loadImages';
+import {debouncedScroll} from '../lib/handleScroll';
 
 /**
  * Генерирует страницу ленты
  * @returns {HTMLDivElement}
  */
+
+let pageNum = 1;
 
 export const renderFeed = async () => {
     const page = document.createElement('div');
@@ -19,15 +23,19 @@ export const renderFeed = async () => {
 
     const feed = page.querySelector('#feed');
 
-    const images = await API.get('/api/v1/feed');
-    // images.forEach((item) => {
-    //     feed.appendChild(item.image);
-    // });
+    const response = await API.get(`/api/v1/feed?page=${pageNum++}`);
+    const images = JSON.parse(await response.text());
+    images.data.forEach((item) => {
+        feed.appendChild(createSkeleton(item.image));
+    });
 
-
-    for (let i = 1; i <= 20; i++) {
-        feed.appendChild(createSkeleton(`img/${i}.jpg`));
-    }
+    feed.addEventListener('click', async () => {
+        const response = await API.get(`/api/v1/feed?page=${pageNum++}`);
+        const images = JSON.parse(await response.text());
+        images.data.forEach((item) => {
+            feed.appendChild(createSkeleton(item.image));
+        });
+    });
 
     return page;
 };

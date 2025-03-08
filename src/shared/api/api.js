@@ -43,7 +43,7 @@ class Api {
     /**
 	 * GET запрос
 	 * @param {string} url url запроса
-	 * @returns {json} ответ от сервера
+	 * @returns {Response} ответ от сервера
 	 */
     async get(url) {
         const headers = {};
