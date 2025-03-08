@@ -1,26 +1,27 @@
 import {validateEmail} from '../../../shared/validation/emailValidation';
-import {validateNickname} from '../../../shared/validation/nicknameValidation';
 import {validateBirthday} from '../../../shared/validation/birthdayValidation';
 import {validatePassword} from '../../../shared/validation/passwordValidation';
+import {validateUsername} from "../../../shared/validation/usernameValidation";
 
 
 /**
  * Валидация формы регистрации
  * @param email почта
- * @param nickname имя пользователя
+ * @param username имя пользователя
  * @param birthday дата рождения
  * @param password пароль
  * @param passwordConfirm подтверждение пароля
  * @returns {boolean}
  */
-export const validateSignup = ({email, nickname, birthday, password, passwordConfirm}) => {
+export const validateSignup = ({email, username, birthday, password, passwordConfirm}) => {
     const result = {
         email: validateEmail(email)[0],
-        nickname: validateNickname(nickname)[0],
+        username: validateUsername(username)[0],
         birthday: validateBirthday(birthday)[0],
         password: validatePassword(password)[0],
         passwordConfirm: password === passwordConfirm && password !== ''
     };
 
+    alert(Object.values(result).join('\n'));
     return Object.values(result).every(Boolean);
 };

@@ -1,6 +1,6 @@
 import { debouncedPasswordConfirm } from '../handlers/passwordConfirm';
 import { signupHandler } from '../handlers/signupHandler';
-import { signupButtonHandler } from '../handlers/signupButtonHandler';
+import {debouncedSignupButton, signupButtonHandler} from '../handlers/signupButtonHandler';
 import { createInput } from '../../../shared/components/input/input';
 import { goToPage } from '../../../shared/router';
 import signupTemplate  from '../../../shared/components/authPage/authPageTemplate.hbs';
@@ -23,7 +23,7 @@ export const renderSignup = () => {
         subheader: 'Еще пару шагов и Вы с flow!',
         inputs: [
             {type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты', isStarred: true},
-            {type: 'text', id: 'nickname', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято', isStarred: true},
+            {type: 'text', id: 'username', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято', isStarred: true},
             {type: 'date', id: 'birthday', inputLabel: 'Дата рождения', errorMessage: 'Неправильный формат даты', isStarred: true},
             {type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов', isStarred: true, isPassword: true},
             {type: 'password', id: 'passwordConfirm', inputLabel: 'Повторите пароль', errorMessage: 'Пароли не совпадают', isStarred: true,  isPassword: true},
@@ -47,7 +47,7 @@ export const renderSignup = () => {
     });
 
     form.addEventListener('submit', signupHandler);
-    form.addEventListener('change', signupButtonHandler);
+    form.addEventListener('input', debouncedSignupButton);
     form.addEventListener('input', debouncedPasswordConfirm);
 
     return page;

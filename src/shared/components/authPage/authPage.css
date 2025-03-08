@@ -9,7 +9,6 @@
     height: 44px;
     color: white;
     background-color: black;
-    opacity: 25%;
     cursor: pointer;
     border: none;
     border-radius: 20px;
@@ -17,8 +16,10 @@
     margin-top: 30px;
 }
 
-.button:hover {
-    opacity: 60%;
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 25%;
 }
 
 .redirect:hover {

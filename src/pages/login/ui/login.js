@@ -1,4 +1,4 @@
-import { loginButtonHandler } from '../handlers/buttonHandler';
+import {debouncedLoginButton} from '../handlers/loginButtonHandler';
 import { handleSubmit } from '../handlers/submitHandler';
 import { goToPage } from '../../../shared/router';
 import { createInput } from '../../../shared/components/input/input';
@@ -37,7 +37,7 @@ export const renderLogin = () => {
     });
 
     form.addEventListener('submit', handleSubmit);
-    form.addEventListener('change', loginButtonHandler);
+    form.addEventListener('input', debouncedLoginButton);
 
     const redirectBtn = page.querySelector('.redirect');
     redirectBtn.addEventListener('click', (event) => {

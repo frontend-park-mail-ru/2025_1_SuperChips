@@ -1,8 +1,8 @@
 import { validateEmail } from '../../validation/emailValidation';
-import { validateNickname } from '../../validation/nicknameValidation';
 import { validateBirthday } from '../../validation/birthdayValidation';
 import { validatePassword } from '../../validation/passwordValidation';
 import { validatePasswordConfirm } from '../../validation/passwordConfirmation';
+import {validateUsername} from "../../validation/usernameValidation";
 import { debounce } from '../../utils/debounce';
 import './input.css';
 import inputTemplate from './input.hbs';
@@ -34,7 +34,7 @@ const inputHandler = (event) => {
 
     const validators = {
         email: validateEmail,
-        nickname: validateNickname,
+        username: validateUsername,
         birthday: validateBirthday,
         password: validatePassword,
         passwordConfirm: validatePasswordConfirm,

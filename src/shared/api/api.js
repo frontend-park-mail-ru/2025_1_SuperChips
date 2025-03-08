@@ -22,7 +22,7 @@ class Api {
             const state = {
                 method: method,
                 headers: headers,
-                mode: 'cors',
+                mode: 'no-cors',
                 credentials: 'include',
                 body: body ? JSON.stringify(body) : null,
             };
@@ -62,7 +62,7 @@ class Api {
             'X-CSRF-Token': this.#csrf.get(),
             'Content-Type': 'application/json;charset=utf-8',
         };
-        return this.request('POST', url, headers, body);
+		return this.request('POST', url, headers, body);
     }
 
     /**
