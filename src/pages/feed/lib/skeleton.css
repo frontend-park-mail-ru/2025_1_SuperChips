@@ -1,0 +1,8 @@
+.feedSkeleton {
+    width: 205px;
+    border-radius: 20px;
+    background-color: #303030;
+    margin-bottom: 32px;
+    break-inside: avoid;
+    object-fit: contain;
+}

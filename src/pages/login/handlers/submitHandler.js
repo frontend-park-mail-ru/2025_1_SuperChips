@@ -10,14 +10,17 @@ export const handleSubmit = async (event) => {
         inputData[input.id] = input.value;
     });
 
-    // const result = await Auth.login(inputData);
-    const result = {status: '403'};
+    const response = await Auth.login(inputData);
+    // const response = {status: '200'};
+    // alert(response.status);
+    // alert(Object.values(response).join('\n'));
 
-    switch (result.status) {
-    case '200':
+    switch (response.description) {
+    case 'OK':
         goToPage('feed');
         break;
-    case '403': {
+    default: {
+        alert(response.description);
         const icon = document.querySelector('#password-error-icon');
         const message = document.querySelector('#password-error');
         const eye = document.querySelector('#password-eye');
@@ -28,7 +31,5 @@ export const handleSubmit = async (event) => {
         eye.style.right = '36px';
         break;
     }
-    default:
-        break;
     }
 };

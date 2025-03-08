@@ -22,7 +22,7 @@ class Api {
             const state = {
                 method: method,
                 headers: headers,
-                mode: 'no-cors',
+                mode: 'cors',
                 credentials: 'include',
                 body: body ? JSON.stringify(body) : null,
             };
@@ -58,9 +58,9 @@ class Api {
 	 */
     async post(url, body = null) {
         const headers = {
-            'Access-Control-Allow-Credentials': 'true',
-            'X-CSRF-Token': this.#csrf.get(),
-            'Content-Type': 'application/json;charset=utf-8',
+            // 'Access-Control-Allow-Credentials': 'true',
+            // 'X-CSRF-Token': this.#csrf.get(),
+            // 'Content-Type': 'application/json;charset=utf-8',
         };
         return this.request('POST', url, headers, body);
     }
@@ -73,7 +73,6 @@ class Api {
 	 */
     async put(url, body) {
         const headers = {
-            'Access-Control-Allow-Credentials': 'true',
             'X-CSRF-Token': this.#csrf.get(),
             'Content-Type': 'multipart/form-data',
         };

@@ -1,23 +1,41 @@
-import { createSkeletonFeed } from '../lib/skeleton';
-import { createNavbar } from '../../../widgets/navbar/navbar';
-import { createSidebar } from '../../../widgets/sidebar/sidebar';
+import {createNavbar} from '../../../widgets/navbar/navbar';
+import {createSidebar} from '../../../widgets/sidebar/sidebar';
+import {createSkeleton} from '../lib/skeleton';
+import {API} from '../../../shared/api/api';
 import './feed.css';
+import feedTemplate from './feed.hbs';
+
 /**
  * Генерирует страницу ленты
  * @returns {HTMLDivElement}
  */
-export const renderFeed = () => {
+
+export const renderFeed = async () => {
     const page = document.createElement('div');
-    page.classList.add('main-page');
+    page.insertAdjacentHTML('beforeend', feedTemplate({}));
 
-    const navbar = createNavbar();
-    page.appendChild(navbar);
+    page.querySelector('#navbar').replaceWith(await createNavbar());
+    page.querySelector('#sidebar').replaceWith(createSidebar());
 
-    const sidebar = createSidebar();
-    page.appendChild(sidebar);
+    const feed = page.querySelector('#feed');
 
-    const feed = createSkeletonFeed(100);
-    page.appendChild(feed);
+    const images = await API.get('/api/v1/feed');
+    // images.forEach((item) => {
+    //     feed.appendChild(item.image);
+    // });
+
+    alert(images);
+
+    for (let i = 1; i <= 20; i++) {
+        feed.appendChild(createSkeleton(`img/${i}.jpg`));
+    }
+
+    document.addEventListener('click', () => {
+        const feed = page.querySelector('#feed');
+        for (let i=1; i<=20; i++) {
+            feed.appendChild(createSkeleton(`img/${i}.jpg`));
+        }
+    });
 
     return page;
 };
