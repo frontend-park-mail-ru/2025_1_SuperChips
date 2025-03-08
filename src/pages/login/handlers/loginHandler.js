@@ -1,7 +1,7 @@
 import { goToPage } from '../../../shared/router';
 import { Auth } from '../../../features/authorization/auth';
 
-export const handleSubmit = async (event) => {
+export const handleLogin = async (event) => {
     event.preventDefault();
 
     const inputData = {};
@@ -12,12 +12,10 @@ export const handleSubmit = async (event) => {
 
     const response = await Auth.login(inputData);
 
-    switch (response.description) {
-    case 'OK':
-        goToPage('feed');
-        break;
-    default: {
-        // alert(response.description);
+    if (response.ok) {
+        await goToPage('feed');
+    }
+    else {
         const icon = document.querySelector('#password-error-icon');
         const message = document.querySelector('#password-error');
         const eye = document.querySelector('#password-eye');
@@ -26,7 +24,5 @@ export const handleSubmit = async (event) => {
         message.classList.remove('hidden');
         icon.classList.remove('hidden');
         eye.style.right = '36px';
-        break;
-    }
     }
 };

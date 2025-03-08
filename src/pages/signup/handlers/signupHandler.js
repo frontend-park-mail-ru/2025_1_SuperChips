@@ -27,11 +27,10 @@ export const signupHandler = async (event) => {
 
     const response = await Auth.register(inputData);
 
-    switch (response.description) {
-    case 'OK':
+    if (response.ok) {
         await goToPage('feed');
-        break;
-    default: {
+    }
+    else {
         const emailIcon = document.querySelector('#email-error-icon');
         const message = document.querySelector('#email-error');
         const usernameIcon = document.querySelector('#username-error-icon');
@@ -40,7 +39,5 @@ export const signupHandler = async (event) => {
         message.classList.remove('hidden');
         emailIcon.classList.remove('hidden');
         usernameIcon.classList.remove('hidden');
-        break;
-    }
     }
 };

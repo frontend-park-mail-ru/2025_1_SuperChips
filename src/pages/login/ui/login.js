@@ -1,5 +1,5 @@
 import {debouncedLoginButton} from '../handlers/loginButtonHandler';
-import { handleSubmit } from '../handlers/submitHandler';
+import {handleLogin} from '../handlers/loginHandler';
 import { goToPage } from '../../../shared/router';
 import { createInput } from '../../../shared/components/input/input';
 import loginTemplate from '../../../shared/components/authPage/authPageTemplate.hbs';
@@ -11,7 +11,7 @@ import './login.css';
  * Генерирует страницу логина
  * @returns {HTMLDivElement}
  */
-export const renderLogin = () => {
+export const renderLogin = async () => {
     const page = document.createElement('div');
 
     const config = {
@@ -36,13 +36,13 @@ export const renderLogin = () => {
         item.replaceWith(createInput(config.inputs[index]));
     });
 
-    form.addEventListener('submit', handleSubmit);
+    form.addEventListener('submit', handleLogin);
     form.addEventListener('input', debouncedLoginButton);
 
     const redirectBtn = page.querySelector('.redirect');
-    redirectBtn.addEventListener('click', (event) => {
+    redirectBtn.addEventListener('click',  async(event) => {
         event.preventDefault();
-        goToPage('signup');
+        await goToPage('signup');
     });
 
     return page;

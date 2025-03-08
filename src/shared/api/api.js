@@ -14,7 +14,7 @@ class Api {
 	 * @param {string} path url запроса (прим '/feed' '/user')
 	 * @param {object} headers HTTP заголовки
 	 * @param {object} body тело запроса, если есть
-	 * @returns {json} ответ от сервера
+	 * @returns ответ от сервера
 	 */
     async request(method, path, headers, body = null) {
         try {
@@ -34,7 +34,7 @@ class Api {
                 this.#csrf.set(CSRFToken);
             }
 
-            return await response.json();
+            return await response;
         } catch {
             return new Error('Could not fetch');
         }
