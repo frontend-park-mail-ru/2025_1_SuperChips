@@ -21,7 +21,7 @@ export const createSidebar = async () => {
     const logout = sidebar.querySelector('#logout');
     logout.addEventListener('click', async (event) => {
         event.preventDefault();
-        Auth.logout();
+        await Auth.logout();
         await goToPage('feed');
     });
 
