@@ -24,8 +24,3 @@ export const renderFeed = async () => {
 
     return page;
 };
-
-export const feedState = {
-    isLoading: false,
-    pageNum: 1
-};

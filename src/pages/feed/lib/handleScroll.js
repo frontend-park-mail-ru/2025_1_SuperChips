@@ -11,7 +11,6 @@ const scrollHandler = async () => {
         if (newFrame.querySelector('#footer') === null) {
             feed.insertAdjacentHTML('beforeend', newFrame.innerHTML);
         } else {
-            // document.querySelector('.main-page').insertAdjacentHTML('beforeend',newFrame.innerHTML);
             document.getElementById('root').insertAdjacentHTML('beforeend', newFrame.innerHTML);
         }
     }

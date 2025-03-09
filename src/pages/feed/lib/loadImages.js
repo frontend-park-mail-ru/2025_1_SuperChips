@@ -1,6 +1,6 @@
 import {API} from '../../../shared/api/api';
 import {createSkeleton} from './skeleton/skeleton';
-import {feedState} from '../ui/feed';
+import {feedState} from '../../../shared/router';
 import {debouncedScroll} from './handleScroll';
 import {createFooter} from './footer/createFooter';
 
