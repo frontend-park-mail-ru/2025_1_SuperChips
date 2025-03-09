@@ -1,13 +1,15 @@
-// import {loadImages} from './loadImages';
-// import {debounce} from '../../../shared/utils/debounce';
-//
-// export const scrollHandler = async (numPage) => {
-//     const threshold = 500;
-//     const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - threshold;
-//
-//     if (scrolledToBottom) {
-//         return await loadImages(numPage);
-//     }
-// };
-//
-// export const debouncedScroll = debounce(scrollHandler, 500);
+import {loadImages} from './loadImages';
+import {debounce} from '../../../shared/utils/debounce';
+
+const scrollHandler = async () => {
+    const threshold = 500;
+    const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - threshold;
+
+    if (scrolledToBottom) {
+        const newFrame = await loadImages();
+        const feed = document.querySelector('#feed');
+        feed.insertAdjacentHTML('beforeend', newFrame.innerHTML);
+    }
+};
+
+export const debouncedScroll = debounce(scrollHandler, 300);
