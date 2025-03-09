@@ -1,4 +1,4 @@
-import { API } from '../../shared/api/api';
+import {API} from '../../shared/api/api';
 
 
 class auth {

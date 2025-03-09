@@ -1,3 +1,3 @@
-import { init } from './app/app';
+import {init} from './app/app';
 
-init();
+await init();

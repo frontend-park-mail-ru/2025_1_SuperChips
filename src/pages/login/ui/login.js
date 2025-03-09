@@ -1,12 +1,12 @@
 import {debouncedLoginButton} from '../handlers/loginButtonHandler';
 import {handleLogin} from '../handlers/loginHandler';
-import { goToPage } from '../../../shared/router';
-import { createInput } from '../../../shared/components/input/input';
+import {goToPage} from '../../../shared/router';
+import {createInput} from '../../../shared/components/input/input';
 import loginTemplate from '../../../shared/components/authPage/authPageTemplate.hbs';
 import '../../../shared/components/input/input.css';
 import '../../../shared/components/authPage/authPage.css';
 import './login.css';
-import {loadImages} from "../../feed/lib/loadImages";
+import {fillPictureBox} from '../../../shared/utils/fillPictureBox';
 
 /**
  * Генерирует страницу логина
@@ -39,10 +39,6 @@ export const renderLogin = async () => {
 
     form.addEventListener('submit', handleLogin);
     form.addEventListener('input', debouncedLoginButton);
-
-    const newFrame = await loadImages();
-    const pictureBox = page.querySelector('.picture-box');
-    pictureBox.innerHTML = newFrame.innerHTML;
 
     const redirectBtn = page.querySelector('.redirect');
     redirectBtn.addEventListener('click',  async(event) => {

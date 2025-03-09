@@ -1,8 +1,8 @@
-import { debouncedPasswordConfirm } from '../handlers/passwordConfirm';
-import { signupHandler } from '../handlers/signupHandler';
+import {debouncedPasswordConfirm} from '../handlers/passwordConfirm';
+import {signupHandler} from '../handlers/signupHandler';
 import {debouncedSignupButton} from '../handlers/signupButtonHandler';
-import { createInput } from '../../../shared/components/input/input';
-import { goToPage } from '../../../shared/router';
+import {createInput} from '../../../shared/components/input/input';
+import {goToPage} from '../../../shared/router';
 import signupTemplate  from '../../../shared/components/authPage/authPageTemplate.hbs';
 import '../../../shared/components/input/input.css';
 import '../../../shared/components/authPage/authPage.css';

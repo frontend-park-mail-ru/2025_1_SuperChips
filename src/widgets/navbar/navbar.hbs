@@ -17,7 +17,11 @@
     {{#if authorized}}
     <div class="profile-picture">
         <img
-                src={{avatar}}
+                {{#if avatar}}
+                    src={{avatar}}
+                {{else}}
+                    scr="/img/pfp-placeholder"
+                {{/if}}
                 alt="profile picture"
                 aria-label="User profile"
         >
