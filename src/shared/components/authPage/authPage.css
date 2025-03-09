@@ -16,9 +16,9 @@
 }
 
 button:disabled {
-    background-color: #cccccc;
+    background-color: #bebebe;
     cursor: not-allowed;
-    opacity: 25%;
+    opacity: 100%;
 }
 
 .redirect:hover {
@@ -52,7 +52,7 @@ button:disabled {
     max-width: calc(100%);
     position: absolute;
     left: 92px;
-    bottom: -120px;
+    top: 292px;
     columns: 205px auto;
 }
 

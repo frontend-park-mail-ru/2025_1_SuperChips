@@ -2,7 +2,7 @@
     background: linear-gradient(to bottom, #141414, #252525) fixed;
     display: grid;
     grid-template-columns: 92px auto;
-    grid-template-rows: 112px auto;
+    grid-template-rows: 100px auto;
     grid-template-areas:
             "header header"
             "sidebar page";
@@ -26,7 +26,7 @@
     width: 205px;
     border-radius: 20px;
     background-color: #303030;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
 }
 
 .skeleton-1 {
