@@ -12,11 +12,10 @@
 
 .signup-container {
     padding: 32px 66px 0 66px;
-    position: relative;
     height: 100%;
     width: 572px;
-    margin-left: auto;
     background-color: white;
+    z-index: 200;
 }
 
 .signup-header {

@@ -2,7 +2,11 @@
     <div class="sidebar__button-container">
         {{#each buttons}}
             <a
-                class="sidebar-button"
+                {{#if this.active}}
+                    class="sidebar-button"
+                {{else}}
+                    class="sidebar-button_disabled"
+                {{/if}}
                 id="{{this.id}}"
                 aria-label="{{this.alt}}"
             >

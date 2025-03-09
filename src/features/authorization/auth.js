@@ -1,4 +1,4 @@
-import { API } from '../../shared/api/api';
+import {API} from '../../shared/api/api';
 
 
 class auth {
@@ -14,7 +14,7 @@ class auth {
 	 */
     async login({email, password}) {
         try {
-            const response = await this.API.post('/api/v1/auth/login', { email, password });
+            const response = await this.API.post('/api/v1/auth/login',{ email, password });
             if (response.error) {
                 return new Error(response.error);
             }
@@ -72,22 +72,6 @@ class auth {
             return response;
         } catch (error) {
             return new Error(`Failed to fetch user data: ${error.message}`);
-        }
-    }
-
-    /**
-	 * Проверяет, авторизован ли пользователь
-	 * @returns {boolean} Ответ от сервера
-	 */
-    async checkAuthStatus() {
-        try {
-            await this.getUserData();
-            return true;
-        } catch (error) {
-            if (error.status === 401) {
-                return false;
-            }
-            return error;
         }
     }
 }

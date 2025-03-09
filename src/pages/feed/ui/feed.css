@@ -15,6 +15,9 @@
     padding: 0 4px 10px 4px;
     min-height: calc(100vh - 112px);
     width: 100%;
+}
+
+.feed-chunk {
     columns: 205px auto;
 }
 

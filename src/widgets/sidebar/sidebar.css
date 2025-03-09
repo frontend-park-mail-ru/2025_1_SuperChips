@@ -23,3 +23,7 @@
 .sidebar-button:hover {
     cursor: pointer;
 }
+
+.sidebar-button_disabled:hover {
+    cursor: not-allowed;
+}
