@@ -1,9 +1,8 @@
 import {createNavbar} from '../../../widgets/navbar/navbar';
 import {createSidebar} from '../../../widgets/sidebar/sidebar';
-import './feed.css';
-import feedTemplate from './feed.hbs';
-import {loadImages} from '../lib/loadImages';
 import {debouncedScroll} from '../lib/handleScroll';
+import feedTemplate from './feed.hbs';
+import './feed.css';
 
 /**
  * Генерирует страницу ленты
@@ -15,10 +14,6 @@ export const renderFeed = async () => {
 
     page.querySelector('#navbar').replaceWith((await createNavbar()));
     page.querySelector('#sidebar').replaceWith(await createSidebar());
-
-    const feed = page.querySelector('#feed');
-    const newFrame = await loadImages();
-    feed.innerHTML = newFrame.innerHTML;
 
     window.addEventListener('scroll', debouncedScroll);
 

@@ -1,6 +1,6 @@
 import {root} from '../app/app';
 import {config} from './config/router';
-import {fillPictureBox} from './utils/fillPictureBox';
+import {fillFeed, fillPictureBox} from './utils/loadPictures';
 
 const appState = {
     activePageLink: null,
@@ -35,5 +35,7 @@ export const goToPage = async (page) => {
 
     if (page === 'login' || page === 'signup') {
         await fillPictureBox();
+    } else if (page === 'feed') {
+        await fillFeed();
     }
 };

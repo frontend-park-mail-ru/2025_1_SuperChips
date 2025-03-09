@@ -6,7 +6,7 @@ import loginTemplate from '../../../shared/components/authPage/authPageTemplate.
 import '../../../shared/components/input/input.css';
 import '../../../shared/components/authPage/authPage.css';
 import './login.css';
-import {fillPictureBox} from '../../../shared/utils/fillPictureBox';
+import {loadPictures} from '../../../shared/utils/loadPictures';
 
 /**
  * Генерирует страницу логина

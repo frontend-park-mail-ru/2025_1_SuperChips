@@ -1,5 +1,6 @@
-import {loadImages} from './loadImages';
+import {loadImages} from '../../../shared/utils/loadPictures';
 import {debounce} from '../../../shared/utils/debounce';
+import {createFooter} from './footer/createFooter';
 
 const scrollHandler = async () => {
     const threshold = 500;
@@ -7,11 +8,12 @@ const scrollHandler = async () => {
 
     if (scrolledToBottom) {
         const newFrame = await loadImages();
-        const feed = document.querySelector('#feed');
-        if (newFrame.querySelector('#footer') === null) {
+
+        if (newFrame !== null) {
+            const feed = document.querySelector('#feed');
             feed.insertAdjacentHTML('beforeend', newFrame.innerHTML);
         } else {
-            document.getElementById('root').insertAdjacentHTML('beforeend', newFrame.innerHTML);
+            document.getElementById('root').insertAdjacentHTML('beforeend', createFooter().innerHTML);
         }
     }
 };
