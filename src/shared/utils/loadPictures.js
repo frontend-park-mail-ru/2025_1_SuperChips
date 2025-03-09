@@ -1,7 +1,8 @@
-import {feedState} from '../router';
+import {appState, feedState} from '../router';
 import {API} from '../api/api';
 import {debouncedScroll} from '../../pages/feed/lib/handleScroll';
 import {createSkeleton} from '../../pages/feed/lib/skeleton/skeleton';
+
 
 export const fillPictureBox = async () => {
     const newFrame = await loadImages();
@@ -31,8 +32,13 @@ export const loadImages = async () => {
     const images = JSON.parse(await response.text());
 
     const newFrame = document.createElement('div');
-    images.data.forEach((item) => {
-        newFrame.appendChild(createSkeleton(item.image));
+    images.data.forEach((item, index) => {
+        if (appState.activePage === 'login' && index > 10 ||
+            appState.activePage === 'signup' && index <= 10
+        ) { /* empty */ }
+        else {
+            newFrame.appendChild(createSkeleton(item.image));
+        }
     });
 
     feedState.isLoading = false;

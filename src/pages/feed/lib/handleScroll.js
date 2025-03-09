@@ -10,8 +10,9 @@ const scrollHandler = async () => {
         const newFrame = await loadImages();
 
         if (newFrame !== null) {
+            newFrame.classList.add('feed-chunk');
             const feed = document.querySelector('#feed');
-            feed.insertAdjacentHTML('beforeend', newFrame.innerHTML);
+            feed.appendChild(newFrame);
         } else {
             document.getElementById('root').insertAdjacentHTML('beforeend', createFooter().innerHTML);
         }

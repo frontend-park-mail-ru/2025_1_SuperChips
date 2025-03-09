@@ -2,13 +2,13 @@ import {root} from '../app/app';
 import {config} from './config/router';
 import {fillFeed, fillPictureBox} from './utils/loadPictures';
 
-const appState = {
-    activePageLink: null,
+export const appState = {
+    activePage: null,
 };
 
 export const feedState = {
     isLoading: false,
-    pageNum: 1
+    pageNum: 1,
 };
 
 
@@ -19,11 +19,11 @@ export const feedState = {
 export const goToPage = async (page) => {
     root.innerHTML = '';
 
-    appState.activePageLink = page;
+    appState.activePage = page;
     switch (page) {
     case 'login': feedState.pageNum = 1; break;
-    case 'signup': feedState.pageNum = 2; break;
-    case 'feed': feedState.pageNum = 3; break;
+    case 'signup': feedState.pageNum = 1; break;
+    case 'feed': feedState.pageNum = 2; break;
     }
 
     const element = await config.menu[page].render();
