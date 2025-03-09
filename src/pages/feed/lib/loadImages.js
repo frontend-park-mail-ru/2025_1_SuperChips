@@ -12,6 +12,8 @@ export const loadImages = async () => {
     if (!response.ok) {
         const footer = createFooter();
         window.removeEventListener('scroll', debouncedScroll);
+        feedState.isLoading = false;
+        feedState.pageNum = 1;
         return footer;
     }
 
