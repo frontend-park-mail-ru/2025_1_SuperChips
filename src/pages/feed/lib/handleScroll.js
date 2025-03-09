@@ -8,7 +8,11 @@ const scrollHandler = async () => {
     if (scrolledToBottom) {
         const newFrame = await loadImages();
         const feed = document.querySelector('#feed');
-        feed.insertAdjacentHTML('beforeend', newFrame.innerHTML);
+        if (newFrame.querySelector('#footer') === null) {
+            feed.insertAdjacentHTML('beforeend', newFrame.innerHTML);
+        } else {
+            document.getElementById('root').appendChild(newFrame);
+        }
     }
 };
 
