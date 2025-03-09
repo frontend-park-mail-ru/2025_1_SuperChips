@@ -37,5 +37,6 @@ export const goToPage = async (page) => {
         await fillPictureBox();
     } else if (page === 'feed') {
         await fillFeed();
+        await fillFeed();
     }
 };

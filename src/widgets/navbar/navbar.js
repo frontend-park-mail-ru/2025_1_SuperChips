@@ -11,11 +11,12 @@ export const createNavbar = async () => {
     const navbar = document.createElement('div');
 
     const response = await API.get('/api/v1/auth/user');
+    const body = await response.json();
     const userData = response.ok
-        ? { ...response.data, authorized: true }
+        ? { ...body.data, authorized: true }
         : { authorized: false };
 
-    if (userData.avatar !== undefined) {
+    if (!userData.avatar && userData.authorized) {
         userData.shortUsername = userData.username[0].toUpperCase();
     }
 
