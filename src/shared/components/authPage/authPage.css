@@ -1,4 +1,3 @@
-
 .error-message {
     justify-self: right;
     height: 15px;
@@ -43,7 +42,29 @@ button:disabled {
 }
 
 .background {
+    width: 100%;
     min-width: 0;
+    position: relative;
+}
+
+.picture-box {
+    max-height: 600px;
+    max-width: calc(100%);
+    position: absolute;
+    left: 92px;
+    bottom: -120px;
+    columns: 205px auto;
+}
+
+.picture {
+    width: 205px;
+    border-radius: 20px;
+    background-color: #303030;
+    margin-bottom: 20px;
+    break-inside: avoid;
+    object-fit: contain;
+    z-index: 100;
+    margin-right: 32px;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {

@@ -6,6 +6,7 @@ import loginTemplate from '../../../shared/components/authPage/authPageTemplate.
 import '../../../shared/components/input/input.css';
 import '../../../shared/components/authPage/authPage.css';
 import './login.css';
+import {loadImages} from "../../feed/lib/loadImages";
 
 /**
  * Генерирует страницу логина
@@ -38,6 +39,10 @@ export const renderLogin = async () => {
 
     form.addEventListener('submit', handleLogin);
     form.addEventListener('input', debouncedLoginButton);
+
+    const newFrame = await loadImages();
+    const pictureBox = page.querySelector('.picture-box');
+    pictureBox.innerHTML = newFrame.innerHTML;
 
     const redirectBtn = page.querySelector('.redirect');
     redirectBtn.addEventListener('click',  async(event) => {

@@ -15,7 +15,7 @@ export const createNavbar = async () => {
         ? { ...response.data, authorized: true }
         : { authorized: false };
 
-    navbar.insertAdjacentHTML('beforeend', navbarTemplate(userData));
+    navbar.innerHTML += navbarTemplate(userData);
 
     const redirectButton = navbar.querySelector('#redirect');
     if (redirectButton) {

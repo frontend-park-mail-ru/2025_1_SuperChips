@@ -7,13 +7,9 @@
 }
 
 .login-container {
-    background-color: white;
-    display: grid;
-    position: relative;
     height: 100%;
     width: 572px;
-    grid-template-rows: 526px auto;
-    margin-left: auto;
+    background-color: white;
     z-index: 100;
 }
 
@@ -23,11 +19,6 @@
 
 .login-box-1 {
     padding: 112px 66px 0 66px;
-}
-
-.login-box-2 {
-    padding: 18px 66px 0 66px;
-    background-color: #f7f7f7;
 }
 
 .login-redirect {

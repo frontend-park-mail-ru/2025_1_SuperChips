@@ -13,7 +13,7 @@ export const renderFeed = async () => {
     const page = document.createElement('div');
     page.insertAdjacentHTML('beforeend', feedTemplate({}));
 
-    page.querySelector('#navbar').replaceWith(await createNavbar());
+    page.querySelector('#navbar').replaceWith((await createNavbar()));
     page.querySelector('#sidebar').replaceWith(await createSidebar());
 
     const feed = page.querySelector('#feed');
