@@ -22,8 +22,8 @@ export const goToPage = async (page) => {
     appState.activePage = page;
     switch (page) {
     case 'login': feedState.pageNum = 1; break;
-    case 'signup': feedState.pageNum = 1; break;
-    case 'feed': feedState.pageNum = 2; break;
+    case 'signup': feedState.pageNum = 2; break;
+    case 'feed': feedState.pageNum = 1; break;
     }
 
     const element = await config.menu[page].render();
