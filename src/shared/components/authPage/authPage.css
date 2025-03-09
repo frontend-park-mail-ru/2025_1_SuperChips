@@ -48,7 +48,7 @@ button:disabled {
 }
 
 .picture-box {
-    max-height: 600px;
+    max-height: 700px;
     max-width: calc(100%);
     position: absolute;
     left: 92px;

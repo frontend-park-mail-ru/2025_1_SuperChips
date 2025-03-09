@@ -8,7 +8,6 @@ const scrollHandler = async () => {
 
     if (scrolledToBottom) {
         const newFrame = await loadImages();
-
         if (newFrame !== null) {
             newFrame.classList.add('feed-chunk');
             const feed = document.querySelector('#feed');
@@ -19,4 +18,4 @@ const scrollHandler = async () => {
     }
 };
 
-export const debouncedScroll = debounce(scrollHandler, 300);
+export const debouncedScroll = debounce(scrollHandler, 75);

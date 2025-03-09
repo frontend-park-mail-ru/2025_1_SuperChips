@@ -16,15 +16,15 @@
 
     {{#if authorized}}
     <div class="profile-picture">
-        <img
-                {{#if avatar}}
+        {{#if avatar}}
+            <img
                     src={{avatar}}
-                {{else}}
-                    scr="/img/pfp-placeholder"
-                {{/if}}
-                alt="profile picture"
-                aria-label="User profile"
-        >
+                    alt="profile picture"
+                    aria-label="User profile"
+            >
+        {{else}}
+            <p class="shortUsername">{{shortUsername}}</p>
+        {{/if}}
     </div>
     {{else}}
     <button

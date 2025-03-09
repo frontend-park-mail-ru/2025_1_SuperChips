@@ -15,6 +15,10 @@ export const createNavbar = async () => {
         ? { ...response.data, authorized: true }
         : { authorized: false };
 
+    if (userData.avatar !== undefined) {
+        userData.shortUsername = userData.username[0].toUpperCase();
+    }
+
     navbar.innerHTML += navbarTemplate(userData);
 
     const redirectButton = navbar.querySelector('#redirect');
