@@ -10,7 +10,8 @@ import './signup.css';
 
 
 /**
- * Генерирует страницу регистрации
+ * Генерирует страницу регистрации и создает обработчики событий
+ *
  * @returns {HTMLDivElement}
  */
 export const renderSignup = async () => {

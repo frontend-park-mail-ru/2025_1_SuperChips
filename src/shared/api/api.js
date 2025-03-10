@@ -1,5 +1,8 @@
 import {API_BASE_URL} from '../config/constants';
 
+/**
+ * Класс для работы с API бэкенда
+ */
 class Api {
     #apiBaseUrl;
     #csrf;
@@ -14,7 +17,7 @@ class Api {
 	 * @param {string} path url запроса (прим '/feed' '/user')
 	 * @param {object} headers HTTP заголовки
 	 * @param {object} body тело запроса, если есть
-	 * @returns ответ от сервера
+	 * @returns {Promise<any>} ответ от сервера
 	 */
     async request(method, path, headers, body = null) {
         try {
@@ -91,6 +94,9 @@ class Api {
     }
 }
 
+/**
+ * Класс для хранения и работы с CSRF токенами
+ */
 class CSRF {
     #csrfToken;
     constructor() {

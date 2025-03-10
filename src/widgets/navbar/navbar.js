@@ -1,16 +1,17 @@
 import {goToPage} from '../../shared/router';
-import {API} from '../../shared/api/api';
 import navbarTemplate from './navbar.hbs';
 import './navbar.css';
+import {Auth} from '../../features/authorization/auth';
 
 /**
  * Генерирует навбар для основных страниц (ленты, профиля и тд)
+ * Содержимое навбара меняется, в зависимости от того, авторизован ли пользователь
  * @returns {HTMLDivElement}
  */
 export const createNavbar = async () => {
     const navbar = document.createElement('div');
 
-    const response = await API.get('/api/v1/auth/user');
+    const response = await Auth.getUserData();
     const body = await response.json();
     const userData = response.ok
         ? { ...body.data, authorized: true }

@@ -8,7 +8,7 @@ import '../../../shared/components/authPage/authPage.css';
 import './login.css';
 
 /**
- * Генерирует страницу логина
+ * Генерирует страницу логина и создает обработчики событий
  * @returns {HTMLDivElement}
  */
 export const renderLogin = async () => {

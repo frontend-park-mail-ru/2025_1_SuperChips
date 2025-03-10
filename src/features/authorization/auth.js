@@ -1,16 +1,20 @@
 import {API} from '../../shared/api/api';
 
 
+/**
+ * Класс, использующийся для аутентификации пользователя
+ * Для одной сессии создается только один класс
+ */
 class auth {
     constructor() {
         this.API = API;
     }
 
     /**
-	 * Авторизация пользователя
+	 * Авторизация пользователя	 * @param email
+	 * @param {string}
 	 * @param {string} email
-	 * @param {string} password
-	 * @returns {json} Ответ от сервера
+	 * @returns {Promise<json|Error>} ответ сервера
 	 */
     async login({email, password}) {
         try {
@@ -26,7 +30,7 @@ class auth {
 
     /**
 	 * Регистрация нового пользователя
-	 * @param {json} userData
+	 * @param {json} userData - email, имя пользователя, дата рождения, пароль
 	 * @returns {json} Ответ от сервера
 	 */
     async register(userData) {
@@ -42,8 +46,8 @@ class auth {
     }
 
     /**
-	 * Выход из сессии
-	 * @returns {void} Ответ сервера
+	 * Завершение сессии
+	 * @returns {Promise<Error>} ответ сервера
 	 */
     async logout() {
         try {
@@ -56,12 +60,12 @@ class auth {
     /**
 	 * Получение данных о пользователе в формате:
 	 * {
-	 * "username": "{{username}}",
-	 * "avatar": "{{avatar_url}}",
-	 * "birthday": "{{birthday}}",
-	 * "email": "{{email}}",
+	 * username: 	{{username}},
+	 * avatar: 		{{avatar_url}},
+	 * birthday: 	{{birthday}},
+	 * email: 		{{email}},
 	 * }
-	 * @returns {json} Ответ от сервера
+	 * @returns {Response} Ответ от сервера
 	 */
     async getUserData() {
         try {

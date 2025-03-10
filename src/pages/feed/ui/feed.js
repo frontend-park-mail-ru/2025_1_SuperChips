@@ -5,7 +5,7 @@ import feedTemplate from './feed.hbs';
 import './feed.css';
 
 /**
- * Генерирует страницу ленты
+ * Генерирует страницу ленты и создает обработчики событий
  * @returns {HTMLDivElement}
  */
 export const renderFeed = async () => {

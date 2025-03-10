@@ -3,12 +3,21 @@ import {API} from '../api/api';
 import {debouncedScroll} from '../../pages/feed/lib/handleScroll';
 import {createSkeleton} from '../../pages/feed/lib/skeleton/skeleton';
 
+/**
+ * Загружает картинки и создает коллаж для страниы входа
+ * @returns {Promise<void>}
+ */
 export const fillPictureBox = async () => {
     const newFrame = await loadImages();
     const pictureBox = document.querySelector('.picture-box');
     pictureBox.innerHTML = newFrame.innerHTML;
 };
 
+
+/**
+ * Загружает и создает чанк картинок для ленты
+ * @returns {Promise<void>}
+ */
 export const fillFeed = async () => {
     const feed = document.querySelector('#feed');
     const newFrame = await loadImages();
@@ -16,6 +25,10 @@ export const fillFeed = async () => {
     feed.appendChild(newFrame);
 };
 
+/**
+ * Загружает чанк картинок и создает контейнер для них
+ * @returns {Promise<HTMLDivElement|null>}
+ */
 export const loadImages = async () => {
     if (feedState.isLoading) return;
     feedState.isLoading = true;
