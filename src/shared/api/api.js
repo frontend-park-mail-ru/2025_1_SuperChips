@@ -1,5 +1,8 @@
 import {API_BASE_URL} from '../config/constants';
 
+/**
+ * Класс для работы с API бэкенда
+ */
 class Api {
     #apiBaseUrl;
     #csrf;
@@ -14,7 +17,7 @@ class Api {
 	 * @param {string} path url запроса (прим '/feed' '/user')
 	 * @param {object} headers HTTP заголовки
 	 * @param {object} body тело запроса, если есть
-	 * @returns {json} ответ от сервера
+	 * @returns {Promise<any>} ответ от сервера
 	 */
     async request(method, path, headers, body = null) {
         try {
@@ -34,7 +37,7 @@ class Api {
                 this.#csrf.set(CSRFToken);
             }
 
-            return await response.json();
+            return await response;
         } catch {
             return new Error('Could not fetch');
         }
@@ -43,7 +46,7 @@ class Api {
     /**
 	 * GET запрос
 	 * @param {string} url url запроса
-	 * @returns {json} ответ от сервера
+	 * @returns {Response} ответ от сервера
 	 */
     async get(url) {
         const headers = {};
@@ -58,9 +61,8 @@ class Api {
 	 */
     async post(url, body = null) {
         const headers = {
-            'Access-Control-Allow-Credentials': 'true',
             'X-CSRF-Token': this.#csrf.get(),
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
         };
         return this.request('POST', url, headers, body);
     }
@@ -73,7 +75,6 @@ class Api {
 	 */
     async put(url, body) {
         const headers = {
-            'Access-Control-Allow-Credentials': 'true',
             'X-CSRF-Token': this.#csrf.get(),
             'Content-Type': 'multipart/form-data',
         };
@@ -93,6 +94,9 @@ class Api {
     }
 }
 
+/**
+ * Класс для хранения и работы с CSRF токенами
+ */
 class CSRF {
     #csrfToken;
     constructor() {

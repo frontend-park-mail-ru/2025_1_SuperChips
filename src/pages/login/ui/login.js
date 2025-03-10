@@ -1,17 +1,17 @@
-import { loginButtonHandler } from '../handlers/buttonHandler';
-import { handleSubmit } from '../handlers/submitHandler';
-import { goToPage } from '../../../shared/router';
-import { createInput } from '../../../shared/components/input/input';
+import {debouncedLoginButton} from '../handlers/loginButtonHandler';
+import {handleLogin} from '../handlers/loginHandler';
+import {goToPage} from '../../../shared/router';
+import {createInput} from '../../../shared/components/input/input';
 import loginTemplate from '../../../shared/components/authPage/authPageTemplate.hbs';
 import '../../../shared/components/input/input.css';
 import '../../../shared/components/authPage/authPage.css';
 import './login.css';
 
 /**
- * Генерирует страницу логина
+ * Генерирует страницу логина и создает обработчики событий
  * @returns {HTMLDivElement}
  */
-export const renderLogin = () => {
+export const renderLogin = async () => {
     const page = document.createElement('div');
 
     const config = {
@@ -36,13 +36,13 @@ export const renderLogin = () => {
         item.replaceWith(createInput(config.inputs[index]));
     });
 
-    form.addEventListener('submit', handleSubmit);
-    form.addEventListener('change', loginButtonHandler);
+    form.addEventListener('submit', handleLogin);
+    form.addEventListener('input', debouncedLoginButton);
 
     const redirectBtn = page.querySelector('.redirect');
-    redirectBtn.addEventListener('click', (event) => {
+    redirectBtn.addEventListener('click',  async(event) => {
         event.preventDefault();
-        goToPage('signup');
+        await goToPage('signup');
     });
 
     return page;

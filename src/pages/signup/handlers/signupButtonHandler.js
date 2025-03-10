@@ -1,6 +1,7 @@
 import {validateSignup} from '../lib/signupValidation';
+import {debounce} from '../../../shared/utils/debounce';
 
-export const signupButtonHandler = () => {
+const signupButtonHandler = () => {
     const form = document.querySelector('.signup-form');
 
     const inputData = {};
@@ -10,9 +11,7 @@ export const signupButtonHandler = () => {
     });
 
     const button = document.querySelector('.button');
-    if (validateSignup(inputData)) {
-        button.style.opacity = '100%';
-    } else {
-        button.style.opacity = '25%';
-    }
+    button.disabled = !validateSignup(inputData);
 };
+
+export const debouncedSignupButton = debounce(signupButtonHandler, 300);

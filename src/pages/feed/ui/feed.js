@@ -1,23 +1,21 @@
-import { createSkeletonFeed } from '../lib/skeleton';
-import { createNavbar } from '../../../widgets/navbar/navbar';
-import { createSidebar } from '../../../widgets/sidebar/sidebar';
+import {createNavbar} from '../../../widgets/navbar/navbar';
+import {createSidebar} from '../../../widgets/sidebar/sidebar';
+import {debouncedScroll} from '../lib/handleScroll';
+import feedTemplate from './feed.hbs';
 import './feed.css';
+
 /**
- * Генерирует страницу ленты
+ * Генерирует страницу ленты и создает обработчики событий
  * @returns {HTMLDivElement}
  */
-export const renderFeed = () => {
+export const renderFeed = async () => {
     const page = document.createElement('div');
-    page.classList.add('main-page');
+    page.insertAdjacentHTML('beforeend', feedTemplate({}));
 
-    const navbar = createNavbar();
-    page.appendChild(navbar);
+    page.querySelector('#navbar').replaceWith((await createNavbar()));
+    page.querySelector('#sidebar').replaceWith(await createSidebar());
 
-    const sidebar = createSidebar();
-    page.appendChild(sidebar);
-
-    const feed = createSkeletonFeed(100);
-    page.appendChild(feed);
+    window.addEventListener('scroll', debouncedScroll);
 
     return page;
 };

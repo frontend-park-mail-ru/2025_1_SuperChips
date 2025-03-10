@@ -1,8 +1,8 @@
-import { debouncedPasswordConfirm } from '../handlers/passwordConfirm';
-import { signupHandler } from '../handlers/signupHandler';
-import { signupButtonHandler } from '../handlers/signupButtonHandler';
-import { createInput } from '../../../shared/components/input/input';
-import { goToPage } from '../../../shared/router';
+import {debouncedPasswordConfirm} from '../handlers/passwordConfirm';
+import {signupHandler} from '../handlers/signupHandler';
+import {debouncedSignupButton} from '../handlers/signupButtonHandler';
+import {createInput} from '../../../shared/components/input/input';
+import {goToPage} from '../../../shared/router';
 import signupTemplate  from '../../../shared/components/authPage/authPageTemplate.hbs';
 import '../../../shared/components/input/input.css';
 import '../../../shared/components/authPage/authPage.css';
@@ -10,10 +10,11 @@ import './signup.css';
 
 
 /**
- * Генерирует страницу регистрации
+ * Генерирует страницу регистрации и создает обработчики событий
+ *
  * @returns {HTMLDivElement}
  */
-export const renderSignup = () => {
+export const renderSignup = async () => {
     const config = {
         page: 'signup',
         redirectText: 'есть аккаунт?',
@@ -23,7 +24,7 @@ export const renderSignup = () => {
         subheader: 'Еще пару шагов и Вы с flow!',
         inputs: [
             {type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты', isStarred: true},
-            {type: 'text', id: 'nickname', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято', isStarred: true},
+            {type: 'text', id: 'username', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято', isStarred: true},
             {type: 'date', id: 'birthday', inputLabel: 'Дата рождения', errorMessage: 'Неправильный формат даты', isStarred: true},
             {type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов', isStarred: true, isPassword: true},
             {type: 'password', id: 'passwordConfirm', inputLabel: 'Повторите пароль', errorMessage: 'Пароли не совпадают', isStarred: true,  isPassword: true},
@@ -35,9 +36,9 @@ export const renderSignup = () => {
     page.insertAdjacentHTML('beforeend', html);
 
     const redirectBtn = page.querySelector('.redirect');
-    redirectBtn.addEventListener('click', (event) => {
+    redirectBtn.addEventListener('click', async (event) => {
         event.preventDefault();
-        goToPage('login');
+        await goToPage('login');
     });
 
     const form = page.querySelector('.signup-form');
@@ -47,7 +48,7 @@ export const renderSignup = () => {
     });
 
     form.addEventListener('submit', signupHandler);
-    form.addEventListener('change', signupButtonHandler);
+    form.addEventListener('input', debouncedSignupButton);
     form.addEventListener('input', debouncedPasswordConfirm);
 
     return page;

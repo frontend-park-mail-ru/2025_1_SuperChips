@@ -4,7 +4,7 @@
  * @returns {(""|boolean|string)[]}
  */
 export const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
 
-    return [email && emailRegex.test(email), 'Неправильный формат почты'];
+    return [email && regex.test(email), 'Неправильный формат почты'];
 };

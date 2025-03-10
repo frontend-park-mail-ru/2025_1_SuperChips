@@ -14,10 +14,24 @@
             aria-label="Search input"
     />
 
-    <img
-            src="/img/pfp1.jpg"
-            class="profile-picture"
-            alt="profile picture"
-            aria-label="User profile"
-    />
+    {{#if authorized}}
+    <div class="profile-picture">
+        {{#if avatar}}
+            <img
+                    src={{avatar}}
+                    alt="profile picture"
+                    aria-label="User profile"
+            >
+        {{else}}
+            <p class="shortUsername">{{shortUsername}}</p>
+        {{/if}}
+    </div>
+    {{else}}
+    <button
+        class="feed-redirect"
+        id="redirect"
+    >
+        Войти
+    </button>
+    {{/if}}
 </div>
