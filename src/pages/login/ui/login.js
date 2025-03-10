@@ -20,11 +20,11 @@ export const renderLogin = async () => {
             {type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Неправильный пароль или почта', isPassword: true}
         ],
         page: 'login',
-        redirectText: 'Еще нет аккаунта?',
+        redirectText: 'Ещё нет аккаунта?',
         redirectBtn: 'Регистрация',
         submitBtn: 'Вход',
         header: 'Вход',
-        subheader: 'Добро пожаловать в flow!'
+        subheader: 'Добро пожаловать во flow!'
     };
 
     const html = loginTemplate(config);

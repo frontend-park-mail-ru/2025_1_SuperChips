@@ -10,7 +10,7 @@
 ### Внешние ссылки
  - [Figma]()
  - [Backend]()
- - [Deploy]()
+ - [Deploy](http://146.185.208.105:8000/feed)
  - [Jira]()
 
 ### Правила оформления Pull Requests
