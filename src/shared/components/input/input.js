@@ -45,6 +45,7 @@ const inputHandler = (event) => {
     const showError = !valid && input.value !== '';
     icon.classList.toggle('hidden', !showError);
     message.classList.toggle('hidden', !showError);
+    input.classList.toggle('error', showError);
     message.textContent = error;
 
     const eye = container.querySelector('.input__toggle-password');

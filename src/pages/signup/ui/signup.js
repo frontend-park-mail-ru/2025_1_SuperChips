@@ -17,7 +17,7 @@ import './signup.css';
 export const renderSignup = async () => {
     const config = {
         page: 'signup',
-        redirectText: 'есть аккаунт?',
+        redirectText: 'Есть аккаунт?',
         redirectBtn: 'Войти',
         submitBtn: 'Зарегистрироваться',
         header: 'Регистрация',
