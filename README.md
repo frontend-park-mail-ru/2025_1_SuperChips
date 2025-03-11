@@ -8,13 +8,13 @@
  4. [Демирел Эмре](https://github.com/emresha)
 
 ### Внешние ссылки
- - [Figma]()
- - [Backend]()
- - [Deploy]()
+ - [Figma](https://www.figma.com/design/2XIfIpY4AGnqWHZM7NmWps/flow?node-id=0-1&t=rHBuId1qvp1hDG12-1)
+ - [Backend](https://github.com/go-park-mail-ru/2025_1_SuperChips)
+ - [Deploy](http://146.185.208.105:8000/feed)
  - [Jira]()
 
 ### Правила оформления Pull Requests
-  1. Ветка создается с названием `FLOW-###`, где ### - номер задачи в jira.
-  2. Название Pull Request'а соответствует названию задачки в jira: `FLOW-###: description`, где description - название из jira.
+  1. Ветка создается с названием `FLW-###`, где ### - номер задачи в jira.
+  2. Название Pull Request'а соответствует названию задачки в jira: `FLW-###: description`, где description - название из jira.
   3. При создании Pull Request'а нужно указать в описании ссылку на задачу в jira.
   4. Для того, чтобы залить изменения в ветку main нужен апрув от [Кости](https://t.me/PassPort_Guardian)

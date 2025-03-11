@@ -21,7 +21,7 @@ export const renderSignup = async () => {
         redirectBtn: 'Войти',
         submitBtn: 'Зарегистрироваться',
         header: 'Регистрация',
-        subheader: 'Еще пару шагов и Вы с flow!',
+        subheader: 'Ещё пару шагов и вы с flow!',
         inputs: [
             {type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты', isStarred: true},
             {type: 'text', id: 'username', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято', isStarred: true},
