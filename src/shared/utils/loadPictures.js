@@ -1,7 +1,7 @@
-import {feedState} from '../router/router';
-import {API} from '../api/api';
-import {debouncedScroll} from '../../pages/FeedPage/handlers/handleScroll';
-import {createSkeleton} from '../../pages/FeedPage/lib/skeleton/skeleton';
+import { feedState } from '../router/router';
+import { API } from '../api/api';
+import { debouncedScroll } from '../../pages/FeedPage/handlers/handleScroll';
+import { FeedCard } from '../../pages/FeedPage/lib/skeleton/FeedCard';
 
 /**
  * Загружает картинки и создает коллаж для страниы входа
@@ -46,7 +46,7 @@ export const loadImages = async () => {
 
     const newFrame = document.createElement('div');
     images.data.forEach((item) => {
-        newFrame.appendChild(createSkeleton(item.image));
+        newFrame.appendChild(FeedCard(item.image));
     });
 
     feedState.isLoading = false;

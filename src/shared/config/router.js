@@ -1,6 +1,6 @@
 import { FeedPage } from '../../pages/FeedPage';
-import { renderLogin } from '../../pages/login/ui/login';
-import { renderSignup } from '../../pages/signup/ui/signup';
+import { Login } from '../../pages/login';
+import { Signup } from '../../pages/signup/ui/signup';
 
 export const config = {
     menu: {
@@ -14,12 +14,12 @@ export const config = {
         'login': {
             href: '/login',
             title: 'Авторизация',
-            render: renderLogin
+            render: Login
         },
         'signup': {
             href: '/signup',
             title: 'Регистрация',
-            render: renderSignup
+            render: Signup
         }
     },
 };

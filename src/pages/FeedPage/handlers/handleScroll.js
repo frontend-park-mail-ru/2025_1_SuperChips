@@ -1,6 +1,6 @@
-import {loadImages} from '../../../shared/utils/loadPictures';
-import {debounce} from '../../../shared/utils/debounce';
-import {createFooter} from '../components/footer/createFooter';
+import { loadImages } from '../../../shared/utils/loadPictures';
+import { debounce } from '../../../shared/utils/debounce';
+import { Footer } from '../components/footer/footer';
 
 
 /**
@@ -18,7 +18,7 @@ const scrollHandler = async () => {
             const feed = document.querySelector('#feed');
             feed.appendChild(newFrame);
         } else {
-            document.getElementById('root').insertAdjacentHTML('beforeend', createFooter().innerHTML);
+            document.getElementById('root').insertAdjacentHTML('beforeend', Footer().innerHTML);
         }
     }
 };

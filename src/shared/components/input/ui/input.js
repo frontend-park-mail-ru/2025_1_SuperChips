@@ -1,9 +1,9 @@
-import {validateEmail} from '../../validation/emailValidation';
-import {validateBirthday} from '../../validation/birthdayValidation';
-import {validatePassword} from '../../validation/passwordValidation';
-import {validatePasswordConfirm} from '../../validation/passwordConfirmation';
-import {debounce} from '../../utils/debounce';
-import {validateUsername} from '../../validation/usernameValidation';
+import { validateEmail } from '../../../validation/emailValidation';
+import { validateBirthday } from '../../../validation/birthdayValidation';
+import { validatePassword } from '../../../validation/passwordValidation';
+import { validatePasswordConfirm } from '../../../validation/passwordConfirmation';
+import { debounce } from '../../../utils/debounce';
+import { validateUsername } from '../../../validation/usernameValidation';
 import './input.css';
 import inputTemplate from './input.hbs';
 
@@ -12,7 +12,7 @@ import inputTemplate from './input.hbs';
  * @returns {HTMLDivElement}
  * @param {{type, id, inputLabel, errorMessage, isStarred}} data
  */
-export const createInput = (data) => {
+export const Input = (data) => {
     const inputContainer = document.createElement('div');
     inputContainer.insertAdjacentHTML('beforeend', inputTemplate(data));
 
@@ -61,7 +61,7 @@ const inputHandler = (event) => {
 
 const debouncedInputHandler = debounce(inputHandler, 300);
 
-export const togglePasswordHandler = (event) => {
+const togglePasswordHandler = (event) => {
     const img = event.target;
     const container = img.closest('.input');
     const input = container.querySelector('.input__field');

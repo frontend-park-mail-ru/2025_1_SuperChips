@@ -1,9 +1,9 @@
-import {debouncedLoginButton} from '../handlers/loginButtonHandler';
-import {handleLogin} from '../handlers/loginHandler';
-import {goToPage} from '../../../shared/router/router';
-import {createInput} from '../../../shared/components/input/input';
+import { debouncedLoginButton } from '../handlers/loginButtonHandler';
+import { handleLogin } from '../handlers/loginHandler';
+import { goToPage } from '../../../shared/router/router';
+import { Input } from '../../../shared/components/input/ui/input';
 import loginTemplate from '../../../shared/components/authPage/authPageTemplate.hbs';
-import '../../../shared/components/input/input.css';
+import '../../../shared/components/input/ui/input.css';
 import '../../../shared/components/authPage/authPage.css';
 import './login.css';
 
@@ -11,7 +11,7 @@ import './login.css';
  * Генерирует страницу логина и создает обработчики событий
  * @returns {HTMLDivElement}
  */
-export const renderLogin = async () => {
+export const Login = async () => {
     const page = document.createElement('div');
 
     const config = {
@@ -33,7 +33,7 @@ export const renderLogin = async () => {
     const form = page.querySelector('.login-form');
     const placeholders = form.querySelectorAll('.input-placeholder');
     placeholders.forEach((item, index) => {
-        item.replaceWith(createInput(config.inputs[index]));
+        item.replaceWith(Input(config.inputs[index]));
     });
 
     form.addEventListener('submit', handleLogin);

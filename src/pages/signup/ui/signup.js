@@ -1,10 +1,10 @@
-import {debouncedPasswordConfirm} from '../handlers/passwordConfirm';
-import {signupHandler} from '../handlers/signupHandler';
-import {debouncedSignupButton} from '../handlers/signupButtonHandler';
-import {createInput} from '../../../shared/components/input/input';
-import {goToPage} from '../../../shared/router/router';
+import { debouncedPasswordConfirm } from '../handlers/passwordConfirm';
+import { debouncedSignupButton } from '../handlers/signupButtonHandler';
+import { signupHandler } from '../handlers/signupHandler';
+import { Input } from '../../../shared/components/input';
+import { goToPage } from '../../../shared/router/router';
 import signupTemplate  from '../../../shared/components/authPage/authPageTemplate.hbs';
-import '../../../shared/components/input/input.css';
+import '../../../shared/components/input/ui/input.css';
 import '../../../shared/components/authPage/authPage.css';
 import './signup.css';
 
@@ -14,7 +14,7 @@ import './signup.css';
  *
  * @returns {HTMLDivElement}
  */
-export const renderSignup = async () => {
+export const Signup = async () => {
     const config = {
         page: 'signup',
         redirectText: 'Есть аккаунт?',
@@ -44,7 +44,7 @@ export const renderSignup = async () => {
     const form = page.querySelector('.signup-form');
     const placeholders = form.querySelectorAll('.input-placeholder');
     placeholders.forEach((item, index) => {
-        item.replaceWith(createInput(config.inputs[index]));
+        item.replaceWith(Input(config.inputs[index]));
     });
 
     form.addEventListener('submit', signupHandler);

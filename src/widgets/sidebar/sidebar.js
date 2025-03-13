@@ -1,14 +1,14 @@
-import {Auth} from '../../features/authorization/api/auth';
-import {API} from '../../shared/api/api';
+import { Auth } from '../../features/authorization/api/auth';
+import { API } from '../../shared/api/api';
+import { goToPage } from '../../shared/router/router';
 import sidebarTemplate from './sidebar.hbs';
-import {goToPage} from '../../shared/router/router';
 import './sidebar.css';
 
 /**
  * Генерирует сайдбар для главных страниц (лента, профиль и тд)
  * @returns {HTMLDivElement}
  */
-export const createSidebar = async () => {
+export const Sidebar = async () => {
     const sidebar = document.createElement('div');
     const logged = (await API.get('/api/v1/auth/user')).ok;
 

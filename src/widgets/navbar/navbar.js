@@ -8,7 +8,7 @@ import './navbar.css';
  * Содержимое навбара меняется, в зависимости от того, авторизован ли пользователь
  * @returns {HTMLDivElement}
  */
-export const createNavbar = async () => {
+export const Navbar = async () => {
     const navbar = document.createElement('div');
 
     const response = await Auth.getUserData();
