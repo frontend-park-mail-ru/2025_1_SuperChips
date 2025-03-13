@@ -113,4 +113,3 @@ class CSRF {
 }
 
 export const API = new Api();
-

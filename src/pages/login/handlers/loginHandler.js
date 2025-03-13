@@ -1,5 +1,5 @@
-import {goToPage} from '../../../shared/router';
-import {Auth} from '../../../features/authorization/auth';
+import {goToPage} from '../../../shared/router/router';
+import {Auth} from '../../../features/authorization/api/auth';
 
 export const handleLogin = async (event) => {
     event.preventDefault();

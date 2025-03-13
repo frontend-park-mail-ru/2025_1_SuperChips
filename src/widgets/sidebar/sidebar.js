@@ -1,7 +1,7 @@
-import {Auth} from '../../features/authorization/auth';
+import {Auth} from '../../features/authorization/api/auth';
 import {API} from '../../shared/api/api';
 import sidebarTemplate from './sidebar.hbs';
-import {goToPage} from '../../shared/router';
+import {goToPage} from '../../shared/router/router';
 import './sidebar.css';
 
 /**

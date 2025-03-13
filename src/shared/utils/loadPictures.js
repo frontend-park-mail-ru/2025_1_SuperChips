@@ -1,7 +1,7 @@
-import {feedState} from '../router';
+import {feedState} from '../router/router';
 import {API} from '../api/api';
-import {debouncedScroll} from '../../pages/feed/lib/handleScroll';
-import {createSkeleton} from '../../pages/feed/lib/skeleton/skeleton';
+import {debouncedScroll} from '../../pages/FeedPage/handlers/handleScroll';
+import {createSkeleton} from '../../pages/FeedPage/lib/skeleton/skeleton';
 
 /**
  * Загружает картинки и создает коллаж для страниы входа
@@ -24,6 +24,7 @@ export const fillFeed = async () => {
     newFrame.classList.add('feed-chunk');
     feed.appendChild(newFrame);
 };
+
 
 /**
  * Загружает чанк картинок и создает контейнер для них

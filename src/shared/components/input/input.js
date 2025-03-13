@@ -26,6 +26,7 @@ export const createInput = (data) => {
     return inputContainer;
 };
 
+
 const inputHandler = (event) => {
     const container = event.target.closest('.input-container');
     const message = container.querySelector('.error-message');

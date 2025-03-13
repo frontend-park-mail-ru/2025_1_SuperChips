@@ -1,13 +1,13 @@
-import {renderFeed} from '../../pages/feed/ui/feed';
-import {renderLogin} from '../../pages/login/ui/login';
-import {renderSignup} from '../../pages/signup/ui/signup';
+import { FeedPage } from '../../pages/FeedPage';
+import { renderLogin } from '../../pages/login/ui/login';
+import { renderSignup } from '../../pages/signup/ui/signup';
 
 export const config = {
     menu: {
         'feed': {
             href: '/feed',
             title: 'Лента',
-            render: renderFeed,
+            render: FeedPage,
             // authOnly: true,
             // showSidebar: true
         },

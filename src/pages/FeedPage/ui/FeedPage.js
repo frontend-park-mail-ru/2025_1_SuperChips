@@ -1,14 +1,14 @@
 import {createNavbar} from '../../../widgets/navbar/navbar';
 import {createSidebar} from '../../../widgets/sidebar/sidebar';
-import {debouncedScroll} from '../lib/handleScroll';
-import feedTemplate from './feed.hbs';
-import './feed.css';
+import {debouncedScroll} from '../handlers/handleScroll';
+import feedTemplate from './FeedPage.hbs';
+import './FeedPage.css';
 
 /**
  * Генерирует страницу ленты и создает обработчики событий
  * @returns {HTMLDivElement}
  */
-export const renderFeed = async () => {
+export const FeedPage = async () => {
     const page = document.createElement('div');
     page.insertAdjacentHTML('beforeend', feedTemplate({}));
 

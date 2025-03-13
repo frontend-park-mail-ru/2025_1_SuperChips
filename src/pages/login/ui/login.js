@@ -1,6 +1,6 @@
 import {debouncedLoginButton} from '../handlers/loginButtonHandler';
 import {handleLogin} from '../handlers/loginHandler';
-import {goToPage} from '../../../shared/router';
+import {goToPage} from '../../../shared/router/router';
 import {createInput} from '../../../shared/components/input/input';
 import loginTemplate from '../../../shared/components/authPage/authPageTemplate.hbs';
 import '../../../shared/components/input/input.css';

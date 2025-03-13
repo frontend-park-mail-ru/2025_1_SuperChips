@@ -1,6 +1,6 @@
 import {loadImages} from '../../../shared/utils/loadPictures';
 import {debounce} from '../../../shared/utils/debounce';
-import {createFooter} from './footer/createFooter';
+import {createFooter} from '../components/footer/createFooter';
 
 
 /**

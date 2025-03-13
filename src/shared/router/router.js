@@ -1,6 +1,6 @@
-import {root} from '../app/app';
-import {config} from './config/router';
-import {fillFeed, fillPictureBox} from './utils/loadPictures';
+import {root} from '../../app/app';
+import {config} from '../config/router';
+import {fillFeed, fillPictureBox} from '../utils/loadPictures';
 
 export const appState = {
     activePage: null,

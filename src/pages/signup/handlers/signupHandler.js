@@ -1,7 +1,7 @@
 import {formatDateToISO} from '../../../shared/utils/formateDate';
 import {validateSignup} from '../lib/signupValidation';
-import {goToPage} from '../../../shared/router';
-import {Auth} from '../../../features/authorization/auth';
+import {goToPage} from '../../../shared/router/router';
+import {Auth} from '../../../features/authorization/api/auth';
 
 
 export const signupHandler = async (event) => {
