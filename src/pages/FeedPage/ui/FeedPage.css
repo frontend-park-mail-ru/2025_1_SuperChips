@@ -1,5 +1,5 @@
 .main-page {
-    background: linear-gradient(to bottom, #141414, #252525) fixed;
+    /*background: linear-gradient(to bottom, #141414, #252525) fixed;*/
     display: grid;
     grid-template-columns: 92px auto;
     grid-template-rows: 100px auto;

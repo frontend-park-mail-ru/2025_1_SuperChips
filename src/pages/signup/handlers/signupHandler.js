@@ -28,7 +28,7 @@ export const signupHandler = async (event) => {
     const response = await Auth.register(inputData);
 
     if (response.ok) {
-        await Auth.login(inputData);
+
         await goToPage('feed');
     }
     else {
@@ -36,7 +36,7 @@ export const signupHandler = async (event) => {
         const message = document.querySelector('#email-error');
         const usernameIcon = document.querySelector('#username-error-icon');
 
-        message.textContent = 'Пользователь с таким именем или почтой уже существует';
+        message.textContent = 'Пользователь с такой почтой или именем уже существует';
         message.classList.remove('hidden');
         emailIcon.classList.remove('hidden');
         usernameIcon.classList.remove('hidden');

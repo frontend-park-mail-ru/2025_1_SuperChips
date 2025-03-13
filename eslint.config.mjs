@@ -29,13 +29,13 @@ export default [
     {
         rules: {
             indent: ['error', 4],
-            'linebreak-style': ['error', 'unix'],
+            eqeqeq: 'error',
             quotes: ['error', 'single'],
             semi: ['error', 'always'],
+            'linebreak-style': ['error', 'windows'],
             'no-console': 'warn',
             'no-var': 'error',
             'prefer-const': 'error',
-            eqeqeq: 'error',
             'no-unused-vars': ['warn', { args: 'none' }],
             'import/extensions': ['error', 'ignorePackages', { js: 'never' }],
             'eol-last': ['error', 'always'],

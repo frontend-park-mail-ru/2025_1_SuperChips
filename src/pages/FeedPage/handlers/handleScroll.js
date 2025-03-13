@@ -1,6 +1,7 @@
 import { loadImages } from '../../../shared/utils/loadPictures';
 import { debounce } from '../../../shared/utils/debounce';
 import { Footer } from '../components/footer/footer';
+import { feedState } from '../../../shared/router/router';
 
 
 /**
@@ -8,12 +9,12 @@ import { Footer } from '../components/footer/footer';
  * @returns {Promise<void>}
  */
 const scrollHandler = async () => {
-    const threshold = 500;
+    const threshold = 700;
     const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - threshold;
 
-    if (scrolledToBottom) {
+    if (scrolledToBottom && !feedState.isLoading) {
         const newFrame = await loadImages();
-        if (newFrame !== null) {
+        if (newFrame && newFrame?.classList !== null) {
             newFrame.classList.add('feed-chunk');
             const feed = document.querySelector('#feed');
             feed.appendChild(newFrame);

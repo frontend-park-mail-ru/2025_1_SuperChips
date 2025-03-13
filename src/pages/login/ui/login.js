@@ -22,6 +22,7 @@ export const Login = async () => {
                 inputLabel: 'Email',
                 errorMessage: 'Неправильный формат почты',
                 maxlength: 120,
+                autocomplete: 'username',
             },
             {
                 type: 'password',
@@ -30,6 +31,7 @@ export const Login = async () => {
                 errorMessage: 'Неправильный пароль или почта',
                 isPassword: true,
                 maxlength: 120,
+                autocomplete: 'current-password',
             }
         ],
         page: 'login',

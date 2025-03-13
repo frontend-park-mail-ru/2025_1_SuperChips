@@ -1,5 +1,5 @@
 .login-page {
-    background: linear-gradient(to bottom, #141414, #252525) fixed;
+    /*background: linear-gradient(to bottom, #141414, #252525) fixed;*/
     display: flex;
     height: 100vh;
     position: relative;
