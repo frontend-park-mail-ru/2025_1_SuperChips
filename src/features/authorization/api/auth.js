@@ -16,7 +16,7 @@ class auth {
 	 * @param {string} email
 	 * @returns {Promise<json|Error>} ответ сервера
 	 */
-    async login({email, password}) {
+    async login({ email, password }) {
         try {
             const response = await this.API.post('/api/v1/auth/login',{ email, password });
             if (response.error) {

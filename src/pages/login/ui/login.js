@@ -1,7 +1,7 @@
 import { debouncedLoginButton } from '../handlers/loginButtonHandler';
 import { handleLogin } from '../handlers/loginHandler';
 import { goToPage } from '../../../shared/router/router';
-import { Input } from '../../../shared/components/input/ui/input';
+import { Input } from '../../../shared/components/input';
 import loginTemplate from '../../../shared/components/authPage/authPageTemplate.hbs';
 import '../../../shared/components/input/ui/input.css';
 import '../../../shared/components/authPage/authPage.css';
@@ -16,8 +16,21 @@ export const Login = async () => {
 
     const config = {
         inputs: [
-            {type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты'},
-            {type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Неправильный пароль или почта', isPassword: true}
+            {
+                type: 'email',
+                id: 'email',
+                inputLabel: 'Email',
+                errorMessage: 'Неправильный формат почты',
+                maxlength: 120,
+            },
+            {
+                type: 'password',
+                id: 'password',
+                inputLabel: 'Пароль',
+                errorMessage: 'Неправильный пароль или почта',
+                isPassword: true,
+                maxlength: 120,
+            }
         ],
         page: 'login',
         redirectText: 'Ещё нет аккаунта?',

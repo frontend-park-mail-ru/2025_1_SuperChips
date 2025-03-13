@@ -40,3 +40,9 @@ export const goToPage = async (page) => {
         await fillFeed();
     }
 };
+
+export const UrlHandler = (event) => {
+    // event.preventDefault();
+    // const URL = window.location.href;
+    alert(123);
+};

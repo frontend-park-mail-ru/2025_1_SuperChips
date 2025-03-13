@@ -38,6 +38,8 @@ export default [
             eqeqeq: 'error',
             'no-unused-vars': ['warn', { args: 'none' }],
             'import/extensions': ['error', 'ignorePackages', { js: 'never' }],
+            'eol-last': ['error', 'always'],
+            'object-curly-spacing': ['error', 'always'],
         },
     },
 ];

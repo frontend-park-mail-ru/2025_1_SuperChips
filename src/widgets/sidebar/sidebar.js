@@ -13,12 +13,12 @@ export const Sidebar = async () => {
     const logged = (await API.get('/api/v1/auth/user')).ok;
 
     const buttons = [
-        {id: 'newPin', source: '/icons/new-pin.svg', alt: 'add new pin', active: false},
-        {id: 'chats', source: '/icons/chat.svg', alt: 'chats', active: false},
-        {id: 'logout', source: '/icons/log-out.svg', alt: 'logout', active: logged}
+        { id: 'newPin', source: '/icons/new-pin.svg', alt: 'add new pin', active: false },
+        { id: 'chats', source: '/icons/chat.svg', alt: 'chats', active: false },
+        { id: 'logout', source: '/icons/log-out.svg', alt: 'logout', active: logged }
     ];
 
-    sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({buttons}));
+    sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({ buttons }));
 
 
     if (logged) {

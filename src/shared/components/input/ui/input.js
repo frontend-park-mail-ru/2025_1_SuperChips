@@ -10,7 +10,7 @@ import inputTemplate from './input.hbs';
 /**
  * Создает инпут с иконкой ошибки и сообщением об ошибке
  * @returns {HTMLDivElement}
- * @param {{type, id, inputLabel, errorMessage, isStarred}} data
+ * @param {{type, id, inputLabel, errorMessage, required, maxlength}} data
  */
 export const Input = (data) => {
     const inputContainer = document.createElement('div');
@@ -23,6 +23,11 @@ export const Input = (data) => {
         const eye = inputContainer.querySelector('.input__toggle-password');
         eye.addEventListener('click', togglePasswordHandler);
     }
+
+    if (data.type === 'date') {
+        inputField.addEventListener('input', dateHandler);
+    }
+
     return inputContainer;
 };
 
@@ -73,4 +78,14 @@ const togglePasswordHandler = (event) => {
         input.type = 'password';
         img.src = 'icons/eye-off.svg';
     }
+};
+
+const dateHandler = (event) => {
+    const value = event.target.value;
+    const parts = value.split('-');
+
+    if (parts.length < 3) return;
+
+    parts[0] = parts[0].slice(0, 4);
+    event.target.value = parts.join('-');
 };

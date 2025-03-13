@@ -1,7 +1,7 @@
 import { feedState } from '../router/router';
 import { API } from '../api/api';
 import { debouncedScroll } from '../../pages/FeedPage/handlers/handleScroll';
-import { FeedCard } from '../../pages/FeedPage/lib/skeleton/FeedCard';
+import { FeedCard } from '../../entities/FeedCard/ui/FeedCard';
 
 /**
  * Загружает картинки и создает коллаж для страниы входа
