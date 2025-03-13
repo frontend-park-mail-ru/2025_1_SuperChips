@@ -4,9 +4,9 @@ import {debouncedSignupButton} from '../handlers/signupButtonHandler';
 import {createInput} from '../../../shared/components/input/input';
 import {goToPage} from '../../../shared/router';
 import signupTemplate  from '../../../shared/components/authPage/authPageTemplate.hbs';
-import '../../../shared/components/input/input.css';
-import '../../../shared/components/authPage/authPage.css';
-import './signup.css';
+import '../../../shared/components/input/input.scss';
+import '../../../shared/components/authPage/authPage.scss';
+import './signup.scss';
 
 
 /**

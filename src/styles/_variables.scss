@@ -1,0 +1,65 @@
+// Цвета
+$primary-dark: #141414;
+$secondary-dark: #252525;
+$button-dark: #303030;
+$button-hover: #404040;
+$text-light: #fff;
+$text-dark: #000;
+$text-gray: #666;
+$error-color: #FF4A4A;
+$background-light: #EEE;
+$background-focus: #f8f8f8;
+$text-focus: #333;
+$disabled-color: #bebebe;
+$white: #fff;
+$black: #000;
+
+// Размеры
+$navbar-height: 88px;
+$sidebar-width: 92px;
+$button-height: 44px;
+$input-width: 440px;
+$input-height: 44px;
+$border-radius: 20px;
+$profile-picture-size: 48px;
+$icon-size: 24px;
+$logo-width: 300px;
+$logo-height: 160px;
+
+// Отступы
+$spacing-xs: 6px;
+$spacing-sm: 12px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// Z-индексы
+$z-navbar: 100;
+$z-sidebar: 50;
+$z-modal: 1000;
+
+// Градиенты
+$gradient-dark: linear-gradient(to bottom, $primary-dark, $secondary-dark) fixed;
+
+// Типографика
+$font-family-base: 'FuturaPT', sans-serif;
+$font-size-xs: 14px;
+$font-size-sm: 16px;
+$font-size-md: 18px;
+$font-size-lg: 20px;
+$font-size-xl: 36px;
+$font-size-xxl: 40px;
+
+// Прозрачность
+$opacity-80: 0.8;
+$opacity-60: 0.6;
+$opacity-100: 1;
+
+$grid-half: 50%;
+$grid-sidebar: 92px auto;
+$grid-header: 100px auto;
+
+// Добавим новые переменные
+$card-min-width: 205px;
+$card-gap: 20px;
+$feed-padding: 24px; 

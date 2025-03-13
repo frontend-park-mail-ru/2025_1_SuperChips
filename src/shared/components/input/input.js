@@ -4,7 +4,7 @@ import {validatePassword} from '../../validation/passwordValidation';
 import {validatePasswordConfirm} from '../../validation/passwordConfirmation';
 import {debounce} from '../../utils/debounce';
 import {validateUsername} from '../../validation/usernameValidation';
-import './input.css';
+import './input.scss';
 import inputTemplate from './input.hbs';
 
 /**

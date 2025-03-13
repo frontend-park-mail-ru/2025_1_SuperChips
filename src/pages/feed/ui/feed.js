@@ -2,7 +2,7 @@ import {createNavbar} from '../../../widgets/navbar/navbar';
 import {createSidebar} from '../../../widgets/sidebar/sidebar';
 import {debouncedScroll} from '../lib/handleScroll';
 import feedTemplate from './feed.hbs';
-import './feed.css';
+import './feed.scss';
 
 /**
  * Генерирует страницу ленты и создает обработчики событий

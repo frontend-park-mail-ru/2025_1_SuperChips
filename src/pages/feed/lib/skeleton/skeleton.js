@@ -1,4 +1,4 @@
-import './skeleton.css';
+import './skeleton.scss';
 
 export const createSkeleton = (url) => {
     const img = document.createElement('img');

@@ -1,3 +1,5 @@
+@use '../styles/variables' as *;
+
 @font-face {
     font-family: 'FuturaPT';
     src: url('../../public/fonts/futura-pt-book.woff2') format('woff2');
@@ -12,20 +14,19 @@
     font-style: normal;
 }
 
-
 .header {
     font-size: 36px;
-    color: #000;
+    color: $text-dark;
 }
 
 .subheader {
     font-size: 18px;
-    color: #666;
+    color: $text-gray;
 }
 
 .label {
     font-size: 20px;
-    color: #333;
+    color: $text-dark;
 }
 
 .link-label {
@@ -33,21 +34,23 @@
     text-decoration: none;
 }
 
-.input-text {
-    font-size: 14px;
-    color: #fff;
-}
+.input {
+    &-text {
+        font-size: 14px;
+        color: $text-light;
+    }
 
-.input-field-label {
-    font-size: 16px;
+    &-field-label {
+        font-size: 16px;
+    }
 }
 
 .error-label {
     font-size: 14px;
-    color: #FF4A4A;
+    color: $error-color;
 }
 
 .bold {
     font-weight: bold;
     text-decoration: none;
-}
+} 

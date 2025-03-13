@@ -3,9 +3,9 @@ import {handleLogin} from '../handlers/loginHandler';
 import {goToPage} from '../../../shared/router';
 import {createInput} from '../../../shared/components/input/input';
 import loginTemplate from '../../../shared/components/authPage/authPageTemplate.hbs';
-import '../../../shared/components/input/input.css';
-import '../../../shared/components/authPage/authPage.css';
-import './login.css';
+import '../../../shared/components/input/input.scss';
+import '../../../shared/components/authPage/authPage.scss';
+import './login.scss';
 
 /**
  * Генерирует страницу логина и создает обработчики событий

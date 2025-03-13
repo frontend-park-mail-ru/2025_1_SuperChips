@@ -1,6 +1,6 @@
 import {goToPage} from '../shared/router';
-import './fonts.css';
-import './common.css';
+import './fonts.scss';
+import './common.scss';
 
 export const root = document.getElementById('root');
 

@@ -1,6 +1,6 @@
 import {goToPage} from '../../shared/router';
 import navbarTemplate from './navbar.hbs';
-import './navbar.css';
+import './navbar.scss';
 import {Auth} from '../../features/authorization/auth';
 
 /**

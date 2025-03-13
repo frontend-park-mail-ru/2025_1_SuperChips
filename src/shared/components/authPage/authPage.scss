@@ -1,24 +1,26 @@
+@use '../../../styles/variables' as *;
+
 .error-message {
     justify-self: right;
-    height: 15px;
+    height: $spacing-md;
 }
 
 .button {
-    width: 440px;
-    height: 44px;
-    color: white;
-    background-color: black;
+    width: $input-width;
+    height: $button-height;
+    color: $text-light;
+    background-color: $text-dark;
     cursor: pointer;
     border: none;
-    border-radius: 20px;
-    font-size: 20px;
-    margin-top: 30px;
-}
+    border-radius: $border-radius;
+    font-size: $font-size-lg;
+    margin-top: $spacing-xl;
 
-button:disabled {
-    background-color: #bebebe;
-    cursor: not-allowed;
-    opacity: 100%;
+    &:disabled {
+        background-color: $disabled-color;
+        cursor: not-allowed;
+        opacity: $opacity-100;
+    }
 }
 
 .redirect:hover {
@@ -26,10 +28,10 @@ button:disabled {
 }
 
 .page-logo {
-    margin: 62px 10px 20px 94px;
-    opacity: 80%;
-    width: 300px;
-    height: 160px;
+    margin: 62px $spacing-sm $spacing-lg 94px;
+    opacity: $opacity-80;
+    width: $logo-width;
+    height: $logo-height;
     -webkit-user-drag: none;
 }
 
@@ -51,22 +53,22 @@ button:disabled {
     max-height: 700px;
     max-width: calc(100%);
     position: absolute;
-    left: 92px;
+    left: $sidebar-width;
     top: 292px;
     columns: 205px auto;
 }
 
 .picture {
     width: 205px;
-    border-radius: 20px;
-    background-color: #303030;
-    margin-bottom: 20px;
+    border-radius: $border-radius;
+    background-color: $button-dark;
+    margin-bottom: $spacing-lg;
     break-inside: avoid;
     object-fit: contain;
-    z-index: 100;
-    margin-right: 32px;
+    z-index: $z-navbar;
+    margin-right: $spacing-xl;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
-}
+} 

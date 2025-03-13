@@ -1,0 +1,89 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// Переменные
+$navbar-height: 88px;
+$navbar-padding: 20px;
+$search-height: 48px;
+$border-radius: 20px;
+
+// Миксины
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+}
+
+// Основные стили
+.navbar {
+    position: fixed;
+    background: $gradient-dark;
+    display: flex;
+    width: 100%;
+    height: $navbar-height;
+    padding: $spacing-lg 0;
+    align-items: center;
+    justify-content: space-between;
+    z-index: $z-navbar;
+}
+
+.navbar-logo {
+    align-self: center;
+    margin: 0 $spacing-md;
+    float: left;
+}
+
+.search-form {
+    flex-grow: 1;
+    height: $profile-picture-size;
+    margin-right: $spacing-lg;
+    padding: $spacing-sm;
+    padding-left: $spacing-lg;
+    border-radius: $border-radius;
+    border: none;
+
+    &:focus {
+        background-color: $background-focus;
+        color: $text-focus;
+        outline: none;
+    }
+}
+
+.profile-picture {
+    width: $profile-picture-size;
+    height: $profile-picture-size;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: $spacing-lg;
+    display: flex;
+    background-color: $white;
+    align-items: flex-end;
+    justify-content: center;
+
+    img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+}
+
+.shortUsername {
+    user-select: none;
+    font-size: $font-size-xxl;
+    font-weight: bold;
+}
+
+.feed-redirect {
+    color: $text-light;
+    background-color: $text-dark;
+    border-radius: $border-radius;
+    border: none;
+    width: 94px;
+    height: $button-height;
+    margin-right: $spacing-lg;
+
+    &:hover {
+        cursor: pointer;
+        opacity: $opacity-60;
+    }
+} 
