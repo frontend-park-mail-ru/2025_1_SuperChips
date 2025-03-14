@@ -1,4 +1,4 @@
-import {API} from '../../shared/api/api';
+import { API } from '../../../shared/api/api';
 
 
 /**
@@ -16,7 +16,7 @@ class auth {
 	 * @param {string} email
 	 * @returns {Promise<json|Error>} ответ сервера
 	 */
-    async login({email, password}) {
+    async login({ email, password }) {
         try {
             const response = await this.API.post('/api/v1/auth/login',{ email, password });
             if (response.error) {
@@ -29,10 +29,10 @@ class auth {
     }
 
     /**
-	 * Регистрация нового пользователя
-	 * @param {json} userData - email, имя пользователя, дата рождения, пароль
-	 * @returns {json} Ответ от сервера
-	 */
+     Регистрация нового пользователя
+     * @param {Object} userData - email, имя пользователя, дата рождения, пароль
+     * @returns {Promise<json|Error>} - ответ от сервера
+     */
     async register(userData) {
         try {
             const response = await this.API.post('/api/v1/auth/registration', userData);

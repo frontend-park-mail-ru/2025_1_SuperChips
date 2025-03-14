@@ -1,7 +1,7 @@
-import {validateEmail} from '../../../shared/validation/emailValidation';
-import {validateBirthday} from '../../../shared/validation/birthdayValidation';
-import {validatePassword} from '../../../shared/validation/passwordValidation';
-import {validateUsername} from '../../../shared/validation/usernameValidation';
+import { validateEmail } from '../../../shared/validation/emailValidation';
+import { validateBirthday } from '../../../shared/validation/birthdayValidation';
+import { validatePassword } from '../../../shared/validation/passwordValidation';
+import { validateUsername } from '../../../shared/validation/usernameValidation';
 
 
 /**
@@ -13,7 +13,7 @@ import {validateUsername} from '../../../shared/validation/usernameValidation';
  * @param passwordConfirm подтверждение пароля
  * @returns {boolean}
  */
-export const validateSignup = ({email, username, birthday, password, passwordConfirm}) => {
+export const validateSignup = ({ email, username, birthday, password, passwordConfirm }) => {
     const result = {
         email: validateEmail(email)[0],
         username: validateUsername(username)[0],

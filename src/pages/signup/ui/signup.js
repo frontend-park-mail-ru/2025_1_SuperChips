@@ -1,12 +1,13 @@
-import {debouncedPasswordConfirm} from '../handlers/passwordConfirm';
-import {signupHandler} from '../handlers/signupHandler';
-import {debouncedSignupButton} from '../handlers/signupButtonHandler';
-import {createInput} from '../../../shared/components/input/input';
-import {goToPage} from '../../../shared/router';
-import signupTemplate  from '../../../shared/components/authPage/authPageTemplate.hbs';
-import '../../../shared/components/input/input.css';
-import '../../../shared/components/authPage/authPage.css';
+import { debouncedPasswordConfirm } from '../handlers/passwordConfirm';
+import { debouncedSignupButton } from '../handlers/signupButtonHandler';
+import { signupHandler } from '../handlers/signupHandler';
+import { Input } from '../../../shared/components/input';
+import { goToPage } from '../../../shared/router/router';
+import signupTemplate  from '../../login/authPage/authPageTemplate.hbs';
+import '../../../shared/components/input/ui/input.css';
+import '../../login/authPage/authPage.css';
 import './signup.css';
+import { fillPictureBox } from '../../login/lib/fillPictureBox';
 
 
 /**
@@ -14,7 +15,7 @@ import './signup.css';
  *
  * @returns {HTMLDivElement}
  */
-export const renderSignup = async () => {
+export const Signup = async () => {
     const config = {
         page: 'signup',
         redirectText: 'Есть аккаунт?',
@@ -23,11 +24,11 @@ export const renderSignup = async () => {
         header: 'Регистрация',
         subheader: 'Ещё пару шагов и вы с flow!',
         inputs: [
-            {type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты', isStarred: true},
-            {type: 'text', id: 'username', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято', isStarred: true},
-            {type: 'date', id: 'birthday', inputLabel: 'Дата рождения', errorMessage: 'Неправильный формат даты', isStarred: true},
-            {type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов', isStarred: true, isPassword: true},
-            {type: 'password', id: 'passwordConfirm', inputLabel: 'Повторите пароль', errorMessage: 'Пароли не совпадают', isStarred: true,  isPassword: true},
+            { type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты', required: true, maxlength: 120, autocomplete: 'username' },
+            { type: 'text', id: 'username', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято', required: true, maxlength: 120 },
+            { type: 'date', id: 'birthday', inputLabel: 'Дата рождения', errorMessage: 'Неправильный формат даты', required: true },
+            { type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов', required: true, isPassword: true, maxlength: 120, autocomplete: 'current-password' },
+            { type: 'password', id: 'passwordConfirm', inputLabel: 'Повторите пароль', errorMessage: 'Пароли не совпадают', required: true,  isPassword: true, maxlength: 120 },
         ]
     };
 
@@ -44,12 +45,20 @@ export const renderSignup = async () => {
     const form = page.querySelector('.signup-form');
     const placeholders = form.querySelectorAll('.input-placeholder');
     placeholders.forEach((item, index) => {
-        item.replaceWith(createInput(config.inputs[index]));
+        item.replaceWith(Input(config.inputs[index]));
     });
 
     form.addEventListener('submit', signupHandler);
     form.addEventListener('input', debouncedSignupButton);
     form.addEventListener('input', debouncedPasswordConfirm);
+
+    const observer = new MutationObserver(() => {
+        fillPictureBox(2);
+        observer.disconnect();
+    });
+
+    observer.observe(document.getElementById('root'), { childList: true });
+
 
     return page;
 };
