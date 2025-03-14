@@ -3,10 +3,11 @@ import { debouncedSignupButton } from '../handlers/signupButtonHandler';
 import { signupHandler } from '../handlers/signupHandler';
 import { Input } from '../../../shared/components/input';
 import { goToPage } from '../../../shared/router/router';
-import signupTemplate  from '../../../shared/components/authPage/authPageTemplate.hbs';
+import signupTemplate  from '../../login/authPage/authPageTemplate.hbs';
 import '../../../shared/components/input/ui/input.css';
-import '../../../shared/components/authPage/authPage.css';
+import '../../login/authPage/authPage.css';
 import './signup.css';
+import { fillPictureBox } from '../../login/lib/fillPictureBox';
 
 
 /**
@@ -50,6 +51,14 @@ export const Signup = async () => {
     form.addEventListener('submit', signupHandler);
     form.addEventListener('input', debouncedSignupButton);
     form.addEventListener('input', debouncedPasswordConfirm);
+
+    const observer = new MutationObserver(() => {
+        fillPictureBox(2);
+        observer.disconnect();
+    });
+
+    observer.observe(document.getElementById('root'), { childList: true });
+
 
     return page;
 };

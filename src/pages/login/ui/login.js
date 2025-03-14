@@ -2,10 +2,12 @@ import { debouncedLoginButton } from '../handlers/loginButtonHandler';
 import { handleLogin } from '../handlers/loginHandler';
 import { goToPage } from '../../../shared/router/router';
 import { Input } from '../../../shared/components/input';
-import loginTemplate from '../../../shared/components/authPage/authPageTemplate.hbs';
+import loginTemplate from '../authPage/authPageTemplate.hbs';
 import '../../../shared/components/input/ui/input.css';
-import '../../../shared/components/authPage/authPage.css';
+import '../authPage/authPage.css';
 import './login.css';
+import { fillFeed } from '../../FeedPage/lib/fillFeed';
+import { fillPictureBox } from '../lib/fillPictureBox';
 
 /**
  * Генерирует страницу логина и создает обработчики событий
@@ -59,6 +61,13 @@ export const Login = async () => {
         event.preventDefault();
         await goToPage('signup');
     });
+
+    const observer = new MutationObserver(() => {
+        fillPictureBox(1);
+        observer.disconnect();
+    });
+
+    observer.observe(document.getElementById('root'), { childList: true });
 
     return page;
 };
