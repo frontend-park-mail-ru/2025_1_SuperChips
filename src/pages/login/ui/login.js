@@ -1,4 +1,5 @@
 import { debouncedLoginButton } from '../handlers/loginButtonHandler';
+import { fillPictureBox } from '../lib/fillPictureBox';
 import { handleLogin } from '../handlers/loginHandler';
 import { goToPage } from '../../../shared/router/router';
 import { Input } from '../../../shared/components/input';
@@ -6,8 +7,6 @@ import loginTemplate from '../authPage/authPageTemplate.hbs';
 import '../../../shared/components/input/ui/input.css';
 import '../authPage/authPage.css';
 import './login.css';
-import { fillFeed } from '../../FeedPage/lib/fillFeed';
-import { fillPictureBox } from '../lib/fillPictureBox';
 
 /**
  * Генерирует страницу логина и создает обработчики событий
