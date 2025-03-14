@@ -1,5 +1,6 @@
 import { root } from '../../app/app';
 import { config } from '../config/router';
+import { debouncedScroll } from '../../pages/FeedPage/handlers/handleScroll';
 
 export const appState = {
     activePage: null,
@@ -13,6 +14,11 @@ export const appState = {
  */
 export const goToPage = async (page) => {
     root.innerHTML = '';
+
+    if (appState.activePage === 'feed' && page !== 'feed') {
+        window.removeEventListener('scroll', debouncedScroll);
+    }
+
 
     appState.activePage = page;
 
