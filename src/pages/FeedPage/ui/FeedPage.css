@@ -1,0 +1,43 @@
+.main-page {
+    /*background: linear-gradient(to bottom, #141414, #252525) fixed;*/
+    display: grid;
+    grid-template-columns: 92px auto;
+    grid-template-rows: 100px auto;
+    grid-template-areas:
+            "header header"
+            "sidebar page";
+    gap: 0;
+}
+
+.feed {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    padding: 0 4px 10px 4px;
+    min-height: calc(100vh - 112px);
+    width: 100%;
+}
+
+.feed-chunk {
+    columns: 205px auto;
+}
+
+.skeleton-1, .skeleton-2, .skeleton-3 {
+    break-inside: avoid;
+    width: 205px;
+    border-radius: 20px;
+    background-color: #303030;
+    margin-bottom: 20px;
+}
+
+.skeleton-1 {
+    height: 205px;
+}
+
+.skeleton-2 {
+    height: 285px;
+}
+
+.skeleton-3 {
+    height: 365px;
+}
+

@@ -1,0 +1,9 @@
+.feed--card {
+    width: 205px;
+    border-radius: 20px;
+    background-color: #303030;
+    margin-bottom: 20px;
+    break-inside: avoid;
+    object-fit: contain;
+    z-index: 100;
+}

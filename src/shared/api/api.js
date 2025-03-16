@@ -1,4 +1,4 @@
-import {API_BASE_URL} from '../config/constants';
+import { API_BASE_URL } from '../config/constants';
 
 /**
  * Класс для работы с API бэкенда
@@ -113,4 +113,3 @@ class CSRF {
 }
 
 export const API = new Api();
-

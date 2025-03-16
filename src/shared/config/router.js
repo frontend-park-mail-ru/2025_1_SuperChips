@@ -1,25 +1,25 @@
-import {renderFeed} from '../../pages/feed/ui/feed';
-import {renderLogin} from '../../pages/login/ui/login';
-import {renderSignup} from '../../pages/signup/ui/signup';
+import { FeedPage } from '../../pages/FeedPage';
+import { LoginPage } from '../../pages/LoginPage';
+import { SignupPage } from '../../pages/SignupPage';
 
 export const config = {
     menu: {
         'feed': {
             href: '/feed',
             title: 'Лента',
-            render: renderFeed,
+            render: FeedPage,
             // authOnly: true,
             // showSidebar: true
         },
         'login': {
             href: '/login',
             title: 'Авторизация',
-            render: renderLogin
+            render: LoginPage
         },
         'signup': {
             href: '/signup',
             title: 'Регистрация',
-            render: renderSignup
+            render: SignupPage
         }
     },
 };

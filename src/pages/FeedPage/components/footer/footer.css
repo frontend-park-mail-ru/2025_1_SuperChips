@@ -1,0 +1,25 @@
+.worm-container {
+    position: relative;
+    height: 292px;
+    width: calc(100% - 92px);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 92px;
+    /*background: linear-gradient(to bottom, #141414, #252525) fixed;*/
+}
+
+
+.wormy {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 292px;
+}
+
+.worm-container p {
+    z-index: 200;
+}

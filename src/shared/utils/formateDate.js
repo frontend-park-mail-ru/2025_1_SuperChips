@@ -1,6 +1,6 @@
 export const formatDateToISO = (dateString) => {
     if (dateString === '') {
-        return;
+        return '';
     }
 
     const [year, month, day] = dateString.split('-');
