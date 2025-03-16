@@ -3,11 +3,11 @@ import { debouncedSignupButton } from '../handlers/signupButtonHandler';
 import { signupHandler } from '../handlers/signupHandler';
 import { Input } from '../../../shared/components/input';
 import { goToPage } from '../../../shared/router/router';
-import signupTemplate  from '../../login/authPage/authPageTemplate.hbs';
+import signupTemplate  from '../../LoginPage/authPage/authPageTemplate.hbs';
 import '../../../shared/components/input/ui/input.css';
-import '../../login/authPage/authPage.css';
+import '../../LoginPage/authPage/authPage.css';
 import './signup.css';
-import { fillPictureBox } from '../../login/lib/fillPictureBox';
+import { fillPictureBox } from '../../LoginPage/lib/fillPictureBox';
 
 
 /**
@@ -15,7 +15,7 @@ import { fillPictureBox } from '../../login/lib/fillPictureBox';
  *
  * @returns {HTMLDivElement}
  */
-export const Signup = async () => {
+export const SignupPage = async () => {
     const config = {
         page: 'signup',
         redirectText: 'Есть аккаунт?',
@@ -24,11 +24,48 @@ export const Signup = async () => {
         header: 'Регистрация',
         subheader: 'Ещё пару шагов и вы с flow!',
         inputs: [
-            { type: 'email', id: 'email', inputLabel: 'Email', errorMessage: 'Неправильный формат почты', required: true, maxlength: 120, autocomplete: 'username' },
-            { type: 'text', id: 'username', inputLabel: 'Имя пользователя', errorMessage: 'Это имя уже занято', required: true, maxlength: 120 },
-            { type: 'date', id: 'birthday', inputLabel: 'Дата рождения', errorMessage: 'Неправильный формат даты', required: true },
-            { type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов', required: true, isPassword: true, maxlength: 120, autocomplete: 'current-password' },
-            { type: 'password', id: 'passwordConfirm', inputLabel: 'Повторите пароль', errorMessage: 'Пароли не совпадают', required: true,  isPassword: true, maxlength: 120 },
+            {
+                type: 'email',
+                id: 'email',
+                inputLabel: 'Email',
+                errorMessage: 'Неправильный формат почты',
+                required: true,
+                maxlength: 120,
+                autocomplete: 'username'
+            },
+            {
+                type: 'text',
+                id: 'username',
+                inputLabel: 'Имя пользователя',
+                errorMessage: 'Это имя уже занято',
+                required: true,
+                maxlength: 120 },
+            {
+                type: 'date',
+                id: 'birthday',
+                inputLabel: 'Дата рождения',
+                errorMessage: 'Неправильный формат даты',
+                required: true
+            },
+            {
+                type: 'password',
+                id: 'password',
+                inputLabel: 'Пароль',
+                errorMessage: 'Пароль должен быть длиной не менее 8 символов',
+                required: true,
+                isPassword: true,
+                maxlength: 120,
+                autocomplete: 'current-password'
+            },
+            {
+                type: 'password',
+                id: 'passwordConfirm',
+                inputLabel: 'Повторите пароль',
+                errorMessage: 'Пароли не совпадают',
+                required: true,
+                isPassword: true,
+                maxlength: 120
+            },
         ]
     };
 

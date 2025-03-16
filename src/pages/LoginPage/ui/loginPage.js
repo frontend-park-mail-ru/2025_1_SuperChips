@@ -12,7 +12,7 @@ import './login.css';
  * Генерирует страницу логина и создает обработчики событий
  * @returns {HTMLDivElement}
  */
-export const Login = async () => {
+export const LoginPage = async () => {
     const page = document.createElement('div');
 
     const config = {
