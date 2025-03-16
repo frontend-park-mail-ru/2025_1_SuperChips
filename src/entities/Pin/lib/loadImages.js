@@ -1,8 +1,8 @@
-import { appState } from '../router/router';
-import { API } from '../api/api';
+import { appState } from '../../../shared/router/router';
+import { API } from '../../../shared/api/api';
 
 /**
- * Загружает чанк картинок
+ * Загружает чанк картинок для ленты
  * @returns {Promise<null|number|Object>}
  */
 export const loadImages = async (pageNum) => {

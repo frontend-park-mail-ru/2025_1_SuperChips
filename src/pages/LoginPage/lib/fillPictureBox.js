@@ -1,5 +1,5 @@
-import { loadImages } from '../../../shared/utils/loadImages';
-import { FeedCard } from '../../../entities/FeedCard';
+import { loadImages } from '../../../entities/Pin/lib/loadImages';
+import { Pin } from '../../../entities/Pin';
 
 /**
  * Загружает картинки и создает коллаж для страниы входа
@@ -13,7 +13,7 @@ export const fillPictureBox = async (pageNum) => {
     newFrame.classList.add('feed-chunk');
 
     images.data.forEach((item) => {
-        newFrame.appendChild(FeedCard(item.image));
+        newFrame.appendChild(Pin(item.image));
     });
 
     const pictureBox = document.querySelector('.picture-box');

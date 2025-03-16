@@ -2,8 +2,8 @@ import { appState } from '../../../shared/router/router';
 import { feedState } from '../ui/FeedPage';
 import { debouncedScroll } from '../handlers/handleScroll';
 import { Footer } from '../components/footer/footer';
-import { FeedCard } from '../../../entities/FeedCard';
-import { loadImages } from '../../../shared/utils/loadImages';
+import { Pin } from '../../../entities/Pin';
+import { loadImages } from '../../../entities/Pin/lib/loadImages';
 
 
 /**
@@ -26,7 +26,7 @@ export const fillFeed = async () => {
     newFrame.classList.add('feed-chunk');
 
     images.data.forEach((item) => {
-        newFrame.appendChild(FeedCard(item.image));
+        newFrame.appendChild(Pin(item.image));
     });
 
     feed.appendChild(newFrame);
