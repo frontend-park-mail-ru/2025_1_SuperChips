@@ -1,0 +1,25 @@
+<div class="input-container">
+    <label for="{{id}}">
+        {{inputLabel}}
+        {{#if required}}<span class="required">*</span>{{/if}}
+    </label>
+
+    <div class="input">
+        <input type="{{type}}"
+               class="input__field"
+               id="{{id}}"
+               maxlength="{{maxlength}}"
+               {{#if autocomplete}} autocomplete="{{autocomplete}}" {{/if}}
+        >
+        {{#if isPassword}}
+            <img src="icons/eye-off.svg" class="input__toggle-password"
+                 alt="Показать пароль" data-password-toggle id="{{id}}-eye"
+            >
+        {{/if}}
+        <img src="icons/error.svg" class="input__error hidden" aria-hidden="true" alt="" id="{{id}}-error-icon">
+    </div>
+
+    <p class="error-message error-label hidden" id="{{id}}-error">
+        {{errorMessage}}
+    </p>
+</div>

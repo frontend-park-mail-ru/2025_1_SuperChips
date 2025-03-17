@@ -1,14 +1,14 @@
-import {goToPage} from '../../shared/router';
+import { goToPage } from '../../shared/router/router';
+import { Auth } from '../../features/authorization/api/auth';
 import navbarTemplate from './navbar.hbs';
 import './navbar.scss';
-import {Auth} from '../../features/authorization/auth';
 
 /**
  * Генерирует навбар для основных страниц (ленты, профиля и тд)
  * Содержимое навбара меняется, в зависимости от того, авторизован ли пользователь
  * @returns {HTMLDivElement}
  */
-export const createNavbar = async () => {
+export const Navbar = async () => {
     const navbar = document.createElement('div');
 
     const response = await Auth.getUserData();

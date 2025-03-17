@@ -1,0 +1,32 @@
+@use '../../../styles/variables' as *;
+
+.signup-page {
+    background: $gradient-dark;
+    display: flex;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.signup-container {
+    height: 100%;
+    width: 572px;
+    background-color: $white;
+    z-index: $z-navbar;
+}
+
+.signup-form {
+    margin-top: 24px;
+}
+
+.signup-box-1 {
+    padding: 52px 66px 0 66px;
+}
+
+.signup-redirect {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-top: $spacing-sm;
+    font-size: $font-size-lg;
+}
