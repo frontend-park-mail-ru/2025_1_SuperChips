@@ -1,3 +1,5 @@
+@use '../styles/variables' as *;
+
 * {
     margin: 0;
     padding: 0;
@@ -7,5 +9,5 @@
 }
 
 body {
-    background: linear-gradient(to bottom, #141414, #252525) fixed;
+    background: $gradient-dark;
 }

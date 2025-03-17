@@ -1,7 +1,7 @@
 import { goToPage } from '../../shared/router/router';
 import { Auth } from '../../features/authorization/api/auth';
 import navbarTemplate from './navbar.hbs';
-import './navbar.css';
+import './navbar.scss';
 
 /**
  * Генерирует навбар для основных страниц (ленты, профиля и тд)

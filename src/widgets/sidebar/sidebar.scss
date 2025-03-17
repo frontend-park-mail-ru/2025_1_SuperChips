@@ -1,0 +1,57 @@
+@use '../../styles/variables' as *;
+
+.sidebar {
+    background: $gradient-dark;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: $sidebar-width;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.sidebar__button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: end;
+    gap: $spacing-xl;
+    width: 100%;
+    margin-bottom: 36px;
+}
+
+.sidebar-button {
+    &:hover {
+        cursor: pointer;
+    }
+
+    &_disabled:hover {
+        cursor: not-allowed;
+    }
+}
+
+.sidebar-button {
+    width: $button-height;
+    height: $button-height;
+    border-radius: 50%;
+    border: none;
+    background-color: $button-dark;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background-color: $button-hover;
+    }
+
+    &.active {
+        background-color: $white;
+
+        img {
+            filter: brightness(0%);
+        }
+    }
+} 

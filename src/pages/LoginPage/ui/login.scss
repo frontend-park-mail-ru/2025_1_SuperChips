@@ -1,5 +1,7 @@
+@use '../../../styles/variables' as *;
+
 .login-page {
-    /*background: linear-gradient(to bottom, #141414, #252525) fixed;*/
+    background: $gradient-dark;
     display: flex;
     height: 100vh;
     position: relative;
@@ -9,8 +11,8 @@
 .login-container {
     height: 100%;
     width: 572px;
-    background-color: white;
-    z-index: 100;
+    background-color: $white;
+    z-index: $z-navbar;
 }
 
 .login-form {
@@ -25,6 +27,6 @@
     display: flex;
     justify-content: center;
     gap: 4px;
-    margin-top:12px;
-    font-size: 20px;
+    margin-top: $spacing-sm;
+    font-size: $font-size-lg;
 }

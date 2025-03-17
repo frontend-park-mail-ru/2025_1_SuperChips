@@ -2,7 +2,7 @@ import { Auth } from '../../features/authorization/api/auth';
 import { API } from '../../shared/api/api';
 import { goToPage } from '../../shared/router/router';
 import sidebarTemplate from './sidebar.hbs';
-import './sidebar.css';
+import './sidebar.scss';
 
 /**
  * Генерирует сайдбар для главных страниц (лента, профиль и тд)

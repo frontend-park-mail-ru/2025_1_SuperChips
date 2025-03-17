@@ -1,5 +1,5 @@
 import footerTemplate from './footer.hbs';
-import './footer.css';
+import './footer.scss';
 
 export const Footer = () => {
     const footer = document.createElement('div');

@@ -1,0 +1,60 @@
+@use '../../../styles/variables' as *;
+
+.input, .input__field, .input--invalid {
+    height: $input-height;
+    border-radius: $border-radius;
+    background-color: $background-light;
+    color: $text-gray;
+}
+
+.input {
+    width: $input-width;
+    margin-top: $spacing-xs;
+    position: relative;
+
+    &__field {
+        width: $input-width;
+        border: none;
+        padding: $spacing-sm 60px $spacing-sm $spacing-lg;
+
+        &:focus {
+            background-color: $background-focus;
+            color: $text-focus;
+            outline: none;
+        }
+
+        &.error {
+            border: 2px solid $error-color;
+        }
+    }
+
+    &__error {
+        position: absolute;
+        right: $spacing-sm;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    &__toggle-password {
+        position: absolute;
+        right: $spacing-sm;
+        transform: translateY(45%);
+        cursor: pointer;
+        width: $icon-size;
+        height: $icon-size;
+    }
+
+    &--invalid {
+        width: $input-width;
+        border: 2px solid $error-color;
+        appearance: none;
+    }
+}
+
+.required {
+    color: $error-color;
+}
+
+.hidden {
+    visibility: hidden;
+} 

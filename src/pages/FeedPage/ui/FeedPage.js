@@ -3,7 +3,7 @@ import { Sidebar } from '../../../widgets/sidebar/sidebar';
 import { fillFeed } from '../lib/fillFeed';
 import { debouncedScroll } from '../handlers/handleScroll';
 import feedTemplate from './FeedPage.hbs';
-import './FeedPage.css';
+import './feed.scss';
 
 export const feedState = {
     isLoading: false,

@@ -4,9 +4,9 @@ import { signupHandler } from '../handlers/signupHandler';
 import { Input } from '../../../shared/components/input';
 import { goToPage } from '../../../shared/router/router';
 import signupTemplate  from '../../LoginPage/authPage/authPageTemplate.hbs';
-import '../../../shared/components/input/ui/input.css';
-import '../../LoginPage/authPage/authPage.css';
-import './signup.css';
+import '../../../shared/components/input/ui/input.scss';
+import '../../LoginPage/authPage/authPage.scss';
+import './signup.scss';
 import { fillPictureBox } from '../../LoginPage/lib/fillPictureBox';
 
 
