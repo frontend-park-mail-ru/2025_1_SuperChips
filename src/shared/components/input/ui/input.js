@@ -48,7 +48,8 @@ const inputHandler = (event) => {
 
     const [valid, error] = validators[input.id]?.(input.value) ?? true;
 
-    const showError = !valid && input.value !== '';
+    const showError = !valid && (input.value !== '' || event.target.type === 'date');
+
     icon.classList.toggle('hidden', !showError);
     message.classList.toggle('hidden', !showError);
     input.classList.toggle('error', showError);

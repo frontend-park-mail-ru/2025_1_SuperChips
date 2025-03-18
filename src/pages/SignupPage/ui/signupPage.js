@@ -28,7 +28,7 @@ export const SignupPage = async () => {
                 type: 'email',
                 id: 'email',
                 inputLabel: 'Email',
-                errorMessage: 'Неправильный формат почты',
+                errorMessage: 'Введите email в формате user@domain.ru',
                 required: true,
                 maxlength: 64,
                 autocomplete: 'username'
@@ -39,13 +39,7 @@ export const SignupPage = async () => {
                 inputLabel: 'Имя пользователя',
                 errorMessage: 'Это имя уже занято',
                 required: true,
-                maxlength: 32 },
-            {
-                type: 'date',
-                id: 'birthday',
-                inputLabel: 'Дата рождения',
-                errorMessage: 'Неправильный формат даты',
-                required: true
+                maxlength: 32
             },
             {
                 type: 'password',
