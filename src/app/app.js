@@ -8,9 +8,10 @@ export const root = document.getElementById('root');
 export const App = async () => {
     await User.login();
 
-    await goToPage('/feed');
 
     window.addEventListener('popstate', () => {
         goToPage(location.pathname, false);
     });
+
+    await goToPage(location.pathname);
 };

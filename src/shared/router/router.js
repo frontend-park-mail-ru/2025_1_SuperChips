@@ -16,6 +16,10 @@ export const appState = {
 export const goToPage = async (page, updateHistory = true) => {
     root.innerHTML = '';
 
+    if (!(page in config.menu)) {
+        page = '/feed';
+    }
+
     if (appState.activePage === '/feed' && page !== '/feed') {
         window.removeEventListener('scroll', debouncedScroll);
     }
@@ -30,4 +34,3 @@ export const goToPage = async (page, updateHistory = true) => {
     const element = await config.menu[page].render();
     root.appendChild(element);
 };
-
