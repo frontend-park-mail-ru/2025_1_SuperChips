@@ -1,7 +1,7 @@
 import { formatDateToISO } from 'shared/utils/formateDate';
 import { validateSignup } from '../lib/signupValidation';
 import { goToPage } from 'shared/router/router';
-import { Auth } from 'features/authorization/api/auth';
+import { Auth } from 'features/authorization';
 import { User } from 'entities/User';
 
 

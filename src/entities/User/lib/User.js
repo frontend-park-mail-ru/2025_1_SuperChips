@@ -1,4 +1,4 @@
-import { Auth } from 'features/authorization/api/auth';
+import { Auth } from 'features/authorization';
 
 class user {
     authorized;
