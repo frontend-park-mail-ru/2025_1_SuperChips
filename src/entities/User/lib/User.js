@@ -15,26 +15,15 @@ class user {
 
     login = async () => {
         const response = await Auth.getUserData();
+        const body = await response.json();
         if (response.ok) {
-            const data = await response.json();
+            const data = body.data;
             this.#username = data.username;
             this.#avatar = data.avatar;
             this.#tag = data.tag;
             this.authorized = true;
         }
     };
-
-    // login = async () => {
-    //     const data = {
-    //         username: 'Valekir',
-    //         tag: 'creative_id237',
-    //         avatar: 'http://146.185.208.105:8080/static/img/18d6c98da28bee541c91931f1b0bb12f.jpg',
-    //     };
-    //     this.#username = data.username;
-    //     this.#avatar = data.avatar;
-    //     this.#tag = data.tag;
-    //     this.authorized = true;
-    // };
 
     logout = () => {
         this.#username = null;

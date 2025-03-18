@@ -25,7 +25,7 @@ export const Sidebar = async () => {
         logout.addEventListener('click', async (event) => {
             event.preventDefault();
             User.logout();
-            // await Auth.logout();
+            await Auth.logout();
             await goToPage('feed');
         });
     }
