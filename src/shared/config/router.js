@@ -8,18 +8,18 @@ export const config = {
             href: '/feed',
             title: 'Лента',
             render: FeedPage,
-            // authOnly: true,
-            // showSidebar: true
         },
         '/login': {
             href: '/login',
             title: 'Авторизация',
-            render: LoginPage
+            render: LoginPage,
+            nonAuthOnly: true,
         },
         '/signup': {
             href: '/signup',
             title: 'Регистрация',
-            render: SignupPage
+            render: SignupPage,
+            nonAuthOnly: true,
         }
     },
 };

@@ -1,6 +1,7 @@
 import { root } from 'app/app';
 import { config } from 'shared/config/router';
 import { debouncedScroll } from 'pages/FeedPage/handlers/handleScroll';
+import { User } from 'entities/User';
 
 export const appState = {
     activePage: null,
@@ -16,7 +17,7 @@ export const appState = {
 export const goToPage = async (page, updateHistory = true) => {
     root.innerHTML = '';
 
-    if (!(page in config.menu)) {
+    if ((!(page in config.menu)) || (config.menu[page]?.nonAuthOnly && User.authorized)) {
         page = '/feed';
     }
 
