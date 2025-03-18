@@ -39,7 +39,13 @@ export const SignupPage = async () => {
                 inputLabel: 'Имя пользователя',
                 errorMessage: 'Это имя уже занято',
                 required: true,
-                maxlength: 32
+                maxlength: 32 },
+            {
+                type: 'date',
+                id: 'birthday',
+                inputLabel: 'Дата рождения',
+                errorMessage: 'Введите дату в формате ДД.ММ.ГГГГ',
+                required: true
             },
             {
                 type: 'password',
