@@ -1,7 +1,8 @@
-import { User } from '../../entities/User';
-import { goToPage } from 'shared/router/router';
 import navbarTemplate from './navbar.hbs';
 import './navbar.scss';
+import { User } from 'entities/User';
+import { goToPage } from 'shared/router/router';
+import { scrollToTop } from '../handlers/scrollToTop';
 
 /**
  * Генерирует навбар для основных страниц (ленты, профиля и тд)
@@ -25,6 +26,9 @@ export const Navbar = async () => {
             await goToPage('/login');
         });
     }
+
+    const anchorButton = navbar.querySelector('#scroll-to-top');
+    anchorButton.addEventListener('click', scrollToTop);
 
     return navbar;
 };

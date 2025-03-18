@@ -1,10 +1,10 @@
-import { Navbar } from 'widgets/navbar/navbar';
+import { User } from 'entities/User';
+import { Navbar } from 'widgets/navbar';
 import { Sidebar } from 'widgets/sidebar/sidebar';
 import { fillFeed } from '../lib/fillFeed';
 import { debouncedScroll } from '../handlers/handleScroll';
 import feedTemplate from './FeedPage.hbs';
 import './feed.scss';
-import { User } from 'entities/User';
 
 export const feedState = {
     isLoading: false,

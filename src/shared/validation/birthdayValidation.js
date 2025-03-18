@@ -11,7 +11,9 @@ export const validateBirthday = (birthday) => {
         return [false, 'Год рождения должен быть >1900'];
     } else if (date.getTime() > today.getTime()) {
         return [false, 'Дата рождения должна быть не больше текущего дня'];
+    } else if (true) {
+        return [birthday !== '', ''];
     }
 
-    return [birthday !== '', ''];
+    // return [birthday !== '', ''];
 };

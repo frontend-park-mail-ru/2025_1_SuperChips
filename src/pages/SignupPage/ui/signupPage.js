@@ -30,7 +30,7 @@ export const SignupPage = async () => {
                 inputLabel: 'Email',
                 errorMessage: 'Неправильный формат почты',
                 required: true,
-                maxlength: 120,
+                maxlength: 64,
                 autocomplete: 'username'
             },
             {
@@ -39,7 +39,7 @@ export const SignupPage = async () => {
                 inputLabel: 'Имя пользователя',
                 errorMessage: 'Это имя уже занято',
                 required: true,
-                maxlength: 120 },
+                maxlength: 32 },
             {
                 type: 'date',
                 id: 'birthday',
@@ -54,7 +54,7 @@ export const SignupPage = async () => {
                 errorMessage: 'Пароль должен быть длиной не менее 8 символов',
                 required: true,
                 isPassword: true,
-                maxlength: 120,
+                maxlength: 96,
                 autocomplete: 'current-password'
             },
             {
