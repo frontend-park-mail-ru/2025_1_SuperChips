@@ -26,7 +26,7 @@ export const Sidebar = async () => {
             event.preventDefault();
             User.logout();
             await Auth.logout();
-            await goToPage('feed');
+            await goToPage('/feed');
         });
     }
     return sidebar;

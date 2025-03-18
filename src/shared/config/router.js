@@ -4,19 +4,19 @@ import { SignupPage } from '../../pages/SignupPage';
 
 export const config = {
     menu: {
-        'feed': {
+        '/feed': {
             href: '/feed',
             title: 'Лента',
             render: FeedPage,
             // authOnly: true,
             // showSidebar: true
         },
-        'login': {
+        '/login': {
             href: '/login',
             title: 'Авторизация',
             render: LoginPage
         },
-        'signup': {
+        '/signup': {
             href: '/signup',
             title: 'Регистрация',
             render: SignupPage

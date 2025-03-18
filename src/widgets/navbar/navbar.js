@@ -1,5 +1,5 @@
 import { User } from '../../entities/User';
-import { goToPage } from '../../shared/router/router';
+import { goToPage } from 'shared/router/router';
 import navbarTemplate from './navbar.hbs';
 import './navbar.scss';
 
@@ -21,8 +21,8 @@ export const Navbar = async () => {
 
     const redirectButton = navbar.querySelector('#redirect');
     if (redirectButton) {
-        redirectButton.addEventListener('click', () => {
-            goToPage('login');
+        redirectButton.addEventListener('click', async () => {
+            await goToPage('/login');
         });
     }
 

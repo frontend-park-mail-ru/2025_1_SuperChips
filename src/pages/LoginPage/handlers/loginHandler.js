@@ -15,7 +15,7 @@ export const handleLogin = async (event) => {
 
     if (response.ok) {
         await User.login();
-        await goToPage('feed');
+        await goToPage('/feed');
     }
     else {
         const icon = document.querySelector('#password-error-icon');
