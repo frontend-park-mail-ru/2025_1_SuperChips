@@ -1,10 +1,10 @@
 import { debouncedPasswordConfirm } from '../handlers/passwordConfirm';
 import { debouncedSignupButton } from '../handlers/signupButtonHandler';
 import { signupHandler } from '../handlers/signupHandler';
-import { Input } from '../../../shared/components/input';
-import { goToPage } from '../../../shared/router/router';
-import signupTemplate  from '../../LoginPage/authPage/authPageTemplate.hbs';
-import '../../../shared/components/input/ui/input.scss';
+import { Input } from 'shared/components/input';
+import { goToPage } from 'shared/router/router';
+import signupTemplate  from 'pages/LoginPage/authPage/authPageTemplate.hbs';
+import 'shared/components/input/ui/input.scss';
 import '../../LoginPage/authPage/authPage.scss';
 import './signup.scss';
 import { fillPictureBox } from '../../LoginPage/lib/fillPictureBox';

@@ -1,7 +1,8 @@
-import { formatDateToISO } from '../../../shared/utils/formateDate';
+import { formatDateToISO } from 'shared/utils/formateDate';
 import { validateSignup } from '../lib/signupValidation';
-import { goToPage } from '../../../shared/router/router';
-import { Auth } from '../../../features/authorization/api/auth';
+import { goToPage } from 'shared/router/router';
+import { Auth } from 'features/authorization/api/auth';
+import { User } from 'entities/User';
 
 
 export const signupHandler = async (event) => {
@@ -28,7 +29,7 @@ export const signupHandler = async (event) => {
     const response = await Auth.register(inputData);
 
     if (response.ok) {
-
+        await User.login();
         await goToPage('feed');
     }
     else {

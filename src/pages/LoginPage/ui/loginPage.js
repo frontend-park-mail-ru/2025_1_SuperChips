@@ -1,10 +1,10 @@
 import { debouncedLoginButton } from '../handlers/loginButtonHandler';
 import { fillPictureBox } from '../lib/fillPictureBox';
 import { handleLogin } from '../handlers/loginHandler';
-import { goToPage } from '../../../shared/router/router';
-import { Input } from '../../../shared/components/input';
+import { goToPage } from 'shared/router/router';
+import { Input } from 'shared/components/input';
 import loginTemplate from '../authPage/authPageTemplate.hbs';
-import '../../../shared/components/input/ui/input.scss';
+import 'shared/components/input/ui/input.scss';
 import '../authPage/authPage.scss';
 import './login.scss';
 

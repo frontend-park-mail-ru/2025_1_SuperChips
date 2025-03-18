@@ -1,5 +1,6 @@
-import { goToPage } from '../../../shared/router/router';
-import { Auth } from '../../../features/authorization/api/auth';
+import { goToPage } from 'shared/router/router';
+import { Auth } from 'features/authorization/api/auth';
+import { User } from 'entities/User';
 
 export const handleLogin = async (event) => {
     event.preventDefault();
@@ -13,6 +14,7 @@ export const handleLogin = async (event) => {
     const response = await Auth.login(inputData);
 
     if (response.ok) {
+        await User.login();
         await goToPage('feed');
     }
     else {

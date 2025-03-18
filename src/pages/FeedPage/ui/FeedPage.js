@@ -1,9 +1,10 @@
-import { Navbar } from '../../../widgets/navbar/navbar';
-import { Sidebar } from '../../../widgets/sidebar/sidebar';
+import { Navbar } from 'widgets/navbar/navbar';
+import { Sidebar } from 'widgets/sidebar/sidebar';
 import { fillFeed } from '../lib/fillFeed';
 import { debouncedScroll } from '../handlers/handleScroll';
 import feedTemplate from './FeedPage.hbs';
 import './feed.scss';
+import { User } from 'entities/User';
 
 export const feedState = {
     isLoading: false,
@@ -21,7 +22,10 @@ export const FeedPage = async () => {
     page.insertAdjacentHTML('beforeend', feedTemplate({}));
 
     page.querySelector('#navbar').replaceWith((await Navbar()));
-    page.querySelector('#sidebar').replaceWith(await Sidebar());
+
+    if (User.authorized) {
+        page.querySelector('#sidebar').replaceWith(await Sidebar());
+    }
 
     window.addEventListener('scroll', debouncedScroll);
 

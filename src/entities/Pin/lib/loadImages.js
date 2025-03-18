@@ -1,5 +1,5 @@
-import { appState } from '../../../shared/router/router';
-import { API } from '../../../shared/api/api';
+import { appState } from 'shared/router/router';
+import { API } from 'shared/api/api';
 
 /**
  * Загружает чанк картинок для ленты
