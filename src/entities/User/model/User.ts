@@ -1,10 +1,10 @@
 import { Auth } from 'features/authorization';
 
 class user {
-    authorized;
-    #username;
-    #tag;
-    #avatar;
+    authorized: boolean;
+    #username: string | null;
+    #tag: string | null;
+    #avatar: string | null;
 
     constructor() {
         this.authorized = false;
@@ -13,10 +13,14 @@ class user {
         this.#avatar = null;
     }
 
-    fetchUserData = async () => {
+    fetchUserData = async (): Promise<void> => {
         const response = await Auth.getUserData();
-        const body = await response.json();
-        if (response.ok) {
+
+        if (response instanceof Error) {
+            return;
+        }
+        else if (response.ok) {
+            const body = await response.json();
             const data = body.data;
             this.#username = data.username;
             this.#avatar = data.avatar;
@@ -25,7 +29,7 @@ class user {
         }
     };
 
-    clearUserData = () => {
+    clearUserData = (): void => {
         this.#username = null;
         this.#avatar = null;
         this.#tag = null;

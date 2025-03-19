@@ -4,7 +4,7 @@ import { API_BASE_URL } from '../config/constants';
  * Класс для работы с API бэкенда
  */
 class Api {
-    #apiBaseUrl;
+    readonly #apiBaseUrl: string;
     #csrf;
     constructor() {
         this.#apiBaseUrl = API_BASE_URL;
@@ -19,10 +19,16 @@ class Api {
 	 * @param {object} body тело запроса, если есть
 	 * @returns {Promise<any>} ответ от сервера
 	 */
-    async request(method, path, headers, body = null) {
+    async request(
+        method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
+        path: string,
+        headers: HeadersInit | undefined,
+        body: object | null = null
+    ): Promise<Response|Error> {
         try {
-            const url = this.#apiBaseUrl + path;
-            const state = {
+            const url: string = this.#apiBaseUrl + path;
+
+            const state: RequestInit = {
                 method: method,
                 headers: headers,
                 mode: 'cors',
@@ -30,14 +36,14 @@ class Api {
                 body: body ? JSON.stringify(body) : null,
             };
 
-            const response = await fetch(url, state);
+            const response: Response = await fetch(url, state);
 
-            const CSRFToken = response.headers.get('X-CSRF-TOKEN') ?? localStorage.getItem('csrf');
+            const CSRFToken: string | null = response.headers.get('X-CSRF-TOKEN') ?? localStorage.getItem('csrf');
             if (CSRFToken) {
                 this.#csrf.set(CSRFToken);
             }
 
-            return await response;
+            return response;
         } catch {
             return new Error('Could not fetch');
         }
@@ -48,8 +54,10 @@ class Api {
 	 * @param {string} url url запроса
 	 * @returns {Response} ответ от сервера
 	 */
-    async get(url) {
-        const headers = {};
+    async get(
+        url: string
+    ): Promise<Response|Error> {
+        const headers: HeadersInit = {};
         return this.request('GET', url, headers);
     }
 
@@ -59,8 +67,11 @@ class Api {
 	 * @param {object} body тело запроса
 	 * @returns {json} ответ от сервера
 	 */
-    async post(url, body = null) {
-        const headers = {
+    async post(
+        url: string,
+        body: object | null = null
+    ): Promise<Response|Error> {
+        const headers: HeadersInit = {
             'X-CSRF-Token': this.#csrf.get(),
             'Content-Type': 'application/json',
         };
@@ -73,7 +84,10 @@ class Api {
 	 * @param {object} body тело запроса
 	 * @returns {json} ответ от сервера
 	 */
-    async put(url, body) {
+    async put(
+        url: string,
+        body: object | null = null
+    ): Promise<Response|Error> {
         const headers = {
             'X-CSRF-Token': this.#csrf.get(),
             'Content-Type': 'multipart/form-data',
@@ -86,7 +100,9 @@ class Api {
 	 * @param {string} url url запроса
 	 * @returns {json} ответ от сервера
 	 */
-    async delete(url) {
+    async delete(
+        url: string
+    ): Promise<Response|Error> {
         const headers = {
             'X-CSRF-Token': this.#csrf.get(),
         };
@@ -98,16 +114,16 @@ class Api {
  * Класс для хранения и работы с CSRF токенами
  */
 class CSRF {
-    #csrfToken;
+    #csrfToken: string;
     constructor() {
         this.#csrfToken = '';
     }
 
-    get() {
+    get(): string {
         return this.#csrfToken;
     }
 
-    set(csrf) {
+    set(csrf: string): void {
         this.#csrfToken = csrf;
     }
 }
