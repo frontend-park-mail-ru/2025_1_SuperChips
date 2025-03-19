@@ -1,13 +1,12 @@
 import { debouncedPasswordConfirm } from '../handlers/passwordConfirm';
 import { debouncedSignupButton } from '../handlers/signupButtonHandler';
+import { fillPictureBox } from '../../LoginPage/lib/fillPictureBox';
 import { signupHandler } from '../handlers/signupHandler';
 import { Input } from 'shared/components/input';
-import { goToPage } from 'shared/router/router';
+import { goToPage } from 'shared/router';
 import signupTemplate  from 'pages/LoginPage/authPage/authPageTemplate.hbs';
-import 'shared/components/input/ui/input.scss';
 import '../../LoginPage/authPage/authPage.scss';
 import './signup.scss';
-import { fillPictureBox } from '../../LoginPage/lib/fillPictureBox';
 
 
 /**
@@ -76,7 +75,7 @@ export const SignupPage = async () => {
     const redirectBtn = page.querySelector('.redirect');
     redirectBtn.addEventListener('click', async (event) => {
         event.preventDefault();
-        await goToPage('/login');
+        await goToPage('/login', true);
     });
 
     const form = page.querySelector('.signup-form');

@@ -1,4 +1,4 @@
-import { debounce } from 'shared/utils/debounce';
+import { debounce } from 'shared/utils';
 
 const passwordConfirm = (event) => {
     if (event.target.id !== 'password' && event.target.id !== 'passwordConfirm') { return; }

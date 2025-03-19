@@ -1,6 +1,6 @@
-import { validatePassword } from 'shared/validation/passwordValidation';
-import { validateEmail } from 'shared/validation/emailValidation';
-import { debounce } from 'shared/utils/debounce';
+import { validatePassword } from 'shared/validation';
+import { validateEmail } from 'shared/validation';
+import { debounce } from 'shared/utils';
 
 const loginButtonHandler = () => {
     const password = document.querySelector('#password').value;

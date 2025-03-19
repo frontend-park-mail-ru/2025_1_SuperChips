@@ -1,4 +1,4 @@
-import { appState } from 'shared/router/router';
+import { appState } from 'shared/router';
 import { API } from 'shared/api/api';
 
 /**

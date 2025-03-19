@@ -13,7 +13,7 @@ class user {
         this.#avatar = null;
     }
 
-    login = async () => {
+    fetchUserData = async () => {
         const response = await Auth.getUserData();
         const body = await response.json();
         if (response.ok) {
@@ -25,7 +25,7 @@ class user {
         }
     };
 
-    logout = () => {
+    clearUserData = () => {
         this.#username = null;
         this.#avatar = null;
         this.#tag = null;

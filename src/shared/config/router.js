@@ -1,6 +1,6 @@
-import { FeedPage } from '../../pages/FeedPage';
-import { LoginPage } from '../../pages/LoginPage';
-import { SignupPage } from '../../pages/SignupPage';
+import { FeedPage } from 'pages/FeedPage';
+import { LoginPage } from 'pages/LoginPage';
+import { SignupPage } from 'pages/SignupPage';
 
 export const config = {
     menu: {

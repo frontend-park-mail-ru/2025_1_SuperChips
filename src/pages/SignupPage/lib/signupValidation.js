@@ -1,7 +1,7 @@
-import { validateEmail } from 'shared/validation/emailValidation';
-import { validateBirthday } from 'shared/validation/birthdayValidation';
-import { validatePassword } from 'shared/validation/passwordValidation';
-import { validateUsername } from 'shared/validation/usernameValidation';
+import { validateEmail } from 'shared/validation';
+import { validateBirthday } from 'shared/validation';
+import { validatePassword } from 'shared/validation';
+import { validateUsername } from 'shared/validation';
 
 
 /**

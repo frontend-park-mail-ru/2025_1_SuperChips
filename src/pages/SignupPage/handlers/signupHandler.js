@@ -1,6 +1,6 @@
-import { formatDateToISO } from 'shared/utils/formateDate';
+import { formatDateToISO } from 'shared/utils';
 import { validateSignup } from '../lib/signupValidation';
-import { goToPage } from 'shared/router/router';
+import { goToPage } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { User } from 'entities/User';
 
@@ -29,8 +29,8 @@ export const signupHandler = async (event) => {
     const response = await Auth.register(inputData);
 
     if (response.ok) {
-        await User.login();
-        await goToPage('/feed');
+        await User.fetchUserData();
+        await goToPage('/feed', true);
     }
     else {
         const emailIcon = document.querySelector('#email-error-icon');

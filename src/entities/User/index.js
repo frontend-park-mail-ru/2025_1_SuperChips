@@ -1,1 +1,1 @@
-export { User } from './lib/User';
+export { User } from './model/User';

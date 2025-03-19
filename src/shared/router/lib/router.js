@@ -10,11 +10,11 @@ export const appState = {
 
 
 /**
- * Переходит на указанный URL (прим: 'feed', 'login')
+ * Переходит на указанный URL (прим: '/feed', '/login')
  * @param {string} page
- * @param {boolean} updateHistory
+ * @param {boolean} replace
  */
-export const goToPage = async (page, updateHistory = true) => {
+export const goToPage = async (page, replace = false) => {
     root.innerHTML = '';
 
     if ((!(page in config.menu)) || (config.menu[page]?.nonAuthOnly && User.authorized)) {
@@ -27,11 +27,15 @@ export const goToPage = async (page, updateHistory = true) => {
 
     appState.activePage = page;
 
-    if (updateHistory) {
+    if (replace) {
         history.pushState({ page: page }, '', config.menu[page].href);
     }
     document.title = config.menu[page].title;
 
     const element = await config.menu[page].render();
     root.appendChild(element);
+
+    window.scrollTo({
+        top: 0,
+    });
 };

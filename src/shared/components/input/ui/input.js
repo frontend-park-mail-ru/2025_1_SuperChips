@@ -1,9 +1,9 @@
-import { validateEmail } from 'shared/validation/emailValidation';
-import { validateBirthday } from 'shared/validation/birthdayValidation';
-import { validatePassword } from 'shared/validation/passwordValidation';
-import { validatePasswordConfirm } from 'shared/validation/passwordConfirmation';
-import { debounce } from 'shared/utils/debounce';
-import { validateUsername } from 'shared/validation/usernameValidation';
+import { validateEmail } from 'shared/validation';
+import { validateBirthday } from 'shared/validation';
+import { validatePassword } from 'shared/validation';
+import { validatePasswordConfirm } from 'shared/validation';
+import { debounce } from 'shared/utils';
+import { validateUsername } from 'shared/validation';
 import './input.scss';
 import inputTemplate from './input.hbs';
 

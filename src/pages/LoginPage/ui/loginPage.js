@@ -1,10 +1,9 @@
 import { debouncedLoginButton } from '../handlers/loginButtonHandler';
-import { fillPictureBox } from '../lib/fillPictureBox';
 import { handleLogin } from '../handlers/loginHandler';
-import { goToPage } from 'shared/router/router';
+import { fillPictureBox } from '../lib/fillPictureBox';
+import { goToPage } from 'shared/router';
 import { Input } from 'shared/components/input';
 import loginTemplate from '../authPage/authPageTemplate.hbs';
-import 'shared/components/input/ui/input.scss';
 import '../authPage/authPage.scss';
 import './login.scss';
 
@@ -58,7 +57,7 @@ export const LoginPage = async () => {
     const redirectBtn = page.querySelector('.redirect');
     redirectBtn.addEventListener('click',  async(event) => {
         event.preventDefault();
-        await goToPage('/signup');
+        await goToPage('/signup', true);
     });
 
     const observer = new MutationObserver(() => {

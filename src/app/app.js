@@ -1,4 +1,4 @@
-import { goToPage } from 'shared/router/router';
+import { goToPage } from 'shared/router';
 import { User } from 'entities/User';
 import './fonts.scss';
 import './common.scss';
@@ -6,12 +6,12 @@ import './common.scss';
 export const root = document.getElementById('root');
 
 export const App = async () => {
-    await User.login();
+    await User.fetchUserData();
 
 
-    window.addEventListener('popstate', () => {
-        goToPage(location.pathname, false);
+    window.addEventListener('popstate', async () => {
+        await goToPage(location.pathname);
     });
 
-    await goToPage(location.pathname);
+    await goToPage(location.pathname, true);
 };

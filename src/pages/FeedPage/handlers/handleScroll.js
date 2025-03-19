@@ -1,4 +1,4 @@
-import { debounce } from 'shared/utils/debounce';
+import { debounce } from 'shared/utils';
 import { fillFeed } from '../lib/fillFeed';
 
 

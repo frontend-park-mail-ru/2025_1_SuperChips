@@ -1,16 +1,12 @@
 import { User } from 'entities/User';
 import { Auth } from 'features/authorization';
-import { goToPage } from 'shared/router/router';
+import { goToPage } from 'shared/router';
 
 export const logoutHandler = async (event) => {
     event.preventDefault();
 
-    User.logout();
+    User.clearUserData();
     await Auth.logout();
 
-    window.scrollTo({
-        top: 0,
-    });
-
-    await goToPage('/feed', false);
+    await goToPage('/feed');
 };
