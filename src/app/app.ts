@@ -10,8 +10,8 @@ export const App = async () => {
 
 
     window.addEventListener('popstate', async () => {
-        await goToPage(location.pathname);
+        await goToPage(location.pathname.slice(1));
     });
 
-    await goToPage(location.pathname, true);
+    await goToPage(location.pathname.slice(1), true);
 };

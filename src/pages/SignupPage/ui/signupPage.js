@@ -75,7 +75,7 @@ export const SignupPage = async () => {
     const redirectBtn = page.querySelector('.redirect');
     redirectBtn.addEventListener('click', async (event) => {
         event.preventDefault();
-        await goToPage('/login', true);
+        await goToPage('login', true);
     });
 
     const form = page.querySelector('.signup-form');
@@ -94,7 +94,6 @@ export const SignupPage = async () => {
     });
 
     observer.observe(document.getElementById('root'), { childList: true });
-
 
     return page;
 };

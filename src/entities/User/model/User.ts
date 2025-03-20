@@ -16,9 +16,7 @@ class user {
     fetchUserData = async (): Promise<void> => {
         const response = await Auth.getUserData();
 
-        if (response instanceof Error) {
-            return;
-        }
+        if (response instanceof Error) { return; }
         else if (response.ok) {
             const body = await response.json();
             const data = body.data;

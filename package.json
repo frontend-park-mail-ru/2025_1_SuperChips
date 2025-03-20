@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
     "start": "webpack serve",
-    "linter": "eslint ./ --fix"
+    "linter": "eslint ./ --fix",
+    "check-types": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
