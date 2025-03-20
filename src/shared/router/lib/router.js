@@ -1,6 +1,6 @@
 import { root } from 'app/app';
 import { config } from 'shared/config/router';
-import { debouncedScroll } from 'pages/FeedPage/handlers/handleScroll';
+import { debouncedScroll } from 'pages/FeedPage';
 import { User } from 'entities/User';
 
 export const appState = {
@@ -27,15 +27,17 @@ export const goToPage = async (page, replace = false) => {
 
     appState.activePage = page;
 
-    if (replace) {
-        history.pushState({ page: page }, '', config.menu[page].href);
-    }
-    document.title = config.menu[page].title;
-
     const element = await config.menu[page].render();
     root.appendChild(element);
 
     window.scrollTo({
         top: 0,
     });
+    document.title = config.menu[page].title;
+
+    if (!replace) {
+        return;
+    }
+
+    history.pushState({ page: page }, '', config.menu[page].href);
 };

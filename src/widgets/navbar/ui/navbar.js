@@ -23,7 +23,7 @@ export const Navbar = async () => {
     const redirectButton = navbar.querySelector('#goToLogin');
     if (redirectButton) {
         redirectButton.addEventListener('click', async () => {
-            await goToPage('/login', true);
+            goToPage('/login', true).finally();
         });
     }
 

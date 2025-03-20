@@ -1,4 +1,4 @@
-@use 'styles/variables' as *;
+@use 'shared/styles/variables' as *;
 
 .error-message {
     justify-self: right;
@@ -57,17 +57,6 @@
     top: 292px;
     columns: 205px auto;
     margin-right: $spacing-md;
-}
-
-.picture {
-    width: 205px;
-    border-radius: $border-radius;
-    background-color: $button-dark;
-    margin-bottom: $spacing-lg;
-    break-inside: avoid;
-    object-fit: contain;
-    z-index: $z-navbar;
-    margin-right: $spacing-xl;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
