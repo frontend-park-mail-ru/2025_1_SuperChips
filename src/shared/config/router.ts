@@ -3,15 +3,19 @@ import { LoginPage } from 'pages/LoginPage';
 import { SignupPage } from 'pages/SignupPage';
 
 
-interface RouterConfig{
-    menu: {
-        [key: string]: {
-            href: string,
-            title: string,
-            render: () => HTMLDivElement,
-            nonAuthOnly?: boolean,
-        };
-    }
+interface PageConfig {
+    href: string,
+    title: string,
+    render: () => HTMLDivElement,
+    nonAuthOnly?: boolean,
+}
+
+interface MenuConfig {
+    [key: string]: PageConfig
+}
+
+interface RouterConfig {
+    menu: MenuConfig
 }
 
 
