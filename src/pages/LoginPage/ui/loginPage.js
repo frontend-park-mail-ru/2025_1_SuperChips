@@ -57,7 +57,7 @@ export const LoginPage = async () => {
     const redirectBtn = page.querySelector('.redirect');
     redirectBtn.addEventListener('click',  async(event) => {
         event.preventDefault();
-        await goToPage('signup', true);
+        await goToPage('/signup', true);
     });
 
     const observer = new MutationObserver(() => {

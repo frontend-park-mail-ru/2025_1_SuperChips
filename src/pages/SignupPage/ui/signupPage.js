@@ -4,8 +4,7 @@ import { fillPictureBox } from '../../LoginPage/lib/fillPictureBox';
 import { signupHandler } from '../handlers/signupHandler';
 import { Input } from 'shared/components/input';
 import { goToPage } from 'shared/router';
-import signupTemplate  from 'pages/LoginPage/authPage/authPageTemplate.hbs';
-import '../../LoginPage/authPage/authPage.scss';
+import { authPageTemplate } from 'pages/LoginPage';
 import './signup.scss';
 
 
@@ -68,14 +67,14 @@ export const SignupPage = async () => {
         ]
     };
 
-    const html = signupTemplate(config);
+    const html = authPageTemplate(config);
     const page = document.createElement('div');
     page.insertAdjacentHTML('beforeend', html);
 
     const redirectBtn = page.querySelector('.redirect');
-    redirectBtn.addEventListener('click', async (event) => {
+    redirectBtn.addEventListener('click',  (event) => {
         event.preventDefault();
-        await goToPage('login', true);
+        goToPage('/login').finally();
     });
 
     const form = page.querySelector('.signup-form');

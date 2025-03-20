@@ -1,7 +1,7 @@
 import { root } from 'app/app';
 import { config } from 'shared/config/router';
-import { User } from 'entities/User';
 import { debouncedScroll } from 'pages/FeedPage';
+import { User } from 'entities/User';
 
 interface AppState {
     activePage: string | null,
@@ -25,25 +25,25 @@ export const goToPage = async (
     if (root === null) { return; }
     root.innerHTML = '';
 
-
     if ((!(page in config.menu)) || (config.menu[page]?.nonAuthOnly && User.authorized)) {
-        page = 'feed';
+        page = '/feed';
     }
 
-    if (appState.activePage === 'feed' && page !== 'feed') {
+    if (appState.activePage === '/feed' && page !== '/feed') {
         window.removeEventListener('scroll', debouncedScroll);
     }
 
     appState.activePage = page;
 
-    if (replace) {
-        history.pushState({ page: page }, '', config.menu[page].href);
-        document.title = config.menu[page].title;
-    }
-
     const element = await config.menu[page].render();
-
     root.appendChild(element);
 
     window.scrollTo({ top: 0 });
+    document.title = config.menu[page].title;
+
+    if (replace) {
+        history.replaceState({ page: page }, '', config.menu[page].href);
+    } else {
+        history.pushState({ page: page }, '', config.menu[page].href);
+    }
 };

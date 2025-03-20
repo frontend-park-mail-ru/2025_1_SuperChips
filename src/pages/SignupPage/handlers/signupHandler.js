@@ -30,7 +30,7 @@ export const signupHandler = async (event) => {
 
     if (response.ok) {
         await User.fetchUserData();
-        await goToPage('feed', true);
+        goToPage('/feed').finally();
     }
     else {
         const emailIcon = document.querySelector('#email-error-icon');

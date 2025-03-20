@@ -1,15 +1,14 @@
-@use 'styles/variables' as *;
+@use 'shared/styles/variables' as *;
 
 .login-page {
     background: $gradient-dark;
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
     overflow: hidden;
 }
 
 .login-container {
-    height: 100%;
     width: 572px;
     background-color: $white;
     z-index: $z-navbar;
