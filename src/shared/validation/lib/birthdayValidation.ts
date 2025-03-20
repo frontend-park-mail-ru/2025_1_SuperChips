@@ -1,4 +1,4 @@
-import { ValidationResult } from './type';
+import { ValidationResult } from './types';
 
 /**
  * Валидация даты рождения

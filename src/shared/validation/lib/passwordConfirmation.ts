@@ -1,4 +1,4 @@
-import { ValidationResult } from './type';
+import { ValidationResult } from './types';
 
 export const validatePasswordConfirm = (
     confirm: string

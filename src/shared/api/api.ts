@@ -1,5 +1,7 @@
 import { API_BASE_URL } from '../config/constants';
 
+type TMethods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+
 /**
  * Класс для работы с API бэкенда
  */
@@ -20,13 +22,13 @@ class Api {
 	 * @returns {Promise<any>} ответ от сервера
 	 */
     async request(
-        method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
+        method: TMethods,
         path: string,
         headers: HeadersInit | undefined,
         body: object | null = null
     ): Promise<Response|Error> {
         try {
-            const url: string = this.#apiBaseUrl + path;
+            const url = this.#apiBaseUrl + path;
 
             const state: RequestInit = {
                 method: method,
@@ -36,9 +38,9 @@ class Api {
                 body: body ? JSON.stringify(body) : null,
             };
 
-            const response: Response = await fetch(url, state);
+            const response = await fetch(url, state);
 
-            const CSRFToken: string | null = response.headers.get('X-CSRF-TOKEN') ?? localStorage.getItem('csrf');
+            const CSRFToken = response.headers.get('X-CSRF-TOKEN') ?? localStorage.getItem('csrf');
             if (CSRFToken) {
                 this.#csrf.set(CSRFToken);
             }
@@ -119,11 +121,11 @@ class CSRF {
         this.#csrfToken = '';
     }
 
-    get(): string {
+    get(){
         return this.#csrfToken;
     }
 
-    set(csrf: string): void {
+    set(csrf: string) {
         this.#csrfToken = csrf;
     }
 }

@@ -1,11 +1,10 @@
 import { API } from 'shared/api/api';
+import { IUserData } from 'entities/User';
 
-export interface UserData {
-    password: string,
-    username: string,
-    email: string,
-    birthday: Date,
-}
+type TLoginData = {
+    email: string;
+    password: string;
+};
 
 /**
  * Класс, использующийся для аутентификации пользователя
@@ -23,7 +22,7 @@ class auth {
      * @returns {Promise<Response | Error>} ответ сервера
      */
     async login(
-        { email, password }: {email: string, password: string}
+        { email, password }: TLoginData
     ): Promise<Response|Error> {
         try {
             return await this.API.post('/api/v1/auth/login', { email, password });
@@ -37,7 +36,7 @@ class auth {
      * @param {Object} userData - email, имя пользователя, дата рождения, пароль
      * @returns {Promise<json|Error>} - ответ от сервера
      */
-    async register(userData: UserData): Promise<Response|Error> {
+    async register(userData: IUserData): Promise<Response|Error> {
         try {
             return await this.API.post('/api/v1/auth/registration', userData);
         } catch (error) {

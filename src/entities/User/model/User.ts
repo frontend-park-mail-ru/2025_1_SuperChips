@@ -20,6 +20,7 @@ class user {
         else if (response.ok) {
             const body = await response.json();
             const data = body.data;
+
             this.#username = data.username;
             this.#avatar = data.avatar;
             this.#tag = data.tag;
@@ -27,7 +28,7 @@ class user {
         }
     };
 
-    clearUserData = (): void => {
+    clearUserData = () => {
         this.#username = null;
         this.#avatar = null;
         this.#tag = null;
