@@ -35,9 +35,9 @@ export const goToPage = async (page, replace = false) => {
     });
     document.title = config.menu[page].title;
 
-    if (!replace) {
-        return;
+    if (replace) {
+        history.replaceState({ page: page }, '', config.menu[page].href);
+    } else {
+        history.pushState({ page: page }, '', config.menu[page].href);
     }
-
-    history.pushState({ page: page }, '', config.menu[page].href);
 };

@@ -73,7 +73,7 @@ export const SignupPage = async () => {
     const redirectBtn = page.querySelector('.redirect');
     redirectBtn.addEventListener('click',  (event) => {
         event.preventDefault();
-        goToPage('/login', true).finally();
+        goToPage('/login').finally();
     });
 
     const form = page.querySelector('.signup-form');

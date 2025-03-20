@@ -8,5 +8,5 @@ export const logoutHandler = async (event) => {
     User.clearUserData();
     await Auth.logout();
 
-    goToPage('/feed').finally();
+    goToPage('/feed', true).finally();
 };

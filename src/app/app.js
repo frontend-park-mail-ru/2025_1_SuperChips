@@ -10,7 +10,7 @@ export const App = async () => {
 
 
     window.addEventListener('popstate', async () => {
-        goToPage(location.pathname).finally();
+        goToPage(location.pathname, true).finally();
     });
 
     goToPage(location.pathname, true).finally();
