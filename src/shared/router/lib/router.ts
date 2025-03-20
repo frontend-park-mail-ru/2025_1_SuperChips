@@ -26,10 +26,10 @@ export const goToPage = async (
     root.innerHTML = '';
 
     if ((!(page in config.menu)) || (config.menu[page]?.nonAuthOnly && User.authorized)) {
-        page = '/feed';
+        page = 'feed';
     }
 
-    if (appState.activePage === '/feed' && page !== '/feed') {
+    if (appState.activePage === 'feed' && page !== 'feed') {
         window.removeEventListener('scroll', debouncedScroll);
     }
 

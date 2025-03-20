@@ -9,9 +9,9 @@ export const App = async () => {
     await User.fetchUserData();
 
 
-    window.addEventListener('popstate', async () => {
-        goToPage(location.pathname, true).finally();
+    window.addEventListener('popstate', () => {
+        goToPage(location.pathname.slice(1), true).finally();
     });
 
-    goToPage(location.pathname, true).finally();
+    goToPage(location.pathname.slice(1), true).finally();
 };
