@@ -1,5 +1,6 @@
-import { goToPage } from '../../../shared/router/router';
-import { Auth } from '../../../features/authorization/api/auth';
+import { goToPage } from 'shared/router';
+import { Auth } from 'features/authorization';
+import { User } from 'entities/User';
 
 export const handleLogin = async (event) => {
     event.preventDefault();
@@ -13,7 +14,8 @@ export const handleLogin = async (event) => {
     const response = await Auth.login(inputData);
 
     if (response.ok) {
-        await goToPage('feed');
+        await User.fetchUserData();
+        goToPage('/feed').finally();
     }
     else {
         const icon = document.querySelector('#password-error-icon');

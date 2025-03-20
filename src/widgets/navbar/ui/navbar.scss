@@ -1,5 +1,5 @@
-@use '../../styles/variables' as *;
-@use '../../styles/mixins' as *;
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
 
 // Переменные
 $navbar-height: 88px;
@@ -30,6 +30,7 @@ $border-radius: 20px;
     align-self: center;
     margin: 0 $spacing-md;
     float: left;
+    cursor: pointer;
 }
 
 .search-form {

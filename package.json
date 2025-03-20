@@ -21,11 +21,15 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2025_1_SuperChips#readme",
   "devDependencies": {
+    "@babel/preset-typescript": "^7.26.0",
     "@eslint/js": "^9.21.0",
+    "@typescript-eslint/eslint-plugin": "^8.26.1",
+    "@typescript-eslint/parser": "^8.26.1",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
     "eslint": "^8.57.1",
+    "eslint-import-resolver-typescript": "^4.2.1",
     "eslint-plugin-import": "^2.31.0",
     "globals": "^16.0.0",
     "handlebars-loader": "^1.7.3",
@@ -33,6 +37,7 @@
     "sass": "^1.85.1",
     "sass-loader": "^16.0.5",
     "style-loader": "^4.0.0",
+    "typescript": "^5.8.2",
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.0"

@@ -1,5 +1,5 @@
-import { loadImages } from '../../../entities/Pin/lib/loadImages';
-import { Pin } from '../../../entities/Pin';
+import { loadImages } from 'entities/Pin/lib/loadImages';
+import { Pin } from 'entities/Pin';
 
 /**
  * Загружает картинки и создает коллаж для страниы входа

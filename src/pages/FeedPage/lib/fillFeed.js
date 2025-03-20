@@ -1,9 +1,9 @@
-import { appState } from '../../../shared/router/router';
 import { feedState } from '../ui/FeedPage';
 import { debouncedScroll } from '../handlers/handleScroll';
+import { Pin } from 'entities/Pin';
 import { Footer } from '../components/footer/footer';
-import { Pin } from '../../../entities/Pin';
-import { loadImages } from '../../../entities/Pin/lib/loadImages';
+import { loadImages } from 'entities/Pin/lib/loadImages';
+import { appState } from 'shared/router';
 
 
 /**

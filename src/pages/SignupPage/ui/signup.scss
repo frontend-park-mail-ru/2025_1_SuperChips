@@ -1,15 +1,15 @@
-@use '../../../styles/variables' as *;
+@use 'shared/styles/variables' as *;
 
 .signup-page {
     background: $gradient-dark;
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
     overflow: hidden;
 }
 
 .signup-container {
-    height: 100%;
+    padding: 52px 66px 0 66px;
     width: 572px;
     background-color: $white;
     z-index: $z-navbar;
@@ -20,7 +20,6 @@
 }
 
 .signup-box-1 {
-    padding: 52px 66px 0 66px;
 }
 
 .signup-redirect {

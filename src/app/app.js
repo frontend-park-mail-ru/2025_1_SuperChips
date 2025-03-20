@@ -1,9 +1,17 @@
-import { goToPage } from '../shared/router/router';
-import './fonts.scss';
-import './common.scss';
+import { goToPage } from 'shared/router';
+import { User } from 'entities/User';
+import './styles/fonts.scss';
+import './styles/common.scss';
 
 export const root = document.getElementById('root');
 
 export const App = async () => {
-    await goToPage('feed');
+    await User.fetchUserData();
+
+
+    window.addEventListener('popstate', async () => {
+        goToPage(location.pathname, true).finally();
+    });
+
+    goToPage(location.pathname, true).finally();
 };

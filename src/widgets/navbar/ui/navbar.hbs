@@ -1,11 +1,15 @@
 <div class="navbar">
-    <img
-            src="/icons/logo-small.svg"
-            class="navbar-logo"
-            alt="site logo"
-            aria-label="Main logo"
-    />
+    <a class="navbar-logo"
+        id="scroll-to-top"
+        aria-label="Scroll to top"
+    >
 
+        <img
+                src="/icons/logo-small.svg"
+                alt="site logo"
+                aria-label="Main logo"
+        />
+    </a>
     <input
             type="text"
             class="search-form"
@@ -29,7 +33,7 @@
     {{else}}
     <button
         class="feed-redirect"
-        id="redirect"
+        id="goToLogin"
     >
         Войти
     </button>

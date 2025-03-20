@@ -1,7 +1,8 @@
-@use '../../../../styles/variables' as *;
+@use 'shared/styles/variables' as *;
 
 .feedSkeleton {
     width: 100%;
+    min-width: 205px;
     border-radius: $border-radius;
     background-color: $button-dark;
     margin-bottom: 20px;

@@ -1,9 +1,9 @@
-import { validateEmail } from '../../../validation/emailValidation';
-import { validateBirthday } from '../../../validation/birthdayValidation';
-import { validatePassword } from '../../../validation/passwordValidation';
-import { validatePasswordConfirm } from '../../../validation/passwordConfirmation';
-import { debounce } from '../../../utils/debounce';
-import { validateUsername } from '../../../validation/usernameValidation';
+import { validateEmail } from 'shared/validation';
+import { validateBirthday } from 'shared/validation';
+import { validatePassword } from 'shared/validation';
+import { validatePasswordConfirm } from 'shared/validation';
+import { debounce } from 'shared/utils';
+import { validateUsername } from 'shared/validation';
 import './input.scss';
 import inputTemplate from './input.hbs';
 
@@ -48,7 +48,8 @@ const inputHandler = (event) => {
 
     const [valid, error] = validators[input.id]?.(input.value) ?? true;
 
-    const showError = !valid && input.value !== '';
+    const showError = !valid && (input.value !== '' || event.target.type === 'date');
+
     icon.classList.toggle('hidden', !showError);
     message.classList.toggle('hidden', !showError);
     input.classList.toggle('error', showError);

@@ -1,5 +1,5 @@
 import { validateSignup } from '../lib/signupValidation';
-import { debounce } from '../../../shared/utils/debounce';
+import { debounce } from 'shared/utils';
 
 const signupButtonHandler = () => {
     const form = document.querySelector('.signup-form');

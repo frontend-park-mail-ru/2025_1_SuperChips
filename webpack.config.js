@@ -6,6 +6,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
     mode: 'development',
     entry: './src/index.js',
+    resolve: {
+        modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+        extensions: ['.js', '.ts']
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/[name].bundle.js',
@@ -13,14 +17,25 @@ module.exports = {
     },
     module: {
         rules: [
-            { test: /\.hbs$/, use: 'handlebars-loader' },
-            { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+            {
+                test: /\.tsx?$/,
+                use: 'babel-loader',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.hbs$/,
+                use: 'handlebars-loader'
+            },
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+            },
             {
                 test: /\.s[ac]ss$/i,
                 use: [
-                    "style-loader",
-                    "css-loader",
-                    "sass-loader",
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader',
                 ],
             },
             {

@@ -1,14 +1,11 @@
 import { debouncedPasswordConfirm } from '../handlers/passwordConfirm';
 import { debouncedSignupButton } from '../handlers/signupButtonHandler';
-import { signupHandler } from '../handlers/signupHandler';
-import { Input } from '../../../shared/components/input';
-import { goToPage } from '../../../shared/router/router';
-import signupTemplate  from '../../LoginPage/authPage/authPageTemplate.hbs';
-import '../../../shared/components/input/ui/input.scss';
-import '../../LoginPage/authPage/authPage.scss';
-import './signup.scss';
 import { fillPictureBox } from '../../LoginPage/lib/fillPictureBox';
-
+import { signupHandler } from '../handlers/signupHandler';
+import { Input } from 'shared/components/input';
+import { goToPage } from 'shared/router';
+import { authPageTemplate } from 'pages/LoginPage';
+import './signup.scss';
 
 /**
  * Генерирует страницу регистрации и создает обработчики событий
@@ -28,9 +25,9 @@ export const SignupPage = async () => {
                 type: 'email',
                 id: 'email',
                 inputLabel: 'Email',
-                errorMessage: 'Неправильный формат почты',
+                errorMessage: 'Введите email в формате user@domain.ru',
                 required: true,
-                maxlength: 120,
+                maxlength: 64,
                 autocomplete: 'username'
             },
             {
@@ -39,12 +36,12 @@ export const SignupPage = async () => {
                 inputLabel: 'Имя пользователя',
                 errorMessage: 'Это имя уже занято',
                 required: true,
-                maxlength: 120 },
+                maxlength: 32 },
             {
                 type: 'date',
                 id: 'birthday',
                 inputLabel: 'Дата рождения',
-                errorMessage: 'Неправильный формат даты',
+                errorMessage: 'Введите дату в формате ДД.ММ.ГГГГ',
                 required: true
             },
             {
@@ -54,7 +51,7 @@ export const SignupPage = async () => {
                 errorMessage: 'Пароль должен быть длиной не менее 8 символов',
                 required: true,
                 isPassword: true,
-                maxlength: 120,
+                maxlength: 96,
                 autocomplete: 'current-password'
             },
             {
@@ -69,14 +66,14 @@ export const SignupPage = async () => {
         ]
     };
 
-    const html = signupTemplate(config);
+    const html = authPageTemplate(config);
     const page = document.createElement('div');
     page.insertAdjacentHTML('beforeend', html);
 
     const redirectBtn = page.querySelector('.redirect');
-    redirectBtn.addEventListener('click', async (event) => {
+    redirectBtn.addEventListener('click',  (event) => {
         event.preventDefault();
-        await goToPage('login');
+        goToPage('/login').finally();
     });
 
     const form = page.querySelector('.signup-form');

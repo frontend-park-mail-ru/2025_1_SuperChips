@@ -1,25 +1,25 @@
-import { FeedPage } from '../../pages/FeedPage';
-import { LoginPage } from '../../pages/LoginPage';
-import { SignupPage } from '../../pages/SignupPage';
+import { FeedPage } from 'pages/FeedPage';
+import { LoginPage } from 'pages/LoginPage';
+import { SignupPage } from 'pages/SignupPage';
 
 export const config = {
     menu: {
-        'feed': {
+        '/feed': {
             href: '/feed',
             title: 'Лента',
             render: FeedPage,
-            // authOnly: true,
-            // showSidebar: true
         },
-        'login': {
+        '/login': {
             href: '/login',
             title: 'Авторизация',
-            render: LoginPage
+            render: LoginPage,
+            nonAuthOnly: true,
         },
-        'signup': {
+        '/signup': {
             href: '/signup',
             title: 'Регистрация',
-            render: SignupPage
+            render: SignupPage,
+            nonAuthOnly: true,
         }
     },
 };

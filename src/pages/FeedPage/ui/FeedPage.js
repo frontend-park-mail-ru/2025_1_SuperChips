@@ -1,5 +1,6 @@
-import { Navbar } from '../../../widgets/navbar/navbar';
-import { Sidebar } from '../../../widgets/sidebar/sidebar';
+import { User } from 'entities/User';
+import { Navbar } from 'widgets/navbar';
+import { Sidebar } from 'widgets/sidebar';
 import { fillFeed } from '../lib/fillFeed';
 import { debouncedScroll } from '../handlers/handleScroll';
 import feedTemplate from './FeedPage.hbs';
@@ -21,7 +22,10 @@ export const FeedPage = async () => {
     page.insertAdjacentHTML('beforeend', feedTemplate({}));
 
     page.querySelector('#navbar').replaceWith((await Navbar()));
-    page.querySelector('#sidebar').replaceWith(await Sidebar());
+
+    if (User.authorized) {
+        page.querySelector('#sidebar').replaceWith(await Sidebar());
+    }
 
     window.addEventListener('scroll', debouncedScroll);
 

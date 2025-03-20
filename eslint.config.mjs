@@ -1,6 +1,8 @@
 import js from '@eslint/js';
 import globals from 'globals';
 import pluginImport from 'eslint-plugin-import';
+import typescript from '@typescript-eslint/eslint-plugin';
+import parser from '@typescript-eslint/parser';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -22,8 +24,25 @@ export default [
                 node: {
                     extensions: ['.js'],
                 },
+                typescript: {},
             },
         },
+    },
+    {
+        files: ['**/*.ts'],
+        languageOptions: {
+            parser: parser,
+            parserOptions: {
+                project: './tsconfig.json'
+            }
+        },
+        plugins: {
+            '@typescript-eslint': typescript
+        },
+        rules: {
+            ...typescript.configs.recommended.rules,
+            'no-undef': 'off'
+        }
     },
     js.configs.recommended,
     {
@@ -37,7 +56,7 @@ export default [
             'no-var': 'error',
             'prefer-const': 'error',
             'no-unused-vars': ['warn', { args: 'none' }],
-            'import/extensions': ['error', 'ignorePackages', { js: 'never' }],
+            'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }],
             'eol-last': ['error', 'always'],
             'object-curly-spacing': ['error', 'always'],
         },

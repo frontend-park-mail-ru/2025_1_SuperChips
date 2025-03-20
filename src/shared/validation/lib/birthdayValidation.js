@@ -12,6 +12,8 @@ export const validateBirthday = (birthday) => {
     } else if (date.getTime() > today.getTime()) {
         return [false, 'Дата рождения должна быть не больше текущего дня'];
     }
-
-    return [birthday !== '', ''];
+    else if (isNaN(date.getTime())) {
+        return [false, 'Введите дату в формате: ДД.ММ.ГГГГ'];
+    }
+    return [true, ''];
 };
