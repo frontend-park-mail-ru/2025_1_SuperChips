@@ -41,10 +41,9 @@ export const goToPage = async (
         document.title = config.menu[page].title;
     }
 
-    const element = config.menu[page].render();
+    const element = await config.menu[page].render();
+
     root.appendChild(element);
 
-    window.scrollTo({
-        top: 0,
-    });
+    window.scrollTo({ top: 0 });
 };

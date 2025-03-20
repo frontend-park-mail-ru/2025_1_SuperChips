@@ -6,7 +6,7 @@ import { SignupPage } from 'pages/SignupPage';
 interface PageConfig {
     href: string,
     title: string,
-    render: () => HTMLDivElement,
+    render: () => Promise<HTMLDivElement>,
     nonAuthOnly?: boolean,
 }
 
