@@ -1,1 +1,1 @@
-export { goToPage, appState } from './lib/router';
+export { navigate, appState } from './lib/router';

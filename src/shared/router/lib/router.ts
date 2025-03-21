@@ -18,7 +18,7 @@ export const appState: AppState = {
  * Переходит на указанный URL (прим: '/feed', '/login')
  * Если replace = true, создает новую запись в истории
  */
-export const goToPage = async (
+export const navigate = async (
     page: string,
     replace = false
 ): Promise<void> => {
