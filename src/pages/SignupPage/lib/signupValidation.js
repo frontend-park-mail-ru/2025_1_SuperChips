@@ -15,10 +15,10 @@ import { validateUsername } from 'shared/validation';
  */
 export const validateSignup = ({ email, username, birthday, password, passwordConfirm }) => {
     const result = {
-        email: validateEmail(email)[0],
-        username: validateUsername(username)[0],
-        birthday: validateBirthday(birthday)[0],
-        password: validatePassword(password)[0],
+        email: validateEmail(email).isValid,
+        username: validateUsername(username).isValid,
+        birthday: validateBirthday(birthday).isValid,
+        password: validatePassword(password).isValid,
         passwordConfirm: password === passwordConfirm && password !== ''
     };
 

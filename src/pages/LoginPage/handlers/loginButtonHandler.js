@@ -6,7 +6,7 @@ const loginButtonHandler = () => {
     const password = document.querySelector('#password').value;
     const email = document.querySelector('#email').value;
 
-    const valid = (validatePassword(password)[0] && validateEmail(email)[0]);
+    const valid = (validatePassword(password).isValid && validateEmail(email).isValid);
 
     const button = document.querySelector('.button');
     button.disabled = !valid;

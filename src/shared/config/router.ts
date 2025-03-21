@@ -2,20 +2,37 @@ import { FeedPage } from 'pages/FeedPage';
 import { LoginPage } from 'pages/LoginPage';
 import { SignupPage } from 'pages/SignupPage';
 
-export const config = {
+
+interface PageConfig {
+    href: string,
+    title: string,
+    render: () => Promise<HTMLDivElement>,
+    nonAuthOnly?: boolean,
+}
+
+interface MenuConfig {
+    [key: string]: PageConfig
+}
+
+interface RouterConfig {
+    menu: MenuConfig
+}
+
+
+export const config: RouterConfig = {
     menu: {
-        '/feed': {
+        feed: {
             href: '/feed',
             title: 'Лента',
             render: FeedPage,
         },
-        '/login': {
+        login: {
             href: '/login',
             title: 'Авторизация',
             render: LoginPage,
             nonAuthOnly: true,
         },
-        '/signup': {
+        signup: {
             href: '/signup',
             title: 'Регистрация',
             render: SignupPage,

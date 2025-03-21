@@ -3,7 +3,12 @@ import { config } from 'shared/config/router';
 import { debouncedScroll } from 'pages/FeedPage';
 import { User } from 'entities/User';
 
-export const appState = {
+interface AppState {
+    activePage: string | null,
+    isLoadingFeed: boolean,
+}
+
+export const appState: AppState = {
     activePage: null,
     isLoadingFeed: false,
 };
@@ -11,17 +16,20 @@ export const appState = {
 
 /**
  * Переходит на указанный URL (прим: '/feed', '/login')
- * @param {string} page
- * @param {boolean} replace
+ * Если replace = true, создает новую запись в истории
  */
-export const goToPage = async (page, replace = false) => {
+export const navigate = async (
+    page: string,
+    replace = false
+): Promise<void> => {
+    if (root === null) { return; }
     root.innerHTML = '';
 
     if ((!(page in config.menu)) || (config.menu[page]?.nonAuthOnly && User.authorized)) {
-        page = '/feed';
+        page = 'feed';
     }
 
-    if (appState.activePage === '/feed' && page !== '/feed') {
+    if (appState.activePage === 'feed' && page !== 'feed') {
         window.removeEventListener('scroll', debouncedScroll);
     }
 
@@ -30,9 +38,7 @@ export const goToPage = async (page, replace = false) => {
     const element = await config.menu[page].render();
     root.appendChild(element);
 
-    window.scrollTo({
-        top: 0,
-    });
+    window.scrollTo({ top: 0 });
     document.title = config.menu[page].title;
 
     if (replace) {

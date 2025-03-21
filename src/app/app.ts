@@ -1,4 +1,4 @@
-import { goToPage } from 'shared/router';
+import { navigate } from 'shared/router';
 import { User } from 'entities/User';
 import './styles/fonts.scss';
 import './styles/common.scss';
@@ -9,9 +9,9 @@ export const App = async () => {
     await User.fetchUserData();
 
 
-    window.addEventListener('popstate', async () => {
-        goToPage(location.pathname, true).finally();
+    window.addEventListener('popstate', () => {
+        navigate(location.pathname.slice(1), true).finally();
     });
 
-    goToPage(location.pathname, true).finally();
+    navigate(location.pathname.slice(1), true).finally();
 };

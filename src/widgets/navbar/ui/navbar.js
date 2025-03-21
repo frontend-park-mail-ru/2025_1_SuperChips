@@ -1,7 +1,7 @@
 import navbarTemplate from './navbar.hbs';
 import './navbar.scss';
 import { User } from 'entities/User';
-import { goToPage } from 'shared/router';
+import { navigate } from 'shared/router';
 import { scrollToTop } from '../handlers/scrollToTop';
 
 /**
@@ -23,7 +23,7 @@ export const Navbar = async () => {
     const redirectButton = navbar.querySelector('#goToLogin');
     if (redirectButton) {
         redirectButton.addEventListener('click', async () => {
-            goToPage('/login').finally();
+            navigate('login').finally();
         });
     }
 

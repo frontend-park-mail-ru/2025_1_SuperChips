@@ -1,30 +1,33 @@
 import { API } from 'shared/api/api';
+import { IUserData } from 'entities/User';
 
+type TLoginData = {
+    email: string;
+    password: string;
+};
 
 /**
  * Класс, использующийся для аутентификации пользователя
  * Для одной сессии создается только один класс
  */
 class auth {
+    private API: typeof API;
+
     constructor() {
         this.API = API;
     }
 
     /**
-	 * Авторизация пользователя	 * @param email
-	 * @param {string}
-	 * @param {string} email
-	 * @returns {Promise<json|Error>} ответ сервера
-	 */
-    async login({ email, password }) {
+     * Авторизация пользователя
+     * @returns {Promise<Response | Error>} ответ сервера
+     */
+    async login(
+        { email, password }: TLoginData
+    ): Promise<Response|Error> {
         try {
-            const response = await this.API.post('/api/v1/auth/login',{ email, password });
-            if (response.error) {
-                return new Error(response.error);
-            }
-            return response;
+            return await this.API.post('/api/v1/auth/login', { email, password });
         } catch (error) {
-            return new Error(`Login failed: ${error.message}`);
+            return new Error(`Login failed: ${error}`);
         }
     }
 
@@ -33,15 +36,11 @@ class auth {
      * @param {Object} userData - email, имя пользователя, дата рождения, пароль
      * @returns {Promise<json|Error>} - ответ от сервера
      */
-    async register(userData) {
+    async register(userData: IUserData): Promise<Response|Error> {
         try {
-            const response = await this.API.post('/api/v1/auth/registration', userData);
-            if (response.error) {
-                return new Error(response.error);
-            }
-            return response;
+            return await this.API.post('/api/v1/auth/registration', userData);
         } catch (error) {
-            return new Error(`Registration failed: ${error.message}`);
+            return new Error(`Registration failed: ${error}`);
         }
     }
 
@@ -49,11 +48,11 @@ class auth {
 	 * Завершение сессии
 	 * @returns {Promise<Error>} ответ сервера
 	 */
-    async logout() {
+    async logout(): Promise<void|Error> {
         try {
             await this.API.post('/api/v1/auth/logout');
         } catch (error) {
-            return new Error(`Logout failed: ${error.message}`);
+            return new Error(`Logout failed: ${error}`);
         }
     }
 
@@ -67,15 +66,11 @@ class auth {
 	 * }
 	 * @returns {Response} Ответ от сервера
 	 */
-    async getUserData() {
+    async getUserData(): Promise<Response|Error> {
         try {
-            const response = await this.API.get('/api/v1/auth/user');
-            if (response.error) {
-                return new Error(response.error);
-            }
-            return response;
+            return await this.API.get('/api/v1/auth/user');
         } catch (error) {
-            return new Error(`Failed to fetch user data: ${error.message}`);
+            return new Error(`Failed to fetch user data: ${error}`);
         }
     }
 }
