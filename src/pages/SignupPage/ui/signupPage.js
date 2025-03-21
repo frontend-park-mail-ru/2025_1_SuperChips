@@ -3,7 +3,7 @@ import { debouncedSignupButton } from '../handlers/signupButtonHandler';
 import { fillPictureBox } from '../../LoginPage/lib/fillPictureBox';
 import { signupHandler } from '../handlers/signupHandler';
 import { Input } from 'shared/components/input';
-import { goToPage } from 'shared/router';
+import { navigate } from 'shared/router';
 import { authPageTemplate } from 'pages/LoginPage';
 import './signup.scss';
 
@@ -74,7 +74,7 @@ export const SignupPage = async () => {
     const redirectBtn = page.querySelector('.redirect');
     redirectBtn.addEventListener('click',  (event) => {
         event.preventDefault();
-        goToPage('login').finally();
+        navigate('login').finally();
     });
 
     const form = page.querySelector('.signup-form');

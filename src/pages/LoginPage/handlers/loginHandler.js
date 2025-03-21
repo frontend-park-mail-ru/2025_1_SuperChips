@@ -1,4 +1,4 @@
-import { goToPage } from 'shared/router';
+import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { User } from 'entities/User';
 
@@ -15,7 +15,7 @@ export const handleLogin = async (event) => {
 
     if (response.ok) {
         await User.fetchUserData();
-        goToPage('feed').finally();
+        navigate('feed').finally();
     }
     else {
         const icon = document.querySelector('#password-error-icon');

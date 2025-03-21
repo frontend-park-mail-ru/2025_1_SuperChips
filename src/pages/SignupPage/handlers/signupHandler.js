@@ -1,6 +1,6 @@
 import { formatDateToISO } from 'shared/utils';
 import { validateSignup } from '../lib/signupValidation';
-import { goToPage } from 'shared/router';
+import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { User } from 'entities/User';
 
@@ -30,7 +30,7 @@ export const signupHandler = async (event) => {
 
     if (response.ok) {
         await User.fetchUserData();
-        goToPage('feed').finally();
+        navigate('feed').finally();
     }
     else {
         const emailIcon = document.querySelector('#email-error-icon');
