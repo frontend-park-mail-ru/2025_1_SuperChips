@@ -7,14 +7,34 @@ import { navigate } from 'shared/router';
 import { authPageTemplate } from 'pages/LoginPage';
 import './signup.scss';
 
+interface InputConfig {
+    type: string;
+    id: string;
+    inputLabel: string;
+    errorMessage: string;
+    required: boolean;
+    maxlength?: number;
+    autocomplete?: string;
+    isPassword?: boolean;
+}
+
+interface PageConfig {
+    page: string;
+    redirectText: string;
+    redirectBtn: string;
+    submitBtn: string;
+    header: string;
+    subheader: string;
+    inputs: InputConfig[];
+}
 
 /**
  * Генерирует страницу регистрации и создает обработчики событий
  *
- * @returns {HTMLDivElement}
+ * @returns {Promise<HTMLDivElement>}
  */
-export const SignupPage = async () => {
-    const config = {
+export const SignupPage = async (): Promise<HTMLDivElement> => {
+    const config: PageConfig = {
         page: 'signup',
         redirectText: 'Есть аккаунт?',
         redirectBtn: 'Войти',
@@ -37,7 +57,8 @@ export const SignupPage = async () => {
                 inputLabel: 'Имя пользователя',
                 errorMessage: 'Это имя уже занято',
                 required: true,
-                maxlength: 32 },
+                maxlength: 32
+            },
             {
                 type: 'date',
                 id: 'birthday',
@@ -71,14 +92,18 @@ export const SignupPage = async () => {
     const page = document.createElement('div');
     page.insertAdjacentHTML('beforeend', html);
 
-    const redirectBtn = page.querySelector('.redirect');
-    redirectBtn.addEventListener('click',  (event) => {
+    const redirectBtn = page.querySelector<HTMLAnchorElement>('.redirect');
+    if (!redirectBtn) return page;
+
+    redirectBtn.addEventListener('click', (event: MouseEvent) => {
         event.preventDefault();
         navigate('login').finally();
     });
 
-    const form = page.querySelector('.signup-form');
-    const placeholders = form.querySelectorAll('.input-placeholder');
+    const form = page.querySelector<HTMLFormElement>('.signup-form');
+    if (!form) return page;
+
+    const placeholders = form.querySelectorAll<HTMLElement>('.input-placeholder');
     placeholders.forEach((item, index) => {
         item.replaceWith(Input(config.inputs[index]));
     });
@@ -92,7 +117,7 @@ export const SignupPage = async () => {
         observer.disconnect();
     });
 
-    observer.observe(document.getElementById('root'), { childList: true });
+    observer.observe(document.getElementById('root') as HTMLElement, { childList: true });
 
     return page;
 };

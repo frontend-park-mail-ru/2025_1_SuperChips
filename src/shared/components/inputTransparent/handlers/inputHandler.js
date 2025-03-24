@@ -10,8 +10,8 @@ import { debounce } from 'shared/utils';
 export const inputHandler = (event) => {
     const container = event.target.closest('.input-container');
     const message = container.querySelector('.error-message');
-    const input = container.querySelector('.input__field');
-    const icon = container.querySelector('.input__error');
+    const input = container.querySelector('.inputTransparent__field');
+    const icon = container.querySelector('.inputTransparent__error');
 
     const validators = {
         email: validateEmail,
@@ -32,7 +32,7 @@ export const inputHandler = (event) => {
     input.classList.toggle('error', showError);
     message.textContent = error;
 
-    const eye = container.querySelector('.input__toggle-password');
+    const eye = container.querySelector('.inputTransparent__toggle-password');
     if (eye !== null) {
         if (showError) {
             eye.style.right = '36px';

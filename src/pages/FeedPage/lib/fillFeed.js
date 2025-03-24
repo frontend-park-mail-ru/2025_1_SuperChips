@@ -20,7 +20,7 @@ export const fillFeed = async () => {
         appState.isLoadingFeed = false;
         return null;
     }
-    if (images === null) return;
+    if (images === null || !images || !images.data) return;
 
     const newFrame = document.createElement('div');
     newFrame.classList.add('feed-chunk');

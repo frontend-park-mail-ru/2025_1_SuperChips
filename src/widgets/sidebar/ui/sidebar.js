@@ -1,4 +1,5 @@
 import { logoutHandler } from '../handlers/logout';
+import { navigate } from 'shared/router';
 import sidebarTemplate from './sidebar.hbs';
 import './sidebar.scss';
 
@@ -12,6 +13,7 @@ export const Sidebar = async () => {
     const buttons = [
         { id: 'newPin', source: '/icons/new-pin.svg', alt: 'add new pin', active: false },
         { id: 'chats', source: '/icons/chat.svg', alt: 'chats', active: false },
+        { id: 'settings', source: '/icons/settings-icon.svg', alt: 'settings', active: false },
         { id: 'logout', source: '/icons/log-out.svg', alt: 'logout', active: true }
     ];
 
@@ -19,6 +21,11 @@ export const Sidebar = async () => {
 
     const logout = sidebar.querySelector('#logout');
     logout.addEventListener('click', logoutHandler);
+
+    const settings = sidebar.querySelector('#settings');
+    settings.addEventListener('click', () => {
+        navigate('settings').finally();
+    });
 
     return sidebar;
 };

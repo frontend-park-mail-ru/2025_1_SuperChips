@@ -3,6 +3,13 @@ import { validateBirthday } from 'shared/validation';
 import { validatePassword } from 'shared/validation';
 import { validateUsername } from 'shared/validation';
 
+interface SignupFormData {
+    email: string;
+    username: string;
+    birthday: string;
+    password: string;
+    passwordConfirm: string;
+}
 
 /**
  * Валидация формы регистрации
@@ -13,7 +20,7 @@ import { validateUsername } from 'shared/validation';
  * @param passwordConfirm подтверждение пароля
  * @returns {boolean}
  */
-export const validateSignup = ({ email, username, birthday, password, passwordConfirm }) => {
+export const validateSignup = ({ email, username, birthday, password, passwordConfirm }: SignupFormData): boolean => {
     const result = {
         email: validateEmail(email).isValid,
         username: validateUsername(username).isValid,

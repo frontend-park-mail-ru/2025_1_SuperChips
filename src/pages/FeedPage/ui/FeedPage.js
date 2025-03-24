@@ -23,9 +23,7 @@ export const FeedPage = async () => {
 
     page.querySelector('#navbar').replaceWith((await Navbar()));
 
-    if (User.authorized) {
-        page.querySelector('#sidebar').replaceWith(await Sidebar());
-    }
+    page.querySelector('#sidebar').replaceWith(await Sidebar());
 
     window.addEventListener('scroll', debouncedScroll);
 

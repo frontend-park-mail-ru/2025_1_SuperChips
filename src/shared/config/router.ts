@@ -1,6 +1,7 @@
 import { FeedPage } from 'pages/FeedPage';
 import { LoginPage } from 'pages/LoginPage';
 import { SignupPage } from 'pages/SignupPage';
+import { SettingsPage } from 'pages/SettingsPage';
 
 
 interface PageConfig {
@@ -37,6 +38,11 @@ export const config: RouterConfig = {
             title: 'Регистрация',
             render: SignupPage,
             nonAuthOnly: true,
+        },
+        settings: {
+            href: '/settings',
+            title: 'Настройки',
+            render: SettingsPage
         }
     },
 };

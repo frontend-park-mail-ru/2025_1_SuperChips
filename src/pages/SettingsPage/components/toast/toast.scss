@@ -1,0 +1,30 @@
+@use '../../../styles/variables' as *;
+
+.toast {
+    position: fixed;
+    bottom: $spacing-xl;
+    right: $spacing-xl;
+    padding: $spacing-m $spacing-l;
+    border-radius: $border-radius-m;
+    background-color: $white;
+    box-shadow: $shadow-light;
+    color: $text-primary;
+    font-size: $font-size-m;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+
+    &_visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    &_success {
+        border-left: 4px solid $success;
+    }
+
+    &_error {
+        border-left: 4px solid $error;
+    }
+}
