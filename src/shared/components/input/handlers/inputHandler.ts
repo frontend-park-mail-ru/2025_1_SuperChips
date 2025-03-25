@@ -37,9 +37,9 @@ export const inputHandler = (event: Event) => {
         passwordConfirm: validatePasswordConfirm,
     };
 
-    const validatorKey = input.id as keyof IValidators;
+    const key = input.id as keyof IValidators;
 
-    const result = validators[validatorKey]?.(input.value) ?? { isValid: true, error: '' };
+    const result = validators[key]?.(input.value) ?? { isValid: true, error: '' };
     const valid = result.isValid;
     const error = result.error;
 

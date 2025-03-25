@@ -2,16 +2,29 @@ import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { User } from 'entities/User';
 
-export const handleLogin = async (event) => {
-    event.preventDefault();
+interface IInputData {
+    email: string,
+    password: string,
+}
 
-    const inputData = {};
-    const inputs = event.target.querySelectorAll('.input__field');
+export const handleLogin = async (event: Event) => {
+    event.preventDefault();
+    const target = event.target as HTMLFormElement;
+
+    const inputData: IInputData = {
+        email: '',
+        password: '',
+    };
+
+    const inputs: NodeListOf<HTMLInputElement> = target.querySelectorAll('.input__field');
     inputs.forEach(input => {
-        inputData[input.id] = input.value;
+        const key = input.id as keyof IInputData;
+
+        inputData[key] = input.value;
     });
 
     const response = await Auth.login(inputData);
+    if (response instanceof Error) return;
 
     if (response.ok) {
         await User.fetchUserData();
@@ -20,7 +33,8 @@ export const handleLogin = async (event) => {
     else {
         const icon = document.querySelector('#password-error-icon');
         const message = document.querySelector('#password-error');
-        const eye = document.querySelector('#password-eye');
+        const eye = document.querySelector('#password-eye') as HTMLImageElement;
+        if (!icon || !message || !eye) return;
 
         message.textContent = 'Неправильный пароль или почта';
         message.classList.remove('hidden');

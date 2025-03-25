@@ -1,3 +1,4 @@
+import { IInputConfig } from 'shared/types/InputConfig';
 import { debouncedInputHandler } from '../handlers/inputHandler';
 import { togglePasswordHandler } from '../handlers/togglePasswordHandler';
 import { dateHandler } from '../handlers/dateHandler';
@@ -7,7 +8,7 @@ import inputTemplate from './input.hbs';
 /**
  * Создает инпут с иконкой ошибки и полем для сообщения об ошибке
  */
-export const Input = (data: Event) => {
+export const Input = (data: IInputConfig) => {
     const inputContainer = document.createElement('div');
     inputContainer.insertAdjacentHTML('beforeend', inputTemplate(data));
 
