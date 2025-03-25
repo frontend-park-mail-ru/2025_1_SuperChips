@@ -5,7 +5,6 @@ import { fillFeed } from '../lib/fillFeed';
 /**
  * Загружает новые картинки для ленты, когда пользователь достигает определенной высоты
  * или создает футер с сообщением, когда картинки закончились
- * @returns {Promise<void>}
  */
 const scrollHandler = async () => {
     const threshold = 700;

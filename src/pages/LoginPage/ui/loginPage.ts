@@ -9,7 +9,6 @@ import './login.scss';
 
 /**
  * Генерирует страницу логина и создает обработчики событий
- * @returns {HTMLDivElement}
  */
 export const LoginPage = async () => {
     const page = document.createElement('div');
@@ -46,26 +45,34 @@ export const LoginPage = async () => {
     page.insertAdjacentHTML('beforeend', html);
 
     const form = page.querySelector('.login-form');
-    const placeholders = form.querySelectorAll('.input-placeholder');
-    placeholders.forEach((item, index) => {
-        item.replaceWith(Input(config.inputs[index]));
-    });
+    if (form) {
+        const placeholders = form.querySelectorAll('.input-placeholder');
+        placeholders.forEach((item, index) => {
+            item.replaceWith(Input(config.inputs[index]));
+        });
 
-    form.addEventListener('submit', handleLogin);
-    form.addEventListener('input', debouncedLoginButton);
+        form.addEventListener('submit', handleLogin);
+        form.addEventListener('input', debouncedLoginButton);
+    }
 
     const redirectBtn = page.querySelector('.redirect');
-    redirectBtn.addEventListener('click',  async(event) => {
-        event.preventDefault();
-        navigate('signup').finally();
-    });
+
+    if (redirectBtn) {
+        redirectBtn.addEventListener('click',  async(event) => {
+            event.preventDefault();
+            navigate('signup').finally();
+        });
+    }
 
     const observer = new MutationObserver(() => {
         fillPictureBox(1);
         observer.disconnect();
     });
 
-    observer.observe(document.getElementById('root'), { childList: true });
+    const rootElement = document.getElementById('root');
+    if (rootElement) {
+        observer.observe(rootElement, { childList: true });
+    }
 
     return page;
 };

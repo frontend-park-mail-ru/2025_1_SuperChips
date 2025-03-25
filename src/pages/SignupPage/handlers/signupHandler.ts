@@ -3,10 +3,8 @@ import { validateSignup } from '../lib/signupValidation';
 import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { User } from 'entities/User';
+import { ISignupFormData } from 'shared/types/SignupFormData';
 
-interface SignupFormData {
-    [key: string]: string;
-}
 
 export const signupHandler = async (event: SubmitEvent): Promise<void> => {
     event.preventDefault();
@@ -14,13 +12,22 @@ export const signupHandler = async (event: SubmitEvent): Promise<void> => {
     const form = document.querySelector<HTMLFormElement>('.signup-form');
     if (!form) return;
 
-    const inputData: SignupFormData = {};
+    const inputData: ISignupFormData = {
+        email: '',
+        username: '',
+        birthday: '',
+        password: '',
+        passwordConfirm: '',
+    };
+
     const inputs = form.querySelectorAll<HTMLInputElement>('.input__field');
     inputs.forEach(input => {
-        if (input.id === 'birthday') {
-            inputData[input.id] = formatDateToISO(input.value);
+        const key = input.id as keyof ISignupFormData;
+
+        if (key === 'birthday') {
+            inputData[key] = formatDateToISO(input.value);
         } else {
-            inputData[input.id] = input.value;
+            inputData[key] = input.value;
         }
     });
 
@@ -30,6 +37,7 @@ export const signupHandler = async (event: SubmitEvent): Promise<void> => {
     delete inputData.passwordConfirm;
 
     const response = await Auth.register(inputData);
+    if (response instanceof Error) return;
 
     if (response.ok) {
         await User.fetchUserData();

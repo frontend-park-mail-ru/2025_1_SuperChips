@@ -1,5 +1,5 @@
 import { API } from 'shared/api/api';
-import { IUserData } from 'entities/User';
+import { ISignupFormData } from 'shared/types/SignupFormData';
 
 type TLoginData = {
     email: string;
@@ -36,7 +36,7 @@ class auth {
      * @param {Object} userData - email, имя пользователя, дата рождения, пароль
      * @returns {Promise<json|Error>} - ответ от сервера
      */
-    async register(userData: IUserData): Promise<Response|Error> {
+    async register(userData: ISignupFormData): Promise<Response|Error> {
         try {
             return await this.API.post('/api/v1/auth/registration', userData);
         } catch (error) {

@@ -1,6 +1,6 @@
 import { debounce } from 'shared/utils';
 
-const passwordConfirm = (event: InputEvent): void => {
+const passwordConfirm = (event: Event): void => {
     const target = event.target as HTMLInputElement;
     if (target.id !== 'password' && target.id !== 'passwordConfirm') { return; }
 

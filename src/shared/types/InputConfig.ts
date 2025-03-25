@@ -3,7 +3,7 @@ export interface IInputConfig {
     id: string;
     inputLabel: string;
     errorMessage: string;
-    required: boolean;
+    required?: boolean;
     maxlength?: number;
     autocomplete?: string;
     isPassword?: boolean;

@@ -12,7 +12,6 @@ export const feedState = {
 
 /**
  * Генерирует страницу ленты и создает обработчики событий
- * @returns {HTMLDivElement}
  */
 export const FeedPage = async () => {
     feedState.pageNum = 1;
@@ -20,9 +19,11 @@ export const FeedPage = async () => {
     const page = document.createElement('div');
     page.insertAdjacentHTML('beforeend', feedTemplate({}));
 
-    page.querySelector('#navbar').replaceWith((await Navbar()));
+    const navbar = page.querySelector('#navbar');
+    if (navbar) navbar.replaceWith((await Navbar()));
 
-    page.querySelector('#sidebar').replaceWith(await Sidebar());
+    const sidebar = page.querySelector('#sidebar');
+    if (sidebar) sidebar.replaceWith((await Sidebar()));
 
     window.addEventListener('scroll', debouncedScroll);
 
@@ -31,7 +32,11 @@ export const FeedPage = async () => {
         delayedFill.disconnect();
     });
 
-    delayedFill.observe(document.getElementById('root'), { childList: true });
+
+    const rootElement = document.getElementById('root');
+    if (rootElement) {
+        delayedFill.observe(rootElement, { childList: true });
+    }
 
     return page;
 };

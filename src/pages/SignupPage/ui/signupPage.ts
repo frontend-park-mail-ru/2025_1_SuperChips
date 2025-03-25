@@ -4,9 +4,9 @@ import { fillPictureBox } from '../../LoginPage/lib/fillPictureBox';
 import { signupHandler } from '../handlers/signupHandler';
 import { Input } from 'shared/components/input';
 import { navigate } from 'shared/router';
-import { authPageTemplate } from 'pages/LoginPage';
-import './signup.scss';
 import { IInputConfig } from 'shared/types/InputConfig';
+import authPageTemplate from 'pages/LoginPage/authPage/authPageTemplate.hbs';
+import './signup.scss';
 
 
 

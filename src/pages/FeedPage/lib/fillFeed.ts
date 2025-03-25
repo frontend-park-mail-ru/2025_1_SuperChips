@@ -8,18 +8,24 @@ import { appState } from 'shared/router';
 
 /**
  * Загружает и создает чанк картинок для ленты
- * @returns {Promise<void>}
  */
 export const fillFeed = async () => {
     const feed = document.querySelector('#feed');
+    if (!feed) return;
+
     const images = await loadImages(feedState.pageNum++);
 
     if (images === 404) {
-        document.getElementById('root').insertAdjacentHTML('beforeend', Footer().innerHTML);
+        const rootElement = document.getElementById('root');
+        if (!rootElement) return;
+
+        rootElement.insertAdjacentHTML('beforeend', Footer().innerHTML);
         window.removeEventListener('scroll', debouncedScroll);
         appState.isLoadingFeed = false;
         return null;
     }
+    if (typeof images === 'number') return;
+
     if (images === null || !images || !images.data) return;
 
     const newFrame = document.createElement('div');
