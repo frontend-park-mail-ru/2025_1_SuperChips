@@ -7,7 +7,6 @@ import { scrollToTop } from '../handlers/scrollToTop';
 /**
  * Генерирует навбар для основных страниц (ленты, профиля и тд)
  * Содержимое навбара меняется, в зависимости от того, авторизован ли пользователь
- * @returns {HTMLDivElement}
  */
 export const Navbar = async () => {
     const navbar = document.createElement('div');
@@ -28,7 +27,7 @@ export const Navbar = async () => {
     }
 
     const anchorButton = navbar.querySelector('#scroll-to-top');
-    anchorButton.addEventListener('click', scrollToTop);
+    anchorButton?.addEventListener('click', scrollToTop);
 
     return navbar;
 };

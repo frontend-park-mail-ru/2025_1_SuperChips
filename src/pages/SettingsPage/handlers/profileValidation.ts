@@ -15,25 +15,25 @@ const profileValidation = (event: InputEvent): void => {
     let errorText = '';
 
     switch (field) {
-        case 'firstName':
-            showError = !value.trim();
-            errorText = 'Введите имя';
-            break;
-        case 'lastName':
-            showError = !value.trim();
-            errorText = 'Введите фамилию';
-            break;
-        case 'username':
-            const validationResult = validateUsername(value);
-            showError = !validationResult.isValid;
-            errorText = validationResult.error;
-            break;
-        case 'birthday':
-            const date = new Date(value);
-            const today = new Date();
-            showError = date > today;
-            errorText = 'Некорректная дата рождения';
-            break;
+    case 'firstName':
+        showError = !value.trim();
+        errorText = 'Введите имя';
+        break;
+    case 'lastName':
+        showError = !value.trim();
+        errorText = 'Введите фамилию';
+        break;
+    case 'username':
+        const validationResult = validateUsername(value);
+        showError = !validationResult.isValid;
+        errorText = validationResult.error;
+        break;
+    case 'birthday':
+        const date = new Date(value);
+        const today = new Date();
+        showError = date > today;
+        errorText = 'Некорректная дата рождения';
+        break;
     }
 
     errorIcon.classList.toggle('hidden', !showError);

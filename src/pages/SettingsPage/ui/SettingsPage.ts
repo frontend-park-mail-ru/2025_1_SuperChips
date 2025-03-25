@@ -189,7 +189,7 @@ export const SettingsPage = async () => {
             contentContainer.remove();
         }
 
-        let newContentContainer = document.createElement('div');
+        const newContentContainer = document.createElement('div');
         newContentContainer.classList.add('settings-content-container');
 
         if (tabId === 'profile') {

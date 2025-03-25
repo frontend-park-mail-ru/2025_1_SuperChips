@@ -1,4 +1,4 @@
-export const scrollToTop = (event) => {
+export const scrollToTop = (event: Event) => {
     event.preventDefault();
     window.scrollTo({
         top: 0,

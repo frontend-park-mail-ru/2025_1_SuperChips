@@ -1,4 +1,3 @@
-import { User } from 'entities/User';
 import { Navbar } from 'widgets/navbar';
 import { Sidebar } from 'widgets/sidebar';
 import { fillFeed } from '../lib/fillFeed';

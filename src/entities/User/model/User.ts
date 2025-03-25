@@ -1,34 +1,36 @@
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api/api';
+import { IUserData } from './types';
 
 class user {
     authorized: boolean;
-    #username: string | null;
-    #tag: string | null;
-    #avatar: string | null;
-    #firstName: string | null;
-    #lastName: string | null;
-    #birthDate: string | null;
-    #about: string | null;
-    #email: string | null;
+    #username: string;
+    #tag: string;
+    #avatar: string;
+    #firstName: string;
+    #lastName: string;
+    #birthDate: Date;
+    #about: string;
+    #email: string;
 
     constructor() {
         this.authorized = false;
-        this.#username = null;
-        this.#tag = null;
-        this.#avatar = null;
-        this.#firstName = null;
-        this.#lastName = null;
-        this.#birthDate = null;
-        this.#about = null;
-        this.#email = null;
+        this.#username = '';
+        this.#tag = '';
+        this.#avatar = '';
+        this.#firstName = '';
+        this.#lastName = '';
+        this.#birthDate = new Date;
+        this.#about = '';
+        this.#email = '';
     }
 
     fetchUserData = async (): Promise<void> => {
         const response = await Auth.getUserData();
 
         if (response instanceof Error) { return; }
-        else if (response.ok) {
+
+        if (response.ok) {
             const body = await response.json();
             const data = body.data;
 
@@ -50,34 +52,34 @@ class user {
         username: string;
         birthDate: string;
         about: string;
-    }): Promise<Response> => {
+    }) => {
         return await API.put('/api/v1/user/profile', profileData);
     };
 
     updatePassword = async (passwords: {
         currentPassword: string;
         newPassword: string;
-    }): Promise<Response> => {
+    }) => {
         return await API.put('/api/v1/user/password', passwords);
     };
 
-    updateAvatar = async (formData: FormData): Promise<Response> => {
+    updateAvatar = async (formData: FormData) => {
         return await API.put('/api/v1/user/avatar', formData);
     };
 
     clearUserData = () => {
-        this.#username = null;
-        this.#avatar = null;
-        this.#tag = null;
-        this.#firstName = null;
-        this.#lastName = null;
-        this.#birthDate = null;
-        this.#about = null;
-        this.#email = null;
+        this.#username = '';
+        this.#avatar = '';
+        this.#tag = '';
+        this.#firstName = '';
+        this.#lastName = '';
+        this.#birthDate = new Date;
+        this.#about = '';
+        this.#email = '';
         this.authorized = false;
     };
 
-    getUserData = () => {
+    getUserData = (): IUserData => {
         return {
             username: this.#username,
             avatar: this.#avatar,
