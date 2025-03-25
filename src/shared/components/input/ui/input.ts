@@ -5,19 +5,17 @@ import './input.scss';
 import inputTemplate from './input.hbs';
 
 /**
- * Создает инпут с иконкой ошибки и сообщением об ошибке
- * @returns {HTMLDivElement}
- * @param {{type, id, inputLabel, errorMessage, required, maxlength}} data
+ * Создает инпут с иконкой ошибки и полем для сообщения об ошибке
  */
-export const Input = (data) => {
+export const Input = (data: Event) => {
     const inputContainer = document.createElement('div');
     inputContainer.insertAdjacentHTML('beforeend', inputTemplate(data));
 
-    const inputField = inputContainer.querySelector('input');
+    const inputField = inputContainer.querySelector('input') as HTMLInputElement;
     inputField.addEventListener('input', debouncedInputHandler);
 
     if (data.type === 'password') {
-        const eye = inputContainer.querySelector('.input__toggle-password');
+        const eye = inputContainer.querySelector('.input__toggle-password') as HTMLImageElement;
         eye.addEventListener('click', togglePasswordHandler);
     }
 

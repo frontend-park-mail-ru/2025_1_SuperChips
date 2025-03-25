@@ -27,7 +27,9 @@ export const Navbar = async () => {
     }
 
     const anchorButton = navbar.querySelector('#scroll-to-top');
-    anchorButton?.addEventListener('click', scrollToTop);
+    if (anchorButton) {
+        anchorButton.addEventListener('click', scrollToTop);
+    }
 
     return navbar;
 };

@@ -6,17 +6,9 @@ import { Input } from 'shared/components/input';
 import { navigate } from 'shared/router';
 import { authPageTemplate } from 'pages/LoginPage';
 import './signup.scss';
+import { IInputConfig } from 'shared/types/InputConfig';
 
-interface InputConfig {
-    type: string;
-    id: string;
-    inputLabel: string;
-    errorMessage: string;
-    required: boolean;
-    maxlength?: number;
-    autocomplete?: string;
-    isPassword?: boolean;
-}
+
 
 interface PageConfig {
     page: string;
@@ -25,7 +17,7 @@ interface PageConfig {
     submitBtn: string;
     header: string;
     subheader: string;
-    inputs: InputConfig[];
+    inputs: IInputConfig[];
 }
 
 /**

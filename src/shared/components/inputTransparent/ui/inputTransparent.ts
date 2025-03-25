@@ -1,15 +1,12 @@
-import { debouncedInputHandler } from '../handlers/inputHandler';
-import { togglePasswordHandler } from '../handlers/togglePasswordHandler';
-import { dateHandler } from '../handlers/dateHandler';
-import './inputTransparent.scss';
+import { dateHandler, debouncedInputHandler, togglePasswordHandler } from 'shared/components/input';
 import inputTemplate from './inputTransparent.hbs';
+import './inputTransparent.scss';
+import { IInputConfig } from 'shared/types/InputConfig';
 
 /**
  * Создает инпут с иконкой ошибки и сообщением об ошибке
- * @returns {HTMLDivElement}
- * @param {{type, id, inputLabel, errorMessage, required, maxlength}} data
  */
-export const InputTransparent = (data) => {
+export const InputTransparent = (data: IInputConfig) => {
     const inputContainer = document.createElement('div');
     const templateData = {
         ...data,
