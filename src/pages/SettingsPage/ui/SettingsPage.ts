@@ -3,16 +3,12 @@ import { Navbar } from 'widgets/navbar';
 import { Sidebar } from 'widgets/sidebar';
 import { createVertTabBar } from 'pages/SettingsPage/components/vert-tab-bar/vert-tab-bar';
 import { InputTransparent } from 'shared/components/inputTransparent';
+import { showToast } from '../components/toast/toast';
+import { handleProfileUpdate } from '../handlers/profileUpdate';
+import { debouncedProfileValidation } from '../handlers/profileValidation';
 import './settings.scss';
 
-const mockUserData = {
-    avatar: null,
-    firstName: 'Иван',
-    lastName: 'Иванов',
-    username: 'ivanov',
-    birthDate: '2000-01-01',
-    about: 'Привет! Я Иван.'
-};
+let userData = User.getUserData();
 
 const createProfileSettings = () => {
     const container = document.createElement('div');
@@ -27,10 +23,10 @@ const createProfileSettings = () => {
     form.classList.add('settings-form');
 
     const fields = [
-        { type: 'text', id: 'firstName', inputLabel: 'Имя', value: mockUserData.firstName, errorMessage: 'Введите имя', maxlength: 120, required: true },
-        { type: 'text', id: 'lastName', inputLabel: 'Фамилия', value: mockUserData.lastName, errorMessage: 'Введите фамилию', maxlength: 120, required: true },
-        { type: 'text', id: 'username', inputLabel: 'Никнейм', value: mockUserData.username, errorMessage: 'Неверный формат никнейма', maxlength: 120, required: true },
-        { type: 'date', id: 'birthday', inputLabel: 'Дата рождения', value: mockUserData.birthDate, errorMessage: 'Неверный формат даты', required: true }
+        { type: 'text', id: 'firstName', inputLabel: 'Имя', value: userData.firstName || '', errorMessage: 'Введите имя', maxlength: 120, required: true },
+        { type: 'text', id: 'lastName', inputLabel: 'Фамилия', value: userData.lastName || '', errorMessage: 'Введите фамилию', maxlength: 120, required: true },
+        { type: 'text', id: 'username', inputLabel: 'Никнейм', value: userData.username || '', errorMessage: 'Неверный формат никнейма', maxlength: 120, required: true },
+        { type: 'date', id: 'birthday', inputLabel: 'Дата рождения', value: userData.birthDate || '', errorMessage: 'Неверный формат даты', required: true }
     ];
 
     // Create avatar container
@@ -40,15 +36,15 @@ const createProfileSettings = () => {
     const avatarWrapper = document.createElement('div');
     avatarWrapper.classList.add('profile-picture');
 
-    if (mockUserData.avatar) {
+    if (userData.avatar) {
         const avatarImg = document.createElement('img');
-        avatarImg.src = mockUserData.avatar;
+        avatarImg.src = userData.avatar;
         avatarImg.alt = 'Profile picture';
         avatarWrapper.appendChild(avatarImg);
     } else {
         const shortUsername = document.createElement('p');
         shortUsername.classList.add('shortUsername');
-        shortUsername.textContent = mockUserData.username[0].toUpperCase();
+        shortUsername.textContent = userData.username ? userData.username[0].toUpperCase() : '';
         avatarWrapper.appendChild(shortUsername);
     }
 
@@ -62,8 +58,26 @@ const createProfileSettings = () => {
     fileInput.accept = 'image/*';
     fileInput.style.display = 'none';
 
-    changePhotoButton.addEventListener('click', () => {
-        fileInput.click();
+    fileInput.addEventListener('change', async (e) => {
+        const target = e.target as HTMLInputElement;
+        if (target.files && target.files[0]) {
+            const formData = new FormData();
+            formData.append('avatar', target.files[0]);
+            try {
+                const response = await User.updateAvatar(formData);
+                if (response.ok) {
+                    await User.fetchUserData();
+                    userData = User.getUserData();
+                    showToast('Фото профиля обновлено', 'success');
+                    // Refresh the page to show the new avatar
+                    window.location.reload();
+                } else {
+                    showToast('Ошибка при обновлении фото', 'error');
+                }
+            } catch (error) {
+                showToast('Произошла ошибка', 'error');
+            }
+        }
     });
 
     avatarContainer.appendChild(avatarWrapper);
@@ -84,7 +98,7 @@ const createProfileSettings = () => {
     label.textContent = 'О себе';
     const textarea = document.createElement('textarea');
     textarea.setAttribute('id', 'about');
-    textarea.value = mockUserData.about || '';
+    textarea.value = userData.about || '';
     textarea.maxLength = 500;
     fieldContainer.appendChild(label);
     fieldContainer.appendChild(textarea);
@@ -95,9 +109,13 @@ const createProfileSettings = () => {
     submitButton.classList.add('submit-button');
     form.appendChild(submitButton);
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('Изменения сохранены (заглушка)');
+    form.addEventListener('submit', handleProfileUpdate);
+
+    fields.forEach(field => {
+        const input = form.querySelector(`#${field.id}`);
+        if (input) {
+            input.addEventListener('input', debouncedProfileValidation);
+        }
     });
 
     container.appendChild(form);
@@ -143,7 +161,7 @@ const createSecuritySettings = () => {
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        alert('Пароль изменен (заглушка)');
+        showToast('Пароль изменен', 'success');
     });
 
     container.appendChild(form);

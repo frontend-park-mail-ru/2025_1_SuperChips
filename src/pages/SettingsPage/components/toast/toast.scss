@@ -6,14 +6,14 @@
     right: $spacing-xl;
     padding: $spacing-m $spacing-l;
     border-radius: $border-radius-m;
-    background-color: $white;
+    background-color: rgba($background-dark, 0.8);
     box-shadow: $shadow-light;
-    color: $text-primary;
+    color: $white;
     font-size: $font-size-m;
     z-index: 1000;
     opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.3s ease;
+    transform: translateY(100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     &_visible {
         opacity: 1;
