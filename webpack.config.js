@@ -1,11 +1,11 @@
-import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import CopyWebpackPlugin from 'copy-webpack-plugin';
-import {CleanWebpackPlugin} from 'clean-webpack-plugin';
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     mode: 'development',
-    entry: './src/index.ts',
+    entry: './src/index.js',
     resolve: {
         modules: [path.resolve(__dirname, 'src'), 'node_modules'],
         extensions: ['.js', '.ts']
@@ -71,7 +71,7 @@ module.exports = {
             patterns: [
                 {
                     from: path.resolve(__dirname, 'public'),
-                    to: path.resolve(__dirname, 'dist', 'public'),
+                    to: path.resolve(__dirname, 'dist'),
                     globOptions: {
                         ignore: ['**/index.html']
                     }
