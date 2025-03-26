@@ -2,6 +2,7 @@ import { Navbar } from 'widgets/navbar';
 import { Sidebar } from 'widgets/sidebar';
 import { fillFeed } from '../lib/fillFeed';
 import { debouncedScroll } from '../handlers/handleScroll';
+import { User } from 'entities/User';
 import feedTemplate from './FeedPage.hbs';
 import './feed.scss';
 
@@ -22,8 +23,10 @@ export const FeedPage = async () => {
     const navbar = page.querySelector('#navbar');
     if (navbar) navbar.replaceWith((await Navbar()));
 
-    const sidebar = page.querySelector('#sidebar');
-    if (sidebar) sidebar.replaceWith((await Sidebar()));
+    if (User.authorized) {
+        const sidebar = page.querySelector('#sidebar');
+        if (sidebar) sidebar.replaceWith((await Sidebar()));
+    }
 
     window.addEventListener('scroll', debouncedScroll);
 
