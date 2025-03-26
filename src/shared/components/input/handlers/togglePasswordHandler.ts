@@ -5,9 +5,9 @@ export const togglePasswordHandler = (event: Event) => {
 
     if (input.type === 'password') {
         input.type = 'text';
-        img.src = '/public/icons/eye-on.svg';
+        img.src = 'public/icons/eye-on.svg';
     } else {
         input.type = 'password';
-        img.src = '/public/icons/eye-off.svg';
+        img.src = 'public/icons/eye-off.svg';
     }
 };

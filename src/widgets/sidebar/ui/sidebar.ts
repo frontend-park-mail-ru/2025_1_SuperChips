@@ -5,16 +5,15 @@ import './sidebar.scss';
 
 /**
  * Генерирует сайдбар для главных страниц (лента, профиль и тд)
- * @returns {HTMLDivElement}
  */
 export const Sidebar = async () => {
     const sidebar = document.createElement('div');
 
     const buttons = [
-        { id: 'newPin', source: '/public/icons/new-pin.svg', alt: 'add new pin', active: false },
-        { id: 'chats', source: '/public/icons/chat.svg', alt: 'chats', active: false },
-        { id: 'settings', source: '/public/icons/settings-icon.svg', alt: 'settings', active: false },
-        { id: 'logout', source: '/public/icons/log-out.svg', alt: 'logout', active: false }
+        { id: 'newPin', source: 'public/icons/new-pin.svg', alt: 'add new pin', active: false },
+        { id: 'chats', source: 'public/icons/chat.svg', alt: 'chats', active: false },
+        { id: 'settings', source: 'public/icons/settings-icon.svg', alt: 'settings', active: false },
+        { id: 'logout', source: 'public/icons/log-out.svg', alt: 'logout', active: false }
     ];
 
     sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({ buttons }));
