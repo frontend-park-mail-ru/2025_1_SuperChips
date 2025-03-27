@@ -26,7 +26,7 @@ export const fillFeed = async () => {
     }
     if (typeof images === 'number') return;
 
-    if (images === null || !images || !images.data) return;
+    if (!images || !images.data) return;
 
     const newFrame = document.createElement('div');
     newFrame.classList.add('feed-chunk');

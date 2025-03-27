@@ -1,7 +1,6 @@
 import { appState } from 'shared/router';
 import { API } from 'shared/api/api';
-import { ILoadedImages } from 'shared/types/Image';
-
+import { ILoadedImages } from '../model/types';
 
 
 /**

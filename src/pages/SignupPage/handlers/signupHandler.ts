@@ -3,7 +3,7 @@ import { validateSignup } from '../lib/signupValidation';
 import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { User } from 'entities/User';
-import { ISignupFormData } from 'shared/types/SignupFormData';
+import { ISignupFormData } from '../model/types';
 
 
 export const signupHandler = async (event: SubmitEvent): Promise<void> => {
@@ -42,10 +42,11 @@ export const signupHandler = async (event: SubmitEvent): Promise<void> => {
     if (response.ok) {
         await User.fetchUserData();
         navigate('feed').finally();
+        return;
     } else {
-        const emailIcon = document.querySelector<HTMLElement>('#email-error-icon');
-        const message = document.querySelector<HTMLElement>('#email-error');
-        const usernameIcon = document.querySelector<HTMLElement>('#username-error-icon');
+        const emailIcon = document.querySelector('#email-error-icon');
+        const message = document.querySelector('#email-error');
+        const usernameIcon = document.querySelector('#username-error-icon');
 
         if (!emailIcon || !message || !usernameIcon) return;
 

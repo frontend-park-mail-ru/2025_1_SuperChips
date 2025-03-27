@@ -6,9 +6,9 @@ const passwordConfirm = (event: Event): void => {
 
     const password = document.querySelector<HTMLInputElement>('#password')?.value || '';
     const confirm = document.querySelector<HTMLInputElement>('#passwordConfirm')?.value || '';
-    const message = document.querySelector<HTMLElement>('#passwordConfirm-error');
-    const icon = document.querySelector<HTMLElement>('#passwordConfirm-error-icon');
-    const eye = document.querySelector<HTMLElement>('#passwordConfirm-eye');
+    const message = document.querySelector('#passwordConfirm-error');
+    const icon = document.querySelector('#passwordConfirm-error-icon');
+    const eye = document.querySelector<HTMLImageElement>('#passwordConfirm-eye');
 
     if (!message || !icon || !eye) return;
 

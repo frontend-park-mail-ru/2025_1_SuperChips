@@ -1,5 +1,5 @@
 import { API } from 'shared/api/api';
-import { ISignupFormData } from 'shared/types/SignupFormData';
+import { ISignupFormData } from 'pages/SignupPage';
 
 type TLoginData = {
     email: string;

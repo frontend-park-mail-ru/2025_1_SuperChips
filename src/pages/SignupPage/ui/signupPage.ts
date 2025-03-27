@@ -4,13 +4,12 @@ import { fillPictureBox } from '../../LoginPage/lib/fillPictureBox';
 import { signupHandler } from '../handlers/signupHandler';
 import { Input } from 'shared/components/input';
 import { navigate } from 'shared/router';
-import { IInputConfig } from 'shared/types/InputConfig';
 import authPageTemplate from 'pages/LoginPage/authPage/authPageTemplate.hbs';
 import './signup.scss';
+import { IInputConfig } from 'shared/components/input/model/types';
 
 
-
-interface PageConfig {
+interface SignupPageConfig {
     page: string;
     redirectText: string;
     redirectBtn: string;
@@ -22,11 +21,9 @@ interface PageConfig {
 
 /**
  * Генерирует страницу регистрации и создает обработчики событий
- *
- * @returns {Promise<HTMLDivElement>}
  */
 export const SignupPage = async (): Promise<HTMLDivElement> => {
-    const config: PageConfig = {
+    const config: SignupPageConfig = {
         page: 'signup',
         redirectText: 'Есть аккаунт?',
         redirectBtn: 'Войти',
@@ -95,9 +92,11 @@ export const SignupPage = async (): Promise<HTMLDivElement> => {
     const form = page.querySelector<HTMLFormElement>('.signup-form');
     if (!form) return page;
 
-    const placeholders = form.querySelectorAll<HTMLElement>('.input-placeholder');
+    const placeholders = form.querySelectorAll('.input-placeholder');
     placeholders.forEach((item, index) => {
-        item.replaceWith(Input(config.inputs[index]));
+        const newInput = Input(config.inputs[index]);
+        if (newInput)
+            item.replaceWith(newInput);
     });
 
     form.addEventListener('submit', signupHandler);
@@ -109,7 +108,9 @@ export const SignupPage = async (): Promise<HTMLDivElement> => {
         observer.disconnect();
     });
 
-    observer.observe(document.getElementById('root') as HTMLElement, { childList: true });
+    const rootElement = document.getElementById('root');
+    if (rootElement)
+        observer.observe(rootElement, { childList: true });
 
     return page;
 };

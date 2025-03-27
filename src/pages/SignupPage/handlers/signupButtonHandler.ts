@@ -1,6 +1,6 @@
 import { validateSignup } from '../lib/signupValidation';
 import { debounce } from 'shared/utils';
-import { ISignupFormData } from 'shared/types/SignupFormData';
+import { ISignupFormData } from '../model/types';
 
 
 

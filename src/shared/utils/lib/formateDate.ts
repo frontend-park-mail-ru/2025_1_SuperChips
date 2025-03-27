@@ -1,7 +1,7 @@
 export const formatDateToISO = (
     dateString: string | null
 ) => {
-    if (!dateString || dateString === '') {
+    if (!dateString) {
         return '';
     }
 

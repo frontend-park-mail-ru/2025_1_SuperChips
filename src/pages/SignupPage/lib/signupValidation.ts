@@ -2,7 +2,7 @@ import { validateEmail } from 'shared/validation';
 import { validateBirthday } from 'shared/validation';
 import { validatePassword } from 'shared/validation';
 import { validateUsername } from 'shared/validation';
-import { ISignupFormData } from 'shared/types/SignupFormData';
+import { ISignupFormData } from '../model/types';
 
 
 /**
@@ -14,7 +14,13 @@ import { ISignupFormData } from 'shared/types/SignupFormData';
  * @param passwordConfirm подтверждение пароля
  * @returns {boolean}
  */
-export const validateSignup = ({ email, username, birthday, password, passwordConfirm }: ISignupFormData): boolean => {
+export const validateSignup = (
+    {   email,
+        username,
+        birthday,
+        password,
+        passwordConfirm
+    }: ISignupFormData): boolean => {
     const result = {
         email: validateEmail(email).isValid,
         username: validateUsername(username).isValid,

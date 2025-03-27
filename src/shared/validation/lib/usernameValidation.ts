@@ -1,4 +1,4 @@
-import { ValidationResult } from 'shared/types/ValidationResult';
+import { ValidationResult } from './types';
 
 /**
  * Валидация имени пользователя
