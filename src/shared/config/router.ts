@@ -8,6 +8,8 @@ interface PageConfig {
     title: string,
     render: () => Promise<HTMLDivElement>,
     nonAuthOnly?: boolean,
+    hasNavbar?: boolean,
+    hasSidebar?: boolean,
 }
 
 interface MenuConfig {
@@ -25,6 +27,8 @@ export const config: RouterConfig = {
             href: '/feed',
             title: 'Лента',
             render: FeedPage,
+            hasNavbar: true,
+            hasSidebar: true,
         },
         login: {
             href: '/login',

@@ -15,7 +15,7 @@ export const fillFeed = async () => {
 
     const images = await loadImages(feedState.pageNum++);
 
-    if (images === 404) {
+    if (images && images.status === 404) {
         const rootElement = document.getElementById('root');
         if (!rootElement) return;
 
@@ -24,7 +24,6 @@ export const fillFeed = async () => {
         appState.isLoadingFeed = false;
         return null;
     }
-    if (typeof images === 'number') return;
 
     if (!images || !images.data) return;
 

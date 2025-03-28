@@ -1,3 +1,3 @@
 export { FeedPage } from './ui/FeedPage';
 export { debouncedScroll } from './handlers/handleScroll';
-export { IImage } from './model/types';
+export type { IImage } from './model/types';

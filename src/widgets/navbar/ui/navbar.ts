@@ -14,7 +14,7 @@ export const Navbar = async () => {
     const userData = User.getUserData();
 
     if (!userData.avatar && userData.authorized) {
-        userData.shortUsername = userData.username[0].toUpperCase();
+        userData.shortUsername = userData.username ? userData.username[0].toUpperCase() : '';
     }
 
     navbar.innerHTML += navbarTemplate(userData);

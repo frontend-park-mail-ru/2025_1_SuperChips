@@ -25,13 +25,13 @@ export const Sidebar = async () => {
             id: 'settings',
             source: '/public/icons/settings-icon.svg',
             alt: 'settings',
-            active: false
+            active: true,
         },
         {
             id: 'logout',
             source: '/public/icons/log-out.svg',
             alt: 'logout',
-            active: false
+            active: true,
         }
     ];
 

@@ -2,6 +2,8 @@ import { root } from 'app/app';
 import { config } from 'shared/config/router';
 import { debouncedScroll } from 'pages/FeedPage';
 import { User } from 'entities/User';
+import { Navbar } from '../../../widgets/navbar';
+import { Sidebar } from '../../../widgets/sidebar';
 
 interface AppState {
     activePage: string | null,
@@ -25,7 +27,7 @@ export const navigate = async (
     if (root === null) { return; }
     root.innerHTML = '';
 
-    if ((!(page in config.menu)) || (config.menu[page]?.nonAuthOnly && User.authorized)) {
+    if ((!(page in config.menu)) || (config.menu[page]?.nonAuthOnly && User.authorized())) {
         page = 'feed';
     }
 
@@ -37,6 +39,16 @@ export const navigate = async (
 
     const element = await config.menu[page].render();
     root.appendChild(element);
+
+    if (config.menu[page].hasNavbar) {
+        const navbar = root.querySelector('#navbar');
+        if (navbar) navbar.replaceWith((await Navbar()));
+    }
+
+    if (config.menu[page].hasSidebar && User.authorized()) {
+        const sidebar = root.querySelector('#sidebar');
+        if (sidebar) sidebar.replaceWith((await Sidebar()));
+    }
 
     window.scrollTo({ top: 0 });
     document.title = config.menu[page].title;

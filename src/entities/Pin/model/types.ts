@@ -1,7 +1,8 @@
 import { IImage } from 'pages/FeedPage';
 
 export interface ILoadedImages {
-    data : [
+    status: number,
+    data?: [
         IImage
     ];
 }

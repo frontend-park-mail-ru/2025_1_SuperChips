@@ -2,7 +2,7 @@ import { debounce } from 'shared/utils';
 
 const passwordConfirm = (event: Event): void => {
     const target = event.target as HTMLInputElement;
-    if (target.id !== 'password' && target.id !== 'passwordConfirm') { return; }
+    if (target.id !== 'password' && target.id !== 'passwordConfirm') return;
 
     const password = document.querySelector<HTMLInputElement>('#password')?.value || '';
     const confirm = document.querySelector<HTMLInputElement>('#passwordConfirm')?.value || '';

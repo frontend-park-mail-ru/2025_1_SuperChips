@@ -4,6 +4,7 @@ import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { User } from 'entities/User';
 import { ISignupFormData } from '../model/types';
+import { ErrorToast } from 'shared/components/errorToast';
 
 
 export const signupHandler = async (event: SubmitEvent): Promise<void> => {
@@ -23,7 +24,6 @@ export const signupHandler = async (event: SubmitEvent): Promise<void> => {
     const inputs = form.querySelectorAll<HTMLInputElement>('.input__field');
     inputs.forEach(input => {
         const key = input.id as keyof ISignupFormData;
-
         if (key === 'birthday') {
             inputData[key] = formatDateToISO(input.value);
         } else {
@@ -37,8 +37,9 @@ export const signupHandler = async (event: SubmitEvent): Promise<void> => {
     delete inputData.passwordConfirm;
 
     const response = await Auth.register(inputData);
-    if (response instanceof Error) return;
-
+    if (response instanceof Error) { // Ошибка уже обрабатывается в Auth.register
+        return;
+    }
     if (response.ok) {
         await User.fetchUserData();
         navigate('feed').finally();

@@ -83,18 +83,18 @@ module.exports = {
         })
     ],
     devServer: {
-        server: 'https',
+        server: 'http',
         static: {
             directory: path.resolve(__dirname, 'dist'),
         },
-        proxy: [{
-            context: ['/api'],
-            target: 'http://yourflow.ru:8080',
-            secure: false,
-            changeOrigin: true,
-        }],
+        // proxy: [{
+        //     context: ['/api'],
+        //     target: 'http://yourflow.ru:8080',
+        //     secure: false,
+        //     changeOrigin: true,
+        // }],
         historyApiFallback: true,
         compress: true,
-        port: 1234,
+        port: 8000,
     }
 };

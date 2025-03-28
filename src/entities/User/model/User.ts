@@ -1,48 +1,69 @@
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api/api';
-import { IUserData } from './types';
+import { IUser } from './types';
+import { ErrorToast } from 'shared/components/errorToast';
 
 class user {
-    authorized: boolean;
-    #username: string;
-    #tag: string;
-    #avatar: string;
-    #firstName: string;
-    #lastName: string;
-    #birthDate: Date;
-    #about: string;
-    #email: string;
+    #userData: IUser;
+    // #authorized: boolean | null;
+    // #username: string | null;
+    // #tag: string | null;
+    // #avatar: string | null;
+    // #firstName: string | null;
+    // #lastName: string | null;
+    // #birthDate: Date | null;
+    // #about: string | null;
+    // #email: string | null;
 
     constructor() {
-        this.authorized = false;
-        this.#username = '';
-        this.#tag = '';
-        this.#avatar = '';
-        this.#firstName = '';
-        this.#lastName = '';
-        this.#birthDate = new Date;
-        this.#about = '';
-        this.#email = '';
+        this.#userData = {
+            authorized: false,
+            username: null,
+            tag: null,
+            avatar: null,
+            firstName: null,
+            lastName: null,
+            birthday: null,
+            about: null,
+            email: null,
+        };
+        // this.#authorized = false;
+        // this.#username = null;
+        // this.#tag = null;
+        // this.#avatar = null;
+        // this.#firstName = null;
+        // this.#lastName = null;
+        // this.#birthDate = null;
+        // this.#about = null;
+        // this.#email = null;
     }
 
     fetchUserData = async (): Promise<void> => {
         const response = await Auth.getUserData();
 
-        if (response instanceof Error) { return; }
+        if (response instanceof Error) {
+            ErrorToast('Ошибка при получении данных. Попробуйте еще раз');
+            return;
+        }
 
         if (response.ok) {
             const body = await response.json();
             const data = body.data;
 
-            this.#username = data.username;
-            this.#avatar = data.avatar;
-            this.#tag = data.tag;
-            this.#firstName = data.firstName;
-            this.#lastName = data.lastName;
-            this.#birthDate = data.birthDate;
-            this.#about = data.about;
-            this.#email = data.email;
-            this.authorized = true;
+            this.#userData = {
+                ...data,
+                birthday: new Date(data.birthday),
+                authorized: true,
+            };
+            // this.#username = data.username;
+            // this.#avatar = data.avatar;
+            // this.#tag = data.tag;
+            // this.#firstName = data.firstName;
+            // this.#lastName = data.lastName;
+            // this.#birthDate = data.birthDate;
+            // this.#about = data.about;
+            // this.#email = data.email;
+            // this.#authorized = true;
         }
     };
 
@@ -68,29 +89,18 @@ class user {
     };
 
     clearUserData = () => {
-        this.#username = '';
-        this.#avatar = '';
-        this.#tag = '';
-        this.#firstName = '';
-        this.#lastName = '';
-        this.#birthDate = new Date;
-        this.#about = '';
-        this.#email = '';
-        this.authorized = false;
+        Object.keys(this.#userData).forEach((item: string) => {
+            const key = item as keyof IUser;
+            this.#userData[key] = null;
+        });
     };
 
-    getUserData = (): IUserData => {
-        return {
-            username: this.#username,
-            avatar: this.#avatar,
-            tag: this.#tag,
-            firstName: this.#firstName,
-            lastName: this.#lastName,
-            birthDate: this.#birthDate,
-            about: this.#about,
-            email: this.#email,
-            authorized: this.authorized,
-        };
+    getUserData = (): IUser => {
+        return this.#userData;
+    };
+
+    authorized = (): boolean => {
+        return !!this.#userData.authorized;
     };
 }
 

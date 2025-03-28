@@ -50,7 +50,7 @@ export const LoginPage = async () => {
         placeholders.forEach((item, index) => {
             const newInput = Input(config.inputs[index]);
             if (newInput)
-                item.replaceWith();
+                item.replaceWith(newInput);
         });
 
         form.addEventListener('submit', handleLogin);

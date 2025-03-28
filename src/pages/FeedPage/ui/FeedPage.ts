@@ -20,14 +20,6 @@ export const FeedPage = async () => {
     const page = document.createElement('div');
     page.insertAdjacentHTML('beforeend', feedTemplate({}));
 
-    const navbar = page.querySelector('#navbar');
-    if (navbar) navbar.replaceWith((await Navbar()));
-
-    if (User.authorized) {
-        const sidebar = page.querySelector('#sidebar');
-        if (sidebar) sidebar.replaceWith((await Sidebar()));
-    }
-
     window.addEventListener('scroll', debouncedScroll);
 
     const delayedFill = new MutationObserver(() => {
