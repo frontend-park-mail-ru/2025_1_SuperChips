@@ -1,6 +1,7 @@
 import { FeedPage } from 'pages/FeedPage';
 import { LoginPage } from 'pages/LoginPage';
 import { SignupPage } from 'pages/SignupPage';
+import { NewPinPage } from '../../pages/NewPinPage';
 
 
 interface PageConfig {
@@ -8,6 +9,7 @@ interface PageConfig {
     title: string,
     render: () => Promise<HTMLDivElement>,
     nonAuthOnly?: boolean,
+    authOnly?: boolean,
     hasNavbar?: boolean,
     hasSidebar?: boolean,
 }
@@ -42,5 +44,11 @@ export const config: RouterConfig = {
             render: SignupPage,
             nonAuthOnly: true,
         },
+        newPin: {
+            href: 'flow/new',
+            title: 'Новый flow',
+            render: NewPinPage,
+
+        }
     },
 };
