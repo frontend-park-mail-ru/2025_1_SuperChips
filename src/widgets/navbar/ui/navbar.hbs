@@ -1,41 +1,39 @@
-<div class="navbar">
-    <a class="navbar-logo"
-        id="scroll-to-top"
-        aria-label="Scroll to top"
-    >
+<a class="navbar-logo"
+    id="scroll-to-top"
+    aria-label="Scroll to top"
+>
 
-        <img
-                src="public/icons/logo-small.svg"
-                alt="site logo"
-                aria-label="Main logo"
-        />
-    </a>
-    <input
-            type="text"
-            class="search-form"
-            placeholder="Поиск..."
-            id="search"
-            aria-label="Search input"
+    <img
+            src="public/icons/logo-small.svg"
+            alt="site logo"
+            aria-label="Main logo"
     />
+</a>
+<input
+        type="text"
+        class="search-form"
+        placeholder="Поиск..."
+        id="search"
+        aria-label="Search input"
+/>
 
-    {{#if authorized}}
-    <div class="profile-picture">
-        {{#if avatar}}
-            <img
-                    src={{avatar}}
-                    alt="profile picture"
-                    aria-label="User profile"
-            >
-        {{else}}
-            <p class="shortUsername">{{shortUsername}}</p>
-        {{/if}}
-    </div>
+{{#if authorized}}
+<div class="profile-picture">
+    {{#if avatar}}
+        <img
+                src={{avatar}}
+                alt="profile picture"
+                aria-label="User profile"
+        >
     {{else}}
-    <button
-        class="feed-redirect"
-        id="goToLogin"
-    >
-        Войти
-    </button>
+        <p class="shortUsername">{{shortUsername}}</p>
     {{/if}}
 </div>
+{{else}}
+<button
+    class="feed-redirect"
+    id="goToLogin"
+>
+    Войти
+</button>
+{{/if}}

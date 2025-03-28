@@ -10,12 +10,9 @@ import { scrollToTop } from '../handlers/scrollToTop';
  */
 export const Navbar = async () => {
     const navbar = document.createElement('div');
+    navbar.classList.add('navbar');
 
     const userData = User.getUserData();
-
-    if (!userData.avatar && userData.authorized) {
-        userData.shortUsername = userData.username ? userData.username[0].toUpperCase() : '';
-    }
 
     navbar.innerHTML += navbarTemplate(userData);
 

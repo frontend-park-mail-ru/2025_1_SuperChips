@@ -8,6 +8,7 @@ import './sidebar.scss';
  */
 export const Sidebar = async () => {
     const sidebar = document.createElement('div');
+    sidebar.classList.add('sidebar');
 
     const buttons = [
         { id: 'newPin',

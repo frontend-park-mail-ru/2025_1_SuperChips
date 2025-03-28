@@ -1,6 +1,7 @@
 import { API } from 'shared/api/api';
 import { ISignupFormData } from 'pages/SignupPage';
 import { ErrorToast } from 'shared/components/errorToast';
+import { Navbar } from '../../../widgets/navbar';
 
 type TLoginData = {
     email: string;
@@ -26,7 +27,12 @@ class auth {
         { email, password }: TLoginData
     ): Promise<Response|Error> {
         try {
-            return await this.API.post('/api/v1/auth/login', { email, password });
+            const response = this.API.post('/api/v1/auth/login', { email, password });
+
+            const navbar = document.querySelector('.navbar');
+            if (navbar) navbar.replaceWith(await Navbar());
+
+            return response;
         } catch (error) {
             ErrorToast('Ошибка при отправке данных. Попробуйте еще раз');
             return new Error(`Login failed: ${error}`);
@@ -51,9 +57,14 @@ class auth {
 	 * Завершение сессии
 	 * @returns {Promise<Error>} ответ сервера
 	 */
-    async logout(): Promise<void|Error> {
+    async logout(): Promise<Response|Error> {
         try {
-            await this.API.post('/api/v1/auth/logout');
+            const response = this.API.post('/api/v1/auth/logout');
+
+            const navbar = document.querySelector('.navbar');
+            if (navbar) navbar.replaceWith(await Navbar());
+
+            return response;
         } catch (error) {
             return new Error(`Logout failed: ${error}`);
         }
@@ -73,7 +84,6 @@ class auth {
         try {
             return await this.API.get('/api/v1/auth/user');
         } catch (error) {
-            ErrorToast('Ошибка при получении данных. Попробуйте еще раз');
             return new Error(`Failed to fetch user data: ${error}`);
         }
     }

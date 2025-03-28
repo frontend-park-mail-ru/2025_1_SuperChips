@@ -15,7 +15,12 @@ export const loadImages = async (pageNum: number): Promise<ILoadedImages | null>
     if (response instanceof Error) return null;
 
     if (!response.ok) {
-        ErrorToast('Ошибка при получении данных. Попробуйте еще раз');
+        const body = await response.json();
+
+        if (body.description !== 'Not Found') {
+            ErrorToast('Ошибка при получении данных. Попробуйте еще раз');
+        }
+
         return {
             status: 404,
         };

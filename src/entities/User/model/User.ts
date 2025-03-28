@@ -1,14 +1,16 @@
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api/api';
-import { IUser } from './types';
+import { IUserData } from './types';
 import { ErrorToast } from 'shared/components/errorToast';
 
 class user {
-    #userData: IUser;
+    #userData: IUserData;
 
     constructor() {
         this.#userData = {
             authorized: false,
+            uid: null,
+            publicName: null,
             username: null,
             tag: null,
             avatar: null,
@@ -35,6 +37,7 @@ class user {
             this.#userData = {
                 ...data,
                 birthday: new Date(data.birthday),
+                shortUsername: data.username[0].toUpperCase(),
                 authorized: true,
             };
         }
@@ -63,12 +66,12 @@ class user {
 
     clearUserData = () => {
         Object.keys(this.#userData).forEach((item: string) => {
-            const key = item as keyof IUser;
+            const key = item as keyof IUserData;
             this.#userData[key] = null;
         });
     };
 
-    getUserData = (): IUser => {
+    getUserData = (): IUserData => {
         return this.#userData;
     };
 

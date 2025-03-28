@@ -1,6 +1,7 @@
 import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { User } from 'entities/User';
+import { Navbar } from 'widgets/navbar';
 
 interface ILoginInputData {
     email: string,

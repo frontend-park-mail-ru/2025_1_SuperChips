@@ -40,15 +40,21 @@ export const navigate = async (
     const element = await config.menu[page].render();
     root.appendChild(element);
 
-    if (config.menu[page].hasNavbar) {
-        const navbar = root.querySelector('#navbar');
-        if (navbar) navbar.replaceWith((await Navbar()));
-    }
+    const navbar = root.querySelector<HTMLDivElement>('.navbar');
+    const showNavbar = config.menu[page].hasNavbar;
+    console.log('navbar: ', showNavbar);
+    // navbar.style.display = showNavbar ? 'flex' : 'none';
+    if (navbar) navbar.classList.toggle('hidden', !showNavbar);
 
-    if (config.menu[page].hasSidebar && User.authorized()) {
-        const sidebar = root.querySelector('#sidebar');
-        if (sidebar) sidebar.replaceWith((await Sidebar()));
-    }
+    const sidebar = root.querySelector<HTMLDivElement>('.sidebar');
+    const showSidebar = config.menu[page].hasSidebar && User.authorized();
+    if (sidebar) sidebar.classList.toggle('hidden', !showSidebar);
+    // if (sidebar) {
+    //     const showSidebar = config.menu[page].hasSidebar && User.authorized();
+    //     sidebar.style.display = showSidebar ? 'flex' : 'none';
+    // }
+    console.log('sidebar: ', showSidebar);
+
 
     window.scrollTo({ top: 0 });
     document.title = config.menu[page].title;
