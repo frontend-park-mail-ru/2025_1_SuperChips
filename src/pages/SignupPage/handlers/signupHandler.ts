@@ -4,7 +4,6 @@ import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { User } from 'entities/User';
 import { ISignupFormData } from '../model/types';
-import { ErrorToast } from 'shared/components/errorToast';
 
 
 export const signupHandler = async (event: SubmitEvent): Promise<void> => {

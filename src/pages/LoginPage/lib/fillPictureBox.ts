@@ -1,7 +1,6 @@
 import { loadImages } from 'entities/Pin';
 import { Pin } from 'entities/Pin';
 import { IImage } from 'pages/FeedPage';
-import { ErrorToast } from 'shared/components/errorToast';
 
 /**
  * Загружает картинки и создает коллаж для страниы входа

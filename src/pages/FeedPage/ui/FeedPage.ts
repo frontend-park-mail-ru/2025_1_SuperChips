@@ -1,8 +1,5 @@
-import { Navbar } from 'widgets/navbar';
-import { Sidebar } from 'widgets/sidebar';
 import { fillFeed } from '../lib/fillFeed';
 import { debouncedScroll } from '../handlers/handleScroll';
-import { User } from 'entities/User';
 import feedTemplate from './FeedPage.hbs';
 import './feed.scss';
 
