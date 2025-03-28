@@ -13,7 +13,7 @@ export const fillPictureBox = async (pageNum: number) => {
     const newFrame = document.createElement('div');
     newFrame.classList.add('feed-chunk');
 
-    if (!images || images.status !== 200 || !images.data) { // Ошибка уже обрабатывается в loadImages
+    if (!images?.data) { // Ошибка уже обрабатывается в loadImages
         return;
     }
 

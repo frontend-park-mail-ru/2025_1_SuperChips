@@ -15,7 +15,7 @@ export const fillFeed = async () => {
 
     const images = await loadImages(feedState.pageNum++);
 
-    if (images && images.status === 404) {
+    if (images?.status === 404) {
         const rootElement = document.getElementById('root');
         if (!rootElement) return;
 

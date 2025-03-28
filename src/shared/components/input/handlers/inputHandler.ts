@@ -1,11 +1,11 @@
 import { debounce } from 'shared/utils';
+import type { ValidationResult } from 'shared/validation';
 import {
     validateBirthday,
     validateEmail,
     validatePassword,
     validatePasswordConfirm,
     validateUsername,
-    ValidationResult
 } from 'shared/validation';
 
 interface IValidators {
