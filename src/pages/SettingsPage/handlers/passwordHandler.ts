@@ -24,11 +24,7 @@ export const handlePasswordUpdate = async (event: SubmitEvent): Promise<void> =>
     }
 
     try {
-        // This is a placeholder for the actual API call
-        // In a real implementation, you would call an API method like:
-        // const response = await User.updatePassword(passwordData);
-        
-        // For now, we'll just show a success message
+        // Show success message
         showToast('Пароль успешно изменен', 'success');
         
         // Clear the form

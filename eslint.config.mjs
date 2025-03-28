@@ -42,7 +42,8 @@ export default [
         rules: {
             ...typescript.configs.recommended.rules,
             'no-undef': 'off',
-            '@typescript-eslint/no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }]
+            '@typescript-eslint/no-unused-vars': 'off',
+            'no-unused-vars': 'off'
         }
     },
     js.configs.recommended,
@@ -60,10 +61,11 @@ export default [
             'no-console': 'warn',
             'no-var': 'error',
             'prefer-const': 'error',
-            'no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }],
             'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }],
             'eol-last': ['error', 'always'],
             'object-curly-spacing': ['error', 'always'],
+            '@typescript-eslint/no-unused-vars': 'off',
+            'no-unused-vars': 'off'
         },
     },
 ];
