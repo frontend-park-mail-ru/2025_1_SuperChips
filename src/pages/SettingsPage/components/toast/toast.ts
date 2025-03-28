@@ -3,7 +3,7 @@
  * @param {string} message - текст сообщения
  * @param {string} type - тип сообщения ('success' или 'error')
  */
-export const showToast = (message, type = 'success') => {
+export const showToast = (message: string, type: 'success' | 'error' = 'success'): void => {
     const toast = document.createElement('div');
     toast.classList.add('toast', `toast_${type}`);
     toast.textContent = message;

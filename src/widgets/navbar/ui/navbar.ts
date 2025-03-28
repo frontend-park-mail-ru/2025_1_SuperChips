@@ -13,11 +13,12 @@ export const Navbar = async () => {
 
     const userData = User.getUserData();
 
-    if (!userData.avatar && userData.authorized) {
-        userData.shortUsername = userData.username[0].toUpperCase();
+    if (!userData.avatar && userData.authorized && userData.username) {
+        const shortUsername = userData.username[0].toUpperCase();
+        navbar.innerHTML += navbarTemplate({ ...userData, shortUsername });
+    } else {
+        navbar.innerHTML += navbarTemplate(userData);
     }
-
-    navbar.innerHTML += navbarTemplate(userData);
 
     const redirectButton = navbar.querySelector('#goToLogin');
     if (redirectButton) {

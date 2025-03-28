@@ -41,11 +41,16 @@ export default [
         },
         rules: {
             ...typescript.configs.recommended.rules,
-            'no-undef': 'off'
+            'no-undef': 'off',
+            '@typescript-eslint/no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }]
         }
     },
     js.configs.recommended,
     {
+        plugins: {
+            '@typescript-eslint': typescript,
+            import: pluginImport
+        },
         rules: {
             indent: ['error', 4],
             eqeqeq: 'error',
@@ -55,7 +60,7 @@ export default [
             'no-console': 'warn',
             'no-var': 'error',
             'prefer-const': 'error',
-            'no-unused-vars': ['warn', { args: 'none' }],
+            'no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }],
             'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }],
             'eol-last': ['error', 'always'],
             'object-curly-spacing': ['error', 'always'],

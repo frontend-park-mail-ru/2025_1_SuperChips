@@ -1,7 +1,7 @@
 import { validateUsername } from 'shared/validation';
 import { debounce } from 'shared/utils';
 
-const profileValidation = (event: InputEvent): void => {
+export const validateProfileField = (event: Event): void => {
     const target = event.target as HTMLInputElement;
     const field = target.id;
     const value = target.value;
@@ -23,17 +23,19 @@ const profileValidation = (event: InputEvent): void => {
         showError = !value.trim();
         errorText = 'Введите фамилию';
         break;
-    case 'username':
+    case 'username': {
         const validationResult = validateUsername(value);
         showError = !validationResult.isValid;
         errorText = validationResult.error;
         break;
-    case 'birthday':
+    }
+    case 'birthday': {
         const date = new Date(value);
         const today = new Date();
         showError = date > today;
         errorText = 'Некорректная дата рождения';
         break;
+    }
     }
 
     errorIcon.classList.toggle('hidden', !showError);
@@ -43,4 +45,4 @@ const profileValidation = (event: InputEvent): void => {
     target.classList.toggle('error', showError);
 };
 
-export const debouncedProfileValidation = debounce(profileValidation, 300);
+export const debouncedProfileValidation = debounce(validateProfileField, 300);

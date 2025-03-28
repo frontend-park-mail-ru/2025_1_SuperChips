@@ -65,16 +65,19 @@ const createProfileSettings = () => {
             formData.append('avatar', target.files[0]);
             try {
                 const response = await User.updateAvatar(formData);
-                if (response.ok) {
+                if (response instanceof Response && response.ok) {
                     await User.fetchUserData();
                     userData = User.getUserData();
                     showToast('Фото профиля обновлено', 'success');
                     // Refresh the page to show the new avatar
                     window.location.reload();
-                } else {
+                } else if (response instanceof Response) {
+                    await response.json(); // Process response but don't store unused variable
                     showToast('Ошибка при обновлении фото', 'error');
+                } else {
+                    showToast('Произошла ошибка', 'error');
                 }
-            } catch (error) {
+            } catch (_error) { // Changed from _ to _error to fix ESLint error
                 showToast('Произошла ошибка', 'error');
             }
         }
@@ -88,7 +91,9 @@ const createProfileSettings = () => {
 
     fields.forEach(field => {
         const inputComponent = InputTransparent(field);
-        form.appendChild(inputComponent);
+        if (inputComponent) {
+            form.appendChild(inputComponent);
+        }
     });
 
     const fieldContainer = document.createElement('div');
@@ -123,8 +128,9 @@ const createProfileSettings = () => {
 };
 
 import { debouncedPasswordValidation } from '../handlers/passwordValidation';
+import { handlePasswordUpdate } from '../handlers/passwordHandler';
 
-const createSecuritySettings = () => {
+const createSecuritySettings = (): HTMLElement => {
     const container = document.createElement('div');
     container.classList.add('settings-content');
 
@@ -144,12 +150,14 @@ const createSecuritySettings = () => {
 
     fields.forEach(field => {
         const inputComponent = InputTransparent(field);
-        form.appendChild(inputComponent);
-        
-        if (field.id === 'newPassword' || field.id === 'confirmPassword') {
-            const input = inputComponent.querySelector('input');
-            if (input) {
-                input.addEventListener('input', debouncedPasswordValidation);
+        if (inputComponent) {
+            form.appendChild(inputComponent);
+            
+            if (field.id === 'newPassword' || field.id === 'confirmPassword') {
+                const input = inputComponent.querySelector('input');
+                if (input) {
+                    input.addEventListener('input', debouncedPasswordValidation);
+                }
             }
         }
     });
@@ -159,10 +167,7 @@ const createSecuritySettings = () => {
     submitButton.classList.add('submit-button');
     form.appendChild(submitButton);
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        showToast('Пароль изменен', 'success');
-    });
+    form.addEventListener('submit', handlePasswordUpdate);
 
     container.appendChild(form);
     return container;

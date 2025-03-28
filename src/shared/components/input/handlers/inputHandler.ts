@@ -9,11 +9,11 @@ import { debounce } from 'shared/utils';
 import { ValidationResult } from 'shared/types/ValidationResult';
 
 interface IValidators {
-    email: (value: string) => ValidationResult;
-    username: (value: string) => ValidationResult;
-    birthday: (value: string) => ValidationResult;
-    password: (value: string) => ValidationResult;
-    passwordConfirm: (value: string) => ValidationResult;
+    email: (_value: string) => ValidationResult;
+    username: (_value: string) => ValidationResult;
+    birthday: (_value: string) => ValidationResult;
+    password: (_value: string) => ValidationResult;
+    passwordConfirm: (_value: string) => ValidationResult;
 }
 
 

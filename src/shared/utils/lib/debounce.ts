@@ -1,9 +1,9 @@
 type DebouncedFunction<Args extends unknown[]> = (
-    ...args: Args
+    ..._args: Args
 ) => void;
 
 export const debounce = <Args extends unknown[]>(
-    func: (...args: Args) => void,
+    func: (..._args: Args) => void,
     delay: number
 ): DebouncedFunction<Args> => {
     let timer: ReturnType<typeof setTimeout> | undefined;

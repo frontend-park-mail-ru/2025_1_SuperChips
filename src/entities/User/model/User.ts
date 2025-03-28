@@ -1,36 +1,33 @@
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api/api';
-import { IUserData } from './types';
 
 class user {
     authorized: boolean;
-    #username: string;
-    #tag: string;
-    #avatar: string;
-    #firstName: string;
-    #lastName: string;
-    #birthDate: Date;
-    #about: string;
-    #email: string;
-
+    #username: string | null;
+    #tag: string | null;
+    #avatar: string | null;
+    #firstName: string | null;
+    #lastName: string | null;
+    #birthDate: string | null;
+    #about: string | null;
+    #email: string | null;
     constructor() {
         this.authorized = false;
-        this.#username = '';
-        this.#tag = '';
-        this.#avatar = '';
-        this.#firstName = '';
-        this.#lastName = '';
-        this.#birthDate = new Date;
-        this.#about = '';
-        this.#email = '';
+        this.#username = null;
+        this.#tag = null;
+        this.#avatar = null;
+        this.#firstName = null;
+        this.#lastName = null;
+        this.#birthDate = null;
+        this.#about = null;
+        this.#email = null;
     }
 
     fetchUserData = async (): Promise<void> => {
         const response = await Auth.getUserData();
 
         if (response instanceof Error) { return; }
-
-        if (response.ok) {
+        else if (response.ok) {
             const body = await response.json();
             const data = body.data;
 
@@ -52,34 +49,46 @@ class user {
         username: string;
         birthDate: string;
         about: string;
-    }) => {
-        return await API.put('/api/v1/user/profile', profileData);
+    }): Promise<Response|Error> => {
+        try {
+            return await API.put('/api/v1/user/profile', profileData);
+        } catch (error) {
+            return new Error(`Profile update failed: ${error}`);
+        }
     };
 
     updatePassword = async (passwords: {
         currentPassword: string;
         newPassword: string;
-    }) => {
-        return await API.put('/api/v1/user/password', passwords);
+    }): Promise<Response|Error> => {
+        try {
+            return await API.put('/api/v1/user/password', passwords);
+        } catch (error) {
+            return new Error(`Password update failed: ${error}`);
+        }
     };
 
-    updateAvatar = async (formData: FormData) => {
-        return await API.put('/api/v1/user/avatar', formData);
+    updateAvatar = async (formData: FormData): Promise<Response|Error> => {
+        try {
+            return await API.put('/api/v1/user/avatar', formData);
+        } catch (error) {
+            return new Error(`Avatar update failed: ${error}`);
+        }
     };
 
     clearUserData = () => {
-        this.#username = '';
-        this.#avatar = '';
-        this.#tag = '';
-        this.#firstName = '';
-        this.#lastName = '';
-        this.#birthDate = new Date;
-        this.#about = '';
-        this.#email = '';
+        this.#username = null;
+        this.#avatar = null;
+        this.#tag = null;
+        this.#firstName = null;
+        this.#lastName = null;
+        this.#birthDate = null;
+        this.#about = null;
+        this.#email = null;
         this.authorized = false;
     };
 
-    getUserData = (): IUserData => {
+    getUserData = () => {
         return {
             username: this.#username,
             avatar: this.#avatar,
