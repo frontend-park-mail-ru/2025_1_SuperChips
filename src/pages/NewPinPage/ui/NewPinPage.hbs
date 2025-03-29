@@ -1,4 +1,18 @@
-<div class="main-page">
-    <div class="new-pin-page" id="page">
+<div class="new-pin-page" id="page">
+    <div class="new-pin-form">
+        <div class="description-box">
+            <div>
+                <h1 class="header">{{header}}</h1>
+                <form class="description-box_form" id="description-box_form">
+                    {{#each inputs}}
+                        <div class="input-placeholder"></div>
+                    {{/each}}
+                </form>
+            </div>
+            <button class="create-flow" id="create-flow">
+                Создать flow
+            </button>
+        </div>
     </div>
 </div>
+

@@ -1,10 +1,35 @@
 @use 'shared/styles/variables' as *;
 @use 'shared/styles/mixins' as *;
 
-.main-page {
+.new-pin-page {
     @include main-page;
 }
 
-.new-pin-page {
+.new-pin-form {
     grid-area: page;
+    display: flex;
 }
+
+.description-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: $input-width;
+    color: $text-light;
+    margin-left: $spacing-xxl;
+}
+
+.description-box_form {
+    margin-top: 20px;
+
+}
+
+.create-flow {
+    width: $input-width;
+    height: $input-height;
+    border-radius: $border-radius;
+    background-color: $text-gray;
+    color: $text-light;
+    border: none;
+}
+

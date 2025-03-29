@@ -1,10 +1,10 @@
 import ImageInputTemplate from './ImageInput.hbs';
 import './ImageInput.scss';
 
-export const ImageInput = async () => {
-    const config = {};
-    const container = document.createElement('div');
-    container.innerHTML = ImageInputTemplate(config);
+export const ImageInput = () => {
 
-    return container;
+    const container = document.createElement('div');
+    container.innerHTML = ImageInputTemplate({});
+
+    return container.firstElementChild as HTMLDivElement;
 };

@@ -48,6 +48,8 @@ export const config: RouterConfig = {
             href: 'newPin',
             title: 'Новый flow',
             render: NewPinPage,
+            hasNavbar: true,
+            hasSidebar: true,
         },
     },
 };

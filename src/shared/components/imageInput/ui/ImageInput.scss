@@ -2,8 +2,21 @@
 @use 'shared/styles/mixins' as *;
 
 
-.image-input-container {
-    @include transparent-active;
-    width: 404px;
-    height: 584px;
+.image-input {
+    @include flex-center;
+    flex-direction: column;
+    background-color: #323232;
+    border-radius: $border-radius;
+
+    width: $image-input-width;
+    height: $image-input-height;
+
+    &__text {
+        color: $text-light;
+        text-align: center;
+    }
+}
+
+.upload-icon {
+    margin-bottom: $spacing-lg;
 }

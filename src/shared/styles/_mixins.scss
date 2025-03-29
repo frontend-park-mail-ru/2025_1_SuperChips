@@ -49,5 +49,6 @@
 }
 
 @mixin transparent-active {
-    background: #fff opacity(0.1);
+    background-color: #fff;
+    opacity: 0.1;
 }
