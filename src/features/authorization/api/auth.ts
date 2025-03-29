@@ -1,6 +1,5 @@
 import { ISignupFormData } from 'pages/SignupPage';
 import { ErrorToast } from 'shared/components/errorToast';
-import { Navbar } from 'widgets/navbar';
 import { User } from 'entities/User';
 import { API } from 'shared/api/api';
 
