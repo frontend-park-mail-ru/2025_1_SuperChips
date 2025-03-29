@@ -1,13 +1,17 @@
-import { API } from 'shared/api/api';
 import { ISignupFormData } from 'pages/SignupPage';
 import { ErrorToast } from 'shared/components/errorToast';
-import { Navbar } from '../../../widgets/navbar';
+import { Navbar } from 'widgets/navbar';
+import { User } from 'entities/User';
+import { API } from 'shared/api/api';
 
 type TLoginData = {
     email: string;
     password: string;
 };
 
+const ErrorMessageSend = 'Ошибка при отправке данных. Попробуйте еще раз';
+const ErrorMessageLoad = 'Ошибка при отправке данных. Попробуйте еще раз';
+const ErrorMessageConnection = 'Проблемы с соединением. Попробуйте еще раз';
 /**
  * Класс, использующийся для аутентификации пользователя
  * Для одной сессии создается только один класс
@@ -21,53 +25,56 @@ class auth {
 
     /**
      * Авторизация пользователя
-     * @returns {Promise<Response | Error>} ответ сервера
      */
     async login(
         { email, password }: TLoginData
     ): Promise<Response|Error> {
-        try {
-            const response = this.API.post('/api/v1/auth/login', { email, password });
+        const response = await this.API.post('/api/v1/auth/login', { email, password });
+        if (response instanceof Error) {
+            ErrorToast(ErrorMessageLoad);
+        } else if (response?.status !== 401) {
+            await User.fetchUserData();
 
             const navbar = document.querySelector('.navbar');
-            if (navbar) navbar.replaceWith(await Navbar());
-
-            return response;
-        } catch (error) {
-            ErrorToast('Ошибка при отправке данных. Попробуйте еще раз');
-            return new Error(`Login failed: ${error}`);
+            navbar?.replaceWith(await Navbar());
         }
+        return response;
     }
 
     /**
      Регистрация нового пользователя
-     * @param {Object} userData - email, имя пользователя, дата рождения, пароль
-     * @returns {Promise<json|Error>} - ответ от сервера
      */
     async register(userData: ISignupFormData): Promise<Response|Error> {
-        try {
-            return await this.API.post('/api/v1/auth/registration', userData);
-        } catch (error) {
-            ErrorToast('Ошибка при отправке данных. Попробуйте еще раз');
-            return new Error(`Registration failed: ${error}`);
+        const response = await this.API.post('/api/v1/auth/registration', userData);
+
+        if (response instanceof Error) {
+            ErrorToast(ErrorMessageSend);
+        } else {
+            User.setUserData(userData);
+
+            const navbar = document.querySelector('.navbar');
+            navbar?.replaceWith(await Navbar());
         }
+
+        return response;
     }
 
     /**
 	 * Завершение сессии
-	 * @returns {Promise<Error>} ответ сервера
 	 */
     async logout(): Promise<Response|Error> {
-        try {
-            const response = this.API.post('/api/v1/auth/logout');
+        const response = await this.API.post('/api/v1/auth/logout');
+
+        if (response instanceof Error) {
+            ErrorToast(ErrorMessageConnection);
+        } else {
+            User.clearUserData();
 
             const navbar = document.querySelector('.navbar');
-            if (navbar) navbar.replaceWith(await Navbar());
-
-            return response;
-        } catch (error) {
-            return new Error(`Logout failed: ${error}`);
+            navbar?.replaceWith(await Navbar());
         }
+
+        return response;
     }
 
     /**
@@ -78,14 +85,15 @@ class auth {
 	 * birthday: 	{{birthday}},
 	 * email: 		{{email}},
 	 * }
-	 * @returns {Response} Ответ от сервера
 	 */
     async getUserData(): Promise<Response|Error> {
-        try {
-            return await this.API.get('/api/v1/auth/user');
-        } catch (error) {
-            return new Error(`Failed to fetch user data: ${error}`);
+        const response = await this.API.get('/api/v1/auth/user');
+
+        if (response instanceof Error) {
+            ErrorToast(ErrorMessageLoad);
         }
+
+        return response;
     }
 }
 

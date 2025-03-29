@@ -2,17 +2,17 @@ import { root } from 'app/app';
 import { config } from 'shared/config/router';
 import { debouncedScroll } from 'pages/FeedPage';
 import { User } from 'entities/User';
-import { Navbar } from '../../../widgets/navbar';
-import { Sidebar } from '../../../widgets/sidebar';
 
 interface AppState {
     activePage: string | null,
     isLoadingFeed: boolean,
+    isShowingToast: boolean,
 }
 
 export const appState: AppState = {
     activePage: null,
     isLoadingFeed: false,
+    isShowingToast: false,
 };
 
 
@@ -40,20 +40,13 @@ export const navigate = async (
     const element = await config.menu[page].render();
     root.appendChild(element);
 
-    const navbar = root.querySelector<HTMLDivElement>('.navbar');
+    const navbar = document.querySelector('.navbar');
     const showNavbar = config.menu[page].hasNavbar;
-    console.log('navbar: ', showNavbar);
-    // navbar.style.display = showNavbar ? 'flex' : 'none';
-    if (navbar) navbar.classList.toggle('hidden', !showNavbar);
+    navbar?.classList.toggle('hidden', !showNavbar);
 
-    const sidebar = root.querySelector<HTMLDivElement>('.sidebar');
+    const sidebar = document.querySelector<HTMLDivElement>('.sidebar');
     const showSidebar = config.menu[page].hasSidebar && User.authorized();
-    if (sidebar) sidebar.classList.toggle('hidden', !showSidebar);
-    // if (sidebar) {
-    //     const showSidebar = config.menu[page].hasSidebar && User.authorized();
-    //     sidebar.style.display = showSidebar ? 'flex' : 'none';
-    // }
-    console.log('sidebar: ', showSidebar);
+    sidebar?.classList.toggle('hidden', !showSidebar);
 
 
     window.scrollTo({ top: 0 });

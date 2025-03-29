@@ -1,7 +1,5 @@
 import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
-import { User } from 'entities/User';
-import { Navbar } from 'widgets/navbar';
 
 interface ILoginInputData {
     email: string,
@@ -28,7 +26,6 @@ export const handleLogin = async (event: Event) => {
     if (response instanceof Error) return;
 
     if (response.ok) {
-        await User.fetchUserData();
         navigate('feed').finally();
     }
     else {

@@ -1,7 +1,7 @@
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api/api';
 import { IUserData } from './types';
-import { ErrorToast } from 'shared/components/errorToast';
+import { ISignupFormData } from 'pages/SignupPage';
 
 class user {
     #userData: IUserData;
@@ -26,7 +26,6 @@ class user {
         const response = await Auth.getUserData();
 
         if (response instanceof Error) {
-            ErrorToast('Ошибка при получении данных. Попробуйте еще раз');
             return;
         }
 
@@ -77,6 +76,14 @@ class user {
 
     authorized = (): boolean => {
         return !!this.#userData.authorized;
+    };
+
+    setUserData = (data: ISignupFormData): void => {
+        this.#userData.username = data.username;
+        this.#userData.shortUsername = data.username[0].toUpperCase();
+        this.#userData.birthday = new Date(data.birthday);
+        this.#userData.email = data.email;
+        this.#userData.authorized = true;
     };
 }
 

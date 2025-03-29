@@ -2,7 +2,7 @@ import { feedState } from '../ui/FeedPage';
 import { debouncedScroll } from '../handlers/handleScroll';
 import { Pin } from 'entities/Pin';
 import { Footer } from '../components/footer/footer';
-import { loadImages } from 'entities/Pin/lib/loadImages';
+import { loadImages, retryLoadImages } from 'entities/Pin';
 import { appState } from 'shared/router';
 
 
@@ -13,7 +13,7 @@ export const fillFeed = async () => {
     const feed = document.querySelector('#feed');
     if (!feed) return;
 
-    const images = await loadImages(feedState.pageNum++);
+    let images = await loadImages(feedState.pageNum);
 
     if (images?.status === 404) {
         const rootElement = document.getElementById('root');
@@ -22,10 +22,17 @@ export const fillFeed = async () => {
         rootElement.insertAdjacentHTML('beforeend', Footer().innerHTML);
         window.removeEventListener('scroll', debouncedScroll);
         appState.isLoadingFeed = false;
+
         return null;
+    } else if (images?.status === 503) {
+        images = await retryLoadImages();
+
+        if (images?.status !== 200) {
+            return null;
+        }
     }
 
-    if (!images || !images.data) return;
+    if (!images?.data) return;
 
     const newFrame = document.createElement('div');
     newFrame.classList.add('feed-chunk');
@@ -35,4 +42,8 @@ export const fillFeed = async () => {
     });
 
     feed.appendChild(newFrame);
+
+    appState.isLoadingFeed = false;
+    feedState.pageNum++;
 };
+

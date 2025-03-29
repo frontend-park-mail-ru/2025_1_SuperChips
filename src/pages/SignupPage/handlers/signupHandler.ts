@@ -2,7 +2,6 @@ import { formatDateToISO } from 'shared/utils';
 import { validateSignup } from '../lib/signupValidation';
 import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
-import { User } from 'entities/User';
 import { ISignupFormData } from '../model/types';
 
 
@@ -36,14 +35,8 @@ export const signupHandler = async (event: SubmitEvent): Promise<void> => {
     delete inputData.passwordConfirm;
 
     const response = await Auth.register(inputData);
-    if (response instanceof Error) { // Ошибка уже обрабатывается в Auth.register
-        return;
-    }
-    if (response.ok) {
-        await User.fetchUserData();
-        navigate('feed').finally();
-        return;
-    } else {
+
+    if (response instanceof Error)  {
         const emailIcon = document.querySelector('#email-error-icon');
         const message = document.querySelector('#email-error');
         const usernameIcon = document.querySelector('#username-error-icon');
@@ -54,5 +47,8 @@ export const signupHandler = async (event: SubmitEvent): Promise<void> => {
         message.classList.remove('hidden');
         emailIcon.classList.remove('hidden');
         usernameIcon.classList.remove('hidden');
+    } else {
+        navigate('feed').finally();
+        return;
     }
 };
