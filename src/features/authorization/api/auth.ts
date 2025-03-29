@@ -34,9 +34,6 @@ class auth {
             ErrorToast(ErrorMessageLoad);
         } else if (response?.status !== 401) {
             await User.fetchUserData();
-
-            const navbar = document.querySelector('.navbar');
-            navbar?.replaceWith(await Navbar());
         }
         return response;
     }

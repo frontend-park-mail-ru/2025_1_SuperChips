@@ -2,6 +2,7 @@ import { Auth } from 'features/authorization';
 import { API } from 'shared/api/api';
 import { IUserData } from './types';
 import { ISignupFormData } from 'pages/SignupPage';
+import { Navbar } from '../../../widgets/navbar';
 
 class user {
     #userData: IUserData;
@@ -39,6 +40,10 @@ class user {
                 shortUsername: data.username[0].toUpperCase(),
                 authorized: true,
             };
+
+
+            const navbar = document.querySelector('.navbar');
+            navbar?.replaceWith(await Navbar());
         }
     };
 
