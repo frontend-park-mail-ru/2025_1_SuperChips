@@ -48,9 +48,6 @@ class auth {
             ErrorToast(ErrorMessageSend);
         } else {
             User.setUserData(userData);
-
-            const navbar = document.querySelector('.navbar');
-            navbar?.replaceWith(await Navbar());
         }
 
         return response;
@@ -66,9 +63,6 @@ class auth {
             ErrorToast(ErrorMessageConnection);
         } else {
             User.clearUserData();
-
-            const navbar = document.querySelector('.navbar');
-            navbar?.replaceWith(await Navbar());
         }
 
         return response;

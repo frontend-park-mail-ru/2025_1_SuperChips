@@ -68,11 +68,14 @@ class user {
         return await API.put('/api/v1/user/avatar', formData);
     };
 
-    clearUserData = () => {
+    clearUserData = async () => {
         Object.keys(this.#userData).forEach((item: string) => {
             const key = item as keyof IUserData;
             this.#userData[key] = null;
         });
+
+        const navbar = document.querySelector('.navbar');
+        navbar?.replaceWith(await Navbar());
     };
 
     getUserData = (): IUserData => {
@@ -83,12 +86,15 @@ class user {
         return !!this.#userData.authorized;
     };
 
-    setUserData = (data: ISignupFormData): void => {
+    setUserData = async (data: ISignupFormData) => {
         this.#userData.username = data.username;
         this.#userData.shortUsername = data.username[0].toUpperCase();
         this.#userData.birthday = new Date(data.birthday);
         this.#userData.email = data.email;
         this.#userData.authorized = true;
+
+        const navbar = document.querySelector('.navbar');
+        navbar?.replaceWith(await Navbar());
     };
 }
 
