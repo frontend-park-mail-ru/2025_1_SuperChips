@@ -15,7 +15,7 @@ export const Sidebar = async () => {
         { id: 'newPin',
             source: '/public/icons/new-pin.svg',
             alt: 'add new pin',
-            active: false
+            active: true
         },
         {
             id: 'chats',
@@ -40,16 +40,17 @@ export const Sidebar = async () => {
     sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({ buttons }));
 
     const logout = sidebar.querySelector('#logout');
-    if (logout) {
-        logout.addEventListener('click', logoutHandler);
-    }
+    logout?.addEventListener('click', logoutHandler);
 
     const settings = sidebar.querySelector('#settings');
-    if (settings) {
-        settings.addEventListener('click', () => {
-            navigate('settings').finally();
-        });
-    }
+    settings?.addEventListener('click', () => {
+        navigate('settings').finally();
+    });
+
+    const newPin = sidebar.querySelector('#newPin');
+    newPin?.addEventListener('click', () => {
+        navigate('newPin');
+    });
 
     return sidebar;
 };

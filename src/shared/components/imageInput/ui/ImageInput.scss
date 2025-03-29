@@ -1,0 +1,9 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+
+.image-input-container {
+    @include transparent-active;
+    width: 404px;
+    height: 584px;
+}

@@ -1,6 +1,7 @@
 import { FeedPage } from 'pages/FeedPage';
 import { LoginPage } from 'pages/LoginPage';
 import { SignupPage } from 'pages/SignupPage';
+import { NewPinPage } from 'pages/NewPinPage';
 
 
 interface PageConfig {
@@ -42,6 +43,11 @@ export const config: RouterConfig = {
             title: 'Регистрация',
             render: SignupPage,
             nonAuthOnly: true,
+        },
+        newPin: {
+            href: 'newPin',
+            title: 'Новый flow',
+            render: NewPinPage,
         },
     },
 };
