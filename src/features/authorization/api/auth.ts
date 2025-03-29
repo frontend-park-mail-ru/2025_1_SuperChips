@@ -1,11 +1,16 @@
+import { ISignupFormData } from 'pages/SignupPage';
+import { ErrorToast } from 'shared/components/errorToast';
+import { User } from 'entities/User';
 import { API } from 'shared/api/api';
-import { IUserData } from 'entities/User';
 
 type TLoginData = {
     email: string;
     password: string;
 };
 
+const ErrorMessageSend = 'Ошибка при отправке данных. Попробуйте еще раз';
+const ErrorMessageLoad = 'Ошибка при отправке данных. Попробуйте еще раз';
+const ErrorMessageConnection = 'Проблемы с соединением. Попробуйте еще раз';
 /**
  * Класс, использующийся для аутентификации пользователя
  * Для одной сессии создается только один класс
@@ -19,41 +24,47 @@ class auth {
 
     /**
      * Авторизация пользователя
-     * @returns {Promise<Response | Error>} ответ сервера
      */
     async login(
         { email, password }: TLoginData
     ): Promise<Response|Error> {
-        try {
-            return await this.API.post('/api/v1/auth/login', { email, password });
-        } catch (error) {
-            return new Error(`Login failed: ${error}`);
+        const response = await this.API.post('/api/v1/auth/login', { email, password });
+        if (response instanceof Error) {
+            ErrorToast(ErrorMessageLoad);
+        } else if (response?.status !== 401) {
+            await User.fetchUserData();
         }
+        return response;
     }
 
     /**
      Регистрация нового пользователя
-     * @param {Object} userData - email, имя пользователя, дата рождения, пароль
-     * @returns {Promise<json|Error>} - ответ от сервера
      */
-    async register(userData: IUserData): Promise<Response|Error> {
-        try {
-            return await this.API.post('/api/v1/auth/registration', userData);
-        } catch (error) {
-            return new Error(`Registration failed: ${error}`);
+    async register(userData: ISignupFormData): Promise<Response|Error> {
+        const response = await this.API.post('/api/v1/auth/registration', userData);
+
+        if (response instanceof Error) {
+            ErrorToast(ErrorMessageSend);
+        } else {
+            User.setUserData(userData);
         }
+
+        return response;
     }
 
     /**
 	 * Завершение сессии
-	 * @returns {Promise<Error>} ответ сервера
 	 */
-    async logout(): Promise<void|Error> {
-        try {
-            await this.API.post('/api/v1/auth/logout');
-        } catch (error) {
-            return new Error(`Logout failed: ${error}`);
+    async logout(): Promise<Response|Error> {
+        const response = await this.API.post('/api/v1/auth/logout');
+
+        if (response instanceof Error) {
+            ErrorToast(ErrorMessageConnection);
+        } else {
+            User.clearUserData();
         }
+
+        return response;
     }
 
     /**
@@ -64,14 +75,15 @@ class auth {
 	 * birthday: 	{{birthday}},
 	 * email: 		{{email}},
 	 * }
-	 * @returns {Response} Ответ от сервера
 	 */
     async getUserData(): Promise<Response|Error> {
-        try {
-            return await this.API.get('/api/v1/auth/user');
-        } catch (error) {
-            return new Error(`Failed to fetch user data: ${error}`);
+        const response = await this.API.get('/api/v1/auth/user');
+
+        if (response instanceof Error) {
+            ErrorToast(ErrorMessageLoad);
         }
+
+        return response;
     }
 }
 

@@ -1,0 +1,30 @@
+.error-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2f2f2f;
+  color: #ff4a4a;
+  padding: 12px 24px;
+  border-radius: 20px;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+
+  @keyframes fadeIn {
+    from {
+      transform: translate(-50%, -20px);
+    }
+    to {
+      transform: translate(-50%, 0);
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      transform: translate(-50%, 0);
+    }
+    to {
+      transform: translate(-50%, -20px);
+    }
+  }
+}

@@ -1,47 +1,97 @@
 import { Auth } from 'features/authorization';
+import { API } from 'shared/api/api';
+import { IUserData } from './types';
+import { ISignupFormData } from 'pages/SignupPage';
+import { Navbar } from '../../../widgets/navbar';
 
 class user {
-    authorized: boolean;
-    #username: string | null;
-    #tag: string | null;
-    #avatar: string | null;
+    #userData: IUserData;
 
     constructor() {
-        this.authorized = false;
-        this.#username = null;
-        this.#tag = null;
-        this.#avatar = null;
+        this.#userData = {
+            authorized: false,
+            uid: null,
+            publicName: null,
+            username: null,
+            tag: null,
+            avatar: null,
+            firstName: null,
+            lastName: null,
+            birthday: null,
+            about: null,
+            email: null,
+        };
     }
 
     fetchUserData = async (): Promise<void> => {
         const response = await Auth.getUserData();
 
-        if (response instanceof Error) { return; }
-        else if (response.ok) {
+        if (response instanceof Error) {
+            return;
+        }
+
+        if (response.ok) {
             const body = await response.json();
             const data = body.data;
 
-            this.#username = data.username;
-            this.#avatar = data.avatar;
-            this.#tag = data.tag;
-            this.authorized = true;
+            this.#userData = {
+                ...data,
+                birthday: new Date(data.birthday),
+                shortUsername: data.username[0].toUpperCase(),
+                authorized: true,
+            };
+
+
+            await Navbar();
         }
     };
 
-    clearUserData = () => {
-        this.#username = null;
-        this.#avatar = null;
-        this.#tag = null;
-        this.authorized = false;
+    updateProfile = async (profileData: {
+        firstName: string;
+        lastName: string;
+        username: string;
+        birthDate: string;
+        about: string;
+    }) => {
+        return await API.put('/api/v1/user/profile', profileData);
     };
 
-    getUserData = () => {
-        return {
-            username: this.#username,
-            avatar: this.#avatar,
-            tag: this.#tag,
-            authorized: this.authorized,
-        };
+    updatePassword = async (passwords: {
+        currentPassword: string;
+        newPassword: string;
+    }) => {
+        return await API.put('/api/v1/user/password', passwords);
+    };
+
+    updateAvatar = async (formData: FormData) => {
+        return await API.put('/api/v1/user/avatar', formData);
+    };
+
+    clearUserData = async () => {
+        Object.keys(this.#userData).forEach((item: string) => {
+            const key = item as keyof IUserData;
+            this.#userData[key] = null;
+        });
+
+        await Navbar();
+    };
+
+    getUserData = (): IUserData => {
+        return this.#userData;
+    };
+
+    authorized = (): boolean => {
+        return !!this.#userData.authorized;
+    };
+
+    setUserData = async (data: ISignupFormData) => {
+        this.#userData.username = data.username;
+        this.#userData.shortUsername = data.username[0].toUpperCase();
+        this.#userData.birthday = new Date(data.birthday);
+        this.#userData.email = data.email;
+        this.#userData.authorized = true;
+
+        await Navbar();
     };
 }
 

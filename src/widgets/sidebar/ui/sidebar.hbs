@@ -1,21 +1,19 @@
-<div class="sidebar" id="sidebar">
-    <div class="sidebar__button-container">
-        {{#each buttons}}
-            <a
-                {{#if this.active}}
-                    class="sidebar-button"
-                {{else}}
-                    class="sidebar-button_disabled"
-                {{/if}}
-                id="{{this.id}}"
-                aria-label="{{this.alt}}"
-            >
-                <img
-                    src="{{this.source}}"
-                    alt="{{this.alt}}"
-                    class="sidebar-button__icon"
-                />
-            </a>
-        {{/each}}
-    </div>
+<div class="sidebar__button-container">
+    {{#each buttons}}
+        <a
+            {{#if this.active}}
+                class="sidebar-button"
+            {{else}}
+                class="sidebar-button_disabled"
+            {{/if}}
+            id="{{this.id}}"
+            aria-label="{{this.alt}}"
+        >
+            <img
+                src="{{this.source}}"
+                alt="{{this.alt}}"
+                class="sidebar-button__icon"
+            />
+        </a>
+    {{/each}}
 </div>
