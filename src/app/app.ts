@@ -10,11 +10,8 @@ export const root = document.getElementById('root');
 export const App = async () => {
     await User.fetchUserData();
 
-    const navbar = document.getElementById('navbar');
-    navbar?.replaceWith(await Navbar());
-
-    const sidebar = document.getElementById('sidebar');
-    sidebar?.replaceWith(await Sidebar());
+    await Navbar();
+    await Sidebar();
 
     window.addEventListener('popstate', () => {
         navigate(location.pathname.slice(1), true).finally();

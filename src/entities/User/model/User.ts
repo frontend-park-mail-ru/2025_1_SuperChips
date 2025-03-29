@@ -42,8 +42,7 @@ class user {
             };
 
 
-            const navbar = document.querySelector('.navbar');
-            navbar?.replaceWith(await Navbar());
+            await Navbar();
         }
     };
 
@@ -74,8 +73,7 @@ class user {
             this.#userData[key] = null;
         });
 
-        const navbar = document.querySelector('.navbar');
-        navbar?.replaceWith(await Navbar());
+        await Navbar();
     };
 
     getUserData = (): IUserData => {
@@ -93,8 +91,7 @@ class user {
         this.#userData.email = data.email;
         this.#userData.authorized = true;
 
-        const navbar = document.querySelector('.navbar');
-        navbar?.replaceWith(await Navbar());
+        await Navbar();
     };
 }
 

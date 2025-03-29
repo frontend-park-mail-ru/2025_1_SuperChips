@@ -42,11 +42,11 @@ export const navigate = async (
 
     const navbar = document.querySelector('.navbar');
     const showNavbar = config.menu[page].hasNavbar;
-    navbar?.classList.toggle('hidden', !showNavbar);
+    navbar?.classList.toggle('display-none', !showNavbar);
 
     const sidebar = document.querySelector<HTMLDivElement>('.sidebar');
     const showSidebar = config.menu[page].hasSidebar && User.authorized();
-    sidebar?.classList.toggle('hidden', !showSidebar);
+    sidebar?.classList.toggle('display-none', !showSidebar);
 
 
     window.scrollTo({ top: 0 });

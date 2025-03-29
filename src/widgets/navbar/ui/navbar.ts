@@ -9,12 +9,14 @@ import { scrollToTop } from '../handlers/scrollToTop';
  * Содержимое навбара меняется, в зависимости от того, авторизован ли пользователь
  */
 export const Navbar = async () => {
-    const navbar = document.createElement('div');
+    const navbar = document.getElementById('navbar');
+    if (!navbar) return ;
+
     navbar.classList.add('navbar');
 
     const userData = User.getUserData();
 
-    navbar.innerHTML += navbarTemplate(userData);
+    navbar.innerHTML = navbarTemplate(userData);
 
     const redirectButton = navbar.querySelector('#goToLogin');
     if (redirectButton) {

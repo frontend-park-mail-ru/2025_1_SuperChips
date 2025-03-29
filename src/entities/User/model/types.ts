@@ -9,9 +9,9 @@ export interface IUser {
 }
 
 export interface IUserData extends IUser {
-    authorized: boolean | null,
     tag: string | null,
     firstName?: string | null,
     lastName?: string | null,
     shortUsername?: string | null,
+    authorized?: boolean | null,
 }

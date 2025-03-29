@@ -7,7 +7,8 @@ import './sidebar.scss';
  * Генерирует сайдбар для главных страниц (лента, профиль и тд)
  */
 export const Sidebar = async () => {
-    const sidebar = document.createElement('div');
+    const sidebar = document.getElementById('sidebar');
+    if (!sidebar) return ;
     sidebar.classList.add('sidebar');
 
     const buttons = [
