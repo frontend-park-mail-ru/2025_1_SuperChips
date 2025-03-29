@@ -2,7 +2,7 @@ import { validateEmail } from 'shared/validation';
 import { validateBirthday } from 'shared/validation';
 import { validatePassword } from 'shared/validation';
 import { validateUsername } from 'shared/validation';
-import { ISignupFormData } from '../model/types';
+import type { ISignupFormData } from '../model/types';
 
 
 /**

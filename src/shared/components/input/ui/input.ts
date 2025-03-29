@@ -1,7 +1,7 @@
 import { debouncedInputHandler } from '../handlers/inputHandler';
 import { togglePasswordHandler } from '../handlers/togglePasswordHandler';
 import { dateHandler } from '../handlers/dateHandler';
-import { IInputConfig } from '../model/types';
+import type { IInputConfig } from '../model/types';
 import './input.scss';
 import inputTemplate from './input.hbs';
 

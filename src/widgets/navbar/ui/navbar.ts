@@ -1,8 +1,9 @@
 import navbarTemplate from './navbar.hbs';
 import './navbar.scss';
-import { User } from 'entities/User';
 import { navigate } from 'shared/router';
 import { scrollToTop } from '../handlers/scrollToTop';
+import { Auth } from 'features/authorization';
+
 
 /**
  * Генерирует навбар для основных страниц (ленты, профиля и тд)
@@ -14,9 +15,15 @@ export const Navbar = async () => {
 
     navbar.classList.add('navbar');
 
-    const userData = User.getUserData();
+    const userData = Auth.userData;
 
-    navbar.innerHTML = navbarTemplate(userData);
+    const config = {
+        ...userData,
+        authorized: !!userData,
+        shortUsername: userData?.username[0].toUpperCase(),
+    };
+
+    navbar.innerHTML = navbarTemplate(config);
 
     const redirectButton = navbar.querySelector('#goToLogin');
     if (redirectButton) {

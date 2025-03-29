@@ -1,6 +1,11 @@
 import { API_BASE_URL } from '../config/constants';
+import { ErrorToast } from '../components/errorToast';
 
 type TMethods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+
+const RequestSendError = 'Ошибка при отправке данных. Попробуйте еще раз';
+const RequestGetError = 'Ошибка при получении данных. Попробуйте еще раз';
+
 
 /**
  * Класс для работы с API бэкенда
@@ -53,21 +58,22 @@ class Api {
 
     /**
 	 * GET запрос
-	 * @param {string} url url запроса
-	 * @returns {Response} ответ от сервера
 	 */
     async get(
         url: string
     ): Promise<Response|Error> {
         const headers: HeadersInit = {};
-        return this.request('GET', url, headers);
+
+        const response = await this.request('GET', url, headers);
+        if (response instanceof Error) {
+            ErrorToast(RequestGetError);
+        }
+
+        return response;
     }
 
     /**
 	 * POST запрос
-	 * @param {string} url url запроса
-	 * @param {object} body тело запроса
-	 * @returns {json} ответ от сервера
 	 */
     async post(
         url: string,
@@ -77,14 +83,17 @@ class Api {
             'X-CSRF-Token': this.#csrf.get(),
             'Content-Type': 'application/json',
         };
-        return this.request('POST', url, headers, body);
+
+        const response = await this.request('POST', url, headers, body);
+        if (response instanceof Error) {
+            ErrorToast(RequestSendError);
+        }
+
+        return response;
     }
 
     /**
 	 * PUT запрос
-	 * @param {string} url url запроса
-	 * @param {object} body тело запроса
-	 * @returns {json} ответ от сервера
 	 */
     async put(
         url: string,
@@ -94,13 +103,17 @@ class Api {
             'X-CSRF-Token': this.#csrf.get(),
             'Content-Type': 'multipart/form-data',
         };
-        return this.request('PUT', url, headers, body);
+
+        const response = await this.request('PUT', url, headers, body);
+        if (response instanceof Error) {
+            ErrorToast(RequestSendError);
+        }
+
+        return response;
     }
 
     /**
-	 * POST запрос
-	 * @param {string} url url запроса
-	 * @returns {json} ответ от сервера
+	 * DELETE запрос
 	 */
     async delete(
         url: string
@@ -108,9 +121,16 @@ class Api {
         const headers = {
             'X-CSRF-Token': this.#csrf.get(),
         };
-        return this.request('DELETE', url, headers);
+
+        const response = await this.request('DELETE', url, headers);
+        if (response instanceof Error) {
+            ErrorToast(RequestSendError);
+        }
+
+        return response;
     }
 }
+
 
 /**
  * Класс для хранения и работы с CSRF токенами

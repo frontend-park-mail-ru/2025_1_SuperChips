@@ -1,17 +1,15 @@
 import { root } from 'app/app';
 import { config } from 'shared/config/router';
 import { debouncedScroll } from 'pages/FeedPage';
-import { User } from 'entities/User';
+import { Auth } from 'features/authorization';
 
 interface AppState {
     activePage: string | null,
-    isLoadingFeed: boolean,
     isShowingToast: boolean,
 }
 
 export const appState: AppState = {
     activePage: null,
-    isLoadingFeed: false,
     isShowingToast: false,
 };
 
@@ -27,7 +25,7 @@ export const navigate = async (
     if (root === null) { return; }
     root.innerHTML = '';
 
-    if ((!(page in config.menu)) || (config.menu[page]?.nonAuthOnly && User.authorized())) {
+    if ((!(page in config.menu)) || (config.menu[page]?.nonAuthOnly && !!Auth.userData)) {
         page = 'feed';
     }
 
@@ -45,7 +43,7 @@ export const navigate = async (
     navbar?.classList.toggle('display-none', !showNavbar);
 
     const sidebar = document.querySelector<HTMLDivElement>('.sidebar');
-    const showSidebar = config.menu[page].hasSidebar && User.authorized();
+    const showSidebar = config.menu[page].hasSidebar && !!Auth.userData;
     sidebar?.classList.toggle('display-none', !showSidebar);
 
 

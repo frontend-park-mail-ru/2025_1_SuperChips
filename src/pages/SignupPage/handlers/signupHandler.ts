@@ -2,7 +2,7 @@ import { formatDateToISO } from 'shared/utils';
 import { validateSignup } from '../lib/signupValidation';
 import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
-import { ISignupFormData } from '../model/types';
+import type { ISignupFormData } from '../model/types';
 
 
 export const signupHandler = async (event: SubmitEvent): Promise<void> => {

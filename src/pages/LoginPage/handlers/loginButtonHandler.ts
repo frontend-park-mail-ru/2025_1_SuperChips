@@ -15,9 +15,7 @@ const loginButtonHandler = () => {
     const valid = (validatePassword(password).isValid && validateEmail(email).isValid);
 
     const button = document.querySelector<HTMLButtonElement>('.button');
-    if (button) {
-        button.disabled = !valid;
-    }
+    if (button) button.disabled = !valid;
 };
 
 export const debouncedLoginButton = debounce(loginButtonHandler, 300);
