@@ -30,6 +30,10 @@
     &_disabled:hover {
         cursor: not-allowed;
     }
+
+    &_disabled {
+        opacity: 0.5;
+    }
 }
 
 .sidebar-button {
@@ -54,4 +58,8 @@
             filter: brightness(0%);
         }
     }
-} 
+}
+
+.display-none {
+    display: none;
+}

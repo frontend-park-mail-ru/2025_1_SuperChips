@@ -1,13 +1,16 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin }  = require('clean-webpack-plugin');
 
 module.exports = {
     mode: 'development',
-    entry: './src/index.js',
+    entry: './src/index.ts',
     resolve: {
-        modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+        modules: [
+            path.resolve(__dirname, 'src'),
+            'node_modules'
+        ],
         extensions: ['.js', '.ts']
     },
     output: {
@@ -71,7 +74,7 @@ module.exports = {
             patterns: [
                 {
                     from: path.resolve(__dirname, 'public'),
-                    to: path.resolve(__dirname, 'dist'),
+                    to: path.resolve(__dirname, 'dist', 'public'),
                     globOptions: {
                         ignore: ['**/index.html']
                     }
@@ -80,11 +83,29 @@ module.exports = {
         })
     ],
     devServer: {
+        server: 'https',
         static: {
             directory: path.resolve(__dirname, 'dist'),
         },
+        proxy: [{
+            context: ['/api'],
+            target: 'http://yourflow.ru:8080',
+            secure: false,
+            changeOrigin: true,
+            headers: {
+                'Origin': 'https://localhost:8000',
+                'X-Forwarded-Host': 'localhost:8000',
+                'X-Forwarded-Proto': 'https',
+                'Access-Control-Request-Headers': 'content-type,authorization',
+                'Access-Control-Allow-Origin': 'https://localhost:8000'
+            },
+            cookieDomainRewrite: {
+                'yourflow.ru': 'localhost'
+            },
+        }],
         historyApiFallback: true,
         compress: true,
-        port: 8000
+        port: 8000,
+        allowedHosts: 'all',
     }
 };

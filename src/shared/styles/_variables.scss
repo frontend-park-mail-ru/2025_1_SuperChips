@@ -11,8 +11,11 @@ $background-light: #EEE;
 $background-focus: #f8f8f8;
 $text-focus: #333;
 $disabled-color: #bebebe;
+$stroke-color: #474747;
 $white: #fff;
 $black: #000;
+$transparent: transparent;
+$semi-transparent: #E8E8E81a;
 
 // Размеры
 $navbar-height: 88px;
@@ -51,6 +54,8 @@ $font-size-xl: 36px;
 $font-size-xxl: 40px;
 
 // Прозрачность
+$opacity-0: 0.0;
+$opacity-10: 0.1;
 $opacity-80: 0.8;
 $opacity-60: 0.6;
 $opacity-100: 1;
