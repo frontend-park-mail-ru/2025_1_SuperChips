@@ -1,21 +1,25 @@
-import { loadImages } from 'entities/Pin/lib/loadImages';
+import { loadFeedPictures } from 'features/imageLoader';
 import { Pin } from 'entities/Pin';
-import { IImage } from 'shared/types/Image';
+import type { IPicture } from 'features/imageLoader';
 
 /**
  * Загружает картинки и создает коллаж для страниы входа
  */
 export const fillPictureBox = async (pageNum: number) => {
-    const images = await loadImages(pageNum);
+    const pictureBox = document.querySelector<HTMLDivElement>('.picture-box');
+    if (!pictureBox) return;
+
+    const images = await loadFeedPictures(pageNum);
     const newFrame = document.createElement('div');
     newFrame.classList.add('feed-chunk');
 
-    if (!images || typeof images === 'number') return;
+    if (!images?.data) { // Ошибка уже обрабатывается в loadFeedPictures
+        return;
+    }
 
-    images.data.forEach((item: IImage) => {
+    images.data.forEach((item: IPicture) => {
         newFrame.appendChild(Pin(item.image));
     });
 
-    const pictureBox = document.querySelector('.picture-box') as HTMLDivElement;
     pictureBox.innerHTML = newFrame.innerHTML;
 };

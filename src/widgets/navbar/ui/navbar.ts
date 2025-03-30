@@ -1,24 +1,29 @@
 import navbarTemplate from './navbar.hbs';
 import './navbar.scss';
-import { User } from 'entities/User';
 import { navigate } from 'shared/router';
 import { scrollToTop } from '../handlers/scrollToTop';
+import { Auth } from 'features/authorization';
+
 
 /**
  * Генерирует навбар для основных страниц (ленты, профиля и тд)
  * Содержимое навбара меняется, в зависимости от того, авторизован ли пользователь
  */
 export const Navbar = async () => {
-    const navbar = document.createElement('div');
+    const navbar = document.getElementById('navbar');
+    if (!navbar) return ;
 
-    const userData = User.getUserData();
+    navbar.classList.add('navbar');
 
-    if (!userData.avatar && userData.authorized && userData.username) {
-        const shortUsername = userData.username[0].toUpperCase();
-        navbar.innerHTML += navbarTemplate({ ...userData, shortUsername });
-    } else {
-        navbar.innerHTML += navbarTemplate(userData);
-    }
+    const userData = Auth.userData;
+
+    const config = {
+        ...userData,
+        authorized: !!userData,
+        shortUsername: userData?.username[0].toUpperCase(),
+    };
+
+    navbar.innerHTML = navbarTemplate(config);
 
     const redirectButton = navbar.querySelector('#goToLogin');
     if (redirectButton) {

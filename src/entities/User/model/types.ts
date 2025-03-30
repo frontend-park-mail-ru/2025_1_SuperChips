@@ -1,13 +1,8 @@
-export interface IUserData {
-    authorized: boolean,
+export interface IUser {
     username: string,
-    tag: string,
-    password?: string,
-    email?: string,
+    email: string,
+    birthday: Date,
+    publicName?: string,
     avatar?: string,
-    firstName?: string,
-    lastName?: string,
     about?: string,
-    shortUsername?: string,
-    birthDate?: Date,
 }

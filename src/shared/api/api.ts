@@ -1,6 +1,9 @@
-import { API_BASE_URL } from '../config/constants';
+import { API_BASE_URL } from 'shared/config/constants';
+import { ErrorToast } from 'shared/components/errorToast';
 
 type TMethods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+
+
 
 /**
  * Класс для работы с API бэкенда
@@ -47,27 +50,28 @@ class Api {
 
             return response;
         } catch {
+            const message = method === 'GET'
+                ? 'Ошибка при получении данных. Попробуйте еще раз'
+                : 'Ошибка при отправке данных. Попробуйте еще раз';
+
+            ErrorToast(message);
             return new Error('Could not fetch');
         }
     }
 
     /**
 	 * GET запрос
-	 * @param {string} url url запроса
-	 * @returns {Response} ответ от сервера
 	 */
     async get(
         url: string
     ): Promise<Response|Error> {
         const headers: HeadersInit = {};
+
         return this.request('GET', url, headers);
     }
 
     /**
 	 * POST запрос
-	 * @param {string} url url запроса
-	 * @param {object} body тело запроса
-	 * @returns {json} ответ от сервера
 	 */
     async post(
         url: string,
@@ -77,14 +81,12 @@ class Api {
             'X-CSRF-Token': this.#csrf.get(),
             'Content-Type': 'application/json',
         };
+
         return this.request('POST', url, headers, body);
     }
 
     /**
 	 * PUT запрос
-	 * @param {string} url url запроса
-	 * @param {object} body тело запроса
-	 * @returns {json} ответ от сервера
 	 */
     async put(
         url: string,
@@ -94,13 +96,12 @@ class Api {
             'X-CSRF-Token': this.#csrf.get(),
             'Content-Type': 'multipart/form-data',
         };
+
         return this.request('PUT', url, headers, body);
     }
 
     /**
-	 * POST запрос
-	 * @param {string} url url запроса
-	 * @returns {json} ответ от сервера
+	 * DELETE запрос
 	 */
     async delete(
         url: string
@@ -108,9 +109,25 @@ class Api {
         const headers = {
             'X-CSRF-Token': this.#csrf.get(),
         };
+
         return this.request('DELETE', url, headers);
     }
+
+    /**
+     * PATCH запрос
+     */
+    async patch(
+        url: string,
+        body: object
+    ): Promise<Response|Error> {
+        const headers: HeadersInit = {
+            'X-CSRF-Token': this.#csrf.get(),
+        };
+
+        return this.request('PATCH', url, headers, body);
+    }
 }
+
 
 /**
  * Класс для хранения и работы с CSRF токенами
@@ -121,7 +138,7 @@ class CSRF {
         this.#csrfToken = '';
     }
 
-    get(){
+    get() {
         return this.#csrfToken;
     }
 

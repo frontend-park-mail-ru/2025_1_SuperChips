@@ -1,19 +1,19 @@
+import { debounce } from 'shared/utils';
+import type { ValidationResult } from 'shared/validation';
 import {
     validateBirthday,
     validateEmail,
     validatePassword,
     validatePasswordConfirm,
-    validateUsername
+    validateUsername,
 } from 'shared/validation';
-import { debounce } from 'shared/utils';
-import { ValidationResult } from 'shared/types/ValidationResult';
 
 interface IValidators {
-    email: (_value: string) => ValidationResult;
-    username: (_value: string) => ValidationResult;
-    birthday: (_value: string) => ValidationResult;
-    password: (_value: string) => ValidationResult;
-    passwordConfirm: (_value: string) => ValidationResult;
+    email: (value: string) => ValidationResult;
+    username: (value: string) => ValidationResult;
+    birthday: (value: string) => ValidationResult;
+    password: (value: string) => ValidationResult;
+    passwordConfirm: (value: string) => ValidationResult;
 }
 
 
@@ -24,7 +24,7 @@ export const inputHandler = (event: Event) => {
     const container = target.closest('.input-container');
     if (!container) return;
 
-    const input = container.querySelector('.input__field') as HTMLInputElement;
+    const input = container.querySelector<HTMLInputElement>('.input__field');
     const message = container.querySelector('.error-message');
     const icon = container.querySelector('.input__error');
     if (!message || !input || !icon) return;
@@ -50,13 +50,9 @@ export const inputHandler = (event: Event) => {
     input.classList.toggle('error', showError);
     message.textContent = error;
 
-    const eye  = container.querySelector('.input__toggle-password') as HTMLImageElement;
-    if (eye !== null) {
-        if (showError) {
-            eye.style.right = '36px';
-        } else {
-            eye.style.right = '12px';
-        }
+    const eye  = container.querySelector<HTMLImageElement>('.input__toggle-password');
+    if (eye) {
+        eye.style.right = showError ? '36px' : '12px';
     }
 };
 

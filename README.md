@@ -10,7 +10,7 @@
 ### Внешние ссылки
  - [Figma](https://www.figma.com/design/2XIfIpY4AGnqWHZM7NmWps/flow?node-id=0-1&t=rHBuId1qvp1hDG12-1)
  - [Backend](https://github.com/go-park-mail-ru/2025_1_SuperChips)
- - [Deploy](http://yourflow.ru/feed)
+ - [Deploy](https://yourflow.ru/feed)
  - [Jira](https://ru.yougile.com/team/50ff57452c01/Pinterest-(Flow)/Frontend)
 
 ### Правила оформления Pull Requests

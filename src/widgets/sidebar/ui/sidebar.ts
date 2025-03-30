@@ -7,13 +7,34 @@ import './sidebar.scss';
  * Генерирует сайдбар для главных страниц (лента, профиль и тд)
  */
 export const Sidebar = async () => {
-    const sidebar = document.createElement('div');
+    const sidebar = document.getElementById('sidebar');
+    if (!sidebar) return ;
+    sidebar.classList.add('sidebar');
 
     const buttons = [
-        { id: 'newPin', source: '/public/icons/new-pin.svg', alt: 'add new pin', active: false },
-        { id: 'chats', source: '/public/icons/chat.svg', alt: 'chats', active: false },
-        { id: 'settings', source: '/public/icons/settings-icon.svg', alt: 'settings', active: false },
-        { id: 'logout', source: '/public/icons/log-out.svg', alt: 'logout', active: false }
+        { id: 'newPin',
+            source: '/public/icons/new-pin.svg',
+            alt: 'add new pin',
+            active: false
+        },
+        {
+            id: 'chats',
+            source: '/public/icons/chat.svg',
+            alt: 'chats',
+            active: false
+        },
+        {
+            id: 'settings',
+            source: '/public/icons/settings-icon.svg',
+            alt: 'settings',
+            active: true,
+        },
+        {
+            id: 'logout',
+            source: '/public/icons/log-out.svg',
+            alt: 'logout',
+            active: true,
+        }
     ];
 
     sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({ buttons }));

@@ -1,18 +1,18 @@
-import { User } from 'entities/User';
-import { Navbar } from 'widgets/navbar';
-import { Sidebar } from 'widgets/sidebar';
-import { createVertTabBar } from 'pages/SettingsPage/components/vert-tab-bar/vert-tab-bar';
-import { InputTransparent } from 'shared/components/inputTransparent';
+import { createVertTabBar } from '../components/vert-tab-bar/vert-tab-bar';
 import { showToast } from '../components/toast/toast';
 import { handleProfileUpdate } from '../handlers/profileUpdate';
 import { validateProfileField } from '../handlers/profileValidation';
-import { validatePasswordField, debouncedPasswordValidation } from '../handlers/passwordValidation';
+import { debouncedPasswordValidation } from '../handlers/passwordValidation';
 import { handlePasswordUpdate } from '../handlers/passwordHandler';
 import './settings.scss';
+import { Auth } from 'features/authorization';
+import { Input } from 'shared/components/input';
 
-let userData = User.getUserData();
+await Auth.fetchUserData();
+let userData = Auth.userData;
 
 const createProfileSettings = () => {
+    if (!userData) return null;
     const container = document.createElement('div');
     container.classList.add('settings-content');
 
@@ -25,10 +25,48 @@ const createProfileSettings = () => {
     form.classList.add('settings-form');
 
     const fields = [
-        { type: 'text', id: 'firstName', inputLabel: 'Имя', value: userData.firstName || '', errorMessage: 'Введите имя', maxlength: 120, required: true, onInput: validateProfileField },
-        { type: 'text', id: 'lastName', inputLabel: 'Фамилия', value: userData.lastName || '', errorMessage: 'Введите фамилию', maxlength: 120, required: true, onInput: validateProfileField },
-        { type: 'text', id: 'username', inputLabel: 'Никнейм', value: userData.username || '', errorMessage: 'Неверный формат никнейма', maxlength: 120, required: true, onInput: validateProfileField },
-        { type: 'date', id: 'birthday', inputLabel: 'Дата рождения', value: userData.birthDate || '', errorMessage: 'Неверный формат даты', required: true, onInput: validateProfileField }
+        // {
+        //     type: 'text',
+        //     id: 'firstName',
+        //     inputLabel: 'Имя',
+        //     value: userData.user || '',
+        //     errorMessage: 'Введите имя',
+        //     maxlength: 120,
+        //     onInput: validateProfileField,
+        //     transparent: true,
+        // },
+        // {
+        //     type: 'text',
+        //     id: 'lastName',
+        //     inputLabel: 'Фамилия',
+        //     value: userData.lastName || '',
+        //     errorMessage: 'Введите фамилию',
+        //     maxlength: 120,
+        //     required: true,
+        //     onInput: validateProfileField,
+        //     transparent: true,
+        // },
+        {
+            type: 'text',
+            id: 'username',
+            inputLabel: 'Никнейм',
+            value: userData?.username || '',
+            errorMessage: 'Неверный формат никнейма',
+            maxlength: 120,
+            required: true,
+            onInput: validateProfileField,
+            transparent: true,
+        },
+        {
+            type: 'date',
+            id: 'birthday',
+            inputLabel: 'Дата рождения',
+            value: userData?.birthday || '',
+            errorMessage: 'Неверный формат даты',
+            required: true,
+            onInput: validateProfileField,
+            transparent: true,
+        }
     ];
 
     // Create avatar container
@@ -36,7 +74,7 @@ const createProfileSettings = () => {
     avatarContainer.classList.add('avatar-container');
 
     const avatarWrapper = document.createElement('div');
-    avatarWrapper.classList.add('profile-picture');
+    avatarWrapper.classList.add('profile-picture-settings');
 
     if (userData.avatar) {
         const avatarImg = document.createElement('img');
@@ -66,10 +104,10 @@ const createProfileSettings = () => {
             const formData = new FormData();
             formData.append('avatar', target.files[0]);
             try {
-                const response = await User.updateAvatar(formData);
+                const response = await Auth.updateAvatar(formData);
                 if (response instanceof Response && response.ok) {
-                    await User.fetchUserData();
-                    userData = User.getUserData();
+                    await Auth.fetchUserData();
+                    userData = Auth.userData;
                     showToast('Фото профиля обновлено', 'success');
                     // Refresh the page to show the new avatar
                     window.location.reload();
@@ -92,7 +130,7 @@ const createProfileSettings = () => {
     form.insertBefore(avatarContainer, form.firstChild);
 
     fields.forEach(field => {
-        const inputComponent = InputTransparent(field);
+        const inputComponent = Input(field);
         if (inputComponent) {
             form.appendChild(inputComponent);
         }
@@ -135,13 +173,37 @@ const createSecuritySettings = (): HTMLElement => {
     form.classList.add('settings-form');
 
     const fields = [
-        { type: 'password', id: 'currentPassword', inputLabel: 'Текущий пароль', errorMessage: 'Введите текущий пароль', maxlength: 120, onInput: debouncedPasswordValidation },
-        { type: 'password', id: 'newPassword', inputLabel: 'Новый пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов', maxlength: 120, onInput: debouncedPasswordValidation },
-        { type: 'password', id: 'confirmPassword', inputLabel: 'Подтвердите новый пароль', errorMessage: 'Пароли не совпадают', maxlength: 120, onInput: debouncedPasswordValidation }
+        {
+            type: 'password',
+            id: 'currentPassword',
+            inputLabel: 'Текущий пароль',
+            errorMessage: 'Введите текущий пароль',
+            maxlength: 120,
+            onInput: debouncedPasswordValidation,
+            transparent: true,
+        },
+        {
+            type: 'password',
+            id: 'newPassword',
+            inputLabel: 'Новый пароль',
+            errorMessage: 'Пароль должен быть длиной не менее 8 символов',
+            maxlength: 120,
+            onInput: debouncedPasswordValidation,
+            transparent: true,
+        },
+        {
+            type: 'password',
+            id: 'confirmPassword',
+            inputLabel: 'Подтвердите новый пароль',
+            errorMessage: 'Пароли не совпадают',
+            maxlength: 120,
+            onInput: debouncedPasswordValidation,
+            transparent: true,
+        }
     ];
 
     fields.forEach(field => {
-        const inputComponent = InputTransparent(field);
+        const inputComponent = Input(field);
         if (inputComponent) {
             form.appendChild(inputComponent);
         }
@@ -162,9 +224,6 @@ export const SettingsPage = async () => {
     const page = document.createElement('div');
     page.classList.add('settings-page');
 
-    page.appendChild(await Navbar());
-    page.appendChild(await Sidebar());
-
     const mainContent = document.createElement('div');
     mainContent.classList.add('settings-container');
 
@@ -183,7 +242,9 @@ export const SettingsPage = async () => {
         newContentContainer.classList.add('settings-content-container');
 
         if (tabId === 'profile') {
-            newContentContainer.appendChild(createProfileSettings());
+            const newPage = createProfileSettings();
+            if (newPage)
+                newContentContainer.appendChild(newPage);
         } else if (tabId === 'security') {
             newContentContainer.appendChild(createSecuritySettings());
         }
@@ -195,7 +256,12 @@ export const SettingsPage = async () => {
 
     const initialContent = document.createElement('div');
     initialContent.classList.add('settings-content-container');
-    initialContent.appendChild(createProfileSettings());
+
+    const profileSettings =  createProfileSettings();
+    if (profileSettings) {
+        initialContent.appendChild(profileSettings);
+
+    }
     mainContent.appendChild(initialContent);
 
     page.appendChild(mainContent);

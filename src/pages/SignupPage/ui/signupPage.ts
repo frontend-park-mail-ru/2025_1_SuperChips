@@ -1,69 +1,116 @@
-import './signup.scss';
-import { Navbar } from 'widgets/navbar';
-import { InputTransparent } from 'shared/components/inputTransparent';
+import { debouncedPasswordConfirm } from '../handlers/passwordConfirm';
+import { debouncedSignupButton } from '../handlers/signupButtonHandler';
+import { fillPictureBox } from '../../LoginPage/lib/fillPictureBox';
+import { signupHandler } from '../handlers/signupHandler';
+import { Input } from 'shared/components/input';
 import { navigate } from 'shared/router';
+import { authPageTemplate } from 'pages/LoginPage';
+import './signup.scss';
+import { IInputConfig } from 'shared/components/input/model/types';
+
+
+interface SignupPageConfig {
+    page: string;
+    redirectText: string;
+    redirectBtn: string;
+    submitBtn: string;
+    header: string;
+    subheader: string;
+    inputs: IInputConfig[];
+}
 
 /**
- * Renders the signup page
- * @returns {Promise<HTMLDivElement>} The signup page element
+ * Генерирует страницу регистрации и создает обработчики событий
  */
 export const SignupPage = async (): Promise<HTMLDivElement> => {
+    const config: SignupPageConfig = {
+        page: 'signup',
+        redirectText: 'Есть аккаунт?',
+        redirectBtn: 'Войти',
+        submitBtn: 'Зарегистрироваться',
+        header: 'Регистрация',
+        subheader: 'Ещё пару шагов и вы с flow!',
+        inputs: [
+            {
+                type: 'email',
+                id: 'email',
+                inputLabel: 'Email',
+                errorMessage: 'Введите email в формате user@domain.ru',
+                required: true,
+                maxlength: 64,
+                autocomplete: 'username'
+            },
+            {
+                type: 'text',
+                id: 'username',
+                inputLabel: 'Имя пользователя',
+                errorMessage: 'Это имя уже занято',
+                required: true,
+                maxlength: 32
+            },
+            {
+                type: 'date',
+                id: 'birthday',
+                inputLabel: 'Дата рождения',
+                errorMessage: 'Введите дату в формате ДД.ММ.ГГГГ',
+                required: true
+            },
+            {
+                type: 'password',
+                id: 'password',
+                inputLabel: 'Пароль',
+                errorMessage: 'Пароль должен быть длиной не менее 8 символов',
+                required: true,
+                isPassword: true,
+                maxlength: 96,
+                autocomplete: 'current-password'
+            },
+            {
+                type: 'password',
+                id: 'passwordConfirm',
+                inputLabel: 'Повторите пароль',
+                errorMessage: 'Пароли не совпадают',
+                required: true,
+                isPassword: true,
+                maxlength: 120
+            },
+        ]
+    };
+
+    const html = authPageTemplate(config);
     const page = document.createElement('div');
-    page.classList.add('signup-page');
+    page.insertAdjacentHTML('beforeend', html);
 
-    page.appendChild(await Navbar());
+    const redirectBtn = page.querySelector<HTMLAnchorElement>('.redirect');
+    if (!redirectBtn) return page;
 
-    const container = document.createElement('div');
-    container.classList.add('signup-container');
-
-    const form = document.createElement('form');
-    form.classList.add('signup-form');
-
-    const header = document.createElement('h2');
-    header.textContent = 'Регистрация';
-    header.classList.add('signup-header');
-    form.appendChild(header);
-
-    const fields = [
-        { type: 'text', id: 'firstName', inputLabel: 'Имя', errorMessage: 'Введите имя', maxlength: 120, required: true },
-        { type: 'text', id: 'lastName', inputLabel: 'Фамилия', errorMessage: 'Введите фамилию', maxlength: 120, required: true },
-        { type: 'text', id: 'username', inputLabel: 'Никнейм', errorMessage: 'Неверный формат никнейма', maxlength: 120, required: true },
-        { type: 'password', id: 'password', inputLabel: 'Пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов', maxlength: 120, required: true },
-        { type: 'password', id: 'confirmPassword', inputLabel: 'Подтвердите пароль', errorMessage: 'Пароли не совпадают', maxlength: 120, required: true },
-        { type: 'date', id: 'birthday', inputLabel: 'Дата рождения', errorMessage: 'Неверный формат даты', required: true }
-    ];
-
-    fields.forEach(field => {
-        const inputComponent = InputTransparent(field);
-        if (inputComponent) {
-            form.appendChild(inputComponent);
-        }
-    });
-
-    const submitButton = document.createElement('button');
-    submitButton.textContent = 'Зарегистрироваться';
-    submitButton.classList.add('submit-button');
-    form.appendChild(submitButton);
-
-    const loginLink = document.createElement('p');
-    loginLink.classList.add('login-link');
-    loginLink.innerHTML = 'Уже есть аккаунт? <a href="#">Войти</a>';
-    form.appendChild(loginLink);
-
-    loginLink.querySelector('a')?.addEventListener('click', (e) => {
-        e.preventDefault();
+    redirectBtn.addEventListener('click', (event: MouseEvent) => {
+        event.preventDefault();
         navigate('login').finally();
     });
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        // Handle signup logic here
-        // For now, just navigate to login page
-        navigate('login').finally();
+    const form = page.querySelector<HTMLFormElement>('.signup-form');
+    if (!form) return page;
+
+    const placeholders = form.querySelectorAll('.input-placeholder');
+    placeholders.forEach((item, index) => {
+        const newInput = Input(config.inputs[index]);
+        if (newInput)
+            item.replaceWith(newInput);
     });
 
-    container.appendChild(form);
-    page.appendChild(container);
+    form.addEventListener('submit', signupHandler);
+    form.addEventListener('input', debouncedSignupButton);
+    form.addEventListener('input', debouncedPasswordConfirm);
 
-    return page as HTMLDivElement;
+    const observer = new MutationObserver(() => {
+        fillPictureBox(2);
+        observer.disconnect();
+    });
+
+    const rootElement = document.getElementById('root');
+    if (rootElement)
+        observer.observe(rootElement, { childList: true });
+
+    return page;
 };

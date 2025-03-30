@@ -1,10 +1,13 @@
+import type { ISignupFormData } from 'pages/SignupPage';
+import type { IUser } from 'entities/User';
 import { API } from 'shared/api/api';
-import { ISignupFormData } from 'shared/types/SignupFormData';
+import { Navbar } from 'widgets/navbar';
 
 type TLoginData = {
     email: string;
     password: string;
 };
+
 
 /**
  * Класс, использующийся для аутентификации пользователя
@@ -12,67 +15,117 @@ type TLoginData = {
  */
 class auth {
     private API: typeof API;
+    userData: IUser | null;
 
     constructor() {
         this.API = API;
+        this.userData = null;
     }
 
     /**
      * Авторизация пользователя
-     * @returns {Promise<Response | Error>} ответ сервера
      */
     async login(
         { email, password }: TLoginData
     ): Promise<Response|Error> {
-        try {
-            return await this.API.post('/api/v1/auth/login', { email, password });
-        } catch (error) {
-            return new Error(`Login failed: ${error}`);
+        const response = await this.API.post('/api/v1/auth/login', { email, password });
+
+        if (response instanceof Response && response.ok) {
+            await this.fetchUserData();
         }
+
+        return response;
     }
 
     /**
      Регистрация нового пользователя
-     * @param {Object} userData - email, имя пользователя, дата рождения, пароль
-     * @returns {Promise<json|Error>} - ответ от сервера
      */
     async register(userData: ISignupFormData): Promise<Response|Error> {
-        try {
-            return await this.API.post('/api/v1/auth/registration', userData);
-        } catch (error) {
-            return new Error(`Registration failed: ${error}`);
+        const response = await this.API.post('/api/v1/auth/registration', userData);
+
+        if (response instanceof Response && response.ok) {
+            this.userData = {
+                email: userData.email,
+                username: userData.username,
+                publicName: userData.username,
+                birthday: new Date(userData.birthday),
+            };
         }
+
+        return response;
     }
 
     /**
 	 * Завершение сессии
-	 * @returns {Promise<Error>} ответ сервера
 	 */
-    async logout(): Promise<void|Error> {
-        try {
-            await this.API.post('/api/v1/auth/logout');
-        } catch (error) {
-            return new Error(`Logout failed: ${error}`);
+    async logout(): Promise<Response|Error> {
+        const response = await this.API.post('/api/v1/auth/logout');
+
+        if (response instanceof Response && response.ok) {
+            await this.clearUserData();
         }
+
+        return response;
     }
 
     /**
-	 * Получение данных о пользователе в формате:
-	 * {
-	 * username: 	{{username}},
-	 * avatar: 		{{avatar_url}},
-	 * birthday: 	{{birthday}},
-	 * email: 		{{email}},
-	 * }
-	 * @returns {Response} Ответ от сервера
-	 */
-    async getUserData(): Promise<Response|Error> {
-        try {
-            return await this.API.get('/api/v1/auth/user');
-        } catch (error) {
-            return new Error(`Failed to fetch user data: ${error}`);
+     * Получение данных о пользователе
+     */
+    fetchUserData = async (): Promise<void> => {
+        const response = await this.API.get('/api/v1/profile');
+
+        if (response instanceof Response && response.ok) {
+            const body = await response.json();
+            const data = body.data;
+
+            this.userData = {
+                ...data,
+                birthday: new Date(data.birthday),
+                shortUsername: data.username[0].toUpperCase(),
+                authorized: true,
+            };
+
+
+            await Navbar();
         }
-    }
+    };
+
+    /**
+     * Очистка данных о пользователе
+     */
+    clearUserData = async () => {
+        this.userData = null;
+        await Navbar();
+    };
+
+    /**
+     * Метод для сохренения пользовательских данных при регистрации
+     */
+    setUserData = async (data: IUser) => {
+        this.userData = {
+            ...this.userData,
+            username: data.username,
+            email: data.email,
+            birthday: new Date(data.birthday),
+        };
+        await Navbar();
+    };
+
+    updateProfile = async (profileData: IUser)  => {
+        return await API.put('/api/v1/user/profile', profileData);
+    };
+
+    updatePassword = async (passwords: {
+        currentPassword: string;
+        newPassword: string;
+    }) => {
+        return await API.put('/api/v1/user/password', passwords);
+    };
+
+    updateAvatar = async (formData: FormData) => {
+        return await API.put('/api/v1/user/avatar', formData);
+    };
+
 }
 
 export const Auth = new auth();

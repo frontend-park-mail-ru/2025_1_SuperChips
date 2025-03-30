@@ -3,8 +3,8 @@ import { validateEmail } from 'shared/validation';
 import { debounce } from 'shared/utils';
 
 const loginButtonHandler = () => {
-    const passwordField = document.querySelector('#password') as HTMLInputElement;
-    const emailField = document.querySelector('#email') as HTMLInputElement;
+    const passwordField = document.querySelector<HTMLInputElement>('#password');
+    const emailField = document.querySelector<HTMLInputElement>('#email');
 
     if (!passwordField || !emailField) return;
 
@@ -14,8 +14,8 @@ const loginButtonHandler = () => {
 
     const valid = (validatePassword(password).isValid && validateEmail(email).isValid);
 
-    const button = document.querySelector('.button') as HTMLButtonElement;
-    button.disabled = !valid;
+    const button = document.querySelector<HTMLButtonElement>('.button');
+    if (button) button.disabled = !valid;
 };
 
 export const debouncedLoginButton = debounce(loginButtonHandler, 300);

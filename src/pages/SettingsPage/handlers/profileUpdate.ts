@@ -1,6 +1,6 @@
-import { User } from 'entities/User';
 import { showToast } from '../components/toast/toast';
 import { formatDateToISO } from 'shared/utils';
+import { Auth } from 'features/authorization';
 
 export const handleProfileUpdate = async (event: SubmitEvent): Promise<void> => {
     event.preventDefault();
@@ -12,14 +12,23 @@ export const handleProfileUpdate = async (event: SubmitEvent): Promise<void> => 
         firstName: formData.get('firstName') as string,
         lastName: formData.get('lastName') as string,
         username: formData.get('username') as string,
-        birthDate: formatDateToISO(formData.get('birthday') as string),
+        birthDate: new Date(formData.get('birthday') as string),
         about: formData.get('about') as string
     };
 
+    // IUser
+    //      username:       string,
+    //      email:          string,    можно изменить на email?:
+    //      birthday:       Date,
+    //      publicName?:    string,
+    //      avatar?:        string,
+    //      about?:         string,
+
+
     try {
-        const response = await User.updateProfile(profileData);
+        const response = await Auth.updateProfile(profileData);
         if (response instanceof Response && response.ok) {
-            await User.fetchUserData();
+            await Auth.fetchUserData();
             showToast('Профиль успешно обновлен', 'success');
         } else if (response instanceof Response) {
             const errorData = await response.json();

@@ -83,11 +83,29 @@ module.exports = {
         })
     ],
     devServer: {
+        server: 'https',
         static: {
             directory: path.resolve(__dirname, 'dist'),
         },
+        proxy: [{
+            context: ['/api'],
+            target: 'http://yourflow.ru:8080',
+            secure: false,
+            changeOrigin: true,
+            headers: {
+                'Origin': 'https://localhost:8000',
+                'X-Forwarded-Host': 'localhost:8000',
+                'X-Forwarded-Proto': 'https',
+                'Access-Control-Request-Headers': 'content-type,authorization',
+                'Access-Control-Allow-Origin': 'https://localhost:8000'
+            },
+            cookieDomainRewrite: {
+                'yourflow.ru': 'localhost'
+            },
+        }],
         historyApiFallback: true,
         compress: true,
-        port: 8000
+        port: 8000,
+        allowedHosts: 'all',
     }
 };

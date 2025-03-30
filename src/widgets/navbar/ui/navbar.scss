@@ -16,7 +16,7 @@ $border-radius: 20px;
 // Основные стили
 .navbar {
     position: fixed;
-    background: $gradient-dark;
+    background-color: $primary-dark;
     display: flex;
     width: 100%;
     height: $navbar-height;
@@ -87,4 +87,8 @@ $border-radius: 20px;
         cursor: pointer;
         opacity: $opacity-60;
     }
-} 
+}
+
+.display-none {
+    display: none;
+}

@@ -1,12 +1,12 @@
 <div class="input-container">
-    <label for="{{id}}">
+    <label class="input-field-label" for="{{id}}">
         {{inputLabel}}
         {{#if required}}<span class="required">*</span>{{/if}}
     </label>
 
-    <div class="input">
+    <div class="input{{#if transparent}}Transparent{{/if}}">
         <input type="{{type}}"
-               class="input__field"
+               class="input{{#if transparent}}Transparent{{/if}}__field"
                id="{{id}}"
                maxlength="{{maxlength}}"
                {{#if autocomplete}} autocomplete="{{autocomplete}}" {{/if}}
@@ -16,7 +16,7 @@
                  alt="Показать пароль" data-password-toggle id="{{id}}-eye"
             >
         {{/if}}
-        <img src="icons/error.svg" class="input__error hidden" aria-hidden="true" alt="" id="{{id}}-error-icon">
+        <img src="public/icons/error.svg" class="input__error hidden" aria-hidden="true" alt="" id="{{id}}-error-icon">
     </div>
 
     <p class="error-message error-label hidden" id="{{id}}-error">

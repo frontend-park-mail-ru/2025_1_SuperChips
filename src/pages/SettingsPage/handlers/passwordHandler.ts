@@ -1,6 +1,6 @@
 import { showToast } from '../components/toast/toast';
 import { IPasswordFormData } from 'shared/types/ProfileFormData';
-import { User } from 'entities/User';
+import { Auth } from 'features/authorization';
 
 /**
  * Handles password update form submission
@@ -25,7 +25,7 @@ export const handlePasswordUpdate = async (event: SubmitEvent): Promise<void> =>
     }
 
     try {
-        const response = await User.updatePassword(passwordData);
+        const response = await Auth.updatePassword(passwordData);
         if (response instanceof Response && response.ok) {
             showToast('Пароль успешно изменен', 'success');
             form.reset();

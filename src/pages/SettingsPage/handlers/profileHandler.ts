@@ -1,6 +1,6 @@
-import { User } from 'entities/User';
 import { showToast } from '../components/toast/toast';
 import { IProfileFormData } from 'shared/types/ProfileFormData';
+import { Auth } from 'features/authorization';
 
 export const handleProfileUpdate = async (event: SubmitEvent): Promise<void> => {
     event.preventDefault();
@@ -25,10 +25,10 @@ export const handleProfileUpdate = async (event: SubmitEvent): Promise<void> => 
     }
 
     try {
-        const response = await User.updateProfile(inputData);
+        const response = await Auth.updateProfile(inputData);
 
         if (response instanceof Response && response.ok) {
-            await User.fetchUserData();
+            await Auth.fetchUserData();
             showToast('Профиль успешно обновлен', 'success');
         } else if (response instanceof Response) {
             const errorData = await response.json();

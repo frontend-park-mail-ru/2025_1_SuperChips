@@ -1,7 +1,7 @@
 import { FeedPage } from 'pages/FeedPage';
 import { LoginPage } from 'pages/LoginPage';
 import { SignupPage } from 'pages/SignupPage';
-import { SettingsPage } from 'pages/SettingsPage';
+import { SettingsPage } from '../../pages/SettingsPage';
 
 
 interface PageConfig {
@@ -9,6 +9,9 @@ interface PageConfig {
     title: string,
     render: () => Promise<HTMLDivElement>,
     nonAuthOnly?: boolean,
+    authOnly?: boolean,
+    hasNavbar?: boolean,
+    hasSidebar?: boolean,
 }
 
 interface MenuConfig {
@@ -26,6 +29,8 @@ export const config: RouterConfig = {
             href: '/feed',
             title: 'Лента',
             render: FeedPage,
+            hasNavbar: true,
+            hasSidebar: true,
         },
         login: {
             href: '/login',
@@ -42,7 +47,10 @@ export const config: RouterConfig = {
         settings: {
             href: '/settings',
             title: 'Настройки',
-            render: SettingsPage
+            render: SettingsPage,
+            authOnly: true,
+            hasNavbar: true,
+            hasSidebar: true,
         }
     },
 };
