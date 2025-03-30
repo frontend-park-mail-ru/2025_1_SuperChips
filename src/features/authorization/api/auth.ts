@@ -1,6 +1,6 @@
 import type { ISignupFormData } from 'pages/SignupPage';
+import type { IUser } from 'entities/User';
 import { API } from 'shared/api/api';
-import { IUser } from '../model/types';
 import { Navbar } from 'widgets/navbar';
 
 type TLoginData = {
@@ -30,7 +30,7 @@ class auth {
     ): Promise<Response|Error> {
         const response = await this.API.post('/api/v1/auth/login', { email, password });
 
-        if (response instanceof Response && response?.status !== 401) {
+        if (response instanceof Response && response.ok) {
             await this.fetchUserData();
         }
 
@@ -43,8 +43,13 @@ class auth {
     async register(userData: ISignupFormData): Promise<Response|Error> {
         const response = await this.API.post('/api/v1/auth/registration', userData);
 
-        if (response instanceof Response) {
-            await this.setUserData(userData);
+        if (response instanceof Response && response.ok) {
+            this.userData = {
+                email: userData.email,
+                username: userData.username,
+                publicName: userData.username,
+                birthday: new Date(userData.birthday),
+            };
         }
 
         return response;
@@ -56,7 +61,7 @@ class auth {
     async logout(): Promise<Response|Error> {
         const response = await this.API.post('/api/v1/auth/logout');
 
-        if (response instanceof Response) {
+        if (response instanceof Response && response.ok) {
             await this.clearUserData();
         }
 
@@ -67,7 +72,7 @@ class auth {
      * Получение данных о пользователе
      */
     fetchUserData = async (): Promise<void> => {
-        const response = await this.API.get('/api/v1/auth/user');
+        const response = await this.API.get('/api/v1/profile');
 
         if (response instanceof Response && response.ok) {
             const body = await response.json();
@@ -96,8 +101,9 @@ class auth {
     /**
      * Метод для сохренения пользовательских данных при регистрации
      */
-    setUserData = async (data: ISignupFormData) => {
+    setUserData = async (data: IUser) => {
         this.userData = {
+            ...this.userData,
             username: data.username,
             email: data.email,
             birthday: new Date(data.birthday),

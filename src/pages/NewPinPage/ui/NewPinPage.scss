@@ -1,0 +1,60 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+.new-pin-page {
+    @include main-page;
+}
+
+.new-pin-form {
+    grid-area: page;
+    display: flex;
+}
+
+.description-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: $input-width;
+    color: $text-light;
+    margin-left: $spacing-xxl;
+}
+
+.description-box_form {
+    margin-top: 20px;
+
+}
+
+.create-flow-button {
+    width: $input-width;
+    height: $input-height;
+    border-radius: $border-radius;
+    background-color: $text-gray;
+    color: $text-light;
+    border: none;
+
+    &:hover {
+        opacity: 0.8;
+        cursor: pointer;
+    }
+}
+
+.about-textarea {
+    margin-top: $spacing-xs;
+    padding: $spacing-sm $spacing-lg;
+    border-radius: $border-radius;
+    background-color: $transparent;
+    color: $text-light;
+    width: 100%;
+    border: 1px solid rgba(70, 70, 70, 0.5);
+    font-size: $font-size-sm;
+    resize: none;
+    height: auto;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+    }
+}

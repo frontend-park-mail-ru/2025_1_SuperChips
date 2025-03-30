@@ -1,9 +1,10 @@
 import { debouncedInputHandler } from '../handlers/inputHandler';
 import { togglePasswordHandler } from '../handlers/togglePasswordHandler';
 import { dateHandler } from '../handlers/dateHandler';
-import type { IInputConfig } from '../model/types';
-import './input.scss';
+import { IInputConfig } from '../model/types';
 import inputTemplate from './input.hbs';
+import './input.scss';
+import './inputTransparent.scss';
 
 /**
  * Создает инпут с иконкой ошибки и полем для сообщения об ошибке
@@ -19,7 +20,7 @@ export const Input = (data: IInputConfig) => {
 
     if (data.type === 'password') {
         const eye = inputContainer.querySelector('.input__toggle-password');
-        if (eye) eye.addEventListener('click', togglePasswordHandler);
+        eye?.addEventListener('click', togglePasswordHandler);
     }
 
     if (data.type === 'date') {

@@ -1,6 +1,7 @@
 import { FeedPage } from 'pages/FeedPage';
 import { LoginPage } from 'pages/LoginPage';
 import { SignupPage } from 'pages/SignupPage';
+import { NewPinPage } from '../../pages/NewPinPage';
 
 
 interface PageConfig {
@@ -11,6 +12,7 @@ interface PageConfig {
     authOnly?: boolean,
     hasNavbar?: boolean,
     hasSidebar?: boolean,
+    hasBackButton?: boolean,
 }
 
 interface MenuConfig {
@@ -24,13 +26,6 @@ interface RouterConfig {
 
 export const config: RouterConfig = {
     menu: {
-        feed: {
-            href: '/feed',
-            title: 'Лента',
-            render: FeedPage,
-            hasNavbar: true,
-            hasSidebar: true,
-        },
         login: {
             href: '/login',
             title: 'Авторизация',
@@ -42,6 +37,22 @@ export const config: RouterConfig = {
             title: 'Регистрация',
             render: SignupPage,
             nonAuthOnly: true,
+        },
+        feed: {
+            href: '/feed',
+            title: 'Лента',
+            render: FeedPage,
+            hasNavbar: true,
+            hasSidebar: true,
+        },
+        newPin: {
+            href: '/newPin',
+            title: 'Новый flow',
+            render: NewPinPage,
+            authOnly: true,
+            hasSidebar: true,
+            hasNavbar: true,
+            hasBackButton: true
         },
     },
 };
