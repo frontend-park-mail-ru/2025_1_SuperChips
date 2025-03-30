@@ -1,6 +1,5 @@
 import type { ILoadedPictures } from '../model/types';
 import { API } from 'shared/api/api';
-import { ErrorToast } from 'shared/components/errorToast';
 import { feedState } from 'pages/FeedPage/ui/FeedPage';
 
 
@@ -14,7 +13,6 @@ export const loadFeedPictures = async (pageNum: number): Promise<ILoadedPictures
 
     const response = await API.get(`/api/v1/feed?page=${pageNum}`);
     if (response instanceof Error) {
-        ErrorToast('Ошибка при получении данных. Попробуйте еще раз');
         feedState.isLoading = false;
         return { status: 503 };
     }

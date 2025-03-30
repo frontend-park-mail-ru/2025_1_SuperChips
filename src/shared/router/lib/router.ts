@@ -25,7 +25,9 @@ export const navigate = async (
     if (root === null) { return; }
     root.innerHTML = '';
 
-    if ((!(page in config.menu)) || (config.menu[page]?.nonAuthOnly && !!Auth.userData)) {
+    if ((!(page in config.menu)) ||
+        (config.menu[page]?.nonAuthOnly && !!Auth.userData) ||
+        (config.menu[page]?.authOnly && !Auth.userData)) {
         page = 'feed';
     }
 
@@ -35,17 +37,10 @@ export const navigate = async (
 
     appState.activePage = page;
 
-    const element = await config.menu[page].render();
-    root.appendChild(element);
+    const newPage = await config.menu[page].render();
+    root.appendChild(newPage);
 
-    const navbar = document.querySelector('.navbar');
-    const showNavbar = config.menu[page].hasNavbar;
-    navbar?.classList.toggle('display-none', !showNavbar);
-
-    const sidebar = document.querySelector<HTMLDivElement>('.sidebar');
-    const showSidebar = config.menu[page].hasSidebar && !!Auth.userData;
-    sidebar?.classList.toggle('display-none', !showSidebar);
-
+    updateBars(page);
 
     window.scrollTo({ top: 0 });
     document.title = config.menu[page].title;
@@ -55,4 +50,19 @@ export const navigate = async (
     } else {
         history.pushState({ page: page }, '', config.menu[page].href);
     }
+};
+
+
+const updateBars = (page: string) => {
+    const navbar = document.querySelector('.navbar');
+    const showNavbar = config.menu[page].hasNavbar;
+    navbar?.classList.toggle('display-none', !showNavbar);
+
+    const sidebar = document.querySelector<HTMLDivElement>('.sidebar');
+    const showSidebar = config.menu[page].hasSidebar && !!Auth.userData;
+    sidebar?.classList.toggle('display-none', !showSidebar);
+
+    const backButton = document.getElementById('go-back-button');
+    const showBackButton = config.menu[page].hasBackButton;
+    backButton?.classList.toggle('hidden', !showBackButton);
 };
