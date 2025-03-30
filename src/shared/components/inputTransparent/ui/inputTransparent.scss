@@ -37,9 +37,9 @@
         }
     }
 
-    &__error {
+    .error-icon {
         position: absolute;
-        right: $spacing-sm;
+        right: calc($spacing-sm + $icon-size + $spacing-xs);
         top: 50%;
         transform: translateY(-50%);
     }

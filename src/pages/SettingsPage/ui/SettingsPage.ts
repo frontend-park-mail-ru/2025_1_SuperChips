@@ -5,7 +5,9 @@ import { createVertTabBar } from 'pages/SettingsPage/components/vert-tab-bar/ver
 import { InputTransparent } from 'shared/components/inputTransparent';
 import { showToast } from '../components/toast/toast';
 import { handleProfileUpdate } from '../handlers/profileUpdate';
-import { debouncedProfileValidation } from '../handlers/profileValidation';
+import { validateProfileField } from '../handlers/profileValidation';
+import { validatePasswordField, debouncedPasswordValidation } from '../handlers/passwordValidation';
+import { handlePasswordUpdate } from '../handlers/passwordHandler';
 import './settings.scss';
 
 let userData = User.getUserData();
@@ -23,10 +25,10 @@ const createProfileSettings = () => {
     form.classList.add('settings-form');
 
     const fields = [
-        { type: 'text', id: 'firstName', inputLabel: 'Имя', value: userData.firstName || '', errorMessage: 'Введите имя', maxlength: 120, required: true },
-        { type: 'text', id: 'lastName', inputLabel: 'Фамилия', value: userData.lastName || '', errorMessage: 'Введите фамилию', maxlength: 120, required: true },
-        { type: 'text', id: 'username', inputLabel: 'Никнейм', value: userData.username || '', errorMessage: 'Неверный формат никнейма', maxlength: 120, required: true },
-        { type: 'date', id: 'birthday', inputLabel: 'Дата рождения', value: userData.birthDate || '', errorMessage: 'Неверный формат даты', required: true }
+        { type: 'text', id: 'firstName', inputLabel: 'Имя', value: userData.firstName || '', errorMessage: 'Введите имя', maxlength: 120, required: true, onInput: validateProfileField },
+        { type: 'text', id: 'lastName', inputLabel: 'Фамилия', value: userData.lastName || '', errorMessage: 'Введите фамилию', maxlength: 120, required: true, onInput: validateProfileField },
+        { type: 'text', id: 'username', inputLabel: 'Никнейм', value: userData.username || '', errorMessage: 'Неверный формат никнейма', maxlength: 120, required: true, onInput: validateProfileField },
+        { type: 'date', id: 'birthday', inputLabel: 'Дата рождения', value: userData.birthDate || '', errorMessage: 'Неверный формат даты', required: true, onInput: validateProfileField }
     ];
 
     // Create avatar container
@@ -116,19 +118,9 @@ const createProfileSettings = () => {
 
     form.addEventListener('submit', handleProfileUpdate);
 
-    fields.forEach(field => {
-        const input = form.querySelector(`#${field.id}`);
-        if (input) {
-            input.addEventListener('input', debouncedProfileValidation);
-        }
-    });
-
     container.appendChild(form);
     return container;
 };
-
-import { debouncedPasswordValidation } from '../handlers/passwordValidation';
-import { handlePasswordUpdate } from '../handlers/passwordHandler';
 
 const createSecuritySettings = (): HTMLElement => {
     const container = document.createElement('div');
@@ -143,22 +135,15 @@ const createSecuritySettings = (): HTMLElement => {
     form.classList.add('settings-form');
 
     const fields = [
-        { type: 'password', id: 'currentPassword', inputLabel: 'Текущий пароль', errorMessage: 'Введите текущий пароль', maxlength: 120 },
-        { type: 'password', id: 'newPassword', inputLabel: 'Новый пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов', maxlength: 120 },
-        { type: 'password', id: 'confirmPassword', inputLabel: 'Подтвердите новый пароль', errorMessage: 'Пароли не совпадают', maxlength: 120 }
+        { type: 'password', id: 'currentPassword', inputLabel: 'Текущий пароль', errorMessage: 'Введите текущий пароль', maxlength: 120, onInput: debouncedPasswordValidation },
+        { type: 'password', id: 'newPassword', inputLabel: 'Новый пароль', errorMessage: 'Пароль должен быть длиной не менее 8 символов', maxlength: 120, onInput: debouncedPasswordValidation },
+        { type: 'password', id: 'confirmPassword', inputLabel: 'Подтвердите новый пароль', errorMessage: 'Пароли не совпадают', maxlength: 120, onInput: debouncedPasswordValidation }
     ];
 
     fields.forEach(field => {
         const inputComponent = InputTransparent(field);
         if (inputComponent) {
             form.appendChild(inputComponent);
-            
-            if (field.id === 'newPassword' || field.id === 'confirmPassword') {
-                const input = inputComponent.querySelector('input');
-                if (input) {
-                    input.addEventListener('input', debouncedPasswordValidation);
-                }
-            }
         }
     });
 

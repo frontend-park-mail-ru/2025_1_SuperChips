@@ -1,4 +1,4 @@
-import { dateHandler, debouncedInputHandler, togglePasswordHandler } from 'shared/components/input';
+import { dateHandler, togglePasswordHandler } from 'shared/components/input';
 import inputTemplate from './inputTransparent.hbs';
 import './inputTransparent.scss';
 import { IInputConfig } from 'shared/types/InputConfig';
@@ -17,7 +17,10 @@ export const InputTransparent = (data: IInputConfig) => {
     const inputField = inputContainer.querySelector('input');
     if (!inputField) return;
 
-    inputField.addEventListener('input', debouncedInputHandler);
+    // Add validation event listener if provided
+    if (data.onInput) {
+        inputField.addEventListener('input', data.onInput);
+    }
 
     if (data.type === 'password') {
         const eye = inputContainer.querySelector('.inputTransparent__toggle-password');

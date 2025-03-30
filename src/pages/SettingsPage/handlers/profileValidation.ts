@@ -1,4 +1,4 @@
-import { validateUsername } from 'shared/validation';
+import { validateUsername, validateBirthday } from 'shared/validation';
 import { debounce } from 'shared/utils';
 
 export const validateProfileField = (event: Event): void => {
@@ -30,10 +30,9 @@ export const validateProfileField = (event: Event): void => {
         break;
     }
     case 'birthday': {
-        const date = new Date(value);
-        const today = new Date();
-        showError = date > today;
-        errorText = 'Некорректная дата рождения';
+        const validationResult = validateBirthday(value);
+        showError = !validationResult.isValid;
+        errorText = validationResult.error;
         break;
     }
     }
