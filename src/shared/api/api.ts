@@ -1,10 +1,8 @@
-import { API_BASE_URL } from '../config/constants';
-import { ErrorToast } from '../components/errorToast';
+import { API_BASE_URL } from 'shared/config/constants';
+import { ErrorToast } from 'shared/components/errorToast';
 
 type TMethods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
-const RequestSendError = 'Ошибка при отправке данных. Попробуйте еще раз';
-const RequestGetError = 'Ошибка при получении данных. Попробуйте еще раз';
 
 
 /**
@@ -52,6 +50,11 @@ class Api {
 
             return response;
         } catch {
+            const message = method === 'GET'
+                ? 'Ошибка при получении данных. Попробуйте еще раз'
+                : 'Ошибка при отправке данных. Попробуйте еще раз';
+
+            ErrorToast(message);
             return new Error('Could not fetch');
         }
     }
@@ -64,12 +67,7 @@ class Api {
     ): Promise<Response|Error> {
         const headers: HeadersInit = {};
 
-        const response = await this.request('GET', url, headers);
-        if (response instanceof Error) {
-            ErrorToast(RequestGetError);
-        }
-
-        return response;
+        return this.request('GET', url, headers);
     }
 
     /**
@@ -84,12 +82,7 @@ class Api {
             'Content-Type': 'application/json',
         };
 
-        const response = await this.request('POST', url, headers, body);
-        if (response instanceof Error) {
-            ErrorToast(RequestSendError);
-        }
-
-        return response;
+        return this.request('POST', url, headers, body);
     }
 
     /**
@@ -104,12 +97,7 @@ class Api {
             'Content-Type': 'multipart/form-data',
         };
 
-        const response = await this.request('PUT', url, headers, body);
-        if (response instanceof Error) {
-            ErrorToast(RequestSendError);
-        }
-
-        return response;
+        return this.request('PUT', url, headers, body);
     }
 
     /**
@@ -122,12 +110,7 @@ class Api {
             'X-CSRF-Token': this.#csrf.get(),
         };
 
-        const response = await this.request('DELETE', url, headers);
-        if (response instanceof Error) {
-            ErrorToast(RequestSendError);
-        }
-
-        return response;
+        return this.request('DELETE', url, headers);
     }
 }
 

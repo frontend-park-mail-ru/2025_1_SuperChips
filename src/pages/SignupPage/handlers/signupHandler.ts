@@ -34,6 +34,7 @@ export const signupHandler = async (event: SubmitEvent): Promise<void> => {
     }
     delete inputData.passwordConfirm;
 
+
     const response = await Auth.register(inputData);
 
     if (response instanceof Error)  {
