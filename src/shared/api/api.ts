@@ -141,7 +141,7 @@ class CSRF {
         this.#csrfToken = '';
     }
 
-    get(){
+    get() {
         return this.#csrfToken;
     }
 

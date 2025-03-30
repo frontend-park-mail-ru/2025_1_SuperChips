@@ -1,14 +1,12 @@
 import type { ISignupFormData } from 'pages/SignupPage';
-import { ErrorToast } from 'shared/components/errorToast';
 import { API } from 'shared/api/api';
 import { IUser } from '../model/types';
-import { Navbar } from '../../../widgets/navbar';
+import { Navbar } from 'widgets/navbar';
 
 type TLoginData = {
     email: string;
     password: string;
 };
-
 
 
 /**
@@ -31,9 +29,11 @@ class auth {
         { email, password }: TLoginData
     ): Promise<Response|Error> {
         const response = await this.API.post('/api/v1/auth/login', { email, password });
+
         if (response instanceof Response && response?.status !== 401) {
             await this.fetchUserData();
         }
+
         return response;
     }
 
@@ -43,10 +43,8 @@ class auth {
     async register(userData: ISignupFormData): Promise<Response|Error> {
         const response = await this.API.post('/api/v1/auth/registration', userData);
 
-        if (response instanceof Error) {
-            ErrorToast(ErrorMessageSend);
-        } else {
-            User.setUserData(userData);
+        if (response instanceof Response) {
+            await this.setUserData(userData);
         }
 
         return response;
@@ -58,10 +56,8 @@ class auth {
     async logout(): Promise<Response|Error> {
         const response = await this.API.post('/api/v1/auth/logout');
 
-        if (response instanceof Error) {
-            ErrorToast(ErrorMessageConnection);
-        } else {
-            User.clearUserData();
+        if (response instanceof Response) {
+            await this.clearUserData();
         }
 
         return response;
@@ -73,11 +69,7 @@ class auth {
     fetchUserData = async (): Promise<void> => {
         const response = await this.API.get('/api/v1/auth/user');
 
-        if (response instanceof Error) {
-            return;
-        }
-
-        if (response.ok) {
+        if (response instanceof Response && response.ok) {
             const body = await response.json();
             const data = body.data;
 
@@ -93,13 +85,27 @@ class auth {
         }
     };
 
-    updateProfile = async (profileData: {
-        firstName: string;
-        lastName: string;
-        username: string;
-        birthDate: string;
-        about: string;
-    }) => {
+    /**
+     * Очистка данных о пользователе
+     */
+    clearUserData = async () => {
+        this.userData = null;
+        await Navbar();
+    };
+
+    /**
+     * Метод для сохренения пользовательских данных при регистрации
+     */
+    setUserData = async (data: ISignupFormData) => {
+        this.userData = {
+            username: data.username,
+            email: data.email,
+            birthday: new Date(data.birthday),
+        };
+        await Navbar();
+    };
+
+    updateProfile = async (profileData: IUser)  => {
         return await API.put('/api/v1/user/profile', profileData);
     };
 
@@ -114,20 +120,6 @@ class auth {
         return await API.put('/api/v1/user/avatar', formData);
     };
 
-    clearUserData = async () => {
-        this.userData = null;
-
-        await Navbar();
-    };
-
-    setUserData = async (data: ISignupFormData) => {
-        this.userData = {
-            username: data.username,
-            email: data.email,
-            birthday: new Date(data.birthday),
-        };
-        await Navbar();
-    };
 }
 
 export const Auth = new auth();
