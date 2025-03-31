@@ -1,6 +1,6 @@
 import { fillFeed } from '../lib/fillFeed';
 import { debouncedScroll } from '../handlers/handleScroll';
-import { Masonry } from '../model/Masonry';
+import { Masonry } from 'shared/models/Masonry';
 import feedTemplate from './FeedPage.hbs';
 import './feed.scss';
 
