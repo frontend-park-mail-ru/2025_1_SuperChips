@@ -72,7 +72,7 @@ class auth {
      * Получение данных о пользователе
      */
     fetchUserData = async (): Promise<void> => {
-        const response = await this.API.get('/api/v1/auth/user');
+        const response = await this.API.get('/api/v1/profile');
 
         if (response instanceof Response && response.ok) {
             const body = await response.json();
