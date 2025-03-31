@@ -50,7 +50,7 @@ export const Sidebar = async () => {
 
     const newPin = sidebar.querySelector('#newPin');
     newPin?.addEventListener('click', () => {
-        navigate('newPin').finally();
+        navigate('flow/new').finally();
     });
 
     const backButton = sidebar.querySelector('#go-back-button');

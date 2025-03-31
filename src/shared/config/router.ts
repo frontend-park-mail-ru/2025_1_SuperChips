@@ -4,10 +4,10 @@ import { SignupPage } from 'pages/SignupPage';
 import { NewPinPage } from '../../pages/NewPinPage';
 
 
-interface PageConfig {
-    href: string,
+export interface Route {
+    href: string | RegExp,
     title: string,
-    render: () => Promise<HTMLDivElement>,
+    render: (params: string[] | null) => Promise<HTMLDivElement>,
     nonAuthOnly?: boolean,
     authOnly?: boolean,
     hasNavbar?: boolean,
@@ -16,7 +16,7 @@ interface PageConfig {
 }
 
 interface MenuConfig {
-    [key: string]: PageConfig
+    [key: string]: Route
 }
 
 interface RouterConfig {
@@ -46,7 +46,7 @@ export const config: RouterConfig = {
             hasSidebar: true,
         },
         newPin: {
-            href: '/newPin',
+            href: '/flow/new',
             title: 'Новый flow',
             render: NewPinPage,
             authOnly: true,
