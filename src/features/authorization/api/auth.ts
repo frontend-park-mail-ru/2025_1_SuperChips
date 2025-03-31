@@ -72,7 +72,7 @@ class auth {
      * Получение данных о пользователе
      */
     fetchUserData = async (): Promise<void> => {
-        const response = await this.API.get('/api/v1/auth/user');
+        const response = await this.API.get('/api/v1/profile');
 
         if (response instanceof Response && response.ok) {
             const body = await response.json();
@@ -83,6 +83,7 @@ class auth {
                 birthday: new Date(data.birthday),
                 shortUsername: data.username[0].toUpperCase(),
                 authorized: true,
+                publicName: data.publicName || data.username,
             };
 
 
@@ -105,6 +106,7 @@ class auth {
         this.userData = {
             ...this.userData,
             username: data.username,
+            publicName: data.publicName || data.username,
             email: data.email,
             birthday: new Date(data.birthday),
         };

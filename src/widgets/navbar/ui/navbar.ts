@@ -1,6 +1,6 @@
 import navbarTemplate from './navbar.hbs';
 import './navbar.scss';
-import { navigate } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 import { scrollToTop } from '../handlers/scrollToTop';
 import { Auth } from 'features/authorization';
 
@@ -26,16 +26,17 @@ export const Navbar = async () => {
     navbar.innerHTML = navbarTemplate(config);
 
     const redirectButton = navbar.querySelector('#goToLogin');
-    if (redirectButton) {
-        redirectButton.addEventListener('click', async () => {
-            navigate('login').finally();
-        });
-    }
+    redirectButton?.addEventListener('click', async () => {
+        navigate('login').finally();
+    });
 
     const anchorButton = navbar.querySelector('#scroll-to-top');
-    if (anchorButton) {
-        anchorButton.addEventListener('click', scrollToTop);
-    }
+    anchorButton?.addEventListener('click', scrollToTop);
+
+    const profilePicture = navbar.querySelector<HTMLDivElement>('.navbar__profile-picture');
+    profilePicture?.addEventListener('click', () => {
+        navigate('profile').finally();
+    });
 
     return navbar;
 };

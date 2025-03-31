@@ -1,13 +1,14 @@
 @use 'shared/styles/variables' as *;
 
-.feedSkeleton {
-    width: 100%;
-    min-width: 205px;
+.pin {
+    width: 205px;
     border-radius: $border-radius;
     background-color: $button-dark;
     margin-bottom: 20px;
-    break-inside: avoid;
     display: inline-block;
+    overflow: hidden;
+
+    transition: all 0.3s ease;
 
     img {
         width: 100%;

@@ -1,0 +1,37 @@
+<div class="profile-page">
+    <div class="profile">
+        <div class="author-area">
+            <div class="author-area__box-1">
+                <div class="header">
+                    {{header}}
+                </div>
+                <div class="box-1__menu">
+                    <div id="tabBar" class="tab-bar-placeholder"></div>
+                    <div class="create-board hidden">
+                        <img src="/public/icons/new-pin.svg" alt="create new board">
+                        <div class="label">
+                            создать доску
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{#unless own}}
+            <div class="author-area__box-2">
+                <div class="author-area__box-2">
+                    <div class="author__profile-picture">
+                        {{#if author_pfp}}
+                            <img src="{{author_pfp}}" alt="profile picture" class="author__profile-picture">
+                        {{else}}
+                            <p class="bold header">{{shortUsername}}</p>
+                        {{/if}}
+                    </div>
+                    <div class="author__name">
+                        <p class="bold label">@{{username}}</p>
+                    </div>
+                </div>
+            </div>
+            {{/unless}}
+        </div>
+        <div id="content" class="profile__feed"></div>
+    </div>
+</div>

@@ -1,12 +1,13 @@
 import { FeedPage } from 'pages/FeedPage';
 import { LoginPage } from 'pages/LoginPage';
 import { SignupPage } from 'pages/SignupPage';
+import { ProfilePage } from '../../pages/ProfilePage';
 
 
 interface PageConfig {
-    href: string,
+    href: string | RegExp,
     title: string,
-    render: () => Promise<HTMLDivElement>,
+    render: (params: string) => Promise<HTMLDivElement>,
     nonAuthOnly?: boolean,
     authOnly?: boolean,
     hasNavbar?: boolean,
@@ -43,5 +44,14 @@ export const config: RouterConfig = {
             render: SignupPage,
             nonAuthOnly: true,
         },
-    },
+        profile: {
+            href: /$[a-zA-Z0-9_]+^/,
+            title: 'Профиль',
+            render: (username: string) => {
+                return ProfilePage(username);
+            },
+            hasNavbar: true,
+            hasSidebar: true,
+        }
+    }
 };

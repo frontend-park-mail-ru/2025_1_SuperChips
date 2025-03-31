@@ -1,5 +1,10 @@
 @use 'shared/styles/variables' as *;
 
+.auth-header {
+    color: $black;
+    font-size: 36px;
+}
+
 .error-message {
     justify-self: right;
     height: $spacing-md;
@@ -61,4 +66,4 @@
 
 input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
-} 
+}

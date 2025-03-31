@@ -1,0 +1,10 @@
+@use 'shared/styles/mixins' as *;
+@use 'shared/styles/variables' as *;
+
+.board-list {
+    @include flex-center;
+
+    width: 100px;
+    height: 100px;
+    background-color: #00f;
+}

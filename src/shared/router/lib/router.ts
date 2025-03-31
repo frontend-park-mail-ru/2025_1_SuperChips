@@ -1,6 +1,7 @@
 import { root } from 'app/app';
 import { config } from 'shared/config/router';
 import { debouncedScroll } from 'pages/FeedPage';
+import { IFeed } from 'pages/FeedPage';
 import { Auth } from 'features/authorization';
 
 interface AppState {
@@ -23,18 +24,23 @@ export const navigate = async (
     replace = false
 ): Promise<void> => {
     if (root === null) { return; }
-    root.innerHTML = '';
 
     if ((!(page in config.menu)) || (config.menu[page]?.nonAuthOnly && !!Auth.userData)) {
         page = 'feed';
     }
 
     if (appState.activePage === 'feed' && page !== 'feed') {
+        const feed = document.querySelector<IFeed>('.feed');
+        if (feed?.masonry) {
+            feed.masonry.destroy();
+            feed.masonry = null;
+        }
         window.removeEventListener('scroll', debouncedScroll);
     }
 
     appState.activePage = page;
 
+    root.innerHTML = '';
     const element = await config.menu[page].render();
     root.appendChild(element);
 
