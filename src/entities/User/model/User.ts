@@ -44,36 +44,32 @@ class user {
     };
 
     updateProfile = async (profileData: {
-        firstName: string;
-        lastName: string;
-        username: string;
-        birthDate: string;
-        about: string;
-    }): Promise<Response|Error> => {
+        firstName?: string;
+        lastName?: string;
+        username?: string;
+        birthDate?: string;
+        about?: string;
+        currentPassword?: string;
+        newPassword?: string;
+    } | FormData): Promise<Response|Error> => {
         try {
-            return await API.put('/api/v1/user/profile', profileData);
+            return await API.patch('/api/v1/profile', profileData);
         } catch (error) {
             return new Error(`Profile update failed: ${error}`);
         }
     };
-
+    
+    // Keeping these methods for backward compatibility
+    // but implementing them using the new unified endpoint
     updatePassword = async (passwords: {
         currentPassword: string;
         newPassword: string;
     }): Promise<Response|Error> => {
-        try {
-            return await API.put('/api/v1/user/password', passwords);
-        } catch (error) {
-            return new Error(`Password update failed: ${error}`);
-        }
+        return this.updateProfile(passwords);
     };
 
     updateAvatar = async (formData: FormData): Promise<Response|Error> => {
-        try {
-            return await API.put('/api/v1/user/avatar', formData);
-        } catch (error) {
-            return new Error(`Avatar update failed: ${error}`);
-        }
+        return this.updateProfile(formData);
     };
 
     clearUserData = () => {
