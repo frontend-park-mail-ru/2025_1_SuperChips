@@ -11,25 +11,19 @@
     gap: 0;
 }
 
+.feed-container {
+    grid-area: page;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 .feed {
     grid-row-start: 2;
     grid-column-start: 2;
     min-height: calc(100vh - $navbar-height);
-    width: calc(100%);
+    width: 100%;
     padding-right: $feed-padding;
-
-    &-chunk {
-        column-gap: $card-gap;
-        columns: $card-min-width auto;
-        width: 100%;
-        column-fill: balance;
-
-        & > * {
-            margin-bottom: $card-gap;
-            break-inside: avoid;
-            width: 100%;
-        }
-    }
 }
 
 .skeleton {

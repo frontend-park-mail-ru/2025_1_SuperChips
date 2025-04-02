@@ -2,6 +2,7 @@ import { root } from 'app/app';
 import { config } from 'shared/config/router';
 import type { Route } from 'shared/config/router';
 import { debouncedScroll } from 'pages/FeedPage';
+import { IFeed } from 'pages/FeedPage';
 import { Auth } from 'features/authorization';
 
 interface AppState {
@@ -39,6 +40,7 @@ export const navigate = async (
 
     if (!match) {
         match = 'feed';
+
     }
 
 
