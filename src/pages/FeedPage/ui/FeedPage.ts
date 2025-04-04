@@ -22,6 +22,9 @@ export const FeedPage = async () => {
     const page = document.createElement('div');
     page.insertAdjacentHTML('beforeend', feedTemplate({}));
 
+    const scrollButton = page.querySelector('.scroll-to-top');
+    scrollButton?.addEventListener('click', toTop);
+
     window.addEventListener('scroll', debouncedScroll);
 
     const delayedFill = new MutationObserver(async () => {
@@ -46,4 +49,11 @@ export const FeedPage = async () => {
     }
 
     return page;
+};
+
+const toTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 };

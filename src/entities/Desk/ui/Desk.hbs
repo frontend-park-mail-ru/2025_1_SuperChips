@@ -1,0 +1,22 @@
+<div class="desk-container">
+    <div class="desk-container__preview">
+        {{#each preview}}
+            <div class="img-{{@index}}">
+                <img
+                        src="{{this}}"
+                        alt="preview image"
+                        class="img-{{@index}}"
+                        onerror="this.style.display='none';"
+                >
+            </div>
+        {{/each}}
+        {{#if own}}
+            <img class="hidden preview__icon-delete" src="/public/icons/delete.svg" alt="delete desk">
+            <img class="hidden preview__icon-edit" src="/public/icons/edit.svg" alt="edit desk">
+        {{/if}}
+    </div>
+    <div class="desk-container__name">
+        <p class="desk-name bold label white ">{{name}}</p>
+        <p class="input-text white">{{count}}</p>
+    </div>
+</div>
