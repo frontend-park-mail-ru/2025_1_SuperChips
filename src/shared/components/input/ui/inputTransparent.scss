@@ -1,0 +1,71 @@
+@use 'shared/styles/variables' as *;
+
+.inputTransparent, .inputTransparent__field, .inputTransparent--invalid {
+    height: $input-height;
+    border-radius: $border-radius;
+    background-color: $transparent;
+    border: $stroke-color;
+    color: $text-light;
+    width: 100%;
+    border: 1px solid rgba(70, 70, 70, 0.5);
+    font-size: $font-size-sm;
+    transition: all 0.2s ease;
+    resize: vertical;
+}
+
+.inputTransparent {
+    width: 100%;
+    margin-top: $spacing-xs;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &__field {
+        width: 100%;
+        padding: $spacing-sm $spacing-lg;
+        background-color: transparent;
+
+        &:focus {
+            border-color: rgba($white, 0.8);
+            background-color: $semi-transparent;
+            color: $white;
+            outline: none;
+        }
+
+        &.error {
+            border: 2px solid $error-color;
+        }
+    }
+
+    &__error {
+        position: absolute;
+        right: $spacing-sm;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    &__toggle-password {
+        position: absolute;
+        right: $spacing-sm;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        width: $icon-size;
+        height: $icon-size;
+        filter: brightness(0) invert(1);
+    }
+
+    &--invalid {
+        width: 100%;
+        border: 2px solid $error-color;
+        appearance: none;
+    }
+}
+
+.required {
+    color: $error-color;
+}
+
+.hidden {
+    visibility: hidden;
+}

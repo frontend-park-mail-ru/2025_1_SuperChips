@@ -1,2 +1,3 @@
-// В проде нужно заменить на API_BASE_URL = '', потому что запросы будут проксироваться nginx'ом
 export const API_BASE_URL = '';
+export const MAX_IMAGE_SIZE = 3 * 1024 * 1024; // 3 МБ
+export const VALID_IMAGE_EXTENSIONS = ['jpg', 'png', 'jpeg', 'gif'];

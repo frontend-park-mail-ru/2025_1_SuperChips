@@ -61,4 +61,9 @@
 
 input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
-} 
+}
+
+.auth-page-header {
+    color: $text-dark;
+    font-size: $font-size-xxl;
+}
