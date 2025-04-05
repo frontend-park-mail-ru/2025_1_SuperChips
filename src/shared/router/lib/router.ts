@@ -1,6 +1,8 @@
 import { root } from 'app/app';
 import { config } from 'shared/config/router';
+import type { Route } from 'shared/config/router';
 import { debouncedScroll } from 'pages/FeedPage';
+import { IFeed } from 'pages/FeedPage';
 import { Auth } from 'features/authorization';
 
 interface AppState {
@@ -23,36 +25,70 @@ export const navigate = async (
     replace = false
 ): Promise<void> => {
     if (root === null) { return; }
-    root.innerHTML = '';
 
-    if ((!(page in config.menu)) || (config.menu[page]?.nonAuthOnly && !!Auth.userData)) {
-        page = 'feed';
+    let match = null;
+
+    for (const [key, route] of Object.entries(config.menu)) {
+        if (typeof route.href === 'string' && route.href.slice(1) === page) {
+            match = key;
+            break;
+        } else if (route.href instanceof RegExp && route.href.test(page)) {
+            match = key;
+            break;
+        }
     }
 
-    if (appState.activePage === 'feed' && page !== 'feed') {
+    if (!match) {
+        match = 'feed';
+
+    }
+
+
+    let route = config.menu[match];
+
+    if (
+        route.nonAuthOnly && !!Auth.userData ||
+        route.authOnly && !Auth.userData
+    ) {
+        match = 'feed';
+        route = config.menu[match];
+    }
+
+    updateBars(route);
+    if (match === appState.activePage) { return; }
+
+    if (appState.activePage === 'feed' && match !== 'feed') {
         window.removeEventListener('scroll', debouncedScroll);
     }
 
-    appState.activePage = page;
+    appState.activePage = match;
 
-    const element = await config.menu[page].render();
-    root.appendChild(element);
+    root.innerHTML = '';
 
+    const newPage = await route.render(null);
+    root.appendChild(newPage);
+
+    window.scrollTo({ top: 0 });
+    document.title = route.title;
+
+    if (replace) {
+        history.replaceState({ page: page }, '', route.href.toString());
+    } else {
+        history.pushState({ page: page }, '', route.href.toString());
+    }
+};
+
+
+const updateBars = (route: Route) => {
     const navbar = document.querySelector('.navbar');
-    const showNavbar = config.menu[page].hasNavbar;
+    const showNavbar = route.hasNavbar;
     navbar?.classList.toggle('display-none', !showNavbar);
 
     const sidebar = document.querySelector<HTMLDivElement>('.sidebar');
-    const showSidebar = config.menu[page].hasSidebar && !!Auth.userData;
+    const showSidebar = route.hasSidebar && !!Auth.userData;
     sidebar?.classList.toggle('display-none', !showSidebar);
 
-
-    window.scrollTo({ top: 0 });
-    document.title = config.menu[page].title;
-
-    if (replace) {
-        history.replaceState({ page: page }, '', config.menu[page].href);
-    } else {
-        history.pushState({ page: page }, '', config.menu[page].href);
-    }
+    const backButton = document.getElementById('go-back-button');
+    const showBackButton = route.hasBackButton;
+    backButton?.classList.toggle('hidden', !showBackButton);
 };

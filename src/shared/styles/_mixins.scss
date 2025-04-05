@@ -1,3 +1,5 @@
+@use 'shared/styles/variables' as *;
+
 @mixin flex-center {
     display: flex;
     align-items: center;
@@ -33,4 +35,20 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-} 
+}
+
+@mixin main-page {
+    background: $gradient-dark;
+    display: grid;
+    grid-template-columns: $sidebar-width auto;
+    grid-template-rows: 100px auto;
+    grid-template-areas:
+    "header header"
+    "sidebar page";
+    gap: 0;
+}
+
+@mixin transparent-active {
+    background-color: #fff;
+    opacity: 0.1;
+}

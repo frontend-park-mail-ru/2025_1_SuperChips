@@ -4,12 +4,13 @@
     background: $gradient-dark;
     position: fixed;
     left: 0;
-    top: 0;
-    height: 100%;
+    top: $navbar-height;
+    height: calc(100% - $navbar-height);
     width: $sidebar-width;
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .sidebar__button-container {
@@ -58,6 +59,11 @@
             filter: brightness(0%);
         }
     }
+}
+
+.sidebar-button__icon {
+    cursor: pointer;
+    opacity: 0.8;
 }
 
 .display-none {

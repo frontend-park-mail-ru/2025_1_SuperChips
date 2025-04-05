@@ -29,14 +29,9 @@ export const fillFeed = async () => {
 
     if (!images?.data) return;
 
-    const newFrame = document.createElement('div');
-    newFrame.classList.add('feed-chunk');
-
     images.data.forEach((item) => {
-        newFrame.appendChild(Pin(item.image));
+        feed.appendChild(Pin(item.image));
     });
-
-    feed.appendChild(newFrame);
 
     feedState.isLoading = false;
     feedState.pageNum++;

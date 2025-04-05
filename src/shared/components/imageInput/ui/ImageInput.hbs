@@ -1,12 +1,14 @@
 <div class="image-input" id="image-input-container">
     <img src="" alt="" id="preview" class="preview-image">
     <input class="image-input__field" id="image-input" type="file" accept="/*,.png,.jpg,.jpeg,.gif">
-    <img src="/public/icons/cross.svg" id="clear-button" class="image-input__clear-button display-none">
+    <img src="/public/icons/cross.svg" id="clear-button" class="image-input__clear-button display-none" alt="">
     <button class="image-input__button" id="image-input-button">
         <img src="/public/icons/upload.svg" alt="upload image" id="upload-image" class="upload-icon">
         <p>
-            Загрузите изображение <br>
-            в формате .png, .jpg, .jpeg, .gif не более 3 Мб
+            Выберите файл или перетащите его сюда
         </p>
     </button>
+    <p class="image-input__hint">
+        Поддерживаются файлы в формате <br> .png, .jpg, .jpeg, .gif не более 3 Мб
+    </p>
 </div>

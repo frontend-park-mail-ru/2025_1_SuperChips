@@ -1,0 +1,22 @@
+<div class="board-container">
+    <div class="board-container__preview">
+        {{#each preview}}
+            <div class="img-{{@index}}">
+                <img
+                        src="{{this}}"
+                        alt="preview image"
+                        class="img-{{@index}}"
+                        onerror="this.style.display='none';"
+                >
+            </div>
+        {{/each}}
+        {{#if own}}
+            <img class="hidden preview__icon-delete" src="/public/icons/delete.svg" alt="delete board">
+            <img class="hidden preview__icon-edit" src="/public/icons/edit.svg" alt="edit board">
+        {{/if}}
+    </div>
+    <div class="board-container__name">
+        <p class="board-name bold label white ">{{name}}</p>
+        <p class="input-text white">{{count}}</p>
+    </div>
+</div>

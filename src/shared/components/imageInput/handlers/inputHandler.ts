@@ -7,6 +7,10 @@ export const inputHandler = () => {
     const selectButton = document.querySelector<HTMLButtonElement>('#image-input-button');
     const clearButton = document.querySelector<HTMLImageElement>('#clear-button');
 
+    const hint = document.querySelector<HTMLInputElement>('.image-input__hint');
+
+
+
     if (!input?.files || input.files.length === 0) return;
 
     const file = input.files[0];
@@ -18,13 +22,18 @@ export const inputHandler = () => {
         selectButton?.classList.add('display-none');
     }
 
-    if (clearButton) {
-        clearButton.classList.remove('display-none');
-    }
+
+
+    clearButton?.classList.remove('display-none');
+    hint?.classList.add('display-none');
 
     const valid = validateImage(file);
     
     if (!valid.isValid) {
         ErrorToast(valid.error);
+
+        input.value = '';
+        selectButton?.classList.remove('display-none');
+        clearButton?.classList.add('display-none');
     }
 };

@@ -4,6 +4,9 @@ export const clearButtonHandler = () => {
     const selectButton = document.querySelector<HTMLButtonElement>('#image-input-button');
     const clearButton = document.querySelector<HTMLImageElement>('#clear-button');
 
+    const hint = document.querySelector<HTMLInputElement>('.image-input__hint');
+
+
     if (input) {
         input.files = null;
     }
@@ -13,6 +16,9 @@ export const clearButtonHandler = () => {
 
     clearButton?.classList.add('display-none');
     selectButton?.classList.remove('display-none');
+
+    hint?.classList.remove('display-none');
+
 
     if (input) {
         input.value = '';

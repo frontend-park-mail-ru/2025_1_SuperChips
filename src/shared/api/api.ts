@@ -79,7 +79,6 @@ class Api {
     ): Promise<Response|Error> {
         const headers: HeadersInit = {
             'X-CSRF-Token': this.#csrf.get(),
-            'Content-Type': 'application/json',
         };
 
         return this.request('POST', url, headers, body);
