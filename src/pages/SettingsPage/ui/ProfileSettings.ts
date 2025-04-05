@@ -1,22 +1,62 @@
-import { User } from 'entities/User';
-import { InputTransparent } from 'shared/components/inputTransparent';
 import { showToast } from '../components/toast/toast';
 import { handleProfileUpdate } from '../handlers/profileUpdate';
 import { validateProfileField } from '../handlers/profileValidation';
+import { Auth } from 'features/authorization';
 import profileTemplate from './ProfileSettings.hbs';
-
-let userData = User.getUserData();
+import { Input } from 'shared/components/input';
 
 export const createProfileSettings = () => {
     const container = document.createElement('div');
+    let userData = Auth.userData;
+    if (!userData) return container;
+
 
     const fields = [
-        { type: 'text', id: 'firstName', inputLabel: 'Имя', value: userData.firstName || '', errorMessage: 'Введите имя', maxlength: 120, required: true, onInput: validateProfileField },
-        { type: 'text', id: 'lastName', inputLabel: 'Фамилия', value: userData.lastName || '', errorMessage: 'Введите фамилию', maxlength: 120, required: true, onInput: validateProfileField },
-        { type: 'text', id: 'username', inputLabel: 'Никнейм', value: userData.username || '', errorMessage: 'Неверный формат никнейма', maxlength: 120, required: true, onInput: validateProfileField },
-        { type: 'date', id: 'birthday', inputLabel: 'Дата рождения', value: userData.birthDate || '', errorMessage: 'Неверный формат даты', required: true, onInput: validateProfileField }
+        {
+            type: 'text',
+            id: 'firstName',
+            inputLabel: 'Имя',
+            value: userData.firstName || '',
+            errorMessage: 'Введите имя',
+            maxlength: 120,
+            onInput: validateProfileField,
+            transparent: true,
+
+        },
+        {
+            type: 'text',
+            id: 'lastName',
+            inputLabel: 'Фамилия',
+            value: userData.lastName || '',
+            errorMessage: 'Введите фамилию',
+            maxlength: 120,
+            onInput: validateProfileField,
+            transparent: true,
+
+        },
+        {
+            type: 'text',
+            id: 'username',
+            inputLabel: 'Никнейм',
+            value: userData.username || '',
+            errorMessage: 'Неверный формат никнейма',
+            maxlength: 120,
+            onInput: validateProfileField,
+            transparent: true,
+
+        },
+        {
+            type: 'date',
+            id: 'birthday',
+            inputLabel: 'Дата рождения',
+            value: userData.birthDate || '',
+            errorMessage: 'Неверный формат даты',
+            onInput: validateProfileField,
+            transparent: true,
+        }
     ];
-    
+
+
     const templateData = {
         avatar: userData.avatar,
         username: userData.username,
@@ -24,11 +64,11 @@ export const createProfileSettings = () => {
         about: userData.about || '',
         fields: fields
     };
-    
+
     container.innerHTML = profileTemplate(templateData);
-    
-    const form = container.querySelector('.settings-form');
-    const fileInput = container.querySelector('#avatar');
+
+    const form = container.querySelector<HTMLFormElement>('.settings-form');
+    const fileInput = container.querySelector<HTMLInputElement>('#avatar');
     
     if (fileInput) {
         fileInput.addEventListener('change', async (e) => {
@@ -37,10 +77,10 @@ export const createProfileSettings = () => {
                 const formData = new FormData();
                 formData.append('avatar', target.files[0]);
                 try {
-                    const response = await User.updateAvatar(formData);
+                    const response = await Auth.updateAvatar(formData);
                     if (response instanceof Response && response.ok) {
-                        await User.fetchUserData();
-                        userData = User.getUserData();
+                        await Auth.fetchUserData();
+                        userData = Auth.userData;
                         showToast('Фото профиля обновлено', 'success');
                         window.location.reload();
                     } else if (response instanceof Response) {
@@ -66,16 +106,14 @@ export const createProfileSettings = () => {
     
     if (form) {
         fields.forEach(field => {
-            const inputComponent = InputTransparent(field);
+            const inputComponent = Input(field);
             if (inputComponent) {
                 form.insertBefore(inputComponent, form.querySelector('.form-field'));
             }
         });
     }
 
-    if (form) {
-        form.addEventListener('submit', handleProfileUpdate);
-    }
+    form?.addEventListener('submit', handleProfileUpdate);
 
     return container;
 };

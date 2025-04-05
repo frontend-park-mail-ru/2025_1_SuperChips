@@ -3,6 +3,7 @@ import { LoginPage } from 'pages/LoginPage';
 import { SignupPage } from 'pages/SignupPage';
 
 import { NewPinPage } from 'pages/NewPinPage';
+import { SettingsPage } from 'pages/SettingsPage';
 
 
 export interface Route {
@@ -46,7 +47,7 @@ export const config: RouterConfig = {
             authOnly: true,
             hasNavbar: true,
             hasSidebar: true,
-        }
+        },
         feed: {
             href: '/feed',
             title: 'Лента',

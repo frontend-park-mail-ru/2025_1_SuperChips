@@ -1,19 +1,12 @@
-import { User } from 'entities/User';
-import { Navbar } from 'widgets/navbar';
-import { Sidebar } from 'widgets/sidebar';
-import { createVertTabBar } from 'pages/SettingsPage/components/vert-tab-bar/vert-tab-bar';
 import { createProfileSettings } from './ProfileSettings';
 import { createSecuritySettings } from './SecuritySettings';
 import './settings.scss';
-
+import { TabBar } from 'shared/components/tabBar';
 
 
 export const SettingsPage = async () => {
     const page = document.createElement('div');
     page.classList.add('settings-page');
-
-    page.appendChild(await Navbar());
-    page.appendChild(await Sidebar());
 
     const mainContent = document.createElement('div');
     mainContent.classList.add('settings-container');
@@ -23,7 +16,7 @@ export const SettingsPage = async () => {
         { id: 'security', title: 'Безопасность', active: false }
     ];
 
-    const tabBar = createVertTabBar(tabs, (tabId: string) => {
+    const tabBar = TabBar(tabs, 'vertical', (tabId: string) => {
         const contentContainer = mainContent.querySelector('.settings-content-container');
         if (contentContainer) {
             contentContainer.remove();
