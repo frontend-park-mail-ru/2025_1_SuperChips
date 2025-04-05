@@ -7,4 +7,5 @@ export interface IInputConfig {
     maxlength?: number;
     autocomplete?: string;
     isPassword?: boolean;
+    transparent?: boolean;
 }

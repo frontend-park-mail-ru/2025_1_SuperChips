@@ -56,3 +56,8 @@
     min-height: calc(100vh - $navbar-height);
     padding-right: $feed-padding;
 }
+
+@mixin transparent-active {
+    background-color: #fff;
+    opacity: 0.1;
+}

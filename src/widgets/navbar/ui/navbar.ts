@@ -1,7 +1,7 @@
 import navbarTemplate from './navbar.hbs';
 import './navbar.scss';
-import { appState, navigate } from 'shared/router';
-import { scrollToTop } from '../handlers/scrollToTop';
+import { navigate } from 'shared/router';
+import { goToFeed } from '../handlers/goToFeed';
 import { Auth } from 'features/authorization';
 
 
@@ -31,12 +31,7 @@ export const Navbar = async () => {
     });
 
     const anchorButton = navbar.querySelector('#scroll-to-top');
-    anchorButton?.addEventListener('click', scrollToTop);
-
-    const profilePicture = navbar.querySelector<HTMLDivElement>('.navbar__profile-picture');
-    profilePicture?.addEventListener('click', () => {
-        navigate('profile').finally();
-    });
+    anchorButton?.addEventListener('click', goToFeed);
 
     return navbar;
 };

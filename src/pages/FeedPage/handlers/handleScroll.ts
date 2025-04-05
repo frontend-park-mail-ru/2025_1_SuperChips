@@ -12,6 +12,13 @@ const scrollHandler = async () => {
     if (scrolledToBottom) {
         await fillFeed();
     }
+
+    const scrollButton = document.querySelector('.scroll-to-top');
+    if (window.scrollY > 1000) {
+        scrollButton?.classList.remove('hidden');
+    } else {
+        scrollButton?.classList.add('hidden');
+    }
 };
 
 export const debouncedScroll = debounce(scrollHandler, 75);

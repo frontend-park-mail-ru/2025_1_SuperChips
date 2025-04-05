@@ -79,7 +79,6 @@ class Api {
     ): Promise<Response|Error> {
         const headers: HeadersInit = {
             'X-CSRF-Token': this.#csrf.get(),
-            'Content-Type': 'application/json',
         };
 
         return this.request('POST', url, headers, body);
@@ -111,6 +110,20 @@ class Api {
         };
 
         return this.request('DELETE', url, headers);
+    }
+
+    /**
+     * PATCH запрос
+     */
+    async patch(
+        url: string,
+        body: object
+    ): Promise<Response|Error> {
+        const headers: HeadersInit = {
+            'X-CSRF-Token': this.#csrf.get(),
+        };
+
+        return this.request('PATCH', url, headers, body);
     }
 }
 
