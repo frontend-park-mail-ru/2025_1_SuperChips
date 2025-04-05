@@ -1,6 +1,6 @@
-import { DeskPopup } from '../components/popup/DeskPopup';
+import { BoardPopup } from '../components/popup/BoardPopup';
 
-export const deleteDesk = async (event: Event) => {
+export const deleteBoard = async (event: Event) => {
     const icon = event.target as HTMLImageElement;
     const name = icon.id.slice(7);
 
@@ -8,5 +8,5 @@ export const deleteDesk = async (event: Event) => {
     // Когда будет готова ручка для удаления досок, сюда добавится логика
 
 
-    DeskPopup('delete');
+    BoardPopup('delete');
 };

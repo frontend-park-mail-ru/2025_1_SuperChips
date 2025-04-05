@@ -1,11 +1,11 @@
-import './DeskPopup.scss';
-import template from './DeskPopup.hbs';
+import './BoardPopup.scss';
+import template from './BoardPopup.hbs';
 import { Input } from 'shared/components/input';
 import { root } from 'app/app';
 
-type TPopup = 'edit' | 'delete';
+type TPopupType = 'edit' | 'delete';
 
-export const DeskPopup = (type: TPopup) => {
+export const BoardPopup = (type: TPopupType) => {
     let header;
     let buttonText;
 
@@ -23,7 +23,7 @@ export const DeskPopup = (type: TPopup) => {
     const input = popup.querySelector<HTMLInputElement>('.input-placeholder');
     const newInput = Input({
         type: 'text',
-        id: 'desk-name',
+        id: 'board-name',
         inputLabel: 'Название доски',
         errorMessage: 'Такая доска уже существует',
         maxlength: 120,

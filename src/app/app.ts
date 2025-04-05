@@ -5,7 +5,7 @@ import './styles/fonts.scss';
 import './styles/common.scss';
 import { Auth } from 'features/authorization';
 
-export const root = document.getElementById('root');
+export const root = document.getElementById('root') as HTMLDivElement;
 
 export const App = async () => {
     await Auth.fetchUserData();

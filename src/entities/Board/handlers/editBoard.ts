@@ -1,6 +1,6 @@
-import { DeskPopup } from '../components/popup/DeskPopup';
+import { BoardPopup } from '../components/popup/BoardPopup';
 
-export const editDesk = async (event: Event) => {
+export const editBoard = async (event: Event) => {
     const icon = event.target as HTMLImageElement;
     const name = icon.id.slice(5);
 
@@ -8,5 +8,5 @@ export const editDesk = async (event: Event) => {
     // Когда будет готова ручка для изменения досок, сюда добавится логика
 
 
-    DeskPopup('edit');
+    BoardPopup('edit');
 };
