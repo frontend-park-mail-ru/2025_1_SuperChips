@@ -1,0 +1,43 @@
+@use 'shared/styles/variables' as *;
+
+.tab-bar {
+    display: flex;
+    gap: $spacing-lg;
+    width: 140px;
+    height: fit-content;
+    border-radius: $border-radius;
+    margin-right: $spacing-xl;
+}
+
+.vertical {
+    flex-direction: column;
+}
+
+.tab-bar__tab {
+    font-size: $font-size-lg;
+    color: $white;
+    cursor: pointer;
+    padding: $spacing-xs;
+    transition: all 0.3s ease;
+    position: relative;
+    border-radius: $border-radius;
+
+    &:hover {
+        color: $background-focus;
+    }
+
+    &_active {
+        color: $white;
+        font-weight: 600;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: $white;
+        }
+    }
+}

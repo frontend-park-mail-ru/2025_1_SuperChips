@@ -10,6 +10,13 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "./dist",
+    "declaration": true,
+    "declarationDir": "./types"
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*",
+    "src/**/*.d.ts",
+    "src/pages/SettingsPage/components/**/*.d.ts",
+    "src/pages/SettingsPage/handlers/**/*.d.ts"
+  ]
 }
