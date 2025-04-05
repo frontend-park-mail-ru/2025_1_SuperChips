@@ -10,10 +10,9 @@
     background-color: #fff;
     border-radius: $border-radius;
     z-index: 1100;
-    padding: $spacing-lg;
+    padding: 34px 60px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
 
     &__close {
@@ -32,6 +31,7 @@
         border: none;
         border-radius: $border-radius;
         color: white;
+        margin-top: 54px;
 
         &:hover {
             cursor: pointer;
@@ -57,4 +57,9 @@
     background-color: #000;
     z-index: 100;
     opacity: 0.3;
+}
+
+.popup__text {
+    align-self: flex-start;
+    margin-bottom: 12px;
 }

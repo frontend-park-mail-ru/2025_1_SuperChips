@@ -1,24 +1,25 @@
 import { root } from 'app/app';
-import { config } from 'shared/config/router';
 import type { Route } from 'shared/config/router';
+import { config } from 'shared/config/router';
 import { debouncedScroll } from 'pages/FeedPage';
-import { IFeed } from 'pages/FeedPage';
 import { Auth } from 'features/authorization';
 
 interface AppState {
+    lastPage: string | null,
     activePage: string | null,
     isShowingToast: boolean,
 }
 
 export const appState: AppState = {
+    lastPage: null,
     activePage: null,
     isShowingToast: false,
 };
 
 
 /**
- * Переходит на указанный URL (прим: '/feed', '/login')
- * Если replace = true, создает новую запись в истории
+ * Переходит на указанный URL (прим: 'feed', 'login')
+ * Если replace = true, не добавляет запись в историю
  */
 export const navigate = async (
     page: string,
@@ -40,7 +41,6 @@ export const navigate = async (
 
     if (!match) {
         match = 'feed';
-
     }
 
 
@@ -54,6 +54,20 @@ export const navigate = async (
         route = config.menu[match];
     }
 
+    let renderProps;
+    let newHref;
+
+    if (match === 'profile') {
+        renderProps = page;
+        newHref = `/${page}`;
+    } else if (match === 'flow') {
+        newHref = `/flow/${page}`;
+        renderProps = page.slice(5);
+    } else {
+        newHref = route.href.toString();
+        renderProps = '';
+    }
+
     updateBars(route);
     if (match === appState.activePage) { return; }
 
@@ -61,20 +75,21 @@ export const navigate = async (
         window.removeEventListener('scroll', debouncedScroll);
     }
 
-    appState.activePage = match;
+    appState.activePage = newHref;
 
+
+    const newPage = await route.render(renderProps);
     root.innerHTML = '';
-
-    const newPage = await route.render(null);
     root.appendChild(newPage);
 
     window.scrollTo({ top: 0 });
     document.title = route.title;
 
     if (replace) {
-        history.replaceState({ page: page }, '', route.href.toString());
+        history.replaceState({ page: page }, '', newHref);
     } else {
-        history.pushState({ page: page }, '', route.href.toString());
+        appState.lastPage = newHref;
+        history.pushState({ page: page }, '', newHref);
     }
 };
 
@@ -84,9 +99,9 @@ const updateBars = (route: Route) => {
     const showNavbar = route.hasNavbar;
     navbar?.classList.toggle('display-none', !showNavbar);
 
-    const sidebar = document.querySelector<HTMLDivElement>('.sidebar');
+    const sidebarButtons = document.querySelector<HTMLDivElement>('.sidebar__button-container');
     const showSidebar = route.hasSidebar && !!Auth.userData;
-    sidebar?.classList.toggle('display-none', !showSidebar);
+    sidebarButtons?.classList.toggle('display-none', !showSidebar);
 
     const backButton = document.getElementById('go-back-button');
     const showBackButton = route.hasBackButton;

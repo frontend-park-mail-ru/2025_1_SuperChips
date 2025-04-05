@@ -33,5 +33,13 @@ export const Navbar = async () => {
     const anchorButton = navbar.querySelector('#scroll-to-top');
     anchorButton?.addEventListener('click', goToFeed);
 
+    const pfp = navbar.querySelector('.navbar__profile-picture');
+    pfp?.addEventListener('click', goToProfile);
+
     return navbar;
+};
+
+const goToProfile = () => {
+    if (Auth.userData)
+        navigate(Auth.userData.username).finally();
 };

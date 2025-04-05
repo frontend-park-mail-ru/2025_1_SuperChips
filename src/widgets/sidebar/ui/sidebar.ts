@@ -1,5 +1,5 @@
 import { logoutHandler } from '../handlers/logout';
-import { navigate } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 import sidebarTemplate from './sidebar.hbs';
 import './sidebar.scss';
 
@@ -55,7 +55,11 @@ export const Sidebar = async () => {
 
     const backButton = sidebar.querySelector('#go-back-button');
     backButton?.addEventListener('click', () => {
-        history.back();
+        if (appState.lastPage) {
+            history.back();
+        } else {
+            navigate('feed');
+        }
     });
 
     return sidebar;

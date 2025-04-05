@@ -1,4 +1,4 @@
-import { BoardPopup } from '../components/popup/BoardPopup';
+import { BoardPopup } from 'widgets/BoardPopup';
 
 export const deleteBoard = async (event: Event) => {
     const icon = event.target as HTMLImageElement;
@@ -8,5 +8,5 @@ export const deleteBoard = async (event: Event) => {
     // Когда будет готова ручка для удаления досок, сюда добавится логика
 
 
-    BoardPopup('delete');
+    BoardPopup('delete', name);
 };

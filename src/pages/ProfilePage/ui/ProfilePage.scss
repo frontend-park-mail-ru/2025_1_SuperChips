@@ -1,11 +1,6 @@
 @use 'shared/styles/variables' as *;
 @use 'shared/styles/mixins' as *;
 
-.header {
-    color: $text-light;
-    font-weight: bold;
-}
-
 
 .profile {
     grid-area: page;
@@ -18,9 +13,9 @@
     &__feed {
         grid-area: page;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
+        flex-wrap: wrap;
         width: 100%;
-        padding-right: $feed-padding;
         margin-top: $spacing-xl;
     }
 }
@@ -58,8 +53,12 @@
 
     &:hover {
         cursor: pointer;
-        filter: brightness(0) invert(1); /* Превращаем белый контур в черный */
+        opacity: 0.8;
+    }
 
+    img:hover {
+        filter: invert(1);
+        fill: white;
     }
 }
 

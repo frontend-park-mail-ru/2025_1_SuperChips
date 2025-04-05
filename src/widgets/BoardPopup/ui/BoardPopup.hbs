@@ -1,6 +1,7 @@
 <div class="black-background"></div>
 <div class="popup">
-    <div class="header bold">{{header}}</div>
+    <div class="header bold popup__text">{{header}}</div>
+    <div class="subheader popup__text {{#unless create}}hidden{{/unless}}">Упорядочим flow!</div>
     <div class="input-placeholder"></div>
     <img class="popup__close" src="/public/icons/cross-grey.svg" alt="close popup">
     <button class="popup__button-{{type}}">

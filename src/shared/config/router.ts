@@ -8,7 +8,7 @@ import { ProfilePage } from 'pages/ProfilePage';
 export interface Route {
     href: string | RegExp,
     title: string,
-    render: (params: string[] | null) => Promise<HTMLDivElement>,
+    render: (params: string) => Promise<HTMLDivElement>,
     nonAuthOnly?: boolean,
     authOnly?: boolean,
     hasNavbar?: boolean,
@@ -56,7 +56,7 @@ export const config: RouterConfig = {
             hasBackButton: true
         },
         profile: {
-            href: /$[a-zA-Z0-9_]+^/,
+            href: /^[a-zA-Z0-9_]+$/,
             title: 'Профиль',
             render: (username: string) => {
                 return ProfilePage(username);

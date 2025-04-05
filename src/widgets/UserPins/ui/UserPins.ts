@@ -1,39 +1,52 @@
+import type { IFeed } from 'pages/FeedPage';
+import { Masonry } from 'shared/models/Masonry';
 import { navigate } from 'shared/router';
-import { API } from 'shared/api/api';
+import { loadUserPictures } from 'features/imageLoader';
+import { Pin } from 'entities/Pin';
+import { Auth } from 'features/authorization';
 import emptyPageTemplate from './emptyPage.hbs';
 import './UserPins.scss';
 
-export const UserPins = async (username: string): Promise<HTMLDivElement> => {
-    const page = document.createElement('div');
-    // const config = {
-    //     author: Auth.userData.publicName,
-    //     username: Auth.userData.username,
-    //     author_pfp: Auth.userData.avatar,
-    // };
 
-    // if (!params) {
-    //     params = {
-    //         author: Auth.userData.publicName,
-    //         username: Auth.userData.username,
-    //         author_pfp: Auth.userData.avatar,
-    //     };
-    // }
+const userPinsState = {
+    isLoading: false,
+    page: 1,
+};
 
-    const response = await API.get(`api/v1/profile/${username}`);
-    if (response instanceof Error) return page;
-    const images = await response.json();
-    if (!images) {
-        page.innerHTML = emptyPageTemplate({});
 
-        const btn = page.querySelector('.go-to-feed');
+export const UserPins = async (username: string) => {
+    const feed = document.querySelector<IFeed>('.profile__feed');
+    if (!feed) return;
+
+    const pictures = await loadUserPictures(username);
+
+    if (pictures?.status === 404) {
+        feed.masonry?.destroy();
+        feed.innerHTML = emptyPageTemplate({ own: Auth.userData ? Auth.userData.username === username : false });
+
+        const btn = feed.querySelector('.go-to-feed');
         btn?.addEventListener('click', () => {
             navigate('feed').finally();
         });
-    } else {
-        const feed = document.querySelector('#feed');
 
-        // логика для заполнения пользовательского фида
+        return;
+    } else if (pictures?.status === 503) {
+        return;
     }
 
-    return page.firstElementChild as HTMLDivElement;
+    if (!pictures?.data) return;
+
+    if (!feed.masonry) {
+        feed.masonry = new Masonry(
+            feed, {
+                itemSelector: '.pin',
+                columnWidth: 205,
+                gutter: 20,
+            }
+        );
+    }
+
+    pictures.data.forEach((item) => {
+        feed.appendChild(Pin(item.image));
+    });
 };

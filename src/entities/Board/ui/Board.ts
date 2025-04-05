@@ -1,17 +1,11 @@
-import './Board.scss';
-import BoardTemplate from './Board.hbs';
+import type { IBoardProps } from '../model/types';
 import { pluralize } from 'shared/utils';
 import { editBoard } from '../handlers/editBoard';
 import { deleteBoard } from '../handlers/deleteBoard';
 import { toggleIcons } from '../handlers/togleIcons';
+import BoardTemplate from './Board.hbs';
+import './Board.scss';
 
-export interface IBoardProps {
-    own: boolean
-    id: string,
-    name: string,
-    count: number | string,
-    preview: string[],
-}
 
 /**
  * В параметрах передается id доски, название доски, количество пинов в ней и не более трех картинок для превью
@@ -27,8 +21,12 @@ export const Board = (config: IBoardProps) => {
     container.innerHTML = BoardTemplate(config);
 
     const preview = container.querySelector('.board-container__preview');
-    preview?.addEventListener('mouseenter', toggleIcons);
-    preview?.addEventListener('mouseleave', toggleIcons);
+    preview?.addEventListener('mouseenter', () => {
+        toggleIcons(config.id);
+    });
+    preview?.addEventListener('mouseleave', () => {
+        toggleIcons(config.id);
+    });
 
 
     const pen = container.querySelector<HTMLImageElement>('.preview__icon-edit');
@@ -43,5 +41,5 @@ export const Board = (config: IBoardProps) => {
         bin.id = `delete-${config.id}`;
     }
 
-    return container.firstChild;
+    return container.firstChild as HTMLDivElement;
 };

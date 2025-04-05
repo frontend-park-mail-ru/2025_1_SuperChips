@@ -1,23 +1,25 @@
 import type { ITabItem } from 'shared/components/tabBar';
 import { TabBar } from 'shared/components/tabBar';
-import { Auth } from 'features/authorization';
+import type { IFeed } from 'pages/FeedPage';
+import { handleTabBar } from '../handlers/tabBarHandler';
 import { UserPins } from 'widgets/UserPins';
-import { UserBoard } from 'widgets/UserBoard';
-// import { BoardPopup } from 'entities/Board';
+import { createNewBoard } from '../handlers/createNewBoard';
+import { loadUserBoards } from 'features/boardLoader';
+import { Auth } from 'features/authorization';
+import { root } from 'app/app';
 import ProfilePageTemplate from './ProfilePage.hbs';
 import './ProfilePage.scss';
 
 
-const pageState = {
-    currentTab: 'pin',
-};
-
 export const ProfilePage = async (username: string): Promise<HTMLDivElement> => {
     const page = document.createElement('div');
 
+    loadUserBoards(username).finally();
+
     const config = {
-        header: username,
-        shortUsername: username[0].toUpperCase(),
+        header: username === Auth?.userData?.username ? 'Ваши flow' : username,
+        username: username,
+        shortUsername: username[0]?.toUpperCase(),
         own: Auth.userData ? username === Auth.userData.username : false,
     };
 
@@ -28,43 +30,24 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
         { id: 'boards', title: 'Доски', active: false }
     ];
 
-
-
-    const newTabBar = TabBar(tabs, 'horizontal' , async (tabId) => {
-        const content = document.querySelector('#content');
-        if (!content) return;
-        let newContent: null | HTMLDivElement = null;
-
-        const newBoard = document.querySelector('.create-board');
-
-        if (tabId === 'pins' && pageState.currentTab !== 'pins') {
-            newContent = await UserPins(username);
-            newBoard?.classList.add('hidden');
-        } else if (tabId === 'boards' && pageState.currentTab !== 'boards') {
-            newContent = await UserBoard(username);
-            newBoard?.classList.remove('hidden');
-        }
-
-        if (newContent) {
-            content.innerHTML = '';
-            content.appendChild(newContent);
-        }
+    const newTabBar = TabBar(tabs, 'horizontal', (tabId) => {
+        handleTabBar(tabId, username);
     });
-
     const tabBar = page.querySelector('.tab-bar-placeholder');
     tabBar?.replaceWith(newTabBar);
 
     const newBoard = page.querySelector('.create-board');
     newBoard?.addEventListener('click', createNewBoard);
 
-    const content = page.querySelector('#content');
-    content?.appendChild(await UserPins(username));
+    const feed = page.querySelector<IFeed>('.profile__feed');
+    if (!feed) return page;
 
-    return page.firstElementChild as HTMLDivElement;
-};
+    const delayedFill: MutationObserver = new MutationObserver(async () => {
+        await UserPins(username);
+        delayedFill.disconnect();
+    });
 
-const createNewBoard = () => {
-    // BoardPopup('edit');
+    delayedFill.observe(root, { childList: true });
 
-    // логика для добавления доски по ручке
+    return page.firstChild as HTMLDivElement;
 };

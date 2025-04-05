@@ -2,17 +2,19 @@
     <div class="profile">
         <div class="author-area">
             <div class="author-area__box-1">
-                <div class="header">
+                <div class="header white bold">
                     {{header}}
                 </div>
                 <div class="box-1__menu">
                     <div id="tabBar" class="tab-bar-placeholder"></div>
-                    <div class="create-board hidden">
-                        <img src="/public/icons/new-pin.svg" alt="create new board">
-                        <div class="label">
-                            создать доску
+                    {{#if own}}
+                        <div class="create-board hidden">
+                            <img src="/public/icons/new-pin.svg" alt="create new board">
+                            <div class="label">
+                                создать доску
+                            </div>
                         </div>
-                    </div>
+                    {{/if}}
                 </div>
             </div>
             {{#unless own}}
@@ -32,6 +34,6 @@
             </div>
             {{/unless}}
         </div>
-        <div id="content" class="profile__feed"></div>
+        <div id="feed" class="profile__feed"></div>
     </div>
 </div>

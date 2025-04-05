@@ -2,7 +2,9 @@
 @use 'shared/styles/mixins' as *;
 
 .board-container {
-    margin: 100px;
+    margin-right: $spacing-xl;
+    margin-bottom: $spacing-xl;
+    max-width: 362px;
 
     &__preview {
         position: relative;
@@ -28,7 +30,13 @@
         margin-top: 20px;
         display: flex;
         flex-direction: column;
+        flex-wrap: wrap;
         gap: 12px;
+
+        p {
+            max-width: 362px;
+            overflow-wrap: break-word;
+        }
     }
 }
 
