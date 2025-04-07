@@ -10,9 +10,3 @@ export interface IPasswordFormData {
     currentPassword: string;
     newPassword: string;
 }
-
-export interface IApiResponse<T> {
-    ok: boolean;
-    data: T;
-    error?: string;
-}

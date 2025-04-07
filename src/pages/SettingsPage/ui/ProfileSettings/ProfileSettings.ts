@@ -1,6 +1,7 @@
-import { showToast } from '../components/toast/toast';
-import { handleProfileUpdate } from '../handlers/profileUpdate';
-import { validateProfileField } from '../handlers/profileValidation';
+import { ErrorToast } from 'shared/components/errorToast';
+import { appState } from 'shared/router';
+import { handleProfileUpdate } from '../../handlers/profileUpdate';
+import { validateProfileField } from '../../handlers/profileValidation';
 import { Auth } from 'features/authorization';
 import profileTemplate from './ProfileSettings.hbs';
 import { Input } from 'shared/components/input';
@@ -14,28 +15,6 @@ export const createProfileSettings = () => {
     const fields = [
         {
             type: 'text',
-            id: 'firstName',
-            inputLabel: 'Имя',
-            value: userData.firstName || '',
-            errorMessage: 'Введите имя',
-            maxlength: 120,
-            onInput: validateProfileField,
-            transparent: true,
-
-        },
-        {
-            type: 'text',
-            id: 'lastName',
-            inputLabel: 'Фамилия',
-            value: userData.lastName || '',
-            errorMessage: 'Введите фамилию',
-            maxlength: 120,
-            onInput: validateProfileField,
-            transparent: true,
-
-        },
-        {
-            type: 'text',
             id: 'username',
             inputLabel: 'Никнейм',
             value: userData.username || '',
@@ -43,14 +22,23 @@ export const createProfileSettings = () => {
             maxlength: 120,
             onInput: validateProfileField,
             transparent: true,
-
         },
         {
             type: 'date',
             id: 'birthday',
             inputLabel: 'Дата рождения',
-            value: userData.birthDate || '',
+            value: userData.birthday || '',
             errorMessage: 'Неверный формат даты',
+            onInput: validateProfileField,
+            transparent: true,
+        },
+        {
+            type: 'textarea',
+            id: 'about',
+            inputLabel: 'О себе',
+            value: userData.about || '',
+            errorMessage: 'Неверный формат описания',
+            maxlength: 500,
             onInput: validateProfileField,
             transparent: true,
         }
@@ -81,16 +69,16 @@ export const createProfileSettings = () => {
                     if (response instanceof Response && response.ok) {
                         await Auth.fetchUserData();
                         userData = Auth.userData;
-                        showToast('Фото профиля обновлено', 'success');
+                        ErrorToast('Фото профиля обновлено');
                         window.location.reload();
                     } else if (response instanceof Response) {
                         await response.json();
-                        showToast('Ошибка при обновлении фото', 'error');
+                        ErrorToast('Ошибка при обновлении фото');
                     } else {
-                        showToast('Произошла ошибка', 'error');
+                        ErrorToast('Произошла ошибка');
                     }
                 } catch (_error) {
-                    showToast('Произошла ошибка', 'error');
+                    ErrorToast('Произошла ошибка');
                 }
             }
         });

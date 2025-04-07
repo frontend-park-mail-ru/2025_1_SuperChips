@@ -5,52 +5,47 @@ import { debounce } from 'shared/utils';
  * Validates password fields in the settings form
  * @param {Event} event - The input event
  */
-export const validatePasswordField = (event: Event): void => {
+import { validatePassword as validatePasswordShared } from '../../../../shared/validation/lib/passwordValidation';
+
+export const validatePasswordField = (event: Event, form?: HTMLFormElement): void => {
     const target = event.target as HTMLInputElement;
-    const field = target.id;
-    const value = target.value;
+    if (!target) return;
 
-    const errorIcon = target.parentElement?.querySelector<HTMLElement>('.error-icon');
-    const errorMessage = document.getElementById(`${field}-error`);
+    const container = target.closest('.input-container');
+    if (!container) return;
 
-    if (!errorIcon || !errorMessage) return;
+    const input = container.querySelector<HTMLInputElement>('.input__field');
+    const message = container.querySelector('.error-message');
+    const icon = container.querySelector('.input__error');
+    const eye = container.querySelector<HTMLImageElement>('.input__toggle-password');
+    
+    if (!message || !input || !icon) return;
 
-    let isValid = true;
-    let errorText = '';
+    let result = { isValid: true, error: '' };
 
-    // Validate based on field type
-    if (field === 'currentPassword') {
-        // Current password just needs to not be empty
-        isValid = value.length > 0;
-        errorText = 'Введите текущий пароль';
-    } else if (field === 'newPassword') {
-        // Use the shared password validation
-        const validationResult = validatePassword(value);
-        isValid = validationResult.isValid;
-        errorText = validationResult.error || 'Пароль должен быть длиной не менее 8 символов';
-        
-        // If confirm password field has a value, validate it again when new password changes
-        const confirmField = document.querySelector<HTMLInputElement>('#confirmPassword');
-        if (confirmField && confirmField.value) {
-            // Trigger validation on the confirm password field
-            const inputEvent = new Event('input', { bubbles: true });
-            confirmField.dispatchEvent(inputEvent);
-        }
-    } else if (field === 'confirmPassword') {
-        // Use the shared password confirmation validation
-        const validationResult = validatePasswordConfirm(value);
-        isValid = validationResult.isValid;
-        errorText = validationResult.error || 'Пароли не совпадают';
+    switch(target.id) {
+        case 'currentPassword':
+            result = { isValid: target.value.length > 0, error: target.value.length > 0 ? '' : 'Введите текущий пароль' };
+            break;
+        case 'newPassword':
+            result = validatePassword(target.value);
+            break;
+        case 'confirmPassword':
+            const newPassword = form?.querySelector<HTMLInputElement>('#newPassword')?.value;
+            result = { isValid: target.value === newPassword, error: target.value === newPassword ? '' : 'Пароли не совпадают' };
+            break;
     }
 
-    // Show/hide error elements
-    const showError = !isValid;
-    errorIcon.classList.toggle('hidden', !showError);
-    errorMessage.classList.toggle('hidden', !showError);
-    errorMessage.textContent = errorText;
+    const showError = !result.isValid && target.value !== '';
 
-    // Add/remove error class on input
-    target.classList.toggle('error', showError);
+    icon.classList.toggle('hidden', !showError);
+    message.classList.toggle('hidden', !showError);
+    input.classList.toggle('error', showError);
+    message.textContent = result.error;
+
+    if (eye) {
+        eye.style.right = showError ? '36px' : '12px';
+    }
 
     // Update submit button state
     updateSubmitButtonState();

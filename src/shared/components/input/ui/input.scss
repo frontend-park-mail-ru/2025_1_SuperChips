@@ -38,10 +38,16 @@
     &__toggle-password {
         position: absolute;
         right: $spacing-sm;
-        transform: translateY(45%);
+        top: 50%;
+        transform: translateY(-50%);
         cursor: pointer;
         width: $icon-size;
         height: $icon-size;
+        color: $text-gray;
+    }
+
+    .input__field:focus ~ &__toggle-password {
+        color: $text-light;
     }
 
     &--invalid {

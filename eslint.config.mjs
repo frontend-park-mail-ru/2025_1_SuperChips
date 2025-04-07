@@ -41,9 +41,6 @@ export default [
         },
         rules: {
             ...typescript.configs.recommended.rules,
-            'no-undef': 'off',
-            '@typescript-eslint/no-unused-vars': 'off',
-            'no-unused-vars': 'off'
         }
     },
     js.configs.recommended,

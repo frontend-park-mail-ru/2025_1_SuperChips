@@ -1,10 +1,9 @@
 @use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
 
 .settings-page {
-    display: grid;
-    grid-template-columns: $grid-sidebar;
+    @include main-page;
     min-height: 100vh;
-    background: $gradient-dark;
     color: $text-light;
     position: relative;
     overflow: hidden;
@@ -26,8 +25,9 @@
 }
 
 .settings-container {
-    padding: calc($navbar-height + $spacing-lg) $spacing-xl $spacing-xl $sidebar-width;
-    min-width: 900px;
+    grid-area: page;
+    padding: 0 $spacing-xl $spacing-xl 0;
+    max-width: 900px;
     display: flex;
     gap: 136px;
 }
@@ -48,7 +48,7 @@
 .settings-form {
     display: flex;
     flex-direction: column;
-    gap: $spacing-lg;
+    gap: $spacing-sm;
 }
 
 .form-field {
@@ -130,7 +130,7 @@
     margin-bottom: $spacing-lg;
 }
 
-.profile-picture {
+.settings-profile-picture {
     width: 80px;
     height: 80px;
     flex-shrink: 0;

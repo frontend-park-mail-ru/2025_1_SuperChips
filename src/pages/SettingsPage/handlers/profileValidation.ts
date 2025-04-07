@@ -15,14 +15,18 @@ export const validateProfileField = (event: Event): void => {
     let errorText = '';
 
     switch (field) {
-    case 'firstName':
-        showError = !value.trim();
-        errorText = 'Введите имя';
+    case 'firstName': {
+        const validationResult = validateUsername(value);
+        showError = !validationResult.isValid;
+        errorText = validationResult.error;
         break;
-    case 'lastName':
-        showError = !value.trim();
-        errorText = 'Введите фамилию';
+    }
+    case 'lastName': {
+        const validationResult = validateUsername(value);
+        showError = !validationResult.isValid;
+        errorText = validationResult.error;
         break;
+    }
     case 'username': {
         const validationResult = validateUsername(value);
         showError = !validationResult.isValid;
@@ -40,7 +44,11 @@ export const validateProfileField = (event: Event): void => {
     errorIcon.classList.toggle('hidden', !showError);
     errorMessage.classList.toggle('hidden', !showError);
     errorMessage.textContent = errorText;
-
+    
+    const inputWrapper = target.closest('.input-wrapper');
+    if (inputWrapper) {
+        inputWrapper.classList.toggle('error', showError);
+    }
     target.classList.toggle('error', showError);
 };
 
