@@ -1,8 +1,20 @@
 @use 'shared/styles/variables' as *;
 @use 'shared/styles/mixins' as *;
 
+
+.black-background {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #000;
+    z-index: 100;
+    opacity: 0.3;
+}
+
 .popup {
-    position: absolute;
+    position: fixed;
     top: calc(100vh / 2 - 350px / 2);
     left: calc((100vw - 560px) / 2);
     width: 560px;
@@ -25,41 +37,65 @@
         }
     }
 
-    &__button-create, &__button-delete, &__button-edit {
+    &__create-button, &__delete-button, &__edit-button, &__confirm-button {
         width: 440px;
         height: $button-height;
         border: none;
         border-radius: $border-radius;
         color: white;
-        margin-top: 54px;
+        margin-top: 24px;
 
         &:hover {
             cursor: pointer;
             opacity: 0.8;
         }
+
+        &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
     }
 
-    &__button-create, &__button-edit {
+    &__create-button, &__edit-button {
         background-color: black;
     }
 
-    &__button-delete {
+    &__delete-button {
         background-color: $error-color;
     }
 }
 
-.black-background {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    left: 0;
-    top: 0;
-    background-color: #000;
-    z-index: 100;
-    opacity: 0.3;
-}
 
 .popup__text {
     align-self: flex-start;
     margin-bottom: 12px;
+}
+
+.private-checkbox-area {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    input {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #666;
+        border-radius: 20px;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+    }
+
+    input:checked {
+        content: url("/public/icons/tick-box.svg");
+        border: none;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
 }

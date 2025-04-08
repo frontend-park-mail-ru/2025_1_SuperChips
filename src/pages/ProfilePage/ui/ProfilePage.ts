@@ -2,9 +2,8 @@ import type { ITabItem } from 'shared/components/tabBar';
 import { TabBar } from 'shared/components/tabBar';
 import type { IFeed } from 'pages/FeedPage';
 import { handleTabBar } from '../handlers/tabBarHandler';
+import { BoardPopup } from 'widgets/BoardPopup';
 import { UserPins } from 'widgets/UserPins';
-import { createNewBoard } from '../handlers/createNewBoard';
-import { loadUserBoards } from 'features/boardLoader';
 import { Auth } from 'features/authorization';
 import { root } from 'app/app';
 import ProfilePageTemplate from './ProfilePage.hbs';
@@ -13,8 +12,6 @@ import './ProfilePage.scss';
 
 export const ProfilePage = async (username: string): Promise<HTMLDivElement> => {
     const page = document.createElement('div');
-
-    loadUserBoards(username).finally();
 
     const config = {
         header: username === Auth?.userData?.username ? 'Ваши flow' : username,
@@ -37,7 +34,7 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
     tabBar?.replaceWith(newTabBar);
 
     const newBoard = page.querySelector('.create-board');
-    newBoard?.addEventListener('click', createNewBoard);
+    newBoard?.addEventListener('click', () => BoardPopup('create'));
 
     const feed = page.querySelector<IFeed>('.profile__feed');
     if (!feed) return page;

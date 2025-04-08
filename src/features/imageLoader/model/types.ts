@@ -1,5 +1,8 @@
 export interface IPicture {
-    image: string,
+    header: string,
+    media_url: string,
+    author_id: number,
+    like_count: number,
 }
 
 export interface ILoadedPictures {

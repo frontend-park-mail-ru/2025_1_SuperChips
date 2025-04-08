@@ -53,12 +53,10 @@
 
     &:hover {
         cursor: pointer;
-        opacity: 0.8;
-    }
 
-    img:hover {
-        filter: invert(1);
-        fill: white;
+        img {
+            content: url("/public/icons/plus-active.svg");
+        }
     }
 }
 

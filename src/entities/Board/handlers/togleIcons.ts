@@ -1,5 +1,5 @@
 export const toggleIcons = (id: string) => {
-    const board = document.getElementById(id);
+    const board = document.getElementById(`board-${id}`);
 
     const pen = board?.querySelector<HTMLImageElement>('.preview__icon-edit');
     const bin = board?.querySelector<HTMLImageElement>('.preview__icon-delete');

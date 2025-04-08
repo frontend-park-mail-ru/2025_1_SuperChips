@@ -1,6 +1,6 @@
 import type { ISignupFormData } from 'pages/SignupPage';
 import type { IUser } from 'entities/User';
-import { API } from 'shared/api/api';
+import { API } from 'shared/api';
 import { Navbar } from 'widgets/navbar';
 
 type TLoginData = {

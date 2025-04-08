@@ -10,6 +10,6 @@ export const toggleScroll = (state: TScrollState) => {
 
     const navbar = document.querySelector<HTMLDivElement>('#navbar');
     if (navbar) {
-        navbar.style.padding = padding;
+        navbar.style.paddingRight = padding;
     }
 };

@@ -1,6 +1,4 @@
-import type { IBoardList } from '../model/types';
-
-export const getBoardList = (): IBoardList | null => {
+export const getBoardList = () => {
     const data = localStorage.getItem('boardList');
     return data ? JSON.parse(data) : null;
 };

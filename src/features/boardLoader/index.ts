@@ -1,3 +1,4 @@
-export { getBoardList } from './lib/getBoardList';
+export type { IBoardList } from './model/types';
 export { loadUserBoards } from './lib/loadUserBoards';
-export type { IBoardList, IBoard } from './model/types';
+export { getBoardList } from './lib/getBoardList';
+export { getBoardNames } from './lib/getBoardNames';

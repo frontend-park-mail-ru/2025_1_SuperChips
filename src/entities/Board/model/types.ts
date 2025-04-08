@@ -1,7 +1,8 @@
 export interface IBoardProps {
-    own: boolean
+    own: boolean,
+    is_private: boolean,
     id: string,
     name: string,
-    count: number | string,
+    flow_count: number | string,
     preview: string[],
 }

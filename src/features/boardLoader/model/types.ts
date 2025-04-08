@@ -1,10 +1,6 @@
-export interface IBoard {
-    authorId: number,
-    name: string,
-    isPrivate: boolean,
-}
+import { IBoardProps } from 'entities/Board';
 
 export interface IBoardList {
     status: number,
-    data: IBoard[]
+    data: IBoardProps[]
 }

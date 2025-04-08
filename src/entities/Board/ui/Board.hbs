@@ -1,4 +1,4 @@
-<div class="board-container" id="{{id}}">
+<div class="board-container" id="board-{{id}}">
     <div class="board-container__preview">
         {{#each preview}}
             <div class="img-{{@index}}">
@@ -16,7 +16,7 @@
         {{/if}}
     </div>
     <div class="board-container__name">
-        <p class="bold label white ">{{name}}</p>
-        <p class="input-text white">{{count}}</p>
+        <p id="board-{{id}}-name" class="bold label white ">{{name}}</p>
+        <p class="input-text white">{{flow_count}}</p>
     </div>
 </div>
