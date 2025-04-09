@@ -1,0 +1,15 @@
+<div class="black-background"></div>
+<div class="popup">
+    <div class="header bold popup__text">{{header}}</div>
+    <div class="subheader popup__text {{#unless create}}hidden{{/unless}}">Упорядочим flow!</div>
+    <div class="input-placeholder"></div>
+
+    <div class="private-checkbox-area {{#if delete}}hidden{{/if}}">
+        <input id="private-checkbox" type="checkbox">
+        <label for="private-checkbox">Сделать доску приватной</label>
+    </div>
+    <img class="popup__close" src="/public/icons/cross-grey.svg" alt="close popup">
+    <button id="popup-button" class="popup__{{type}}-button" {{#unless edit}}disabled="disabled"{{/unless}}>
+        {{buttonText}}
+    </button>
+</div>

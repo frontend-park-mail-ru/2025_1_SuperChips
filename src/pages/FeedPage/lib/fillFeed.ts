@@ -30,7 +30,7 @@ export const fillFeed = async () => {
     if (!images?.data) return;
 
     images.data.forEach((item) => {
-        feed.appendChild(Pin(item.image));
+        feed.appendChild(Pin(item.media_url));
     });
 
     feedState.isLoading = false;

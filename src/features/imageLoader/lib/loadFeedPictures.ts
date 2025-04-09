@@ -1,5 +1,5 @@
 import type { ILoadedPictures } from '../model/types';
-import { API } from 'shared/api/api';
+import { API } from 'shared/api';
 import { feedState } from 'pages/FeedPage/ui/FeedPage';
 
 
