@@ -26,16 +26,20 @@ export const Navbar = async () => {
     navbar.innerHTML = navbarTemplate(config);
 
     const redirectButton = navbar.querySelector('#goToLogin');
-    if (redirectButton) {
-        redirectButton.addEventListener('click', async () => {
-            navigate('login').finally();
-        });
-    }
+    redirectButton?.addEventListener('click', async () => {
+        navigate('login').finally();
+    });
 
     const anchorButton = navbar.querySelector('#scroll-to-top');
-    if (anchorButton) {
-        anchorButton.addEventListener('click', goToFeed);
-    }
+    anchorButton?.addEventListener('click', goToFeed);
+
+    const pfp = navbar.querySelector('.navbar__profile-picture');
+    pfp?.addEventListener('click', goToProfile);
 
     return navbar;
+};
+
+const goToProfile = () => {
+    if (Auth.userData)
+        navigate(Auth.userData.username).finally();
 };

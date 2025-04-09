@@ -1,0 +1,89 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+
+.profile {
+    grid-area: page;
+    min-height: calc(100vh - $navbar-height);
+
+    &-page {
+        @include main-page();
+    }
+
+    &__feed {
+        grid-area: page;
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-top: $spacing-xl;
+    }
+}
+
+.author-area {
+    display: flex;
+    justify-content: space-between;
+    margin-right: $spacing-lg;
+    align-items: center;
+
+    &__box-1 {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    &__box-2 {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.box-1 {
+    &__menu {
+        color: #fff;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.create-board {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    &:hover {
+        cursor: pointer;
+
+        img {
+            content: url("/public/icons/plus-active.svg");
+        }
+    }
+}
+
+.author {
+    &__name {
+        color: white;
+    }
+
+    &__profile-picture {
+        height: $profile-picture-size;
+        width: $profile-picture-size;
+        border-radius: 100%;
+        background-color: $white;
+        color: $text-dark;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: $spacing-lg;
+
+        img {
+            margin: 0;
+            object-fit: cover;
+        }
+
+        p {
+            color: $black;
+        }
+    }
+}
+

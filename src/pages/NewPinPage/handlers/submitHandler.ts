@@ -1,4 +1,4 @@
-import { API } from 'shared/api/api';
+import { API } from 'shared/api';
 
 export const submitHandler = async () => {
     const imageInput = document.querySelector<HTMLInputElement>('.image-input__field');

@@ -1,0 +1,29 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+.empty-page {
+    @include flex-center;
+    margin-top: 96px;
+    flex-direction: column;
+    width: 100%;
+
+    div {
+        margin-top: 12px;
+    }
+
+    button {
+        margin-top: 62px;
+    }
+}
+
+.go-to-feed {
+    width: 252px;
+    height: 44px;
+    border-radius: $border-radius;
+    border: none;
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+}

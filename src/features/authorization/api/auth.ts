@@ -1,6 +1,6 @@
 import type { ISignupFormData } from 'pages/SignupPage';
 import type { IUser } from 'entities/User';
-import { API } from 'shared/api/api';
+import { API } from 'shared/api';
 import { Navbar } from 'widgets/navbar';
 
 type TLoginData = {
@@ -50,6 +50,8 @@ class auth {
                 publicName: userData.username,
                 birthday: new Date(userData.birthday),
             };
+
+            await Navbar();
         }
 
         return response;
@@ -83,6 +85,7 @@ class auth {
                 birthday: new Date(data.birthday),
                 shortUsername: data.username[0].toUpperCase(),
                 authorized: true,
+                publicName: data.publicName || data.username,
             };
 
 
@@ -105,6 +108,7 @@ class auth {
         this.userData = {
             ...this.userData,
             username: data.username,
+            publicName: data.publicName || data.username,
             email: data.email,
             birthday: new Date(data.birthday),
         };

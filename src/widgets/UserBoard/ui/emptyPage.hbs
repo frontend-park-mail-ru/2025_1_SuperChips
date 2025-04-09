@@ -1,0 +1,11 @@
+<div class="empty-page">
+    <img src="/public/img/surfboard.png" alt="surfboard">
+    <div class="input-field-label white">
+        {{#if own}} Организуйте свой flow с досками
+        {{else}} У этого пользователя еще нет досок
+        {{/if}}
+    </div>
+    {{#if own}}
+        <button class="empty-page__create-board">Создать доску</button>
+    {{/if}}
+</div>

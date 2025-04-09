@@ -1,30 +1,79 @@
 import { root } from 'app/app';
-import { config } from 'shared/config/router';
 import type { Route } from 'shared/config/router';
+import { config } from 'shared/config/router';
 import { debouncedScroll } from 'pages/FeedPage';
 import { Auth } from 'features/authorization';
+import { API } from 'shared/api';
 
 interface AppState {
+    lastPage: string | null,
     activePage: string | null,
     isShowingToast: boolean,
 }
 
 export const appState: AppState = {
+    lastPage: null,
     activePage: null,
     isShowingToast: false,
 };
 
 
 /**
- * Переходит на указанный URL (прим: '/feed', '/login')
- * Если replace = true, создает новую запись в истории
+ * Переходит на указанный URL (прим: 'feed', 'login')
+ * Если replace = true, не добавляет запись в историю
  */
 export const navigate = async (
     page: string,
     replace = false
 ): Promise<void> => {
-    if (root === null) { return; }
 
+    const match = await findMatch(page);
+    if (match === appState.activePage) {
+        return;
+    }
+
+    const route = config.menu[match];
+
+    let renderProps;
+    let newHref;
+
+    if (match === 'profile') {
+        renderProps = page;
+        newHref = `/${page}`;
+    } else if (match === 'flow') {
+        renderProps = page.slice(5);
+        newHref = `/flow/${page}`;
+    } else {
+        renderProps = '';
+        newHref = route.href.toString();
+    }
+
+
+    updateBars(route);
+
+    const newPage = await route.render(renderProps);
+    root.innerHTML = '';
+    root.appendChild(newPage);
+
+    window.scrollTo({ top: 0 });
+
+
+    if (appState.activePage === '/feed' && newHref !== '/feed') {
+        window.removeEventListener('scroll', debouncedScroll);
+    }
+    appState.activePage = newHref;
+    document.title = route.title;
+
+    if (replace) {
+        history.replaceState({ page: page }, '', newHref);
+    } else {
+        appState.lastPage = newHref;
+        history.pushState({ page: page }, '', newHref);
+    }
+};
+
+
+const findMatch = async (page: string) => {
     let match = null;
 
     for (const [key, route] of Object.entries(config.menu)) {
@@ -37,44 +86,23 @@ export const navigate = async (
         }
     }
 
-    if (!match) {
-        match = 'feed';
-
-    }
-
-
-    let route = config.menu[match];
-
     if (
-        route.nonAuthOnly && !!Auth.userData ||
-        route.authOnly && !Auth.userData
+        !match ||
+        config.menu[match].nonAuthOnly && !!Auth.userData ||
+        config.menu[match].authOnly && !Auth.userData
     ) {
         match = 'feed';
-        route = config.menu[match];
     }
 
-    updateBars(route);
-    if (match === appState.activePage) { return; }
 
-    if (appState.activePage === 'feed' && match !== 'feed') {
-        window.removeEventListener('scroll', debouncedScroll);
+    if (match === 'profile') {
+        const userExists = await API.get(`/api/v1/user/${page}`);
+        if (userExists instanceof Error || !userExists.ok) {
+            match = 'feed';
+        }
     }
 
-    appState.activePage = match;
-
-    root.innerHTML = '';
-
-    const newPage = await route.render(null);
-    root.appendChild(newPage);
-
-    window.scrollTo({ top: 0 });
-    document.title = route.title;
-
-    if (replace) {
-        history.replaceState({ page: page }, '', route.href.toString());
-    } else {
-        history.pushState({ page: page }, '', route.href.toString());
-    }
+    return match;
 };
 
 
@@ -83,9 +111,9 @@ const updateBars = (route: Route) => {
     const showNavbar = route.hasNavbar;
     navbar?.classList.toggle('display-none', !showNavbar);
 
-    const sidebar = document.querySelector<HTMLDivElement>('.sidebar');
+    const sidebarButtons = document.querySelector<HTMLDivElement>('.sidebar__button-container');
     const showSidebar = route.hasSidebar && !!Auth.userData;
-    sidebar?.classList.toggle('display-none', !showSidebar);
+    sidebarButtons?.classList.toggle('display-none', !showSidebar);
 
     const backButton = document.getElementById('go-back-button');
     const showBackButton = route.hasBackButton;

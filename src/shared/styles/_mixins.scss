@@ -41,11 +41,20 @@
     background: $gradient-dark;
     display: grid;
     grid-template-columns: $sidebar-width auto;
-    grid-template-rows: 100px auto;
+    grid-template-rows: $navbar-height auto;
     grid-template-areas:
-    "header header"
-    "sidebar page";
+        "header header"
+        "sidebar page";
     gap: 0;
+}
+
+@mixin content-area {
+    grid-area: page;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: calc(100vh - $navbar-height);
+    padding-right: $feed-padding;
 }
 
 @mixin transparent-active {

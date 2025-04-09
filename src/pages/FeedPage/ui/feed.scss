@@ -13,18 +13,11 @@
 }
 
 .feed-container {
-    grid-area: page;
-    display: flex;
-    justify-content: center;
-    width: 100%;
+    @include content-area;
 }
 
 .feed {
-    grid-row-start: 2;
-    grid-column-start: 2;
-    min-height: calc(100vh - $navbar-height);
     width: 100%;
-    padding-right: $feed-padding;
 }
 
 .skeleton {
