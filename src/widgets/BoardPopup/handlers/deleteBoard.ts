@@ -1,30 +1,22 @@
-import { toggleInputError } from 'shared/components/input';
 import { API } from 'shared/api';
 
 export const deleteBoard = async (boardID: string) => {
-    const input = document.querySelector<HTMLInputElement>('#board-name');
-    const container = input?.closest<HTMLDivElement>('.input-container');
-    const boardName = document.querySelector(`#board-${boardID}-name`);
+    const button = document.querySelector<HTMLButtonElement>('#popup-button');
+    if (!button) return;
 
-    if (!container || !input || !boardName) return;
+    if (button.classList.contains('popup__delete-button')) {
+        button.classList.add('popup__confirm-button');
+        button.classList.remove('popup__delete-button');
+        button.textContent = 'Вы уверены что хотите удалить доску?';
 
-    const newName = input.value;
-    const oldName = boardName.textContent;
+    } else if (button.classList.contains('popup__confirm-button')) {
+        await API.delete(`/api/v1/boards/${boardID}`);
 
-    if (newName !== oldName) {
-        toggleInputError(container, { isValid: false, error: 'Введите название доски которую вы хотите удалить' });
-        return;
-    } else {
-        const button = document.querySelector<HTMLButtonElement>('#popup-button');
-        if (button) button.disabled = false;
+        // Закрывает попап
+        const background = document.querySelector<HTMLDivElement>('.black-background');
+        background?.click();
+
+        const boardPreview = document.querySelector<HTMLDivElement>(`#board-${boardID}`);
+        boardPreview?.remove();
     }
-
-    await API.delete(`/api/v1/boards/${boardID}`);
-
-    // Закрывает попап
-    const background = document.querySelector<HTMLDivElement>('.black-background');
-    background?.click();
-
-    const boardPreview = document.querySelector<HTMLDivElement>(`#board-${boardID}`);
-    boardPreview?.remove();
 };

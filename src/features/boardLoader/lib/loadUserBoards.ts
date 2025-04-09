@@ -28,9 +28,7 @@ export const loadUserBoards = async (username: string) => {
 
     if (own && result.data) {
         const boardNames = result.data.map(board => board.name);
-
         localStorage.setItem('boardNames', JSON.stringify(boardNames));
-        localStorage.setItem('boardList', JSON.stringify(result.data));
     }
 
     return result;

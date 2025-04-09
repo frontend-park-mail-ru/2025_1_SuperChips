@@ -50,6 +50,8 @@ class auth {
                 publicName: userData.username,
                 birthday: new Date(userData.birthday),
             };
+
+            await Navbar();
         }
 
         return response;

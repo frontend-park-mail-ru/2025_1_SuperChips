@@ -8,12 +8,6 @@ import emptyPageTemplate from './emptyPage.hbs';
 import './UserPins.scss';
 
 
-const userPinsState = {
-    isLoading: false,
-    page: 1,
-};
-
-
 export const UserPins = async (username: string) => {
     const feed = document.querySelector<IFeed>('.profile__feed');
     if (!feed) return;
