@@ -7,6 +7,7 @@ import {
     validatePasswordConfirm,
     validateUsername,
 } from 'shared/validation';
+import { toggleInputError } from './toggleInputError';
 
 interface IValidators {
     email: (value: string) => ValidationResult;
@@ -40,20 +41,9 @@ export const inputHandler = (event: Event) => {
     const key = input.id as keyof IValidators;
 
     const result = validators[key]?.(input.value) ?? { isValid: true, error: '' };
-    const valid = result.isValid;
-    const error = result.error;
-
-    const showError = !valid && (input.value !== '' || target.type === 'date');
-
-    icon.classList.toggle('hidden', !showError);
-    message.classList.toggle('hidden', !showError);
-    input.classList.toggle('error', showError);
-    message.textContent = error;
-
-    const eye  = container.querySelector<HTMLImageElement>('.input__toggle-password');
-    if (eye) {
-        eye.style.right = showError ? '36px' : '12px';
-    }
+    
+    // Use the shared toggleInputError function to handle error display
+    toggleInputError(container, result);
 };
 
 export const debouncedInputHandler = debounce(inputHandler, 300);

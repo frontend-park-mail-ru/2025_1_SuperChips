@@ -1,5 +1,4 @@
 import { ErrorToast } from 'shared/components/errorToast';
-import { appState } from 'shared/router';
 import { IPasswordFormData } from 'shared/types/ProfileFormData';
 import { Auth } from 'features/authorization';
 import { validatePassword } from 'shared/validation';

@@ -1,7 +1,6 @@
 import { ErrorToast } from 'shared/components/errorToast';
-import { appState } from 'shared/router';
-import { handleProfileUpdate } from '../../handlers/profileUpdate';
-import { validateProfileField } from '../../handlers/profileValidation';
+import { handleProfileUpdate } from '../handlers/profileUpdate';
+import { validateProfileField } from '../handlers/profileValidation';
 import { Auth } from 'features/authorization';
 import profileTemplate from './ProfileSettings.hbs';
 import { Input } from 'shared/components/input';
@@ -27,18 +26,8 @@ export const createProfileSettings = () => {
             type: 'date',
             id: 'birthday',
             inputLabel: 'Дата рождения',
-            value: userData.birthday || '',
+            value: userData.birthday ? userData.birthday.toString() : '',
             errorMessage: 'Неверный формат даты',
-            onInput: validateProfileField,
-            transparent: true,
-        },
-        {
-            type: 'textarea',
-            id: 'about',
-            inputLabel: 'О себе',
-            value: userData.about || '',
-            errorMessage: 'Неверный формат описания',
-            maxlength: 500,
             onInput: validateProfileField,
             transparent: true,
         }
@@ -99,6 +88,11 @@ export const createProfileSettings = () => {
                 form.insertBefore(inputComponent, form.querySelector('.form-field'));
             }
         });
+        
+        const aboutTextarea = form.querySelector<HTMLTextAreaElement>('#about');
+        if (aboutTextarea) {
+            aboutTextarea.addEventListener('input', validateProfileField);
+        }
     }
 
     form?.addEventListener('submit', handleProfileUpdate);

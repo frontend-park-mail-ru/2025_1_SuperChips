@@ -1,5 +1,5 @@
-import { createProfileSettings } from './ProfileSettings/ProfileSettings';
-import { createSecuritySettings } from './SecuritySettings/SecuritySettings';
+import { createProfileSettings } from 'widgets/ProfileSettings';
+import { createSecuritySettings } from 'widgets/SecuritySettings';
 import './settings.scss';
 import { TabBar } from 'shared/components/tabBar';
 

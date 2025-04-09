@@ -1,7 +1,7 @@
 import { Input } from 'shared/components/input';
 import { debounce } from 'shared/utils';
-import { handlePasswordUpdate } from '../../handlers/passwordHandler';
-import { passwordConfirmHandler } from '../../handlers/passwordValidationHandlers';
+import { handlePasswordUpdate } from '../handlers/passwordHandler';
+import { passwordConfirmHandler } from '../handlers/passwordValidationHandlers';
 import securityTemplate from './SecuritySettings.hbs';
 
 export const createSecuritySettings = (): HTMLElement => {

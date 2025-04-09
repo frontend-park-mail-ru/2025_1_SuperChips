@@ -1,6 +1,4 @@
 import { ErrorToast } from 'shared/components/errorToast';
-import { appState } from 'shared/router';
-import { formatDateToISO } from 'shared/utils';
 import { Auth } from 'features/authorization';
 
 export const handleProfileUpdate = async (event: SubmitEvent): Promise<void> => {
@@ -10,10 +8,11 @@ export const handleProfileUpdate = async (event: SubmitEvent): Promise<void> => 
     const formData = new FormData(form);
 
     const profileData = {
+        email: Auth.userData?.email || '',
         username: formData.get('username') as string,
         public_username: formData.get('username') as string,
-        birthday: formData.get('birthday') as string,
-        about: formData.get('about') as string
+        birthday: new Date(formData.get('birthday') as string),
+        about: formData.get('about') as string,
     };
 
 
