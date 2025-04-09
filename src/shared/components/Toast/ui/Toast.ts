@@ -1,12 +1,14 @@
-import './errorToast.scss';
 import { appState } from 'shared/router';
+import './Toast.scss';
 
-export const ErrorToast = (message: string, duration: number = 3000): void => {
+type TToastType = 'error' | 'success' | 'message';
+
+export const Toast = (message: string, type: TToastType = 'error', duration: number = 3000): void => {
     if (appState.isShowingToast) return;
     appState.isShowingToast = true;
 
     const toast = document.createElement('div');
-    toast.className = 'error-toast';
+    toast.className = `toast-${type}`;
     toast.textContent = message;
 
     document.body.appendChild(toast);
@@ -19,4 +21,3 @@ export const ErrorToast = (message: string, duration: number = 3000): void => {
         }, 300);
     }, duration);
 };
-

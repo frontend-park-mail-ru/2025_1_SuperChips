@@ -1,0 +1,55 @@
+@use 'shared/styles/variables' as *;
+
+.dropdown {
+    width: 360px;
+    height: 300px;
+    overflow-y: auto;
+    background-color: $white;
+    border-radius: $border-radius;
+    padding: 20px 20px 20px 14px;
+    z-index: 100;
+    box-sizing: border-box;
+
+    &__label {
+        font-size: 20px;
+        font-weight: bold;
+        padding-left: 6px;
+    }
+
+    &__create-board {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        margin-top: 10px;
+
+        img {
+            width: $icon-size;
+            height: $icon-size;
+        }
+
+        &:hover {
+            cursor: pointer;
+
+            img {
+                content: url("/public/icons/plus-black-filled.svg");
+            }
+        }
+    }
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 5px;
+        margin: 20px 0;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 5px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+}

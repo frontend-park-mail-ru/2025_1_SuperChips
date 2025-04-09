@@ -4,7 +4,7 @@ import { Auth } from 'features/authorization';
 import { API } from 'shared/api';
 
 
-// Загружает список досок пользователя и добавляет их названия в localStorage
+// Загружает список досок пользователя и добавляет их названия в sessionStorage
 export const loadUserBoards = async (username: string) => {
     const own = Auth.userData ? Auth.userData.username === username : false;
 
@@ -28,7 +28,8 @@ export const loadUserBoards = async (username: string) => {
 
     if (own && result.data) {
         const boardNames = result.data.map(board => board.name);
-        localStorage.setItem('boardNames', JSON.stringify(boardNames));
+        sessionStorage.setItem('boardNames', JSON.stringify(boardNames));
+        sessionStorage.setItem('boardList', JSON.stringify(result.data));
     }
 
     return result;

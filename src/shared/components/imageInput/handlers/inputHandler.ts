@@ -1,5 +1,5 @@
 import { validateImage } from 'shared/validation';
-import { ErrorToast } from 'shared/components/errorToast';
+import { Toast } from 'shared/components/Toast';
 
 export const inputHandler = () => {
     const input = document.querySelector<HTMLInputElement>('.image-input__field');
@@ -26,7 +26,7 @@ export const inputHandler = () => {
     const valid = validateImage(file);
     
     if (!valid.isValid) {
-        ErrorToast(valid.error);
+        Toast(valid.error);
         input.value = '';
         selectButton?.classList.remove('display-none');
         clearButton?.classList.add('display-none');

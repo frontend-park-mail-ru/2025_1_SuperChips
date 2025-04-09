@@ -15,7 +15,6 @@
 
 .tab-bar__tab {
   font-size: $font-size-lg;
-  color: $white;
   cursor: pointer;
   padding: $spacing-xs;
   transition: all 0.3s ease;
@@ -23,11 +22,10 @@
   border-radius: $border-radius;
 
   &:hover {
-    color: $background-focus;
+      color: $text-gray;
   }
 
   &_active {
-    color: $white;
     font-weight: 600;
 
     &::after {
