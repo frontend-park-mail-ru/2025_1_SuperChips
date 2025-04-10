@@ -41,11 +41,14 @@ export default [
         },
         rules: {
             ...typescript.configs.recommended.rules,
-            'no-undef': 'off'
         }
     },
     js.configs.recommended,
     {
+        plugins: {
+            '@typescript-eslint': typescript,
+            import: pluginImport
+        },
         rules: {
             indent: ['error', 4],
             eqeqeq: 'error',

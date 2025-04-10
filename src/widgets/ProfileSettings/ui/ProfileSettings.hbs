@@ -1,0 +1,26 @@
+<div class="settings-content">
+    <h2 class="settings-header">Настройки профиля</h2>
+    <form class="settings-form">
+        <div class="avatar-container">
+            <div class="settings-profile-picture">
+                {{#if avatar}}
+                    <img src="{{avatar}}" alt="Profile picture">
+                {{else}}
+                    <p class="shortUsername">{{#if username}}{{firstLetter}}{{/if}}</p>
+                {{/if}}
+            </div>
+            <button class="change-photo-button">Изменить фото</button>
+            <input type="file" id="avatar" accept="image/*" style="display: none;">
+        </div>
+        
+        {{#each fields}}
+        {{/each}}
+        
+        <div class="form-field">
+            <label for="about">О себе</label>
+            <textarea id="about" maxlength="500">{{about}}</textarea>
+        </div>
+        
+        <button class="submit-button">Сохранить изменения</button>
+    </form>
+</div>

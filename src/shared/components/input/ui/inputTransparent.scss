@@ -35,6 +35,10 @@
         &.error {
             border: 2px solid $error-color;
         }
+        
+        &--invalid {
+            border: 2px solid $error-color;
+        }
     }
 
     &__error {
@@ -52,7 +56,11 @@
         cursor: pointer;
         width: $icon-size;
         height: $icon-size;
-        filter: brightness(0) invert(1);
+        color: rgba(70, 70, 70, 0.5);
+    }
+
+    &__field:focus ~ &__toggle-password {
+        color: $text-light !important;
     }
 
     &--invalid {
