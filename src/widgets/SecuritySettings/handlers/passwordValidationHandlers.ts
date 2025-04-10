@@ -13,7 +13,7 @@ const passwordConfirm = (event: Event): void => {
 
     if (!message || !icon || !eye) return;
 
-    const showError = password && confirm && password !== confirm;
+    const showError = Boolean(password && confirm && password !== confirm);
     icon.classList.toggle('hidden', !showError);
     message.classList.toggle('hidden', !showError);
     message.textContent = 'Пароли не совпадают';
@@ -59,7 +59,9 @@ const validateNewPassword = (event: Event): void => {
 
     const confirmInput = document.querySelector<HTMLInputElement>('#confirmPassword');
     if (confirmInput?.value) {
-        passwordConfirm({ target: confirmInput } as Event);
+        const event = new Event('input');
+        Object.defineProperty(event, 'target', { value: confirmInput });
+        passwordConfirm(event);
     }
 };
 
