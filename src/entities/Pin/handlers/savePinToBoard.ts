@@ -11,7 +11,6 @@ export const savePinToBoard = async (pinID: string, boardName?: string) => {
         closeButton?.click();
         return;
     } else {
-        boardName = '7';
         const data = sessionStorage.getItem('boardList');
         if (!data) return;
         const boardList = JSON.parse(data);

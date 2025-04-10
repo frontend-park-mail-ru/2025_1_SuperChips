@@ -1,6 +1,7 @@
 @use 'shared/styles/variables' as *;
 
 .dropdown {
+    position: fixed;
     width: 360px;
     height: 300px;
     overflow-y: auto;

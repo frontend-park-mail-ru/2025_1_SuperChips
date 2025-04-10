@@ -24,7 +24,6 @@ export const PinDropdown = (pinID: string) => {
     const position = findPosition(pinID);
     const dropdown = container.querySelector<HTMLDivElement>('.dropdown');
     if (dropdown) {
-        dropdown.style.position = 'fixed';
         dropdown.style.left = `${position.x}px`;
         dropdown.style.top = `${position.y}px`;
     }
