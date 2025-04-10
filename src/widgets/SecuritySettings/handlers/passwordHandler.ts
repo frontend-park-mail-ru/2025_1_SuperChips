@@ -18,41 +18,46 @@ export const handlePasswordUpdate = async (event: SubmitEvent): Promise<void> =>
         newPassword: formData.get('newPassword') as string
     };
 
-    // Validate password strength
-    const newPassword = passwordData.newPassword;
-    const passwordValidation = validatePassword(newPassword);
-    if (!passwordValidation.isValid) {
-        const passwordInput = form.querySelector<HTMLInputElement>('#newPassword');
-        const message = form.querySelector('#newPassword-error');
-        const icon = form.querySelector('#newPassword-error-icon');
-        const eye = form.querySelector<HTMLImageElement>('#newPassword-eye');
-        
-        if (message && icon && eye && passwordInput) {
-            icon.classList.remove('hidden');
-            message.classList.remove('hidden');
-            passwordInput.classList.add('error');
-            message.textContent = passwordValidation.error;
-            eye.style.right = '36px';
-            eye.style.filter = 'brightness(1.5)';
+    // Get all input fields
+    const currentPasswordField = form.querySelector<HTMLInputElement>('#currentPassword');
+    const newPasswordField = form.querySelector<HTMLInputElement>('#newPassword');
+    const confirmPasswordField = form.querySelector<HTMLInputElement>('#confirmPassword');
+
+    if (!currentPasswordField || !newPasswordField || !confirmPasswordField) return;
+
+    // Validate current password
+    if (!currentPasswordField.value) {
+        const errorIcon = document.querySelector<HTMLElement>('#currentPassword-error-icon');
+        const errorMessage = document.querySelector<HTMLElement>('#currentPassword-error');
+        if (errorIcon && errorMessage) {
+            errorIcon.classList.remove('hidden');
+            errorMessage.classList.remove('hidden');
+            errorMessage.textContent = 'Введите текущий пароль';
         }
         return;
     }
-    
-    // Validate that passwords match
-    const confirmPassword = formData.get('confirmPassword') as string;
-    if (passwordData.newPassword !== confirmPassword) {
-        const confirmInput = form.querySelector<HTMLInputElement>('#confirmPassword');
-        const message = form.querySelector('#confirmPassword-error');
-        const icon = form.querySelector('#confirmPassword-error-icon');
-        const eye = form.querySelector<HTMLImageElement>('#confirmPassword-eye');
-        
-        if (message && icon && eye && confirmInput) {
-            icon.classList.remove('hidden');
-            message.classList.remove('hidden');
-            confirmInput.classList.add('error');
-            message.textContent = 'Пароли не совпадают';
-            eye.style.right = '36px';
-            eye.style.filter = 'brightness(1.5)';
+
+    // Validate new password
+    const passwordValidation = validatePassword(newPasswordField.value);
+    if (!passwordValidation.isValid) {
+        const errorIcon = document.querySelector<HTMLElement>('#newPassword-error-icon');
+        const errorMessage = document.querySelector<HTMLElement>('#newPassword-error');
+        if (errorIcon && errorMessage) {
+            errorIcon.classList.remove('hidden');
+            errorMessage.classList.remove('hidden');
+            errorMessage.textContent = passwordValidation.error;
+        }
+        return;
+    }
+
+    // Validate password confirmation
+    if (newPasswordField.value !== confirmPasswordField.value) {
+        const errorIcon = document.querySelector<HTMLElement>('#confirmPassword-error-icon');
+        const errorMessage = document.querySelector<HTMLElement>('#confirmPassword-error');
+        if (errorIcon && errorMessage) {
+            errorIcon.classList.remove('hidden');
+            errorMessage.classList.remove('hidden');
+            errorMessage.textContent = 'Пароли не совпадают';
         }
         return;
     }
