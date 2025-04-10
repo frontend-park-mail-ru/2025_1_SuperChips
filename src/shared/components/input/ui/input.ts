@@ -17,6 +17,12 @@ export const Input = (data: IInputConfig) => {
     if (!inputField) return null;
 
     inputField.addEventListener('input', debouncedInputHandler);
+    
+    if (data.onInput) {
+        inputField.addEventListener('input', (e) => {
+            data.onInput?.(e, inputContainer.closest('form') || undefined);
+        });
+    }
 
     if (data.type === 'password') {
         const eye = inputContainer.querySelector('.input__toggle-password');

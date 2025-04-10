@@ -10,6 +10,11 @@ export const validatePassword = (
 ): ValidationResult => {
     const regex = /^[a-zA-Z0-9._\-@#$%&*!]+$/;
 
+    // Проверка на null или undefined
+    if (!password) {
+        return { isValid: false, error: 'Пароль не может быть пустым' };
+    }
+
     if (!regex.test(password)) {
         return { isValid: false, error: 'Пароль должен быть из цифр, латинских букв или символов (._-@#$%&*!)' };
     } else if (password.length > 96) {

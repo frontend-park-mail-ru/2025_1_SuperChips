@@ -7,7 +7,7 @@ import {
     validatePasswordConfirm,
     validateUsername,
 } from 'shared/validation';
-import { toggleInputError } from '../lib/toggleInputError';
+import { toggleInputError } from './toggleInputError';
 
 interface IValidators {
     email: (value: string) => ValidationResult;
@@ -40,6 +40,7 @@ export const inputHandler = (event: Event) => {
 
     const result = validators[key]?.(input.value) ?? { isValid: true, error: '' };
 
+    // Use the shared toggleInputError function to handle error display
     toggleInputError(container, result);
 };
 

@@ -1,12 +1,14 @@
 export const handleDragOver = (event: DragEvent) => {
     event.preventDefault();
     const imageContainer = document.querySelector<HTMLDivElement>('.image-input');
+
     imageContainer?.classList.add('image-input__dragover');
 };
 
 export const handleDragLeave = (event: DragEvent) => {
     event.preventDefault();
     const imageContainer = document.querySelector<HTMLDivElement>('.image-input');
+
     imageContainer?.classList.remove('image-input__dragover');
 };
 
@@ -15,6 +17,7 @@ export const handleDrop = (event: DragEvent) => {
 
     const imageContainer = document.querySelector<HTMLDivElement>('.image-input');
     const input = document.querySelector<HTMLInputElement>('.image-input__field');
+
 
     imageContainer?.classList.remove('image-input__dragover');
 

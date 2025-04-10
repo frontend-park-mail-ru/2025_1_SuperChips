@@ -116,18 +116,18 @@ class auth {
     };
 
     updateProfile = async (profileData: IUser)  => {
-        return await API.put('/api/v1/user/profile', profileData);
+        return await API.patch('/api/v1/profile/update', profileData);
     };
 
     updatePassword = async (passwords: {
         currentPassword: string;
         newPassword: string;
     }) => {
-        return await API.put('/api/v1/user/password', passwords);
+        return await API.put('/api/v1/profile/password', { new_password: passwords.newPassword });
     };
 
     updateAvatar = async (formData: FormData) => {
-        return await API.put('/api/v1/user/avatar', formData);
+        return await API.put('/api/v1/profile/avatar', formData);
     };
 
 }
