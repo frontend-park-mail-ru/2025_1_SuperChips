@@ -1,10 +1,9 @@
 import { debouncedPasswordConfirm } from '../handlers/passwordConfirm';
 import { debouncedSignupButton } from '../handlers/signupButtonHandler';
-import { fillPictureBox } from '../../LoginPage/lib/fillPictureBox';
+import { authPageTemplate, fillPictureBox } from 'pages/LoginPage';
 import { signupHandler } from '../handlers/signupHandler';
 import { Input } from 'shared/components/input';
 import { navigate } from 'shared/router';
-import { authPageTemplate } from 'pages/LoginPage';
 import './signup.scss';
 import { IInputConfig } from 'shared/components/input/model/types';
 

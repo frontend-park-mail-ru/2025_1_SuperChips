@@ -55,14 +55,13 @@ export default [
             quotes: ['error', 'single'],
             semi: ['error', 'always'],
             'linebreak-style': ['error', 'windows'],
-            'no-console': 'warn',
+            'no-console': 'error',
             'no-var': 'error',
             'prefer-const': 'error',
+            'no-unused-vars': ['error', {args: 'none'}],
             'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }],
             'eol-last': ['error', 'always'],
             'object-curly-spacing': ['error', 'always'],
-            '@typescript-eslint/no-unused-vars': 'off',
-            'no-unused-vars': 'off'
         },
     },
 ];

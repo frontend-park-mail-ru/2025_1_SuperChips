@@ -1,19 +1,75 @@
 @use 'shared/styles/variables' as *;
 
+
 .pin {
-    width: 205px;
+    width: 210px;
     border-radius: $border-radius;
     background-color: $button-dark;
     margin-bottom: 20px;
     display: inline-block;
     overflow: hidden;
+    position: relative;
 
     transition: all 0.3s ease;
 
-    img {
+    &:hover {
+        [class*=" pin__"] {
+            visibility: visible;
+        }
+
+        .pin__picture {
+            filter: brightness(0.65);
+        }
+
+        cursor: pointer;
+    }
+
+    &__picture {
         width: 100%;
         height: auto;
         display: block;
         object-fit: cover;
     }
-} 
+
+    &__save-button, &__dropdown-button, &__dropdown-board, &__delete-button {
+        position: absolute;
+        z-index: 50;
+    }
+
+    &__delete-button {
+        bottom: 10px;
+        right: 10px;
+        width: $icon-size;
+        height: $icon-size;
+    }
+
+    &__save-button {
+        right: 6px;
+        top: 6px;
+        width: 94px;
+        height: 44px;
+        border-radius: $border-radius;
+        border: none;
+        background-color: $white;
+
+        &:hover {
+            background-color: $black;
+            color: $white;
+            cursor: pointer;
+        }
+    }
+
+    &__dropdown-button {
+        width: $icon-size;
+        height: $icon-size;
+
+        right: 106px;
+        top: 16px;
+    }
+
+    &__dropdown-board {
+        top: 16px;
+        left: 10px;
+        color: $white;
+    }
+}

@@ -1,5 +1,5 @@
 import { API_BASE_URL } from 'shared/config/constants';
-import { ErrorToast } from 'shared/components/errorToast';
+import { Toast } from 'shared/components/Toast';
 
 type TMethods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
@@ -54,7 +54,7 @@ class Api {
                 ? 'Ошибка при получении данных. Попробуйте еще раз'
                 : 'Ошибка при отправке данных. Попробуйте еще раз';
 
-            ErrorToast(message);
+            Toast(message);
             return new Error('Could not fetch');
         }
     }

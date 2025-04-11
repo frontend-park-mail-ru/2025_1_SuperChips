@@ -1,6 +1,8 @@
 import { Board } from 'entities/Board';
 import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
+import { appState } from 'shared/router';
+import { addBoardName } from 'features/boardLoader';
 
 export const createBoard = async () => {
     if (!Auth.userData) return;
@@ -19,7 +21,6 @@ export const createBoard = async () => {
     if (response instanceof Error || response.status === 409) return;
 
     const body = await response.json();
-
     const id = body.data.board_id;
 
     const newBoard = Board({
@@ -31,10 +32,14 @@ export const createBoard = async () => {
         is_private: privateCheckbox.checked,
     });
 
-    const feed = document.querySelector('#feed');
-    const emptyPage = document.querySelector('.empty-page');
-    emptyPage?.remove();
-    feed?.appendChild(newBoard);
+    addBoardName(input.value);
+
+    if (appState.activePage === 'profile') {
+        const feed = document.querySelector('#feed');
+        const emptyPage = document.querySelector('.empty-page');
+        emptyPage?.remove();
+        feed?.appendChild(newBoard);
+    }
 
     // Закрывает попап
     const background = document.querySelector<HTMLDivElement>('.black-background');

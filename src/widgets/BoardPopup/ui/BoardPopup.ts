@@ -63,12 +63,13 @@ export const BoardPopup = (type: TPopupType, boardID: string | null = null, boar
     });
 
 
-    const background = popup.querySelector<HTMLDivElement>('.black-background');
     const cross = popup.querySelector<HTMLImageElement>('.popup__close');
 
     cross?.addEventListener('click', closePopup);
-    background?.addEventListener('click', closePopup);
     document.addEventListener('keydown', closePopup);
+    setTimeout(() => {
+        document.addEventListener('click', closePopup);
+    }, 0);
 
     const button = popup.querySelector<HTMLButtonElement>('#popup-button');
     button?.addEventListener('click', config[type].handler);

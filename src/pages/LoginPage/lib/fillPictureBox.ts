@@ -1,6 +1,6 @@
+import type { IPicture } from 'features/imageLoader';
 import { loadFeedPictures } from 'features/imageLoader';
 import { Pin } from 'entities/Pin';
-import type { IPicture } from 'features/imageLoader';
 
 /**
  * Загружает картинки и создает коллаж для страниы входа
@@ -17,8 +17,8 @@ export const fillPictureBox = async (pageNum: number) => {
         return;
     }
 
-    images.data.forEach((item: IPicture) => {
-        newFrame.appendChild(Pin(item.media_url));
+    images.data.forEach((item: IPicture, index) => {
+        newFrame.appendChild(Pin(item.media_url, index.toString()));
     });
 
     pictureBox.innerHTML = newFrame.innerHTML;

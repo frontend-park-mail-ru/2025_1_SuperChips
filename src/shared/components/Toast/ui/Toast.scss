@@ -1,10 +1,9 @@
-.error-toast {
+.toast-error, .toast-success, .toast-message {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   background-color: #2f2f2f;
-  color: #ff4a4a;
   padding: 12px 24px;
   border-radius: 20px;
   z-index: 1000;
@@ -27,4 +26,16 @@
       transform: translate(-50%, -20px);
     }
   }
+}
+
+.toast-error {
+  color: #ff4a4a;
+}
+
+.toast-success {
+  color: #93c47d;
+}
+
+.toast-message {
+  color: #fff;
 }

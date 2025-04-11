@@ -40,7 +40,7 @@ export const UserPins = async (username: string) => {
         );
     }
 
-    pictures.data.forEach((item) => {
-        feed.appendChild(Pin(item.media_url));
+    pictures.data.forEach((item, index) => {
+        feed.appendChild(Pin(item.media_url, index.toString()));
     });
 };

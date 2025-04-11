@@ -1,7 +1,7 @@
-import { root } from 'app/app';
 import type { Route } from 'shared/config/router';
 import { config } from 'shared/config/router';
 import { debouncedScroll } from 'pages/FeedPage';
+import { root } from 'app/app';
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api';
 
@@ -9,12 +9,14 @@ interface AppState {
     lastPage: string | null,
     activePage: string | null,
     isShowingToast: boolean,
+    isShowingPopup: boolean,
 }
 
 export const appState: AppState = {
     lastPage: null,
     activePage: null,
     isShowingToast: false,
+    isShowingPopup: false,
 };
 
 
@@ -58,10 +60,11 @@ export const navigate = async (
     window.scrollTo({ top: 0 });
 
 
-    if (appState.activePage === '/feed' && newHref !== '/feed') {
+    if (appState.activePage === 'feed' && newHref !== '/feed') {
         window.removeEventListener('scroll', debouncedScroll);
     }
-    appState.activePage = newHref;
+
+    appState.activePage = match;
     document.title = route.title;
 
     if (replace) {

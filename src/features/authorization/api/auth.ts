@@ -2,6 +2,7 @@ import type { ISignupFormData } from 'pages/SignupPage';
 import type { IUser } from 'entities/User';
 import { API } from 'shared/api';
 import { Navbar } from 'widgets/navbar';
+import { loadUserBoards } from 'features/boardLoader';
 
 type TLoginData = {
     email: string;
@@ -74,10 +75,10 @@ class auth {
      * Получение данных о пользователе
      */
     fetchUserData = async (): Promise<void> => {
-        const response = await this.API.get('/api/v1/profile');
+        const userData = await this.API.get('/api/v1/profile');
 
-        if (response instanceof Response && response.ok) {
-            const body = await response.json();
+        if (userData instanceof Response && userData.ok) {
+            const body = await userData.json();
             const data = body.data;
 
             this.userData = {
@@ -90,6 +91,8 @@ class auth {
 
 
             await Navbar();
+
+            await loadUserBoards(data.username);
         }
     };
 
