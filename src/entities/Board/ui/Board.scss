@@ -45,6 +45,10 @@
         object-fit: cover;
         width: 100%;
         height: 100%;
+
+        img[src=""], img:not([src]) {
+            display: none !important;
+        }
     }
 
     &-0 {
