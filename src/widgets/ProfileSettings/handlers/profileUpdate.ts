@@ -20,16 +20,16 @@ export const handleProfileUpdate = async (event: SubmitEvent): Promise<void> => 
     const payload: IProfileSettings = {};
 
     if (usernameInput && usernameInput.value !== '') {
-        payload.public_name = usernameInput.value;
+        payload.public_name = usernameInput.value.trim();
     }
 
     if (birthdayInput && birthdayInput.value !== '') {
-        const birthday = birthdayInput.value;
+        const birthday = birthdayInput.value.trim();
         payload.birthday = formatDateToISO(birthday);
     }
 
     if (aboutInput && aboutInput.value !== '') {
-        payload.about = aboutInput.value;
+        payload.about = aboutInput.value.trim();
     }
 
     const response = await API.patch('/api/v1/profile/update', payload);

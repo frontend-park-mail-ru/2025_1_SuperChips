@@ -3,7 +3,6 @@ import { debounce } from 'shared/utils';
 import type { ISignupFormData } from '../model/types';
 
 
-
 const signupButtonHandler = (): void => {
     const form = document.querySelector<HTMLFormElement>('.signup-form');
     if (!form) return;
@@ -19,7 +18,7 @@ const signupButtonHandler = (): void => {
     const inputs = form.querySelectorAll<HTMLInputElement>('.input__field');
     inputs.forEach(input => {
         const key = input.id as keyof ISignupFormData;
-        inputData[key] = input.value;
+        inputData[key] = input.value.trim();
     });
 
     const button = document.querySelector<HTMLButtonElement>('.button');

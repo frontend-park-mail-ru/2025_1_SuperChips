@@ -15,11 +15,11 @@ export const submitHandler = async () => {
     formData.append('image', imageInput.files[0]);
 
     if (titleInput.value !== '') {
-        formData.append('title', titleInput.value);
+        formData.append('title', titleInput.value.trim());
     }
 
     if (aboutInput.value !== '') {
-        formData.append('about', aboutInput.value);
+        formData.append('about', aboutInput.value.trim());
     }
 
     formData.append('is_private', privateInput.checked.toString());

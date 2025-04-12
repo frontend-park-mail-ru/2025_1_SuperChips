@@ -7,7 +7,7 @@ export const editBoard = async (boardID: string) => {
     const boardName = document.querySelector(`#board-${boardID}-name`);
     if (!input || !privateCheckbox || !boardName) return;
 
-    const newName = input.value;
+    const newName = input.value.trim();
 
     const body = {
         name: newName !== '' ? newName : boardName.textContent,

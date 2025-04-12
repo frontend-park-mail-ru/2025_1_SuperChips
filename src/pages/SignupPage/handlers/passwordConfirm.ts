@@ -18,7 +18,6 @@ const passwordConfirm = (event: Event): void => {
     message.textContent = 'Пароли не совпадают';
 
     eye.style.right = showError ? '36px' : '12px';
-    eye.style.filter = 'brightness(1.5)';
 };
 
 export const debouncedPasswordConfirm = debounce(passwordConfirm, 300);

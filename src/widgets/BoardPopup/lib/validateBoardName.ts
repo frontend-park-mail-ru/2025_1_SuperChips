@@ -9,7 +9,7 @@ export const validateBoardName = (type: TPopupType, boardName: string | null): V
 
     const boardNames = getBoardNames();
 
-    const newName = input.value;
+    const newName = input.value.trim();
 
     if (type === 'delete' && newName !== boardName) {
         return { isValid: false, error: 'Название доски не совпадает' };

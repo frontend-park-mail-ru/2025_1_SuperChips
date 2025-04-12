@@ -18,8 +18,8 @@ export const handlePasswordUpdate = async (event: SubmitEvent): Promise<void> =>
     if (!currentPasswordField || !newPasswordField || !confirmPasswordField) return;
 
     const payload = {
-        old_password: currentPasswordField.value,
-        new_password: newPasswordField.value,
+        old_password: currentPasswordField.value.trim(),
+        new_password: newPasswordField.value.trim(),
     };
 
     const response = await API.post('/api/v1/profile/password', payload);

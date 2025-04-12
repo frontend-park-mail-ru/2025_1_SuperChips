@@ -25,7 +25,7 @@ export const signupHandler = async (event: SubmitEvent): Promise<void> => {
         if (key === 'birthday') {
             inputData[key] = formatDateToISO(input.value);
         } else {
-            inputData[key] = input.value;
+            inputData[key] = input.value.trim();
         }
     });
 
