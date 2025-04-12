@@ -17,12 +17,12 @@ export const deleteBoard = async (boardID: string) => {
         const background = document.querySelector<HTMLDivElement>('.black-background');
         background?.click();
 
-        const boardPreview = document.querySelector<HTMLDivElement>(`#board-${boardID}`);
-        boardPreview?.remove();
-
         const name = document.querySelector<HTMLDivElement>(`#board-${boardID}-name`);
         if (name) {
             removeBoardName(name.textContent || '');
         }
+
+        const boardPreview = document.querySelector<HTMLDivElement>(`#board-${boardID}`);
+        boardPreview?.remove();
     }
 };

@@ -1,23 +1,27 @@
 import type { IBoardProps } from '../model/types';
 import { pluralize } from 'shared/utils';
 import { toggleIcons } from '../handlers/togleIcons';
+import { BoardPopup } from 'widgets/BoardPopup';
 import BoardTemplate from './Board.hbs';
 import './Board.scss';
-import { BoardPopup } from 'widgets/BoardPopup';
 
 
 /**
  * В параметрах передается id доски, название доски, количество пинов в ней и не более трех картинок для превью
  */
-export const Board = (config: IBoardProps) => {
+export const Board = (params: IBoardProps) => {
     const container = document.createElement('div');
 
-    if (!config.preview) {
-        config.preview = [];
-    }
+    const config = {
+        ...params,
+        preview: ['', '', ''],
+    };
 
-    for (let i = 0; i < 3; i++) {
-        if (!config.preview[i]) config.preview[i] = '';
+    const min = params?.preview ? params.preview.length : 0;
+    for (let i = 0; i < min; i++) {
+        if (params.preview[i]) {
+            config.preview[i] = (params.preview[i].media_url);
+        }
     }
 
     config.flow_count = pluralize('пин', Number(config.flow_count));
@@ -34,7 +38,7 @@ export const Board = (config: IBoardProps) => {
 
     const pen = container.querySelector<HTMLImageElement>('.preview__icon-edit');
     if (pen) {
-        pen.addEventListener('click', () => BoardPopup('edit', config.id, config.name));
+        pen.addEventListener('click', () => BoardPopup('edit', config.id));
         pen.id = `edit-${config.id}`;
     }
 

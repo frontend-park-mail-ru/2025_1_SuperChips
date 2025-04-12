@@ -8,7 +8,7 @@ export const createBoard = async () => {
     if (!Auth.userData) return;
 
     const input = document.querySelector<HTMLInputElement>('#board-name');
-    const privateCheckbox = document.querySelector<HTMLInputElement>('#private-checkbox');
+    const privateCheckbox = document.querySelector<HTMLInputElement>('#isPrivate');
     if (!input || !privateCheckbox) return;
 
     const reqBody = {
@@ -17,7 +17,6 @@ export const createBoard = async () => {
     };
 
     const response = await API.post(`/api/v1/user/${Auth.userData.username}/boards`, reqBody);
-
     if (response instanceof Error || response.status === 409) return;
 
     const body = await response.json();
@@ -38,7 +37,7 @@ export const createBoard = async () => {
         const feed = document.querySelector('#feed');
         const emptyPage = document.querySelector('.empty-page');
         emptyPage?.remove();
-        feed?.appendChild(newBoard);
+        feed?.insertBefore(newBoard, feed.firstChild);
     }
 
     // Закрывает попап

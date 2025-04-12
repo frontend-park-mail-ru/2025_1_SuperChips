@@ -1,5 +1,5 @@
 <div class="board-container" id="board-{{id}}">
-    <div class="board-container__preview">
+    <div class="board-container__preview" id="board-{{id}}-preview">
         {{#each preview}}
             <div class="img-{{@index}}">
                 <img
@@ -14,7 +14,7 @@
             <img class="hidden preview__icon-delete" src="/public/icons/delete.svg" alt="delete board">
             <img class="hidden preview__icon-edit" src="/public/icons/edit.svg" alt="edit board">
             {{#if is_private}}
-                <img class="hidden private-icon" src="/public/icons/lock.svg" alt="">
+                <img id="private-icon-{{id}}" class="hidden private-icon" src="/public/icons/lock.svg" alt="">
             {{/if}}
         {{/if}}
     </div>

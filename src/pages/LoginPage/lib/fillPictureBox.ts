@@ -17,8 +17,8 @@ export const fillPictureBox = async (pageNum: number) => {
         return;
     }
 
-    images.data.forEach((item: IPicture, index) => {
-        newFrame.appendChild(Pin(item.media_url, index.toString()));
+    images.data.forEach((item: IPicture) => {
+        newFrame.appendChild(Pin(item.media_url, item.flow_id));
     });
 
     pictureBox.innerHTML = newFrame.innerHTML;

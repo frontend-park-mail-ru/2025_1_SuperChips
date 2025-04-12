@@ -1,15 +1,15 @@
-import { ErrorToast } from 'shared/components/errorToast';
 import { handleProfileUpdate } from '../handlers/profileUpdate';
 import { validateProfileField } from '../handlers/profileValidation';
 import { Auth } from 'features/authorization';
 import profileTemplate from './ProfileSettings.hbs';
 import { Input } from 'shared/components/input';
+import { avatarUpdate } from '../handlers/avatarUpdate';
+
 
 export const createProfileSettings = () => {
     const container = document.createElement('div');
-    let userData = Auth.userData;
+    const userData = Auth.userData;
     if (!userData) return container;
-
 
     const fields = [
         {
@@ -33,7 +33,6 @@ export const createProfileSettings = () => {
         }
     ];
 
-
     const templateData = {
         avatar: userData.avatar,
         username: userData.username,
@@ -46,33 +45,8 @@ export const createProfileSettings = () => {
 
     const form = container.querySelector<HTMLFormElement>('.settings-form');
     const fileInput = container.querySelector<HTMLInputElement>('#avatar');
-    
-    if (fileInput) {
-        fileInput.addEventListener('change', async (e) => {
-            const target = e.target as HTMLInputElement;
-            if (target.files && target.files[0]) {
-                const formData = new FormData();
-                formData.append('avatar', target.files[0]);
-                try {
-                    const response = await Auth.updateAvatar(formData);
-                    if (response instanceof Response && response.ok) {
-                        await Auth.fetchUserData();
-                        userData = Auth.userData;
-                        ErrorToast('Фото профиля обновлено');
-                        window.location.reload();
-                    } else if (response instanceof Response) {
-                        await response.json();
-                        ErrorToast('Ошибка при обновлении фото');
-                    } else {
-                        ErrorToast('Произошла ошибка');
-                    }
-                } catch (_error) {
-                    ErrorToast('Произошла ошибка');
-                }
-            }
-        });
-    }
-    
+    fileInput?.addEventListener('change', (event) => avatarUpdate(event));
+
     const changePhotoButton = container.querySelector('.change-photo-button');
     if (changePhotoButton && fileInput) {
         changePhotoButton.addEventListener('click', (e) => {

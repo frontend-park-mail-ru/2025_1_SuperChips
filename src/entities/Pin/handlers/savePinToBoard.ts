@@ -17,10 +17,13 @@ export const savePinToBoard = async (pinID: string, boardName?: string) => {
 
         const board = boardList.find((item: IBoardProps) => item.name === boardName);
         if (!board) return;
-        const response = await API.post(`/api/v1/${board.id}/flow`, { flow_id: Number(pinID) });
+        const response = await API.post(`/api/v1/boards/${board.id}/flows`, { flow_id: pinID });
 
         if (response instanceof Response && response.ok) {
             Toast(`flow добавлен на доску ${board.name}`, 'message');
+            closeButton?.click();
+        } else {
+            Toast('Произошла ошибка или flow уже добавлен на доску', 'error');
             closeButton?.click();
         }
     }

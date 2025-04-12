@@ -26,7 +26,7 @@
 
 .settings-container {
     grid-area: page;
-    padding: 0 $spacing-xl $spacing-xl 0;
+    margin-right: $spacing-xl;
     max-width: 900px;
     display: flex;
     gap: 136px;
@@ -36,7 +36,7 @@
     flex: 1;
     border-radius: $border-radius;
     padding: 0 $spacing-xl;
-    min-height: 848px;
+    min-height: calc(100vh - $navbar-height);
 }
 
 .settings-header {
@@ -96,6 +96,10 @@
     &:hover {
         background-color: $background-light;
     }
+
+    &:disabled {
+        background-color: $disabled-color;
+    }
 }
 
 .message-toast {
@@ -133,18 +137,16 @@
 .settings-profile-picture {
     width: 80px;
     height: 80px;
-    flex-shrink: 0;
-    overflow: hidden;
     border-radius: 50%;
-    margin-right: 20px;
+    overflow: hidden;
+    margin-right: $spacing-lg;
     display: flex;
-    background-color: $white;
-    align-items: center;
     justify-content: center;
+    background-color: $white;
 
     img {
-        max-width: 100%;
-        max-height: 100%;
+        min-width: 100%;
+        min-height: 100%;
         object-fit: cover;
     }
 

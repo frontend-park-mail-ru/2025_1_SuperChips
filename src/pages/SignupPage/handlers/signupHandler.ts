@@ -37,7 +37,7 @@ export const signupHandler = async (event: SubmitEvent): Promise<void> => {
 
     const response = await Auth.register(inputData);
 
-    if (response instanceof Error)  {
+    if (response instanceof Error || !response.ok) {
         const emailIcon = document.querySelector('#email-error-icon');
         const message = document.querySelector('#email-error');
         const usernameIcon = document.querySelector('#username-error-icon');

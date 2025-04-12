@@ -28,17 +28,33 @@ class Api {
         method: TMethods,
         path: string,
         headers: HeadersInit | undefined,
-        body: object | null = null
+        body: object | FormData | null = null
     ): Promise<Response|Error> {
         try {
             const url = this.#apiBaseUrl + path;
+
+            let bodyPayload;
+
+            if (body instanceof FormData) {
+                bodyPayload = body;
+            } else if (body) {
+                bodyPayload = JSON.stringify(body);
+                if (headers) {
+                    headers = {
+                        ...headers,
+                        'Content-Type': 'application/json'
+                    };
+                }
+            } else {
+                bodyPayload = null;
+            }
 
             const state: RequestInit = {
                 method: method,
                 headers: headers,
                 mode: 'cors',
                 credentials: 'include',
-                body: body ? JSON.stringify(body) : null,
+                body: bodyPayload,
             };
 
             const response = await fetch(url, state);
@@ -75,7 +91,7 @@ class Api {
 	 */
     async post(
         url: string,
-        body: object | null = null
+        body: object | FormData | null = null
     ): Promise<Response|Error> {
         const headers: HeadersInit = {
             'X-CSRF-Token': this.#csrf.get(),
@@ -89,7 +105,7 @@ class Api {
 	 */
     async put(
         url: string,
-        body: object | null = null
+        body: object | FormData | null = null
     ): Promise<Response|Error> {
         const headers = {
             'X-CSRF-Token': this.#csrf.get(),
@@ -117,7 +133,7 @@ class Api {
      */
     async patch(
         url: string,
-        body: object
+        body: object | FormData
     ): Promise<Response|Error> {
         const headers: HeadersInit = {
             'X-CSRF-Token': this.#csrf.get(),

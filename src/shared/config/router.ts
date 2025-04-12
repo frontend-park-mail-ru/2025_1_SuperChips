@@ -47,6 +47,7 @@ export const config: RouterConfig = {
             authOnly: true,
             hasNavbar: true,
             hasSidebar: true,
+            hasBackButton: true
         },
         feed: {
             href: '/feed',

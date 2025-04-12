@@ -2,7 +2,7 @@ import type { ISignupFormData } from 'pages/SignupPage';
 import type { IUser } from 'entities/User';
 import { API } from 'shared/api';
 import { Navbar } from 'widgets/navbar';
-import { loadUserBoards } from 'features/boardLoader';
+import { fetchUserBoards } from 'features/boardLoader';
 
 type TLoginData = {
     email: string;
@@ -92,7 +92,7 @@ class auth {
 
             await Navbar();
 
-            await loadUserBoards(data.username);
+            await fetchUserBoards(data.username);
         }
     };
 
@@ -132,7 +132,6 @@ class auth {
     updateAvatar = async (formData: FormData) => {
         return await API.put('/api/v1/profile/avatar', formData);
     };
-
 }
 
 export const Auth = new auth();

@@ -1,4 +1,4 @@
-import { validateUsername, validateBirthday } from 'shared/validation';
+import { validateBirthday, validateUsername } from 'shared/validation';
 import { debounce } from 'shared/utils';
 
 export const validateProfileField = (event: Event): void => {
@@ -15,18 +15,6 @@ export const validateProfileField = (event: Event): void => {
     let errorText = '';
 
     switch (field) {
-    case 'firstName': {
-        const validationResult = validateUsername(value);
-        showError = !validationResult.isValid;
-        errorText = validationResult.error;
-        break;
-    }
-    case 'lastName': {
-        const validationResult = validateUsername(value);
-        showError = !validationResult.isValid;
-        errorText = validationResult.error;
-        break;
-    }
     case 'username': {
         const validationResult = validateUsername(value);
         showError = !validationResult.isValid;

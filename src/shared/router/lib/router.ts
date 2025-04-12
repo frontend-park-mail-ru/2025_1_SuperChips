@@ -99,7 +99,7 @@ const findMatch = async (page: string) => {
 
 
     if (match === 'profile') {
-        const userExists = await API.get(`/api/v1/user/${page}`);
+        const userExists = await API.get(`/api/v1/users/${page}`);
         if (userExists instanceof Error || !userExists.ok) {
             match = 'feed';
         }

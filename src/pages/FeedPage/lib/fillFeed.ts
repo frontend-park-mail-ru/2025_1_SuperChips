@@ -29,8 +29,8 @@ export const fillFeed = async () => {
 
     if (!images?.data) return;
 
-    images.data.forEach((item, index) => {
-        feed.appendChild(Pin(item.media_url, index.toString()));
+    images.data.forEach((item) => {
+        feed.appendChild(Pin(item.media_url, item.flow_id));
     });
 
     feedState.isLoading = false;

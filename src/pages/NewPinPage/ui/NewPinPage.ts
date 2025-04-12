@@ -1,6 +1,7 @@
 import { submitHandler } from '../handlers/submitHandler';
 import { ImageInput } from 'shared/components/imageInput';
 import { Input } from 'shared/components/input';
+import { Toggle } from 'shared/components/toggle';
 import NewPinTemplate from './NewPinPage.hbs';
 import './NewPinPage.scss';
 
@@ -29,12 +30,18 @@ export const NewPinPage = async () => {
         if (newInput) placeholder?.replaceWith(newInput);
     }
 
-    const newPinForm = page.querySelector('.new-pin-form');
+    const newPinForm = page.querySelector<HTMLFormElement>('.new-pin-form');
+    newPinForm?.addEventListener('submit', submitHandler);
+
     const imageInput = ImageInput();
     newPinForm?.insertAdjacentElement('afterbegin', imageInput);
 
     const submitButton = page.querySelector('.create-flow-button');
     submitButton?.addEventListener('click', submitHandler);
+
+    const toggle = page.querySelector('.toggle-placeholder');
+    const newToggle = Toggle('isPrivate');
+    toggle?.replaceWith(newToggle);
 
     return page;
 };
