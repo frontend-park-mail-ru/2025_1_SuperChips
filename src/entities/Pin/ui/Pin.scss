@@ -30,9 +30,16 @@
     }
 
     &__save-button, &__dropdown-button, &__dropdown-board,
-    &__delete-button, &__save-button_active {
+    &__delete-button, &__save-button_active, &__edit-button {
         position: absolute;
         z-index: 50;
+    }
+
+    &__edit-button {
+        bottom: 10px;
+        right: 34px;
+        width: $icon-size;
+        height: $icon-size;
     }
 
     &__delete-button {

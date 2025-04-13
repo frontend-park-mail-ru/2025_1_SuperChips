@@ -1,7 +1,8 @@
 import type { IFeed } from 'pages/FeedPage';
+import { boardFeedScroll } from 'pages/BoardPage';
 import { UserPins } from 'widgets/UserPins';
 import { UserBoard } from 'widgets/UserBoard';
-import { userFeedScroll } from 'widgets/UserPins';
+import { appState } from 'shared/router';
 
 const profilePageState = {
     currentTab: 'pin',
@@ -17,13 +18,15 @@ export const handleTabBar = async (tabId: string, username: string) => {
         content.innerHTML = '';
         await UserPins(username);
         newBoard?.classList.add('hidden');
+        appState.activeTab = 'pins';
     } else if (tabId === 'boards' && profilePageState.currentTab !== 'boards') {
-        window.removeEventListener('scroll', userFeedScroll);
+        window.removeEventListener('scroll', boardFeedScroll);
         if (content.masonry) {
             content.masonry = null;
         }
         content.innerHTML = '';
         await UserBoard(username);
         newBoard?.classList.remove('hidden');
+        appState.activeTab = 'boards';
     }
 };

@@ -76,6 +76,10 @@
     &__icon-delete, &__icon-edit {
         position: absolute;
         bottom: 10px;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     &__icon-delete {

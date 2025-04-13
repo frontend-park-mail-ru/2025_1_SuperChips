@@ -64,3 +64,25 @@
     gap: 12px;
     margin-top: 12px;
 }
+
+.edit-pin__image {
+    border-radius: $border-radius;
+    height: 584px;
+    width: 404px;
+    background-color: $button-dark;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    object-fit: contain;
+
+    transition: all ease-in 300ms;
+
+    &:hover {
+        transform: scaleY(0.99) translateZ(5px);
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+}

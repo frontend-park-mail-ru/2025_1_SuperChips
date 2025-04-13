@@ -3,6 +3,7 @@ import { pluralize } from 'shared/utils';
 import { BoardPopup } from 'widgets/BoardPopup';
 import BoardTemplate from './Board.hbs';
 import './Board.scss';
+import { navigate } from 'shared/router';
 
 
 /**
@@ -45,6 +46,11 @@ export const Board = (params: IBoardProps) => {
         });
         bin.id = `delete-${config.id}`;
     }
+
+    const preview = container.firstChild as HTMLDivElement;
+    preview?.addEventListener('click', () => {
+        navigate(`board/${config.id}`).finally();
+    });
 
     return container.firstChild as HTMLDivElement;
 };

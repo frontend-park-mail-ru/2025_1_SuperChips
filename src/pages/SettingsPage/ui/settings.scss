@@ -35,8 +35,9 @@
 .settings-content-container {
     flex: 1;
     border-radius: $border-radius;
-    padding: 0 $spacing-xl;
+    margin: 0 $spacing-xl;
     min-height: calc(100vh - $navbar-height);
+    max-width: $input-width;
 }
 
 .settings-header {
@@ -71,12 +72,29 @@
         border-radius: $border-radius;
         font-size: $font-size-sm;
         transition: all 0.2s ease;
-        resize: vertical;
+        resize: none;
+        height: auto;
 
         &:focus {
             outline: none;
             border-color: rgba($white, 0.8);
             background-color: rgba($white, 0.05);
+        }
+
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+            border: 2px solid transparent;
+            background-clip: content-box;
         }
     }
 }

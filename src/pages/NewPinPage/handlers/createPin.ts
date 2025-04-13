@@ -3,7 +3,7 @@ import { API } from 'shared/api';
 import { savePinToBoard } from 'entities/Pin';
 import { USER_OWN_PINS_BOARD } from 'shared/config/constants';
 
-export const submitHandler = async () => {
+export const createPin = async () => {
     const imageInput = document.querySelector<HTMLInputElement>('.image-input__field');
     const titleInput = document.querySelector<HTMLInputElement>('#title');
     const aboutInput = document.querySelector<HTMLTextAreaElement>('#about');
@@ -17,11 +17,11 @@ export const submitHandler = async () => {
     formData.append('image', imageInput.files[0]);
 
     if (titleInput.value !== '') {
-        formData.append('title', titleInput.value.trim());
+        formData.append('header', titleInput.value.trim());
     }
 
     if (aboutInput.value !== '') {
-        formData.append('about', aboutInput.value.trim());
+        formData.append('description', aboutInput.value.trim());
     }
 
     formData.append('is_private', privateInput.checked.toString());

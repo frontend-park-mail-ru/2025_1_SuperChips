@@ -1,0 +1,47 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+
+.board {
+    grid-area: page;
+    min-height: calc(100vh - $navbar-height);
+
+    &-page {
+        @include main-page();
+    }
+
+    &__header {
+        margin-top: $spacing-md;
+        font-size: $font-size-xl;
+        color: $white;
+        font-weight: bold;
+    }
+
+    &__feed {
+        margin-top: $spacing-xl;
+    }
+}
+
+
+.divider {
+    width: calc(100% - $feed-padding);
+    margin-top: $spacing-lg;
+    height: $divider-height;
+    border-radius: $border-radius;
+
+    background: linear-gradient(45deg, #FFA500, #32CD32, #1E90FF, #FF69B4);
+    background-size: 300% 300%;
+    animation: gradientBG 8s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}

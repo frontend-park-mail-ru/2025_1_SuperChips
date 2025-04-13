@@ -1,7 +1,7 @@
 import type { Route } from 'shared/config/router';
+import { config } from 'shared/config/router';
 import type { IFeed } from 'pages/FeedPage';
 import { debouncedFeedScroll } from 'pages/FeedPage';
-import { config } from 'shared/config/router';
 import { root } from 'app/app';
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api';
@@ -9,15 +9,16 @@ import { API } from 'shared/api';
 interface AppState {
     lastPage: string | null,
     activePage: string | null,
+    activeTab: string | null,
     href: string | null,
     isShowingToast: boolean,
     isShowingPopup: boolean,
-
 }
 
 export const appState: AppState = {
     lastPage: null,
     activePage: null,
+    activeTab: null,
     href: null,
     isShowingToast: false,
     isShowingPopup: false,
@@ -44,6 +45,12 @@ export const navigate = async (
         newHref = `/${page}`;
     } else if (match === 'pin') {
         renderProps = page.slice(5);
+        newHref = `/${page}`;
+    } else if (match === 'board') {
+        renderProps = page.slice(6);
+        newHref = `/${page}`;
+    } else if (match === 'editPin') {
+        renderProps = page.slice(10);
         newHref = `/${page}`;
     } else {
         renderProps = '';
@@ -134,6 +141,7 @@ const updateBars = (route: Route) => {
     const showBackButton = route.hasBackButton;
     backButton?.classList.toggle('hidden', !showBackButton);
 };
+
 
 const cleanup = () => {
     const feed = document.querySelector<IFeed>('#feed');

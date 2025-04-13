@@ -74,5 +74,18 @@ export const createProfileSettings = () => {
 
     form?.addEventListener('submit', handleProfileUpdate);
 
+    const nickname = userData.public_name;
+    const birthday = userData.birthday.toISOString().split('T')[0];
+
+    const nicknameInput = container.querySelector<HTMLInputElement>('#username');
+    if (nicknameInput) {
+        nicknameInput.value = nickname;
+    }
+
+    const birthdayInput = container.querySelector<HTMLInputElement>('#birthday');
+    if (birthdayInput) {
+        birthdayInput.value = birthday;
+    }
+
     return container;
 };

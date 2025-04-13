@@ -31,9 +31,9 @@ export const createBoard = async () => {
         is_private: privateCheckbox.checked,
     });
 
-    addBoardName(input.value.trim());
+    addBoardName(input.value.trim(), id);
 
-    if (appState.activePage === 'profile') {
+    if (appState.activePage === 'profile' && appState.activeTab === 'boards') {
         const feed = document.querySelector('#feed');
         const emptyPage = document.querySelector('.empty-page');
         emptyPage?.remove();

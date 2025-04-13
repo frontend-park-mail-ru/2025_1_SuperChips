@@ -14,6 +14,7 @@ type TLoginData = {
 interface IUserData extends IUser {
     shortUsername?: string,
     authorized?: boolean,
+    id?: string,
 }
 
 /**
@@ -101,6 +102,7 @@ class auth {
                 shortUsername: data.username[0].toUpperCase(),
                 authorized: true,
                 public_name: data.publicName || data.username,
+                id: data.user_id,
             };
 
             await Navbar();

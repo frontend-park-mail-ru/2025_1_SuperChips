@@ -4,11 +4,11 @@ import { savePinToBoard } from 'entities/Pin';
 import { navigate } from 'shared/router';
 import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
-import './OnePinPage.scss';
-import template from './OnePinPage.hbs';
+import './PinPage.scss';
+import template from './PinPage.hbs';
 
 
-export const OnePinPage = async (pinID: string) => {
+export const PinPage = async (pinID: string) => {
     const container = document.createElement('div');
     container.classList.add('one-pin-page-wrapper');
 

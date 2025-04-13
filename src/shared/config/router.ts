@@ -1,6 +1,7 @@
+import { PinPage } from 'pages/PinPage';
 import { FeedPage } from 'pages/FeedPage';
+import { BoardPage } from 'pages/BoardPage';
 import { LoginPage } from 'pages/LoginPage';
-import { OnePinPage } from 'pages/OnePinPage';
 import { SignupPage } from 'pages/SignupPage';
 import { NewPinPage } from 'pages/NewPinPage';
 import { ProfilePage } from 'pages/ProfilePage';
@@ -60,14 +61,23 @@ export const config: RouterConfig = {
         newPin: {
             href: '/flow/new',
             title: 'Новый flow',
-            render: NewPinPage,
+            render: () => NewPinPage('create'),
+            authOnly: true,
+            hasSidebar: true,
+            hasNavbar: true,
+            hasBackButton: true
+        },
+        editPin: {
+            href: /^flow\/edit\/\S+$/,
+            title: 'Изменение flow',
+            render: (pinID: string) => NewPinPage('edit', pinID),
             authOnly: true,
             hasSidebar: true,
             hasNavbar: true,
             hasBackButton: true
         },
         profile: {
-            href: /^[a-zA-Z0-9_]+$/,
+            href: /^[a-zA-Z0-9._\-@#$%&*!]+$/,
             title: 'Профиль',
             render: (username: string) => {
                 return ProfilePage(username);
@@ -80,7 +90,17 @@ export const config: RouterConfig = {
             href: /^flow\/[a-zA-Z0-9]+$/,
             title: 'Flow',
             render: (flowID: string) => {
-                return OnePinPage(flowID);
+                return PinPage(flowID);
+            },
+            hasNavbar: true,
+            hasSidebar: true,
+            hasBackButton: true,
+        },
+        board: {
+            href: /^board\/\S+$/,
+            title: 'Доска',
+            render: (boardID: string) => {
+                return BoardPage(boardID);
             },
             hasNavbar: true,
             hasSidebar: true,
