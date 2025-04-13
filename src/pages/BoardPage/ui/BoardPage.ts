@@ -17,6 +17,7 @@ export const boardFeedState = {
     own: false,
     canDelete: false,
     canRemove: false,
+    canEdit: false,
 };
 
 
@@ -37,17 +38,16 @@ export const BoardPage = async (boardID: string) => {
     boardFeedState.own = Auth.userData ? Auth.userData.id === body.data.author_id : false;
     const own = boardFeedState.own;
 
-    boardFeedState.own = own;
     const config = {
         name: body.data.name,
     };
 
-    if (body.data.name === USER_OWN_PINS_BOARD && own) {
-        boardFeedState.canDelete = true;
-    } else if (body.data.name === USER_OWN_PINS_BOARD && !own) {
-        config.name = `Созданные @${body.data.username}`;
-    } else if (own) {
-        boardFeedState.canRemove = true;
+    boardFeedState.canDelete = body.data.name === USER_OWN_PINS_BOARD && own;
+    boardFeedState.canEdit = body.data.name === USER_OWN_PINS_BOARD && own;
+    boardFeedState.canRemove = body.data.name !== USER_OWN_PINS_BOARD && own;
+
+    if (body.data.name === USER_OWN_PINS_BOARD && !own) {
+        config.name = `Созданные @${body.data.author_username}`;
     }
 
     page.innerHTML = template(config);

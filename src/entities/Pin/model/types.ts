@@ -6,4 +6,5 @@ export interface IPinProps {
     canDelete?: boolean,
     canRemove?: boolean,
     authorized?: boolean,
+    canEdit?: boolean,
 }

@@ -10,6 +10,7 @@ import './UserPins.scss';
 export const UserPins = async (username: string) => {
     boardFeedState.page = 1;
     boardFeedState.own = Auth.userData ? Auth.userData.username === username : false;
+    boardFeedState.canRemove = boardFeedState.own;
     await findBoardID(username);
 
     const feed = document.querySelector<IFeed>('.profile__feed');

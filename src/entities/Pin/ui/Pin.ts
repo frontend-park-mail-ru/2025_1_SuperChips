@@ -15,7 +15,7 @@ export const Pin = (params: IPinProps) => {
     const config = {
         ...params,
         authorized: !!Auth.userData,
-        showDelete: params.canDelete || params.canRemove,
+        mutable: params.canDelete || params.canRemove,
     };
 
     container.innerHTML = template(config);
