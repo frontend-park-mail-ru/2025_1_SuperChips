@@ -134,10 +134,11 @@ export class Masonry {
     private setupMutationObserver() {
         this.observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
-                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                if (mutation.type === 'childList' && (mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0)) {
                     const newItems: HTMLElement[] = [];
+                    const array = mutation.addedNodes.length > 0 ? mutation.addedNodes : mutation.removedNodes;
 
-                    Array.from(mutation.addedNodes).forEach((node) => {
+                    Array.from(array).forEach((node) => {
                         if (node instanceof HTMLElement) {
                             if (node.matches(this.options.itemSelector)) {
                                 newItems.push(node);

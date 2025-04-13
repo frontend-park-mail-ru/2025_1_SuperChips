@@ -11,6 +11,7 @@
     }
 
     &__feed {
+        column-gap: $spacing-xl;
         grid-area: page;
         display: flex;
         justify-content: flex-start;

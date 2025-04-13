@@ -1,6 +1,7 @@
 import type { Route } from 'shared/config/router';
+import type { IFeed } from 'pages/FeedPage';
+import { debouncedFeedScroll } from 'pages/FeedPage';
 import { config } from 'shared/config/router';
-import { debouncedScroll } from 'pages/FeedPage';
 import { root } from 'app/app';
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api';
@@ -8,13 +9,16 @@ import { API } from 'shared/api';
 interface AppState {
     lastPage: string | null,
     activePage: string | null,
+    href: string | null,
     isShowingToast: boolean,
     isShowingPopup: boolean,
+
 }
 
 export const appState: AppState = {
     lastPage: null,
     activePage: null,
+    href: null,
     isShowingToast: false,
     isShowingPopup: false,
 };
@@ -30,10 +34,6 @@ export const navigate = async (
 ): Promise<void> => {
 
     const match = await findMatch(page);
-    if (match === appState.activePage) {
-        return;
-    }
-
     const route = config.menu[match];
 
     let renderProps;
@@ -42,16 +42,21 @@ export const navigate = async (
     if (match === 'profile') {
         renderProps = page;
         newHref = `/${page}`;
-    } else if (match === 'flow') {
+    } else if (match === 'pin') {
         renderProps = page.slice(5);
-        newHref = `/flow/${page}`;
+        newHref = `/${page}`;
     } else {
         renderProps = '';
         newHref = route.href.toString();
     }
 
+    if (match === appState.activePage && newHref === appState.href) {
+        return;
+    }
+
 
     updateBars(route);
+    cleanup();
 
     const newPage = await route.render(renderProps);
     root.innerHTML = '';
@@ -61,7 +66,7 @@ export const navigate = async (
 
 
     if (appState.activePage === 'feed' && newHref !== '/feed') {
-        window.removeEventListener('scroll', debouncedScroll);
+        window.removeEventListener('scroll', debouncedFeedScroll);
     }
 
     appState.activePage = match;
@@ -110,9 +115,16 @@ const findMatch = async (page: string) => {
 
 
 const updateBars = (route: Route) => {
-    const navbar = document.querySelector('.navbar');
+    const navbar = document.querySelector<HTMLDivElement>('.navbar');
     const showNavbar = route.hasNavbar;
     navbar?.classList.toggle('display-none', !showNavbar);
+
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    if (scrollbarWidth > 0 && navbar) {
+        navbar.style.paddingRight = `${scrollbarWidth}px`;
+    } else if (scrollbarWidth <= 0 && navbar) {
+        navbar.style.paddingRight = '0';
+    }
 
     const sidebarButtons = document.querySelector<HTMLDivElement>('.sidebar__button-container');
     const showSidebar = route.hasSidebar && !!Auth.userData;
@@ -121,4 +133,11 @@ const updateBars = (route: Route) => {
     const backButton = document.getElementById('go-back-button');
     const showBackButton = route.hasBackButton;
     backButton?.classList.toggle('hidden', !showBackButton);
+};
+
+const cleanup = () => {
+    const feed = document.querySelector<IFeed>('#feed');
+    if (feed?.masonry) {
+        feed.masonry.destroy();
+    }
 };

@@ -1,8 +1,8 @@
 import { handleProfileUpdate } from '../handlers/profileUpdate';
-import { validateProfileField } from '../handlers/profileValidation';
+import { debouncedProfileValidation, validateProfileField } from '../handlers/profileValidation';
 import { Auth } from 'features/authorization';
 import profileTemplate from './ProfileSettings.hbs';
-import { Input } from 'shared/components/input';
+import { dateHandler, Input } from 'shared/components/input';
 import { avatarUpdate } from '../handlers/avatarUpdate';
 
 
@@ -18,7 +18,7 @@ export const createProfileSettings = () => {
             inputLabel: 'Никнейм',
             value: userData.username || '',
             errorMessage: 'Неверный формат никнейма',
-            maxlength: 120,
+            maxlength: 63,
             onInput: validateProfileField,
             transparent: true,
         },
@@ -65,9 +65,12 @@ export const createProfileSettings = () => {
         
         const aboutTextarea = form.querySelector<HTMLTextAreaElement>('#about');
         if (aboutTextarea) {
-            aboutTextarea.addEventListener('input', validateProfileField);
+            aboutTextarea.addEventListener('input', debouncedProfileValidation);
         }
     }
+
+    const dateInput = document.querySelector<HTMLInputElement>('#birthday');
+    dateInput?.addEventListener('input', dateHandler);
 
     form?.addEventListener('submit', handleProfileUpdate);
 

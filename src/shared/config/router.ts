@@ -1,5 +1,6 @@
 import { FeedPage } from 'pages/FeedPage';
 import { LoginPage } from 'pages/LoginPage';
+import { OnePinPage } from 'pages/OnePinPage';
 import { SignupPage } from 'pages/SignupPage';
 import { NewPinPage } from 'pages/NewPinPage';
 import { ProfilePage } from 'pages/ProfilePage';
@@ -74,6 +75,16 @@ export const config: RouterConfig = {
             hasNavbar: true,
             hasSidebar: true,
             hasBackButton: true
+        },
+        pin: {
+            href: /^flow\/[a-zA-Z0-9]+$/,
+            title: 'Flow',
+            render: (flowID: string) => {
+                return OnePinPage(flowID);
+            },
+            hasNavbar: true,
+            hasSidebar: true,
+            hasBackButton: true,
         }
     }
 };

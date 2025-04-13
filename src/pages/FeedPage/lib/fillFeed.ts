@@ -1,8 +1,9 @@
-import { feedState } from '../ui/FeedPage';
-import { debouncedScroll } from '../handlers/handleScroll';
+import type { IPinProps } from 'entities/Pin/model/types';
+import { debouncedFeedScroll } from '../handlers/handleScroll';
 import { Pin } from 'entities/Pin';
 import { Footer } from '../components/footer/footer';
 import { loadFeedPictures } from 'features/imageLoader';
+import { feedState } from '../ui/FeedPage';
 
 
 /**
@@ -19,7 +20,7 @@ export const fillFeed = async () => {
         if (!rootElement) return;
 
         rootElement.insertAdjacentHTML('beforeend', Footer().innerHTML);
-        window.removeEventListener('scroll', debouncedScroll);
+        window.removeEventListener('scroll', debouncedFeedScroll);
         feedState.isLoading = false;
 
         return null;
@@ -30,7 +31,11 @@ export const fillFeed = async () => {
     if (!images?.data) return;
 
     images.data.forEach((item) => {
-        feed.appendChild(Pin(item.media_url, item.flow_id));
+        const config: IPinProps = {
+            url: item.media_url,
+            pinID: item.flow_id,
+        };
+        feed.appendChild(Pin(config));
     });
 
     feedState.isLoading = false;

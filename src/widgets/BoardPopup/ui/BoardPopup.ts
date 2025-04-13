@@ -17,7 +17,7 @@ export type TPopupType = 'edit' | 'delete' | 'create';
 export const BoardPopup = (type: TPopupType, boardID: string | null = null, boardName: string | null = null) => {
     toggleScroll('disabled');
 
-    if (type === 'edit') {
+    if (type === 'edit' || type === 'delete') {
         const board = document.querySelector(`#board-${boardID}-name`);
         if (board) {
             boardName = board.textContent;
@@ -66,7 +66,7 @@ export const BoardPopup = (type: TPopupType, boardID: string | null = null, boar
         id: 'board-name',
         inputLabel: config[type].inputLabel,
         errorMessage: '',
-        maxlength: 120,
+        maxlength: 63,
     });
     if (newInput) input?.replaceWith(newInput);
 

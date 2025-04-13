@@ -2,9 +2,18 @@
 @use 'shared/styles/mixins' as *;
 
 .board-container {
-    margin-right: $spacing-xl;
     margin-bottom: $spacing-xl;
     max-width: 362px;
+
+    &:hover {
+        [class*="preview__icon"] {
+            visibility: visible;
+        }
+
+        [class*="img-"] {
+            filter: brightness(0.8);
+        }
+    }
 
     &__preview {
         position: relative;
@@ -20,10 +29,6 @@
                 "img-0 img-1"
                 "img-0 img-2";
 
-        &:hover {
-            cursor: pointer;
-            opacity: 0.8;
-        }
     }
 
     &__name {
@@ -47,7 +52,7 @@
         height: 100%;
 
         img[src=""], img:not([src]) {
-            display: none !important;
+            display: none;
         }
     }
 
@@ -80,10 +85,10 @@
     &__icon-edit {
         right: 34px;
     }
-}
 
-.private-icon {
-    position: absolute;
-    right: 10px;
-    top: 10px;
+    &__icon-private {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
 }

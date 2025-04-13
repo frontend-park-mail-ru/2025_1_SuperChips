@@ -7,4 +7,5 @@ export interface IBoardProps {
     flow_count: number | string,
     own: boolean,
     preview: IPicture[],
+    permanent?: boolean,
 }

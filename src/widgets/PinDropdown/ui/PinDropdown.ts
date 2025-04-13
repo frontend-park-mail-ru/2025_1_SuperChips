@@ -3,6 +3,7 @@ import { TabBar } from 'shared/components/tabBar';
 import { getBoardNames } from 'features/boardLoader';
 import { handleTabBar } from '../handlers/handleTabBar';
 import { BoardPopup, closePopup, toggleScroll } from 'widgets/BoardPopup';
+import { USER_OWN_PINS_BOARD, USER_SAVED_PINS_BOARD } from 'shared/config/constants';
 import { appState } from 'shared/router';
 import { root } from 'app/app';
 import template from './PinDropdown.hbs';
@@ -34,7 +35,9 @@ export const PinDropdown = (pinID: string) => {
 
     const boardList = getBoardNames();
     boardList?.forEach((name, index) => {
-        tabs.push({ id: (index + 1).toString(), title: name, active: false });
+        if (name !== USER_SAVED_PINS_BOARD && name !== USER_OWN_PINS_BOARD) {
+            tabs.push({ id: (index + 1).toString(), title: name, active: false });
+        }
     });
 
     const newTabBar = TabBar(tabs, 'vertical', (tabId) => {
@@ -67,9 +70,11 @@ export const PinDropdown = (pinID: string) => {
 
 
 const findPosition = (pinID: string) => {
-    const pin = document.querySelector(`#pin-${pinID}`);
+    const pin = document.querySelector('.dropdown-icon')
+        || document.querySelector(`#pin-${pinID}`);
     const rect = pin?.getBoundingClientRect();
     if (!rect) return { x: 0, y: 0 };
+
 
     let x = rect.left - 80;
     let y = rect.top + 60;

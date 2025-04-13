@@ -151,9 +151,7 @@
     }
 
     .shortUsername {
-        user-select: none;
-        font-size: $font-size-xxl;
-        color: $text-dark;
+        @include short-username;
     }
 }
 

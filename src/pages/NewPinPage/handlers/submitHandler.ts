@@ -1,5 +1,7 @@
 import { Toast } from 'shared/components/Toast';
 import { API } from 'shared/api';
+import { savePinToBoard } from 'entities/Pin';
+import { USER_OWN_PINS_BOARD } from 'shared/config/constants';
 
 export const submitHandler = async () => {
     const imageInput = document.querySelector<HTMLInputElement>('.image-input__field');
@@ -35,5 +37,9 @@ export const submitHandler = async () => {
         btn?.click();
 
         Toast('Flow был успешно создан', 'message', 5000);
+
+        const body = await response.json();
+
+        await savePinToBoard(body.data.flow_id, USER_OWN_PINS_BOARD);
     }
 };

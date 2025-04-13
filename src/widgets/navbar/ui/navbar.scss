@@ -50,33 +50,11 @@ $border-radius: 20px;
 }
 
 .navbar__profile-picture {
-    width: $profile-picture-size;
-    height: $profile-picture-size;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: $white;
-    display: flex;
-    flex-shrink: 0;
-    justify-content: center;
-    margin-right: $spacing-lg;
-
-    img {
-        min-width: 100%;
-        min-height: 100%;
-        object-fit: cover;
-        margin: 0;
-    }
-
-    &:hover {
-        opacity: $opacity-80;
-        cursor: pointer;
-    }
+    @include profile-picture-small;
 }
 
 .shortUsername {
-    user-select: none;
-    font-size: $font-size-xxl;
-    font-weight: bold;
+    @include short-username;
 }
 
 .feed-redirect {

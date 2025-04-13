@@ -1,0 +1,147 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+.one-pin-page-wrapper {
+    @include main-page;
+}
+
+.one-pin-page {
+    grid-area: page;
+    display: grid;
+    grid-template-areas: 'box-1 box-2';
+    grid-template-columns: 404px auto;
+}
+
+.box-1 {
+    border-radius: $border-radius;
+    height: 584px;
+    width: 404px;
+    background-color: $button-dark;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+
+    transition: all ease-in 300ms;
+
+    &:hover {
+        transform: scaleY(0.99) translateZ(5px);
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+}
+
+.box-2 {
+    margin-left: 60px;
+    color: #fff;
+
+    &__buttons {
+        display: flex;
+        gap: 36px;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 20px;
+
+        &__button {
+            display: flex;
+            gap: 16px;
+        }
+    }
+
+    &__save-button {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        img {
+            width: 18px;
+            height: 18px;
+        }
+    }
+
+    &__text-area {
+        text-wrap: wrap;
+        gap: 24px;
+    }
+}
+
+.one-pin__author-area {
+    display: flex;
+    align-items: center;
+    margin-top: $spacing-xxl;
+    margin-right: auto;
+
+    &__pfp {
+        @include profile-picture-small;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__username {
+        white-space: nowrap;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    &__tag {
+        white-space: nowrap;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+
+.like, .like_active {
+    width: $icon-size;
+    height: $icon-size;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.like {
+    content: url("/public/icons/like.svg");
+}
+
+.like_active {
+    content: url("/public/icons/like-filled.svg");
+}
+
+.save-button {
+    background-color: #fff;
+    color: #000;
+    width: 94px;
+    height: 44px;
+    border-radius: $border-radius;
+    border: none;
+    flex-shrink: 0;
+
+    &:hover {
+        background-color: #000;
+        color: #fff;
+    }
+}
+
+.one-pin-header {
+    margin-top: 30px;
+    font-size: 36px;
+}
+
+.one-pin-description {
+    margin-top: 10px;
+}
+
+.dropdown-icon {
+    width: $icon-size;
+    height: $icon-size;
+    cursor: pointer;
+}

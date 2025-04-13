@@ -7,6 +7,11 @@
     color: $text-gray;
 }
 
+.input-container {
+    max-width: $input-width;
+}
+
+
 .input {
     width: $input-width;
     margin-top: $spacing-xs;
@@ -63,4 +68,9 @@
 
 .hidden {
     visibility: hidden;
+}
+
+.input-field-label {
+    max-width: 100%;
+    overflow-wrap: break-word;
 }

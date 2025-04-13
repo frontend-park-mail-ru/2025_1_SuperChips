@@ -14,15 +14,17 @@
 }
 
 .popup {
+    @include popup-scroll;
+    overflow-x: hidden;
     position: fixed;
-    top: calc(100vh / 2 - 350px / 2);
-    left: calc((100vw - 560px) / 2);
-    width: 560px;
-    height: 350px;
-    background-color: #fff;
+    top: calc((100vh - $board-popup-height) / 2);
+    left: calc((100vw - $board-popup-width) / 2);
+    width: $board-popup-width;
+    height: $board-popup-height;
+    background-color: $white;
     border-radius: $border-radius;
     z-index: 1100;
-    padding: 34px 60px;
+    padding: $spacing-xl $spacing-xxl;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,7 +41,7 @@
 
     &__create-button, &__delete-button, &__edit-button, &__confirm-button {
         width: 440px;
-        height: $button-height;
+        min-height: $button-height;
         border: none;
         border-radius: $border-radius;
         color: white;
@@ -68,8 +70,10 @@
 
 
 .popup__text {
+    max-width: calc($board-popup-width - 2 * $spacing-xxl);
     align-self: flex-start;
     margin-bottom: 12px;
+    overflow-wrap: break-word;
 }
 
 .private-checkbox-area {

@@ -37,7 +37,7 @@ export const createBoard = async () => {
         const feed = document.querySelector('#feed');
         const emptyPage = document.querySelector('.empty-page');
         emptyPage?.remove();
-        feed?.insertBefore(newBoard, feed.firstChild);
+        feed?.appendChild(newBoard);
     }
 
     const background = document.querySelector<HTMLDivElement>('.black-background');

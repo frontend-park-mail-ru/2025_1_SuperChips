@@ -1,12 +1,15 @@
-<div class="pin" id="pin-{{id}}">
+<div class="pin" id="pin-{{pinID}}">
     <img src="{{url}}" class="pin__picture" alt="">
     {{#if authorized}}
         <p class="hidden pin__dropdown-board">Мои flow</p>
         <img src="/public/icons/arrow-down.svg" class="hidden pin__dropdown-button" alt="">
-        <button class="hidden pin__save-button">Сохранить</button>
-        {{#if canDelete}}
+        {{#if saved}}
+            <button class="hidden pin__save-button_active">Сохранено</button>
+        {{else}}
+            <button class="hidden pin__save-button">Сохранить</button>
+        {{/if}}
+        {{#if showDelete}}
             <img src="/public/icons/delete.svg" class="hidden pin__delete-button" alt="">
         {{/if}}
-
     {{/if}}
 </div>

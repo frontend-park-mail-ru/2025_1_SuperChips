@@ -1,0 +1,45 @@
+<div class="one-pin-page" id="page">
+    <div class="box-1">
+        <img src="{{media_url}}" id="pin-{{flow_id}}" alt="{{description}}">
+    </div>
+    <div class="box-2">
+        {{#if authorized}}
+            <div class="box-2__buttons">
+                <div>
+                    <div class="box-2__buttons__button">
+                        <img
+                                id="like"
+                                src="/public/icons/like{{#if is_liked}}-filled{{/if}}.svg"
+                                class="like{{#if is_liked}}_active{{/if}}"
+                                alt="like button"
+                        >
+                        <p id="like-count">{{like_count}}</p>
+                    </div>
+                </div>
+                <div class="box-2__save-button">
+                    <p class="save-button__text" id="save-button-text">Мои flow</p>
+                    <img id="dropdown-button" class="dropdown-icon" src="/public/icons/arrow-down.svg"
+                         alt="select board to save">
+                    <button class="save-button">Сохранить</button>
+                </div>
+            </div>
+        {{/if}}
+        <div class="box-2__text-area">
+            <div class="one-pin-header">{{header}}</div>
+            <div class="one-pin-description">{{description}}</div>
+        </div>
+        <div class="one-pin__author-area">
+            <div class="one-pin__author-area__pfp">
+                {{#if author_pfp}}
+                    <img src="{{author_pfp}}" alt="author profile picture">
+                {{else}}
+                    <p class="short-username">{{shortUsername}}</p>
+                {{/if}}
+            </div>
+            <div>
+                <p class="one-pin__author-area__username">{{username}}</p>
+                <p class="one-pin__author-area__tag">@{{author}}</p>
+            </div>
+        </div>
+    </div>
+</div>

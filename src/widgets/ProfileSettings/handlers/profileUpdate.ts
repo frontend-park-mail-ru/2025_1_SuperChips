@@ -1,15 +1,13 @@
-import { Toast } from 'shared/components/Toast';
 import { formatDateToISO } from 'shared/utils';
-import { API } from 'shared/api';
+import { updateProfileData } from 'features/UpdateProfile';
 
-// Схема как в БД, но на странице есть только public_name, birthday и about
-interface IProfileSettings {
+
+export interface IProfileSettings {
     public_name?: string,
     birthday?: string,
     about?: string,
-    username?: string,
-    email?: string,
 }
+
 
 export const handleProfileUpdate = async (event: SubmitEvent): Promise<void> => {
     event.preventDefault();
@@ -32,9 +30,5 @@ export const handleProfileUpdate = async (event: SubmitEvent): Promise<void> => 
         payload.about = aboutInput.value.trim();
     }
 
-    const response = await API.patch('/api/v1/profile/update', payload);
-
-    if (response instanceof Response && response.ok) {
-        Toast('Профиль успешно обновлен', 'message');
-    }
+    await updateProfileData(payload);
 };
