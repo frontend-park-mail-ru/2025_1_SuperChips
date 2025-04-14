@@ -5,8 +5,8 @@
     <div class="input-placeholder"></div>
 
     <div class="private-checkbox-area {{#if delete}}hidden{{/if}}">
-        <input id="private-checkbox" type="checkbox">
-        <label for="private-checkbox">Сделать доску приватной</label>
+        <div class="toggle-placeholder"></div>
+        <label>Сделать доску приватной</label>
     </div>
     <img class="popup__close" src="/public/icons/cross-grey.svg" alt="close popup">
     <button id="popup-button" class="popup__{{type}}-button" {{#unless edit}}disabled="disabled"{{/unless}}>

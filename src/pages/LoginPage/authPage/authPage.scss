@@ -46,6 +46,7 @@
     left: 0;
     transform: rotate(110deg) translateY(20%) translateX(15%);
     -webkit-user-drag: none;
+    z-index: 100;
 }
 
 .background {
@@ -62,6 +63,7 @@
     top: 292px;
     columns: 205px auto;
     margin-right: $spacing-md;
+    z-index: 100;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {

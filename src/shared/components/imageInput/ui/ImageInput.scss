@@ -14,12 +14,14 @@
     position: relative;
     transition: all 0.3s ease;
     border: 2px dashed transparent;
-    
+
     &__button {
         background-color: #323232;
         border: none;
         color: $text-light;
         text-align: center;
+        width: 100%;
+        height: 60%;
 
         &:hover {
             cursor: pointer;

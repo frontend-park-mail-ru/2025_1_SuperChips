@@ -9,6 +9,7 @@ import './sidebar.scss';
 export const Sidebar = async () => {
     const sidebar = document.getElementById('sidebar');
     if (!sidebar) return ;
+
     sidebar.classList.add('sidebar');
 
     const buttons = [

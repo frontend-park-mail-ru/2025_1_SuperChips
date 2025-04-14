@@ -1,8 +1,7 @@
-import { formatDateToISO } from 'shared/utils';
 import { validateSignup } from '../lib/signupValidation';
 import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
-import type { ISignupFormData } from '../model/types';
+import { getInputData } from '../lib/getInputData';
 
 
 export const signupHandler = async (event: SubmitEvent): Promise<void> => {
@@ -11,23 +10,7 @@ export const signupHandler = async (event: SubmitEvent): Promise<void> => {
     const form = document.querySelector<HTMLFormElement>('.signup-form');
     if (!form) return;
 
-    const inputData: ISignupFormData = {
-        email: '',
-        username: '',
-        birthday: '',
-        password: '',
-        passwordConfirm: '',
-    };
-
-    const inputs = form.querySelectorAll<HTMLInputElement>('.input__field');
-    inputs.forEach(input => {
-        const key = input.id as keyof ISignupFormData;
-        if (key === 'birthday') {
-            inputData[key] = formatDateToISO(input.value);
-        } else {
-            inputData[key] = input.value;
-        }
-    });
+    const inputData = getInputData();
 
     if (!validateSignup(inputData)) {
         return;
@@ -37,7 +20,7 @@ export const signupHandler = async (event: SubmitEvent): Promise<void> => {
 
     const response = await Auth.register(inputData);
 
-    if (response instanceof Error)  {
+    if (response instanceof Error || !response.ok) {
         const emailIcon = document.querySelector('#email-error-icon');
         const message = document.querySelector('#email-error');
         const usernameIcon = document.querySelector('#username-error-icon');

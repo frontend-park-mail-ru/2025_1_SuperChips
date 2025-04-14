@@ -26,7 +26,7 @@
 
 .settings-container {
     grid-area: page;
-    padding: 0 $spacing-xl $spacing-xl 0;
+    margin-right: $spacing-xl;
     max-width: 900px;
     display: flex;
     gap: 136px;
@@ -35,8 +35,9 @@
 .settings-content-container {
     flex: 1;
     border-radius: $border-radius;
-    padding: 0 $spacing-xl;
-    min-height: 848px;
+    margin: 0 $spacing-xl;
+    min-height: calc(100vh - $navbar-height);
+    max-width: $input-width;
 }
 
 .settings-header {
@@ -71,12 +72,29 @@
         border-radius: $border-radius;
         font-size: $font-size-sm;
         transition: all 0.2s ease;
-        resize: vertical;
+        resize: none;
+        height: auto;
 
         &:focus {
             outline: none;
             border-color: rgba($white, 0.8);
             background-color: rgba($white, 0.05);
+        }
+
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 5px;
+            border: 2px solid transparent;
+            background-clip: content-box;
         }
     }
 }
@@ -95,6 +113,10 @@
 
     &:hover {
         background-color: $background-light;
+    }
+
+    &:disabled {
+        background-color: $disabled-color;
     }
 }
 
@@ -133,25 +155,21 @@
 .settings-profile-picture {
     width: 80px;
     height: 80px;
-    flex-shrink: 0;
-    overflow: hidden;
     border-radius: 50%;
-    margin-right: 20px;
+    overflow: hidden;
+    margin-right: $spacing-lg;
     display: flex;
-    background-color: $white;
-    align-items: center;
     justify-content: center;
+    background-color: $white;
 
     img {
-        max-width: 100%;
-        max-height: 100%;
+        min-width: 100%;
+        min-height: 100%;
         object-fit: cover;
     }
 
     .shortUsername {
-        user-select: none;
-        font-size: $font-size-xxl;
-        color: $text-dark;
+        @include short-username;
     }
 }
 

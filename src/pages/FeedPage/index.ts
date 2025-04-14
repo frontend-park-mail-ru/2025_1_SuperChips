@@ -1,4 +1,4 @@
-export { FeedPage } from './ui/FeedPage';
-export { debouncedScroll } from './handlers/handleScroll';
-export { feedState } from './ui/FeedPage';
+export { fillFeed } from './lib/fillFeed';
+export { FeedPage, toTop, feedState } from './ui/FeedPage';
+export { debouncedFeedScroll } from './handlers/handleScroll';
 export type { IFeed } from './ui/FeedPage';

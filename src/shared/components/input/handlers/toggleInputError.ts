@@ -8,7 +8,9 @@ import { ValidationResult } from 'shared/validation';
 export const toggleInputError = (container: Element | HTMLElement, result: ValidationResult): void => {
     const message = container.querySelector('.error-message');
     const icon = container.querySelector('.input__error');
-    const input = container.querySelector<HTMLInputElement>('.input__field');
+    const input = container.querySelector<HTMLInputElement>('.input__field')
+        || container.querySelector<HTMLInputElement>('.inputTransparent__field');
+
 
     if (!message || !input || !icon) return;
 
@@ -29,14 +31,5 @@ export const toggleInputError = (container: Element | HTMLElement, result: Valid
         // Position eye icon vertically centered
         eye.style.top = '50%';
         eye.style.transform = 'translateY(-50%)';
-        
-        // Set eye icon color based on state
-        if (showError) {
-            eye.classList.add('light-text');
-            eye.style.filter = 'brightness(0) invert(1)'; // White for error state
-        } else {
-            eye.classList.add('light-text');
-            eye.style.filter = 'opacity(0.5)'; // Match border color when not in error state
-        }
     }
 };

@@ -38,7 +38,7 @@ export const inputHandler = (event: Event) => {
 
     const key = input.id as keyof IValidators;
 
-    const result = validators[key]?.(input.value) ?? { isValid: true, error: '' };
+    const result = validators[key]?.(input.value.trim()) ?? { isValid: true, error: '' };
 
     // Use the shared toggleInputError function to handle error display
     toggleInputError(container, result);

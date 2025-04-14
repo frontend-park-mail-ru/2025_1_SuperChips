@@ -1,14 +1,21 @@
 import type { ISignupFormData } from 'pages/SignupPage';
+import type { IProfileSettings } from 'widgets/ProfileSettings';
 import type { IUser } from 'entities/User';
 import { API } from 'shared/api';
 import { Navbar } from 'widgets/navbar';
-import { loadUserBoards } from 'features/boardLoader';
+import { fetchUserBoards } from 'features/boardLoader';
+import { USER_OWN_PINS_BOARD, USER_SAVED_PINS_BOARD } from 'shared/config/constants';
 
 type TLoginData = {
     email: string;
     password: string;
 };
 
+interface IUserData extends IUser {
+    shortUsername?: string,
+    authorized?: boolean,
+    id?: string,
+}
 
 /**
  * Класс, использующийся для аутентификации пользователя
@@ -16,7 +23,7 @@ type TLoginData = {
  */
 class auth {
     private API: typeof API;
-    userData: IUser | null;
+    userData: IUserData | null;
 
     constructor() {
         this.API = API;
@@ -48,11 +55,19 @@ class auth {
             this.userData = {
                 email: userData.email,
                 username: userData.username,
-                publicName: userData.username,
+                public_name: userData.username,
                 birthday: new Date(userData.birthday),
             };
 
             await Navbar();
+            await API.post(
+                `/api/v1/users/${userData.username}/boards`,
+                { name: USER_OWN_PINS_BOARD, is_private: false }
+            );
+            await API.post(
+                `/api/v1/users/${userData.username}/boards`,
+                { name: USER_SAVED_PINS_BOARD, is_private: false }
+            );
         }
 
         return response;
@@ -86,13 +101,12 @@ class auth {
                 birthday: new Date(data.birthday),
                 shortUsername: data.username[0].toUpperCase(),
                 authorized: true,
-                publicName: data.publicName || data.username,
+                public_name: data.publicName || data.username,
+                id: data.user_id,
             };
 
-
             await Navbar();
-
-            await loadUserBoards(data.username);
+            await fetchUserBoards(data.username);
         }
     };
 
@@ -104,35 +118,17 @@ class auth {
         await Navbar();
     };
 
-    /**
-     * Метод для сохренения пользовательских данных при регистрации
-     */
-    setUserData = async (data: IUser) => {
-        this.userData = {
-            ...this.userData,
-            username: data.username,
-            publicName: data.publicName || data.username,
-            email: data.email,
-            birthday: new Date(data.birthday),
-        };
-        await Navbar();
+    setUserData = (params: IProfileSettings) => {
+        if (this.userData) {
+            this.userData = {
+                ...this.userData,
+                public_name: params.public_name ?? this.userData.public_name,
+                about: params.about ?? this.userData.about,
+                shortUsername: params.public_name ? params.public_name[0].toUpperCase() : this.userData.shortUsername,
+                birthday: params.birthday ? new Date(params.birthday) : this.userData.birthday,
+            };
+        }
     };
-
-    updateProfile = async (profileData: IUser)  => {
-        return await API.patch('/api/v1/profile/update', profileData);
-    };
-
-    updatePassword = async (passwords: {
-        currentPassword: string;
-        newPassword: string;
-    }) => {
-        return await API.put('/api/v1/profile/password', { new_password: passwords.newPassword });
-    };
-
-    updateAvatar = async (formData: FormData) => {
-        return await API.put('/api/v1/profile/avatar', formData);
-    };
-
 }
 
 export const Auth = new auth();

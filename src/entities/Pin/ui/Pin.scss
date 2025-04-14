@@ -13,15 +13,13 @@
     transition: all 0.3s ease;
 
     &:hover {
+        cursor: pointer;
         [class*=" pin__"] {
             visibility: visible;
         }
-
         .pin__picture {
             filter: brightness(0.65);
         }
-
-        cursor: pointer;
     }
 
     &__picture {
@@ -31,9 +29,17 @@
         object-fit: cover;
     }
 
-    &__save-button, &__dropdown-button, &__dropdown-board, &__delete-button {
+    &__save-button, &__dropdown-button, &__dropdown-board,
+    &__delete-button, &__save-button_active, &__edit-button {
         position: absolute;
         z-index: 50;
+    }
+
+    &__edit-button {
+        bottom: 10px;
+        right: 34px;
+        width: $icon-size;
+        height: $icon-size;
     }
 
     &__delete-button {
@@ -44,17 +50,30 @@
     }
 
     &__save-button {
-        right: 6px;
-        top: 6px;
-        width: 94px;
-        height: 44px;
-        border-radius: $border-radius;
-        border: none;
         background-color: $white;
+
+        &, &_active {
+            right: 6px;
+            top: 6px;
+            width: 94px;
+            height: 44px;
+            border-radius: $border-radius;
+            border: none;
+        }
 
         &:hover {
             background-color: $black;
             color: $white;
+            cursor: pointer;
+        }
+    }
+
+
+    &__save-button_active {
+        color: $white;
+        background-color: $black;
+
+        &:hover {
             cursor: pointer;
         }
     }
@@ -71,5 +90,11 @@
         top: 16px;
         left: 10px;
         color: $white;
+        max-width: 70px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }

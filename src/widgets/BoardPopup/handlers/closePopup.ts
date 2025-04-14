@@ -17,6 +17,8 @@ export const closePopup = (event: MouseEvent | KeyboardEvent) => {
     const popup = document.querySelector('#popup');
     const background = document.querySelector<HTMLDivElement>('.black-background');
     const cross = document.querySelector<HTMLImageElement>('.popup__close');
+    const container = background?.parentElement as HTMLElement;
+
 
     document.removeEventListener('keydown', closePopup);
     document.removeEventListener('click', closePopup);
@@ -24,7 +26,8 @@ export const closePopup = (event: MouseEvent | KeyboardEvent) => {
 
     popup?.remove();
     background?.remove();
-
+    container?.remove();
+    
     toggleScroll('enabled');
     appState.isShowingPopup = false;
 };

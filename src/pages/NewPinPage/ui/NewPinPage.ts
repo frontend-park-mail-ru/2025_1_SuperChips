@@ -1,14 +1,18 @@
-import { submitHandler } from '../handlers/submitHandler';
+import { createPin } from '../handlers/createPin';
 import { ImageInput } from 'shared/components/imageInput';
 import { Input } from 'shared/components/input';
+import { Toggle } from 'shared/components/toggle';
 import NewPinTemplate from './NewPinPage.hbs';
 import './NewPinPage.scss';
+
 
 export const NewPinPage = async () => {
     const page = document.createElement('div');
 
     const config = {
+        create: true,
         header: 'Новый flow',
+        url: '',
         input:
             {
                 type: 'text',
@@ -22,19 +26,18 @@ export const NewPinPage = async () => {
 
     page.innerHTML = NewPinTemplate(config);
 
-    const form = page.querySelector('.new-pin-form');
-    if (form) {
-        const placeholder = form.querySelector('.input-placeholder');
-        const newInput = Input(config.input);
-        if (newInput) placeholder?.replaceWith(newInput);
-    }
+    const placeholder = page.querySelector('.input-placeholder');
+    placeholder?.replaceWith(Input(config.input));
 
-    const newPinForm = page.querySelector('.new-pin-form');
-    const imageInput = ImageInput();
-    newPinForm?.insertAdjacentElement('afterbegin', imageInput);
+    const newPinForm = page.querySelector<HTMLFormElement>('.new-pin-form');
+    newPinForm?.addEventListener('submit', createPin);
+    newPinForm?.insertAdjacentElement('afterbegin', ImageInput());
 
     const submitButton = page.querySelector('.create-flow-button');
-    submitButton?.addEventListener('click', submitHandler);
+    submitButton?.addEventListener('click', createPin);
+
+    const toggle = page.querySelector('.toggle-placeholder');
+    toggle?.replaceWith(Toggle('isPrivate'));
 
     return page;
 };

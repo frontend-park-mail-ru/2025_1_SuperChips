@@ -19,7 +19,7 @@ export const handleLogin = async (event: Event) => {
     inputs.forEach(input => {
         const key = input.id as keyof ILoginInputData;
 
-        inputData[key] = input.value;
+        inputData[key] = input.value.trim();
     });
 
     const response = await Auth.login(inputData);

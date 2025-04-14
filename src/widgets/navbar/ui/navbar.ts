@@ -2,6 +2,7 @@ import navbarTemplate from './navbar.hbs';
 import './navbar.scss';
 import { navigate } from 'shared/router';
 import { goToFeed } from '../handlers/goToFeed';
+import { checkAvatar } from 'shared/utils';
 import { Auth } from 'features/authorization';
 
 
@@ -16,11 +17,12 @@ export const Navbar = async () => {
     navbar.classList.add('navbar');
 
     const userData = Auth.userData;
-
+    const ok = await checkAvatar(Auth?.userData?.avatar);
     const config = {
         ...userData,
         authorized: !!userData,
         shortUsername: userData?.username[0].toUpperCase(),
+        avatar: ok ? userData?.avatar : null,
     };
 
     navbar.innerHTML = navbarTemplate(config);

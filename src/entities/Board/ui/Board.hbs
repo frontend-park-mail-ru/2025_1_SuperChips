@@ -1,21 +1,20 @@
 <div class="board-container" id="board-{{id}}">
-    <div class="board-container__preview">
+    <div class="board-container__preview" id="board-{{id}}-preview">
         {{#each preview}}
             <div class="img-{{@index}}">
                 <img
                         src="{{this}}"
                         alt="preview image"
                         class="img-{{@index}}"
-                        onerror="this.style.display='none';"
                 >
             </div>
         {{/each}}
-        {{#if own}}
-            <img class="hidden preview__icon-delete" src="/public/icons/delete.svg" alt="delete board">
-            <img class="hidden preview__icon-edit" src="/public/icons/edit.svg" alt="edit board">
-            {{#if is_private}}
-                <img class="hidden private-icon" src="/public/icons/lock.svg" alt="">
-            {{/if}}
+        {{#if mutable}}
+            <img class="hidden icon icon preview__icon-delete" src="/public/icons/delete.svg" alt="delete board">
+            <img class="hidden icon preview__icon-edit" src="/public/icons/edit.svg" alt="edit board">
+        {{/if}}
+        {{#if is_private}}
+            <img id="private-icon-{{id}}" class="preview__icon-private hidden" src="/public/icons/lock.svg" alt="">
         {{/if}}
     </div>
     <div class="board-container__name">

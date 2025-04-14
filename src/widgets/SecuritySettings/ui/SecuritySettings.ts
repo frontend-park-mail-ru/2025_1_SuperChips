@@ -1,7 +1,6 @@
 import { Input } from 'shared/components/input';
-import { debounce } from 'shared/utils';
 import { handlePasswordUpdate } from '../handlers/passwordHandler';
-import { passwordConfirmHandler } from '../handlers/passwordValidationHandlers';
+import { debouncedPasswordConfirmHandler } from '../handlers/passwordValidationHandlers';
 import securityTemplate from './SecuritySettings.hbs';
 
 export const createSecuritySettings = (): HTMLElement => {
@@ -57,10 +56,10 @@ export const createSecuritySettings = (): HTMLElement => {
     }
 
     if (form) {
-        form.addEventListener('submit', (event: Event) => {
-            handlePasswordUpdate(event as SubmitEvent);
+        form.addEventListener('submit', async (event) => {
+            await handlePasswordUpdate(event as SubmitEvent);
         });
-        form.addEventListener('input', debounce(passwordConfirmHandler, 300));
+        form.addEventListener('input', debouncedPasswordConfirmHandler);
     }
 
     return container;

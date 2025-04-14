@@ -1,34 +1,26 @@
 import type { IFeed } from 'pages/FeedPage';
+import { toTop } from 'pages/FeedPage';
 import { Masonry } from 'shared/models/Masonry';
-import { navigate } from 'shared/router';
-import { loadUserPictures } from 'features/imageLoader';
-import { Pin } from 'entities/Pin';
+import { findBoardID } from '../lib/findBoardID';
 import { Auth } from 'features/authorization';
-import emptyPageTemplate from './emptyPage.hbs';
+import { boardFeedScroll, boardFeedState, fillBoardFeed } from 'pages/BoardPage';
 import './UserPins.scss';
 
 
 export const UserPins = async (username: string) => {
+    boardFeedState.page = 1;
+    boardFeedState.own = Auth.userData ? Auth.userData.username === username : false;
+    boardFeedState.canDelete = boardFeedState.own;
+    boardFeedState.canEdit = boardFeedState.own;
+    await findBoardID(username);
+
     const feed = document.querySelector<IFeed>('.profile__feed');
     if (!feed) return;
 
-    const pictures = await loadUserPictures(username);
-
-    if (pictures?.status === 404) {
-        feed.masonry?.destroy();
-        feed.innerHTML = emptyPageTemplate({ own: Auth.userData ? Auth.userData.username === username : false });
-
-        const btn = feed.querySelector('.go-to-feed');
-        btn?.addEventListener('click', () => {
-            navigate('feed').finally();
-        });
-
-        return;
-    } else if (pictures?.status === 503) {
-        return;
-    }
-
-    if (!pictures?.data) return;
+    feed.innerHTML += `
+    <div class="scroll-to-top hidden">
+        <img src="/public/icons/arrow-up.svg" alt="scroll to top">
+    </div>`;
 
     if (!feed.masonry) {
         feed.masonry = new Masonry(
@@ -40,7 +32,11 @@ export const UserPins = async (username: string) => {
         );
     }
 
-    pictures.data.forEach((item, index) => {
-        feed.appendChild(Pin(item.media_url, index.toString()));
-    });
+    await fillBoardFeed();
+
+    const scrollButton = feed.querySelector('.scroll-to-top');
+    scrollButton?.addEventListener('click', toTop);
+
+    window.addEventListener('scroll', boardFeedScroll);
 };
+

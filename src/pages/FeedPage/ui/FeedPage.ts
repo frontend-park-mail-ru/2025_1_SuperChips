@@ -1,5 +1,5 @@
 import { fillFeed } from '../lib/fillFeed';
-import { debouncedScroll } from '../handlers/handleScroll';
+import { debouncedFeedScroll } from '../handlers/handleScroll';
 import { Masonry } from 'shared/models/Masonry';
 import feedTemplate from './FeedPage.hbs';
 import './feed.scss';
@@ -25,7 +25,7 @@ export const FeedPage = async () => {
     const scrollButton = page.querySelector('.scroll-to-top');
     scrollButton?.addEventListener('click', toTop);
 
-    window.addEventListener('scroll', debouncedScroll);
+    window.addEventListener('scroll', debouncedFeedScroll);
 
     const delayedFill = new MutationObserver(async () => {
         const feed = document.querySelector<IFeed>('.feed');
@@ -51,9 +51,11 @@ export const FeedPage = async () => {
     return page;
 };
 
-const toTop = () => {
+export const toTop = () => {
     window.scrollTo({
         top: 0,
         behavior: 'smooth'
     });
+    const scrollButton = document.querySelector('.scroll-to-top');
+    scrollButton?.classList.toggle('hidden');
 };

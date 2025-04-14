@@ -1,8 +1,11 @@
+import { IPicture } from 'features/imageLoader';
+
 export interface IBoardProps {
-    own: boolean,
-    is_private: boolean,
     id: string,
     name: string,
+    is_private: boolean,
     flow_count: number | string,
-    preview: string[],
+    own: boolean,
+    preview: IPicture[],
+    permanent?: boolean,
 }

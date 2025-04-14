@@ -3,7 +3,7 @@
 .tab-bar {
   display: flex;
   gap: $spacing-lg;
-  width: 140px;
+  min-width: 140px;
   height: fit-content;
   border-radius: $border-radius;
   margin-right: $spacing-xl;
@@ -20,6 +20,7 @@
   transition: all 0.3s ease;
   position: relative;
   border-radius: $border-radius;
+  overflow-wrap: break-word;
 
   &:hover {
       color: $text-gray;

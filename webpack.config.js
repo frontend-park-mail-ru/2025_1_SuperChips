@@ -2,6 +2,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin }  = require('clean-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 
 module.exports = {
     mode: 'development',
@@ -36,15 +40,15 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: [MiniCssExtractPlugin.loader, 'css-loader']
             },
             {
                 test: /\.s[ac]ss$/i,
                 use: [
-                    'style-loader',
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
-                    'sass-loader',
-                ],
+                    'sass-loader'
+                ]
             },
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -61,6 +65,20 @@ module.exports = {
                 }
             }
         ]
+    },
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                terserOptions: {
+                    format: {
+                        comments: false,
+                    },
+                },
+                extractComments: false,
+            }),
+            new CssMinimizerPlugin(),
+        ],
     },
     plugins: [
         new CleanWebpackPlugin(),
@@ -80,7 +98,11 @@ module.exports = {
                     }
                 }
             ]
-        })
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].[contenthash].min.css',
+            chunkFilename: 'css/[id].[contenthash].min.css'
+        }),
     ],
     devServer: {
         server: 'https',

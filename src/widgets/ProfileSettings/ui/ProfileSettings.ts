@@ -1,15 +1,16 @@
-import { ErrorToast } from 'shared/components/errorToast';
 import { handleProfileUpdate } from '../handlers/profileUpdate';
-import { validateProfileField } from '../handlers/profileValidation';
+import { debouncedProfileValidation, validateProfileField } from '../handlers/profileValidation';
 import { Auth } from 'features/authorization';
 import profileTemplate from './ProfileSettings.hbs';
-import { Input } from 'shared/components/input';
+import { dateHandler, Input } from 'shared/components/input';
+import { avatarUpdate } from '../handlers/avatarUpdate';
+import { checkAvatar } from 'shared/utils';
 
-export const createProfileSettings = () => {
+
+export const createProfileSettings = async () => {
     const container = document.createElement('div');
-    let userData = Auth.userData;
+    const userData = Auth.userData;
     if (!userData) return container;
-
 
     const fields = [
         {
@@ -18,7 +19,7 @@ export const createProfileSettings = () => {
             inputLabel: 'Никнейм',
             value: userData.username || '',
             errorMessage: 'Неверный формат никнейма',
-            maxlength: 120,
+            maxlength: 63,
             onInput: validateProfileField,
             transparent: true,
         },
@@ -33,9 +34,10 @@ export const createProfileSettings = () => {
         }
     ];
 
+    const ok = await checkAvatar(userData.avatar);
 
     const templateData = {
-        avatar: userData.avatar,
+        avatar: ok ? userData.avatar : null,
         username: userData.username,
         firstLetter: userData.username ? userData.username[0].toUpperCase() : '',
         about: userData.about || '',
@@ -46,33 +48,8 @@ export const createProfileSettings = () => {
 
     const form = container.querySelector<HTMLFormElement>('.settings-form');
     const fileInput = container.querySelector<HTMLInputElement>('#avatar');
-    
-    if (fileInput) {
-        fileInput.addEventListener('change', async (e) => {
-            const target = e.target as HTMLInputElement;
-            if (target.files && target.files[0]) {
-                const formData = new FormData();
-                formData.append('avatar', target.files[0]);
-                try {
-                    const response = await Auth.updateAvatar(formData);
-                    if (response instanceof Response && response.ok) {
-                        await Auth.fetchUserData();
-                        userData = Auth.userData;
-                        ErrorToast('Фото профиля обновлено');
-                        window.location.reload();
-                    } else if (response instanceof Response) {
-                        await response.json();
-                        ErrorToast('Ошибка при обновлении фото');
-                    } else {
-                        ErrorToast('Произошла ошибка');
-                    }
-                } catch (_error) {
-                    ErrorToast('Произошла ошибка');
-                }
-            }
-        });
-    }
-    
+    fileInput?.addEventListener('change', (event) => avatarUpdate(event));
+
     const changePhotoButton = container.querySelector('.change-photo-button');
     if (changePhotoButton && fileInput) {
         changePhotoButton.addEventListener('click', (e) => {
@@ -91,11 +68,27 @@ export const createProfileSettings = () => {
         
         const aboutTextarea = form.querySelector<HTMLTextAreaElement>('#about');
         if (aboutTextarea) {
-            aboutTextarea.addEventListener('input', validateProfileField);
+            aboutTextarea.addEventListener('input', debouncedProfileValidation);
         }
     }
 
+    const dateInput = document.querySelector<HTMLInputElement>('#birthday');
+    dateInput?.addEventListener('input', dateHandler);
+
     form?.addEventListener('submit', handleProfileUpdate);
+
+    const nickname = userData.public_name;
+    const birthday = userData.birthday.toISOString().split('T')[0];
+
+    const nicknameInput = container.querySelector<HTMLInputElement>('#username');
+    if (nicknameInput) {
+        nicknameInput.value = nickname;
+    }
+
+    const birthdayInput = container.querySelector<HTMLInputElement>('#birthday');
+    if (birthdayInput) {
+        birthdayInput.value = birthday;
+    }
 
     return container;
 };

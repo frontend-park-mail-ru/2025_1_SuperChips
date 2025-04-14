@@ -1,6 +1,7 @@
 import type { IPicture } from 'features/imageLoader';
 import { loadFeedPictures } from 'features/imageLoader';
 import { Pin } from 'entities/Pin';
+import type { IPinProps } from 'entities/Pin/model/types';
 
 /**
  * Загружает картинки и создает коллаж для страниы входа
@@ -17,8 +18,13 @@ export const fillPictureBox = async (pageNum: number) => {
         return;
     }
 
-    images.data.forEach((item: IPicture, index) => {
-        newFrame.appendChild(Pin(item.media_url, index.toString()));
+    images.data.forEach((item: IPicture) => {
+        const config: IPinProps = {
+            url: item.media_url,
+            pinID: item.flow_id,
+            saved: true,
+        };
+        newFrame.appendChild(Pin(config));
     });
 
     pictureBox.innerHTML = newFrame.innerHTML;

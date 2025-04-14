@@ -1,26 +1,10 @@
 import { validateSignup } from '../lib/signupValidation';
 import { debounce } from 'shared/utils';
-import type { ISignupFormData } from '../model/types';
-
+import { getInputData } from '../lib/getInputData';
 
 
 const signupButtonHandler = (): void => {
-    const form = document.querySelector<HTMLFormElement>('.signup-form');
-    if (!form) return;
-
-    const inputData: ISignupFormData = {
-        email: '',
-        username: '',
-        birthday: '',
-        password: '',
-        passwordConfirm: '',
-    };
-
-    const inputs = form.querySelectorAll<HTMLInputElement>('.input__field');
-    inputs.forEach(input => {
-        const key = input.id as keyof ISignupFormData;
-        inputData[key] = input.value;
-    });
+    const inputData = getInputData();
 
     const button = document.querySelector<HTMLButtonElement>('.button');
     if (!button) return;

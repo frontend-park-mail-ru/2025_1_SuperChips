@@ -1,4 +1,5 @@
 import { Input } from 'shared/components/input';
+import { Toggle } from 'shared/components/toggle';
 import { toggleScroll } from '../lib/toggleScroll';
 import { closePopup } from '../handlers/closePopup';
 import { debouncedInputHandler } from '../handlers/inputHandler';
@@ -15,6 +16,13 @@ export type TPopupType = 'edit' | 'delete' | 'create';
 
 export const BoardPopup = (type: TPopupType, boardID: string | null = null, boardName: string | null = null) => {
     toggleScroll('disabled');
+
+    if (type === 'edit' || type === 'delete') {
+        const board = document.querySelector(`#board-${boardID}-name`);
+        if (board) {
+            boardName = board.textContent;
+        }
+    }
 
     const config = {
         create: {
@@ -48,13 +56,17 @@ export const BoardPopup = (type: TPopupType, boardID: string | null = null, boar
     const popup = document.createElement('div');
     popup.innerHTML = template(config[type]);
 
+    const toggle = popup.querySelector('.toggle-placeholder');
+    const newToggle = Toggle('isPrivate');
+    toggle?.replaceWith(newToggle);
+
     const input = popup.querySelector<HTMLInputElement>('.input-placeholder');
     const newInput = Input({
         type: 'text',
         id: 'board-name',
         inputLabel: config[type].inputLabel,
         errorMessage: '',
-        maxlength: 120,
+        maxlength: 63,
     });
     if (newInput) input?.replaceWith(newInput);
 

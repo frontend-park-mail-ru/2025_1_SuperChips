@@ -1,7 +1,5 @@
-import { ErrorToast } from 'shared/components/errorToast';
-import { IPasswordFormData } from 'shared/types/ProfileFormData';
-import { Auth } from 'features/authorization';
-import { validatePassword } from 'shared/validation';
+import { Toast } from 'shared/components/Toast';
+import { API } from 'shared/api';
 
 /**
  * Handles password update form submission
@@ -11,12 +9,6 @@ export const handlePasswordUpdate = async (event: SubmitEvent): Promise<void> =>
     event.preventDefault();
 
     const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-
-    const passwordData: IPasswordFormData = {
-        currentPassword: formData.get('currentPassword') as string,
-        newPassword: formData.get('newPassword') as string
-    };
 
     // Get all input fields
     const currentPasswordField = form.querySelector<HTMLInputElement>('#currentPassword');
@@ -25,55 +17,20 @@ export const handlePasswordUpdate = async (event: SubmitEvent): Promise<void> =>
 
     if (!currentPasswordField || !newPasswordField || !confirmPasswordField) return;
 
-    // Validate current password
-    if (!currentPasswordField.value) {
-        const errorIcon = document.querySelector<HTMLElement>('#currentPassword-error-icon');
-        const errorMessage = document.querySelector<HTMLElement>('#currentPassword-error');
-        if (errorIcon && errorMessage) {
-            errorIcon.classList.remove('hidden');
-            errorMessage.classList.remove('hidden');
-            errorMessage.textContent = 'Введите текущий пароль';
-        }
-        return;
-    }
+    const payload = {
+        old_password: currentPasswordField.value.trim(),
+        new_password: newPasswordField.value.trim(),
+    };
 
-    // Validate new password
-    const passwordValidation = validatePassword(newPasswordField.value);
-    if (!passwordValidation.isValid) {
-        const errorIcon = document.querySelector<HTMLElement>('#newPassword-error-icon');
-        const errorMessage = document.querySelector<HTMLElement>('#newPassword-error');
-        if (errorIcon && errorMessage) {
-            errorIcon.classList.remove('hidden');
-            errorMessage.classList.remove('hidden');
-            errorMessage.textContent = passwordValidation.error;
-        }
-        return;
-    }
-
-    // Validate password confirmation
-    if (newPasswordField.value !== confirmPasswordField.value) {
-        const errorIcon = document.querySelector<HTMLElement>('#confirmPassword-error-icon');
-        const errorMessage = document.querySelector<HTMLElement>('#confirmPassword-error');
-        if (errorIcon && errorMessage) {
-            errorIcon.classList.remove('hidden');
-            errorMessage.classList.remove('hidden');
-            errorMessage.textContent = 'Пароли не совпадают';
-        }
-        return;
-    }
-
-    try {
-        const response = await Auth.updatePassword(passwordData);
-        if (response instanceof Response && response.ok) {
-            ErrorToast('Пароль успешно изменен');
+    const response = await API.post('/api/v1/profile/password', payload);
+    if (response instanceof Response) {
+        if (response.ok) {
+            Toast('Пароль успешно изменен', 'message');
             form.reset();
-        } else if (response instanceof Response) {
-            const errorData = await response.json();
-            ErrorToast(errorData.message || 'Ошибка при изменении пароля');
-        } else {
-            ErrorToast('Ошибка при изменении пароля');
+            const button = document.querySelector<HTMLButtonElement>('.submit-button');
+            if (button) button.disabled = true;
+        } else if (response.status === 401) {
+            Toast('Неправильный старый пароль', 'error', 5000);
         }
-    } catch (_error) {
-        ErrorToast('Произошла ошибка при изменении пароля');
     }
 };

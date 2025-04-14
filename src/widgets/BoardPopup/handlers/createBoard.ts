@@ -8,17 +8,16 @@ export const createBoard = async () => {
     if (!Auth.userData) return;
 
     const input = document.querySelector<HTMLInputElement>('#board-name');
-    const privateCheckbox = document.querySelector<HTMLInputElement>('#private-checkbox');
+    const privateCheckbox = document.querySelector<HTMLInputElement>('#isPrivate');
     if (!input || !privateCheckbox) return;
 
     const reqBody = {
-        name: input.value,
+        name: input.value.trim(),
         is_private: privateCheckbox.checked,
     };
 
-    const response = await API.post(`/api/v1/user/${Auth.userData.username}/boards`, reqBody);
-
-    if (response instanceof Error || response.status === 409) return;
+    const response = await API.post(`/api/v1/users/${Auth.userData.username}/boards`, reqBody);
+    if (response instanceof Error || !response.ok) return;
 
     const body = await response.json();
     const id = body.data.board_id;
@@ -28,20 +27,19 @@ export const createBoard = async () => {
         own: true,
         preview: [],
         flow_count: 0,
-        name: input.value,
+        name: input.value.trim(),
         is_private: privateCheckbox.checked,
     });
 
-    addBoardName(input.value);
+    addBoardName(input.value.trim(), id);
 
-    if (appState.activePage === 'profile') {
+    if (appState.activePage === 'profile' && appState.activeTab === 'boards') {
         const feed = document.querySelector('#feed');
         const emptyPage = document.querySelector('.empty-page');
         emptyPage?.remove();
         feed?.appendChild(newBoard);
     }
 
-    // Закрывает попап
     const background = document.querySelector<HTMLDivElement>('.black-background');
     background?.click();
 };

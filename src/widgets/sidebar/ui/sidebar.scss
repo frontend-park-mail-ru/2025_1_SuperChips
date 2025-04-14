@@ -11,6 +11,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    z-index: $z-navbar;
 }
 
 .sidebar__button-container {
@@ -62,10 +63,14 @@
 }
 
 .sidebar-button__icon {
-    cursor: pointer;
+    cursor: inherit;
     opacity: 0.8;
 }
 
 .display-none {
     display: none;
+}
+
+.go-back-button {
+    cursor: pointer;
 }

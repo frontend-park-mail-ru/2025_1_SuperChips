@@ -5,13 +5,13 @@ import { API } from 'shared/api';
 
 
 // Загружает список досок пользователя и добавляет их названия в sessionStorage
-export const loadUserBoards = async (username: string) => {
+export const fetchUserBoards = async (username: string) => {
     const own = Auth.userData ? Auth.userData.username === username : false;
 
-    const URL = own ? '/api/v1/profile/boards' : `/api/v1/user/${username}/boards`;
+    const URL = own ? '/api/v1/profile/boards' : `/api/v1/users/${username}/boards`;
 
     const response = await API.get(URL);
-    if (response instanceof Error) return;
+    if (response instanceof Error || response.status === 404) return;
 
     const body = await response.json();
 
