@@ -48,13 +48,6 @@ export const SignupPage = async (): Promise<HTMLDivElement> => {
                 maxlength: 32
             },
             {
-                type: 'date',
-                id: 'birthday',
-                inputLabel: 'Дата рождения',
-                errorMessage: 'Введите дату в формате ДД.ММ.ГГГГ',
-                required: true
-            },
-            {
                 type: 'password',
                 id: 'password',
                 inputLabel: 'Пароль',
