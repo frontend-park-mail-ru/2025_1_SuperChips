@@ -7,6 +7,7 @@ import { navigate } from 'shared/router';
 import { API } from 'shared/api';
 import NewPinTemplate from './NewPinPage.hbs';
 import './NewPinPage.scss';
+import { Auth } from '../../../features/authorization';
 
 type TPinPageTypes = 'create' | 'edit';
 
@@ -35,8 +36,14 @@ export const NewPinPage = async (type: TPinPageTypes, pinID?: string) => {
             navigate('feed').finally();
             return page;
         }
+
         const body = await response.json();
         config.url = body.data.media_url;
+
+        if (Auth.userData && body.data.author_username !== Auth.userData.username) {
+            navigate('feed').finally();
+            return page;
+        }
     }
 
 
