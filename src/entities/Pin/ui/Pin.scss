@@ -90,5 +90,11 @@
         top: 16px;
         left: 10px;
         color: $white;
+        max-width: 70px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }

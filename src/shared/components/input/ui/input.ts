@@ -14,12 +14,11 @@ export const Input = (data: IInputConfig) => {
     inputContainer.insertAdjacentHTML('beforeend', inputTemplate(data));
 
     const inputField = inputContainer.querySelector('input');
-    if (!inputField) return null;
 
-    inputField.addEventListener('input', debouncedInputHandler);
+    inputField?.addEventListener('input', debouncedInputHandler);
     
     if (data.onInput) {
-        inputField.addEventListener('input', (e) => {
+        inputField?.addEventListener('input', (e) => {
             data.onInput?.(e, inputContainer.closest('form') || undefined);
         });
     }
@@ -30,7 +29,7 @@ export const Input = (data: IInputConfig) => {
     }
 
     if (data.type === 'date') {
-        inputField.addEventListener('input', dateHandler);
+        inputField?.addEventListener('input', dateHandler);
     }
 
     return inputContainer;

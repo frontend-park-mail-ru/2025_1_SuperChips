@@ -77,6 +77,7 @@
 
     &__pfp {
         @include profile-picture-small;
+        @include flex-center;
 
         &:hover {
             cursor: pointer;
@@ -144,4 +145,10 @@
     width: $icon-size;
     height: $icon-size;
     cursor: pointer;
+}
+
+.short-username {
+    font-size: $font-size-xxl;
+    color: black;
+    font-weight: bold;
 }

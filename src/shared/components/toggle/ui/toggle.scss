@@ -42,7 +42,3 @@ input:checked + .slider {
 input:checked + .slider:before {
     transform: translateX(18px);
 }
-
-input:focus + .slider {
-    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.3);
-}

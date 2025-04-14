@@ -141,6 +141,20 @@ class Api {
 
         return this.request('PATCH', url, headers, body);
     }
+
+    /**
+     * HEAD запрос для проверки существования содержимого по URL
+     * @param url
+     */
+    async head(
+        url: string,
+    ): Promise<Response | Error> {
+        try {
+            return await fetch(url, { method: 'HEAD' });
+        } catch {
+            return new Error('Could not fetch');
+        }
+    }
 }
 
 

@@ -1,7 +1,8 @@
-import type { IFeed } from 'pages/FeedPage';
+import { IFeed, toTop } from 'pages/FeedPage';
 import { Masonry } from 'shared/models/Masonry';
 import { navigate } from 'shared/router';
-import { fillBoardFeed } from 'pages/BoardPage';
+import { fillBoardFeed } from '../lib/fillBoardFeed';
+import { boardFeedScroll } from '../handlers/boardFeedScroll';
 import { API } from 'shared/api';
 import { root } from 'app/app';
 import { Auth } from 'features/authorization';
@@ -68,6 +69,11 @@ export const BoardPage = async (boardID: string) => {
     });
 
     delayedFill.observe(root, { childList: true });
+
+    window.addEventListener('scroll', boardFeedScroll);
+
+    const scrollButton = page.querySelector<HTMLDivElement>('.scroll-to-top');
+    scrollButton?.addEventListener('click', toTop);
 
     return page;
 };

@@ -6,33 +6,18 @@ import { USER_SAVED_PINS_BOARD } from 'shared/config/constants';
 export const savePinToBoard = async (pinID: string, boardName?: string) => {
     const closeButton = document.querySelector<HTMLImageElement>('.popup__close');
 
-    if (!boardName) {
-        const id = findBoardIDbyName(USER_SAVED_PINS_BOARD);
-        if (!id) return;
+    const boardToSave = sessionStorage.getItem('boardToSave');
+    const name = boardName || boardToSave || USER_SAVED_PINS_BOARD;
+    const id = findBoardIDbyName(name);
+    if (!id) return;
 
-        const response = await API.post(`/api/v1/boards/${id}/flows`, { flow_id: Number(pinID) });
-
-        if (response instanceof Response && response.ok) {
-            Toast('flow добавлен в вашу коллекцию', 'message');
-            closeButton?.click();
-        } else {
-            Toast('Произошла ошибка или flow уже добавлен на доску', 'error');
-            closeButton?.click();
-        }
-        return;
+    const response = await API.post(`/api/v1/boards/${id}/flows`, { flow_id: Number(pinID) });
+    if (response instanceof Response && response.ok) {
+        Toast('flow добавлен в вашу коллекцию', 'message');
+        closeButton?.click();
     } else {
-        const id = findBoardIDbyName(boardName);
-        if (!id) return;
-
-        const response = await API.post(`/api/v1/boards/${id}/flows`, { flow_id: Number(pinID) });
-
-        if (response instanceof Response && response.ok) {
-            Toast(`flow добавлен на доску ${boardName}`, 'message');
-            closeButton?.click();
-        } else {
-            Toast('Произошла ошибка или flow уже добавлен на доску', 'error');
-            closeButton?.click();
-        }
+        Toast('Произошла ошибка или flow уже добавлен на доску', 'error');
+        closeButton?.click();
     }
 };
 

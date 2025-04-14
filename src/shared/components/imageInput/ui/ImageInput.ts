@@ -11,8 +11,8 @@ export const ImageInput = () => {
     const input = container.querySelector<HTMLInputElement>('.image-input__field');
     const selectButton = container.querySelector<HTMLButtonElement>('#image-input-button');
     const clearButton = container.querySelector<HTMLImageElement>('#clear-button');
-    const imageContainer = container.querySelector<HTMLDivElement>('.image-input');
-
+    const imageContainer = container.querySelector<HTMLButtonElement>('#image-input-container');
+    if (!imageContainer) return container;
 
     input?.addEventListener('change', inputHandler);
 
@@ -22,9 +22,9 @@ export const ImageInput = () => {
 
     clearButton?.addEventListener('click', clearButtonHandler);
 
-    imageContainer?.addEventListener('dragover', handleDragOver);
-    imageContainer?.addEventListener('dragleave', handleDragLeave);
-    imageContainer?.addEventListener('drop', handleDrop);
+    imageContainer.addEventListener('dragover', handleDragOver);
+    imageContainer.addEventListener('dragleave', handleDragLeave);
+    imageContainer.addEventListener('drop', handleDrop);
 
-    return container.firstElementChild as HTMLDivElement;
+    return imageContainer;
 };

@@ -6,6 +6,7 @@ import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
 import './PinPage.scss';
 import template from './PinPage.hbs';
+import { checkAvatar } from 'shared/utils';
 
 
 export const PinPage = async (pinID: string) => {
@@ -25,11 +26,12 @@ export const PinPage = async (pinID: string) => {
         return container;
     }
     const userData = (await authorRequest.json()).data;
+    const ok = await checkAvatar(userData?.avatar);
 
     const config = {
         ...pinData,
         authorized: !!Auth.userData,
-        author_pfp: userData?.avatar,
+        author_pfp: ok ? userData?.avatar : null,
         shortUsername: userData?.username[0].toUpperCase(),
         author: userData?.username,
         username: userData?.public_name,

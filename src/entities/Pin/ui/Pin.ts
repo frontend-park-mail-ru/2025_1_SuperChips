@@ -16,6 +16,7 @@ export const Pin = (params: IPinProps) => {
         ...params,
         authorized: !!Auth.userData,
         mutable: params.canDelete || params.canRemove,
+        boardToSave: sessionStorage.getItem('boardToSave') || 'Мои flow',
     };
 
     container.innerHTML = template(config);

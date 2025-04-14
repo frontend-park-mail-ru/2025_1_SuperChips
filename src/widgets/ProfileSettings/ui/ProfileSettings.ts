@@ -4,9 +4,10 @@ import { Auth } from 'features/authorization';
 import profileTemplate from './ProfileSettings.hbs';
 import { dateHandler, Input } from 'shared/components/input';
 import { avatarUpdate } from '../handlers/avatarUpdate';
+import { checkAvatar } from 'shared/utils';
 
 
-export const createProfileSettings = () => {
+export const createProfileSettings = async () => {
     const container = document.createElement('div');
     const userData = Auth.userData;
     if (!userData) return container;
@@ -33,8 +34,10 @@ export const createProfileSettings = () => {
         }
     ];
 
+    const ok = await checkAvatar(userData.avatar);
+
     const templateData = {
-        avatar: userData.avatar,
+        avatar: ok ? userData.avatar : null,
         username: userData.username,
         firstLetter: userData.username ? userData.username[0].toUpperCase() : '',
         about: userData.about || '',

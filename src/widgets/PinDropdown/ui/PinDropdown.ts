@@ -2,16 +2,14 @@ import type { ITabItem } from 'shared/components/tabBar';
 import { TabBar } from 'shared/components/tabBar';
 import { getBoardNames } from 'features/boardLoader';
 import { handleTabBar } from '../handlers/handleTabBar';
-import { BoardPopup, closePopup, toggleScroll } from 'widgets/BoardPopup';
+import { findPosition } from '../lib/findPosition';
+import { closePopup, toggleScroll } from 'widgets/BoardPopup';
 import { USER_OWN_PINS_BOARD, USER_SAVED_PINS_BOARD } from 'shared/config/constants';
 import { appState } from 'shared/router';
 import { root } from 'app/app';
 import template from './PinDropdown.hbs';
 import './PinDropdown.scss';
-
-
-const dropdownWidth = 360;
-const dropdownHeight = 300;
+import { createPinDropdown } from '../handlers/createHandler';
 
 
 export const PinDropdown = (pinID: string) => {
@@ -29,23 +27,23 @@ export const PinDropdown = (pinID: string) => {
         dropdown.style.top = `${position.y}px`;
     }
 
+    const boardToSave = sessionStorage.getItem('boardToSave');
     const tabs: ITabItem[] = [
-        { id: '0', title: 'Мои flow', active: true }
+        { id: '0', title: 'Мои flow', active: boardToSave === USER_SAVED_PINS_BOARD }
     ];
 
     const boardList = getBoardNames();
     boardList?.forEach((name, index) => {
         if (name !== USER_SAVED_PINS_BOARD && name !== USER_OWN_PINS_BOARD) {
-            tabs.push({ id: (index + 1).toString(), title: name, active: false });
+            tabs.push({ id: (index + 1).toString(), title: name, active: name === boardToSave });
         }
-    });
-
-    const newTabBar = TabBar(tabs, 'vertical', (tabId) => {
-        handleTabBar(tabId, pinID).finally();
     });
 
     const tabBar = container.querySelector('.tab-bar-placeholder');
     if (tabBar) {
+        const newTabBar = TabBar(tabs, 'vertical', (tabId) => {
+            handleTabBar(tabId).finally();
+        });
         tabBar?.replaceWith(newTabBar);
         newTabBar.style.gap = '0';
     }
@@ -53,39 +51,13 @@ export const PinDropdown = (pinID: string) => {
     const closeButton = container.querySelector<HTMLImageElement>('.popup__close');
     closeButton?.addEventListener('click', closePopup);
 
-    document.addEventListener('keydown', closePopup);
+    const createButton = container.querySelector<HTMLDivElement>('.dropdown__create-board');
+    createButton?.addEventListener('click', createPinDropdown);
+
     setTimeout(() => {
         document.addEventListener('click', closePopup);
     }, 0);
-
-    const createButton = container.querySelector<HTMLDivElement>('.dropdown__create-board');
-    createButton?.addEventListener('click', (event) => {
-        event.stopPropagation();
-        BoardPopup('create');
-        dropdown?.remove();
-    });
+    document.addEventListener('keydown', closePopup);
 
     root.appendChild(container.firstChild as HTMLDivElement);
-};
-
-
-const findPosition = (pinID: string) => {
-    const pin = document.querySelector('.dropdown-icon')
-        || document.querySelector(`#pin-${pinID}`);
-    const rect = pin?.getBoundingClientRect();
-    if (!rect) return { x: 0, y: 0 };
-
-
-    let x = rect.left - 80;
-    let y = rect.top + 60;
-
-    if (y + 60 + dropdownHeight > window.innerHeight) {
-        y = y - dropdownHeight - 60;
-    }
-
-    if (x + dropdownWidth > window.innerWidth) {
-        x = window.innerWidth - (dropdownWidth) - 40;
-    }
-
-    return { x: x, y: y };
 };

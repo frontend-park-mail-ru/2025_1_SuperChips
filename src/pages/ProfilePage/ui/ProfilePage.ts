@@ -1,6 +1,7 @@
 import type { ITabItem } from 'shared/components/tabBar';
 import type { IFeed } from 'pages/FeedPage';
 import { TabBar } from 'shared/components/tabBar';
+import { checkAvatar } from 'shared/utils';
 import { handleTabBar } from '../handlers/tabBarHandler';
 import { BoardPopup } from 'widgets/BoardPopup';
 import { UserPins } from 'widgets/UserPins';
@@ -27,11 +28,12 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
         userData = body.data;
     }
 
+    const ok = await checkAvatar(userData.avatar);
     const config = {
         header: own ? 'Ваши flow' : userData.public_name,
         username: username,
         shortUsername: username[0]?.toUpperCase(),
-        author_pfp: userData.avatar,
+        author_pfp: ok ? userData.avatar : null,
         own: own,
     };
 

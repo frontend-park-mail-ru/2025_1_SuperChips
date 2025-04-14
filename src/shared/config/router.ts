@@ -6,6 +6,7 @@ import { SignupPage } from 'pages/SignupPage';
 import { NewPinPage } from 'pages/NewPinPage';
 import { ProfilePage } from 'pages/ProfilePage';
 import { SettingsPage } from 'pages/SettingsPage';
+import { EditPinPage } from 'pages/EditPinPage';
 
 
 export interface Route {
@@ -61,7 +62,7 @@ export const config: RouterConfig = {
         newPin: {
             href: '/flow/new',
             title: 'Новый flow',
-            render: () => NewPinPage('create'),
+            render: NewPinPage,
             authOnly: true,
             hasSidebar: true,
             hasNavbar: true,
@@ -70,7 +71,7 @@ export const config: RouterConfig = {
         editPin: {
             href: /^flow\/edit\/\S+$/,
             title: 'Изменение flow',
-            render: (pinID: string) => NewPinPage('edit', pinID),
+            render: (pinID: string) => EditPinPage(pinID),
             authOnly: true,
             hasSidebar: true,
             hasNavbar: true,

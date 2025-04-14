@@ -16,7 +16,7 @@ export const SettingsPage = async () => {
         { id: 'security', title: 'Безопасность', active: false }
     ];
 
-    const tabBar = TabBar(tabs, 'vertical', (tabId: string) => {
+    const tabBar = TabBar(tabs, 'vertical', async (tabId: string) => {
         const contentContainer = mainContent.querySelector('.settings-content-container');
         if (contentContainer) {
             contentContainer.remove();
@@ -26,7 +26,7 @@ export const SettingsPage = async () => {
         newContentContainer.classList.add('settings-content-container');
 
         if (tabId === 'profile') {
-            newContentContainer.appendChild(createProfileSettings());
+            newContentContainer.appendChild(await createProfileSettings());
         } else if (tabId === 'security') {
             newContentContainer.appendChild(createSecuritySettings());
         }
@@ -38,7 +38,7 @@ export const SettingsPage = async () => {
 
     const initialContent = document.createElement('div');
     initialContent.classList.add('settings-content-container');
-    initialContent.appendChild(createProfileSettings());
+    initialContent.appendChild(await createProfileSettings());
     mainContent.appendChild(initialContent);
 
     page.appendChild(mainContent);

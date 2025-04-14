@@ -27,9 +27,9 @@ export const UserBoard = async (username: string) => {
     if (!boards?.data) return;
 
     boards.data.forEach((board: IBoardProps) => {
-        if (board.name === USER_OWN_PINS_BOARD) {
+        if (board.name === USER_SAVED_PINS_BOARD) {
             feed.insertBefore(Board({ ...board, permanent: true }), feed.firstChild);
-        } else if (board.name !== USER_SAVED_PINS_BOARD) {
+        } else if (board.name !== USER_OWN_PINS_BOARD) {
             feed.appendChild(Board(board));
         }
     });

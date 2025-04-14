@@ -1,5 +1,8 @@
 <div class="new-pin-page" id="page">
     <div class="new-pin-form">
+        {{#if edit}}
+            <img src="{{url}}" alt="" class="edit-pin__image">
+        {{/if}}
         <div class="description-box">
             <div>
                 <h1 class="header">{{header}}</h1>
@@ -7,14 +10,26 @@
                     <div class="input-placeholder"></div>
                 </form>
                 <label class="input-field-label" for="about">Описание</label>
-                <textarea class="about-textarea" name="Описание" id="about" cols="30" rows="10" maxlength="512"></textarea>
+                <textarea
+                        class="about-textarea"
+                        name="Описание"
+                        id="about"
+                        cols="30"
+                        rows="10"
+                        maxlength="512"
+                >{{#if edit}}{{description}}{{/if}}
+                </textarea>
                 <div class="toggle-area">
                     <div class="toggle-placeholder"></div>
                     <p>Сделать flow приватным</p>
                 </div>
             </div>
             <button class="create-flow-button" id="create-flow-button">
-                Создать flow
+                {{#if create}}
+                    Создать flow
+                {{else}}
+                    Изменить flow
+                {{/if}}
             </button>
         </div>
     </div>
