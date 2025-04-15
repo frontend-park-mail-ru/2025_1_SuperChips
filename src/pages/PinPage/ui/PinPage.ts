@@ -35,6 +35,8 @@ export const PinPage = async (pinID: string) => {
         shortUsername: userData?.username[0].toUpperCase(),
         author: userData?.username,
         username: userData?.public_name,
+        hasText: !!pinData.header || !!pinData.description,
+        own: userData.username === Auth.userData?.username,
     };
 
     container.innerHTML = template(config);
@@ -54,6 +56,9 @@ export const PinPage = async (pinID: string) => {
     const pfp = container.querySelector<HTMLDivElement>('.one-pin__author-area__tag');
     name?.addEventListener('click', () => navigate(config.author));
     pfp?.addEventListener('click', () => navigate(config.author));
+
+    const editButton = container.querySelector('#edit-pin');
+    editButton?.addEventListener('click', () => navigate(`flow/edit/${pinID}`).finally());
 
     return container;
 };

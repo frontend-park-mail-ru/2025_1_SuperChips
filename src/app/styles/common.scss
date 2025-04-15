@@ -13,10 +13,6 @@ body {
     background: $gradient-dark;
 }
 
-.icon {
-    -webkit-user-drag: none;
-}
-
 .scroll-to-top {
     @include flex-center;
     background-color: #000;
@@ -34,7 +30,6 @@ body {
     }
 
     img {
-        width: 24px;
-        height: 24px;
+        @include icon;
     }
 }

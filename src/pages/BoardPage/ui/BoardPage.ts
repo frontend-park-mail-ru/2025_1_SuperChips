@@ -16,7 +16,6 @@ export const boardFeedState = {
     page: 0,
     boardID: '',
     own: false,
-    canDelete: false,
     canRemove: false,
     canEdit: false,
 };
@@ -43,7 +42,6 @@ export const BoardPage = async (boardID: string) => {
         name: body.data.name,
     };
 
-    boardFeedState.canDelete = body.data.name === USER_OWN_PINS_BOARD && own;
     boardFeedState.canEdit = body.data.name === USER_OWN_PINS_BOARD && own;
     boardFeedState.canRemove = body.data.name !== USER_OWN_PINS_BOARD && own;
 

@@ -35,8 +35,18 @@ module.exports = {
                 }
             },
             {
+                // TODO после РК убрать noEscape, проработать с Эмре, санитайзинг
                 test: /\.hbs$/,
-                use: 'handlebars-loader'
+                use: [
+                    {
+                        loader: 'handlebars-loader',
+                        options: {
+                            precompileOptions: {
+                                noEscape: true
+                            }
+                        }
+                    }
+                ]
             },
             {
                 test: /\.css$/,
@@ -67,7 +77,7 @@ module.exports = {
         ]
     },
     optimization: {
-        minimize: true,
+        minimize: process.env.NODE_ENV === 'production',
         minimizer: [
             new TerserPlugin({
                 terserOptions: {

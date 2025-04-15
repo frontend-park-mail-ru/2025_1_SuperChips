@@ -11,15 +11,19 @@ export const avatarUpdate = async (event: Event) => {
     formData.append('image', target.files[0]);
 
     const response = await updateAvatar(formData);
-
     if (response instanceof Response && response.ok) {
+        const body = await response.json();
         const pfp = document.querySelector<HTMLImageElement>('#pfp');
         if (pfp) {
-            const body = await response.json();
             pfp.src = body.data.media_url;
-            if (Auth.userData) {
-                Auth.userData.avatar = pfp.src;
+        } else {
+            const pfpContainer = document.querySelector<HTMLDivElement>('.settings-profile-picture');
+            if (pfpContainer) {
+                pfpContainer.innerHTML = `<img src="${body.data.media_url}" alt="Profile picture" id="pfp">`;
             }
+        }
+        if (Auth.userData) {
+            Auth.userData.avatar = body.data.media_url;
         }
         await Navbar();
     }

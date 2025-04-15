@@ -28,5 +28,6 @@ export const editPin = async (pinID: string) => {
 
     if (response instanceof Response && response.ok) {
         Toast('Flow был успешно обновлен', 'success', 5000);
+        history.back();
     }
 };

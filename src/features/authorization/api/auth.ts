@@ -1,10 +1,10 @@
-import type { ISignupFormData } from 'pages/SignupPage';
 import type { IProfileSettings } from 'widgets/ProfileSettings';
 import type { IUser } from 'entities/User';
+import type { ISignupFormData } from 'pages/SignupPage';
 import { API } from 'shared/api';
 import { Navbar } from 'widgets/navbar';
-import { fetchUserBoards } from 'features/boardLoader';
 import { USER_OWN_PINS_BOARD, USER_SAVED_PINS_BOARD } from 'shared/config/constants';
+import { BoardStorage } from 'features/boardLoader';
 
 type TLoginData = {
     email: string;
@@ -40,6 +40,8 @@ class auth {
 
         if (response instanceof Response && response.ok) {
             await this.fetchUserData();
+            const body = await response.json();
+            this.API.setCSRFToken(body.data.csrf_token);
         }
 
         return response;
@@ -52,11 +54,13 @@ class auth {
         const response = await this.API.post('/api/v1/auth/registration', userData);
 
         if (response instanceof Response && response.ok) {
+            const body = await response.json();
+            this.API.setCSRFToken(body.data.csrf_token);
+
             this.userData = {
                 email: userData.email,
                 username: userData.username,
                 public_name: userData.username,
-                birthday: new Date(userData.birthday),
             };
 
             await Navbar();
@@ -81,6 +85,7 @@ class auth {
 
         if (response instanceof Response && response.ok) {
             await this.clearUserData();
+            BoardStorage.clear();
         }
 
         return response;
@@ -106,7 +111,7 @@ class auth {
             };
 
             await Navbar();
-            await fetchUserBoards(data.username);
+            await BoardStorage.fetchUserBoards();
         }
     };
 

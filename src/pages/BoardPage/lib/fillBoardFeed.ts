@@ -30,7 +30,6 @@ export const fillBoardFeed = async () => {
 
     if (!pictures?.data) return;
 
-
     pictures.data.forEach((item) => {
         const config: IPinProps = {
             ...boardFeedState,

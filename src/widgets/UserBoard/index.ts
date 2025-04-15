@@ -1,1 +1,1 @@
-export { UserBoard } from './ui/UserBoard';
+export { UserBoards } from './ui/UserBoards';

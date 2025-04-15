@@ -10,7 +10,12 @@
                 {{/if}}
             </div>
             <button class="change-photo-button">Изменить фото</button>
-            <input type="file" id="avatar" accept="image/*" style="display: none;">
+            <input
+                    class="display-none"
+                    type="file"
+                    id="avatar"
+                    accept=".png, .jpg, .jpeg"
+            >
         </div>
         
         {{#each fields}}
@@ -20,7 +25,6 @@
             <label for="about">О себе</label>
             <textarea id="about" maxlength="499" class="about-textarea" cols="30" rows="10">{{about}}</textarea>
         </div>
-        
         <button class="submit-button">Сохранить изменения</button>
     </form>
 </div>
