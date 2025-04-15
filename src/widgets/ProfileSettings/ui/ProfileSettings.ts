@@ -78,7 +78,9 @@ export const createProfileSettings = async () => {
     form?.addEventListener('submit', handleProfileUpdate);
 
     const nickname = userData.public_name;
-    const birthday = userData.birthday.toISOString().split('T')[0];
+    const birthday = (userData.birthday && userData.birthday?.getFullYear() !== 1)
+        ? userData.birthday.toISOString().split('T')[0]
+        : null;
 
     const nicknameInput = container.querySelector<HTMLInputElement>('#username');
     if (nicknameInput) {
@@ -86,8 +88,16 @@ export const createProfileSettings = async () => {
     }
 
     const birthdayInput = container.querySelector<HTMLInputElement>('#birthday');
-    if (birthdayInput) {
-        birthdayInput.value = birthday;
+    if (birthdayInput && birthday) {
+        if (birthday) {
+            birthdayInput.value = birthday;
+        } else {
+            birthdayInput.placeholder = new Date().toLocaleDateString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            }).replace(/\//g, '.');
+        }
     }
 
     return container;

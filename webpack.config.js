@@ -35,8 +35,18 @@ module.exports = {
                 }
             },
             {
+                // TODO после РК убрать noEscape, продумать санитайзинг
                 test: /\.hbs$/,
-                use: 'handlebars-loader'
+                use: [
+                    {
+                        loader: 'handlebars-loader',
+                        options: {
+                            precompileOptions: {
+                                noEscape: true
+                            }
+                        }
+                    }
+                ]
             },
             {
                 test: /\.css$/,

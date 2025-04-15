@@ -8,6 +8,7 @@ import { Auth } from 'features/authorization';
 export const root = document.getElementById('root') as HTMLDivElement;
 
 export const App = async () => {
+    sessionStorage.clear();
     await Auth.fetchUserData();
 
     await Navbar();

@@ -8,8 +8,6 @@ export const deleteBoard = async (boardID: string) => {
     if (button.classList.contains('popup__delete-button')) {
         button.classList.add('popup__confirm-button');
         button.classList.remove('popup__delete-button');
-        button.textContent = 'Вы уверены что хотите удалить доску?';
-
     } else if (button.classList.contains('popup__confirm-button')) {
         await API.delete(`/api/v1/boards/${boardID}`);
 

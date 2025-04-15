@@ -29,8 +29,8 @@
         object-fit: cover;
     }
 
-    &__save-button, &__dropdown-button, &__dropdown-board,
-    &__delete-button, &__save-button_active, &__edit-button {
+    &__save-button, &__delete-button,
+    &__save-button_active, &__edit-button {
         position: absolute;
         z-index: 50;
     }
@@ -97,4 +97,13 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+}
+
+.dropdown-block {
+    position: absolute;
+    top: 16px;
+    left: 10px;
+    display: flex;
+    width: 100px;
+    height: 32px;
 }

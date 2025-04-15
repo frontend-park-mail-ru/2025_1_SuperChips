@@ -45,6 +45,7 @@
         justify-content: space-between;
         align-items: center;
         padding-right: 20px;
+        margin-top: 20px;
 
         &__button {
             display: flex;
@@ -72,8 +73,8 @@
 .one-pin__author-area {
     display: flex;
     align-items: center;
-    margin-top: $spacing-xxl;
     margin-right: auto;
+    margin-top: 20px;
 
     &__pfp {
         @include profile-picture-small;
@@ -134,11 +135,12 @@
 
 .one-pin-header {
     margin-top: 30px;
-    font-size: 36px;
+    font-size: 24px;
 }
 
 .one-pin-description {
     margin-top: 10px;
+    white-space: pre;
 }
 
 .dropdown-icon {
@@ -151,4 +153,19 @@
     font-size: $font-size-xxl;
     color: black;
     font-weight: bold;
+}
+
+.edit-button {
+    @include flex-center;
+    position: absolute;
+    top: $navbar-height;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #333;
+
+    &:hover {
+        cursor: pointer;
+    }
 }

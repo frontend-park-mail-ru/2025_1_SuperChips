@@ -10,6 +10,7 @@ interface AppState {
     lastPage: string | null,
     activePage: string | null,
     activeTab: string | null,
+    lastTab: string | null,
     href: string | null,
     isShowingToast: boolean,
     isShowingPopup: boolean,
@@ -19,6 +20,7 @@ export const appState: AppState = {
     lastPage: null,
     activePage: null,
     activeTab: null,
+    lastTab: null,
     href: null,
     isShowingToast: false,
     isShowingPopup: false,
@@ -33,12 +35,12 @@ export const navigate = async (
     page: string,
     replace = false
 ): Promise<void> => {
-
     const match = await findMatch(page);
     const route = config.menu[match];
 
     let renderProps;
     let newHref;
+    let newTab;
 
     if (match === 'profile') {
         renderProps = page;
@@ -57,34 +59,42 @@ export const navigate = async (
         newHref = route.href.toString();
     }
 
+    if (/^board\/\S+$/.test(page)) {
+        newTab = 'boards';
+    } else if (/^flow\/[a-zA-Z0-9]+$/.test(page)) {
+        newTab = 'pins';
+    } else {
+        newTab = null;
+    }
+
     if (match === appState.activePage && newHref === appState.href) {
         return;
     }
-
-
-    updateBars(route);
-    cleanup();
-
-    const newPage = await route.render(renderProps);
-    root.innerHTML = '';
-    root.appendChild(newPage);
-
-    window.scrollTo({ top: 0 });
 
 
     if (appState.activePage === 'feed' && newHref !== '/feed') {
         window.removeEventListener('scroll', debouncedFeedScroll);
     }
 
+    appState.lastPage = appState.activePage;
     appState.activePage = match;
+    appState.lastTab = appState.activeTab;
+    appState.activeTab = newTab;
+
     document.title = route.title;
 
     if (replace) {
-        history.replaceState({ page: page }, '', newHref);
+        history.replaceState({ ...appState }, '', newHref);
     } else {
-        appState.lastPage = newHref;
-        history.pushState({ page: page }, '', newHref);
+        history.pushState({ ...appState }, '', newHref);
     }
+
+    window.scrollTo({ top: 0 });
+    updateBars(route);
+    cleanup();
+    const newPage = await route.render(renderProps);
+    root.innerHTML = '';
+    root.appendChild(newPage);
 };
 
 

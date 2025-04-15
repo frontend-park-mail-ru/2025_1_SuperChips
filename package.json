@@ -55,6 +55,7 @@
     "webpack-dev-server": "^5.2.0"
   },
   "dependencies": {
+    "@vkid/sdk": "^2.0.0",
     "express": "^4.21.2",
     "filemanager-webpack-plugin": "^8.0.0"
   }

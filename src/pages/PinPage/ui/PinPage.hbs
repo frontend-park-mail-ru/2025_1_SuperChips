@@ -1,8 +1,32 @@
 <div class="one-pin-page" id="page">
+    {{#if own}}
+        <div class="edit-button" id="edit-pin">
+            <img src="/public/icons/edit.svg" alt="edit pin">
+        </div>
+    {{/if}}
     <div class="box-1">
         <img src="{{media_url}}" id="pin-{{flow_id}}" alt="{{description}}">
     </div>
     <div class="box-2">
+        {{#if hasText}}
+            <div class="box-2__text-area">
+                <div class="one-pin-header">{{header}}</div>
+                <div class="one-pin-description">{{description}}</div>
+            </div>
+        {{/if}}
+        <div class="one-pin__author-area">
+            <div class="one-pin__author-area__pfp">
+                {{#if author_pfp}}
+                    <img src="{{author_pfp}}" alt="author profile picture">
+                {{else}}
+                    <p class="short-username">{{shortUsername}}</p>
+                {{/if}}
+            </div>
+            <div>
+                <p class="one-pin__author-area__username">{{username}}</p>
+                <p class="one-pin__author-area__tag">@{{author}}</p>
+            </div>
+        </div>
         {{#if authorized}}
             <div class="box-2__buttons">
                 <div>
@@ -24,22 +48,5 @@
                 </div>
             </div>
         {{/if}}
-        <div class="box-2__text-area">
-            <div class="one-pin-header">{{header}}</div>
-            <div class="one-pin-description">{{description}}</div>
-        </div>
-        <div class="one-pin__author-area">
-            <div class="one-pin__author-area__pfp">
-                {{#if author_pfp}}
-                    <img src="{{author_pfp}}" alt="author profile picture">
-                {{else}}
-                    <p class="short-username">{{shortUsername}}</p>
-                {{/if}}
-            </div>
-            <div>
-                <p class="one-pin__author-area__username">{{username}}</p>
-                <p class="one-pin__author-area__tag">@{{author}}</p>
-            </div>
-        </div>
     </div>
 </div>

@@ -74,7 +74,6 @@ export const BoardPopup = (type: TPopupType, boardID: string | null = null, boar
         debouncedInputHandler(type, boardName);
     });
 
-
     const cross = popup.querySelector<HTMLImageElement>('.popup__close');
 
     cross?.addEventListener('click', closePopup);

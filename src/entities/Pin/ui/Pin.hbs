@@ -1,13 +1,11 @@
 <div class="pin" id="pin-{{pinID}}">
     <img src="{{url}}" class="pin__picture" alt="">
     {{#if authorized}}
-        <div class="hidden pin__dropdown-board">{{boardToSave}}</div>
-        <img src="/public/icons/arrow-down.svg" class="icon hidden pin__dropdown-button" alt="">
-        {{#if saved}}
-            <button class="hidden pin__save-button_active">Сохранено</button>
-        {{else}}
-            <button class="hidden pin__save-button">Сохранить</button>
-        {{/if}}
+        <div class="dropdown-block" id="dropdown-button">
+            <div class="hidden pin__dropdown-board">{{boardToSave}}</div>
+            <img src="/public/icons/arrow-down.svg" class="icon hidden pin__dropdown-button" alt="">
+        </div>
+        <button class="hidden pin__save-button">Сохранить</button>
         {{#if mutable}}
             <img src="/public/icons/delete.svg" class="hidden icon pin__delete-button" alt="">
         {{/if}}

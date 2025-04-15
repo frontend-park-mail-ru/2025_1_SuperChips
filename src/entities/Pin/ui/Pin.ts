@@ -21,7 +21,7 @@ export const Pin = (params: IPinProps) => {
 
     container.innerHTML = template(config);
 
-    const dropdownButton = container.querySelector('.pin__dropdown-button');
+    const dropdownButton = container.querySelector('.dropdown-block');
     dropdownButton?.addEventListener('click', (event) => {
         event.stopPropagation();
         PinDropdown(config.pinID);

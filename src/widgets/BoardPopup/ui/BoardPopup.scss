@@ -17,17 +17,18 @@
     @include popup-scroll;
     overflow-x: hidden;
     position: fixed;
-    top: calc((100vh - $board-popup-height) / 2);
-    left: calc((100vw - $board-popup-width) / 2);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: $board-popup-width;
-    height: $board-popup-height;
+    min-height: $board-popup-height;
     background-color: $white;
     border-radius: $border-radius;
     z-index: 1100;
     padding: $spacing-xl $spacing-xxl;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
 
     &__close {
         position: absolute;
@@ -49,7 +50,7 @@
 
         &:hover {
             cursor: pointer;
-            opacity: 0.8;
+            //opacity: 0.8;
         }
 
         &:disabled {
@@ -104,5 +105,14 @@
 }
 
 .popup__confirm-button {
+    position: relative;
     background-color: #000;
+
+    &::before {
+        content: "Вы уверены что хотите удалить доску?";
+        position: absolute;
+        top: -30px;
+        left: 0;
+        color: black;
+    }
 }

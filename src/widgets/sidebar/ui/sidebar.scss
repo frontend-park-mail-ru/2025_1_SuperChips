@@ -38,17 +38,19 @@
     }
 }
 
-.sidebar-button {
+.sidebar-button, .sidebar-button_confirm {
     width: $button-height;
     height: $button-height;
     border-radius: 50%;
     border: none;
-    background-color: $button-dark;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+}
 
+.sidebar-button {
+    background-color: $button-dark;
     &:hover {
         background-color: $button-hover;
     }
@@ -62,6 +64,11 @@
     }
 }
 
+.sidebar-button_confirm {
+    background-color: $error-color;
+    opacity: 1;
+}
+
 .sidebar-button__icon {
     cursor: inherit;
     opacity: 0.8;
@@ -73,4 +80,26 @@
 
 .go-back-button {
     cursor: pointer;
+}
+
+.logout-toast {
+    position: fixed;
+    bottom: 36px;
+    left: 210px;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 12px 24px;
+    border-radius: 20px;
+    border: solid 1px #000;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+
+    @keyframes fadeIn {
+        from {
+            transform: translate(-50%, 20px);
+        }
+        to {
+            transform: translate(-50%, 0px);
+        }
+    }
 }

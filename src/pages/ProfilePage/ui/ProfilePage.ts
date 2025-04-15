@@ -1,10 +1,11 @@
 import type { ITabItem } from 'shared/components/tabBar';
-import type { IFeed } from 'pages/FeedPage';
 import { TabBar } from 'shared/components/tabBar';
+import type { IFeed } from 'pages/FeedPage';
 import { checkAvatar } from 'shared/utils';
 import { handleTabBar } from '../handlers/tabBarHandler';
 import { BoardPopup } from 'widgets/BoardPopup';
 import { UserPins } from 'widgets/UserPins';
+import { UserBoard } from 'widgets/UserBoard';
 import { Auth } from 'features/authorization';
 import { root } from 'app/app';
 import { API } from 'shared/api';
@@ -16,6 +17,7 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
     const page = document.createElement('div');
 
     const own = Auth.userData ? username === Auth.userData.username : false;
+    const loadPins = history.state.lastTab === 'pins';
     let userData;
 
     if (own) {
@@ -40,8 +42,8 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
     page.innerHTML = ProfilePageTemplate(config);
 
     const tabs: ITabItem[] = [
-        { id: 'pins', title: 'Flow', active: true },
-        { id: 'boards', title: 'Доски', active: false }
+        { id: 'pins', title: 'Flow', active: loadPins },
+        { id: 'boards', title: 'Доски', active: !loadPins }
     ];
 
     const newTabBar = TabBar(tabs, 'horizontal', (tabId) => {
@@ -56,8 +58,13 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
     const feed = page.querySelector<IFeed>('.profile__feed');
     if (!feed) return page;
 
+
     const delayedFill: MutationObserver = new MutationObserver(async () => {
-        await UserPins(username);
+        if (loadPins) {
+            await UserPins(username);
+        } else {
+            await UserBoard(username);
+        }
         delayedFill.disconnect();
     });
 

@@ -2,6 +2,7 @@ import { Toast } from 'shared/components/Toast';
 import { API } from 'shared/api';
 import { savePinToBoard } from 'entities/Pin';
 import { USER_OWN_PINS_BOARD } from 'shared/config/constants';
+import { navigate } from '../../../shared/router';
 
 export const createPin = async () => {
     const imageInput = document.querySelector<HTMLInputElement>('.image-input__field');
@@ -39,7 +40,7 @@ export const createPin = async () => {
         Toast('Flow был успешно создан', 'message', 5000);
 
         const body = await response.json();
-
         await savePinToBoard(body.data.flow_id, USER_OWN_PINS_BOARD);
+        navigate(`flow/${body.data.flow_id}`, true).finally();
     }
 };
