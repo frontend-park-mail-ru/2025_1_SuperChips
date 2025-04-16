@@ -28,7 +28,8 @@
     margin-top: $spacing-lg;
     height: $divider-height;
     border-radius: $border-radius;
-
+    
+    /* Default gradient that will be overridden by JavaScript */
     background: linear-gradient(45deg, #FFA500, #32CD32, #1E90FF, #FF69B4);
     background-size: 300% 300%;
     animation: gradientBG 8s ease infinite;

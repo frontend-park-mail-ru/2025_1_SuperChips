@@ -5,6 +5,7 @@ import { Pin } from 'entities/Pin';
 import { boardFeedScroll } from '../handlers/boardFeedScroll';
 import { emptyFeedPageTemplate } from 'widgets/UserPins';
 import { boardFeedState } from '../ui/BoardPage';
+import { updateDividerColors } from './updateDividerColors';
 
 
 export const fillBoardFeed = async () => {
@@ -41,5 +42,8 @@ export const fillBoardFeed = async () => {
         feed.insertBefore(Pin(config), feed.firstChild);
     });
     boardFeedState.page++;
+    
+    // Обновляем цвета разделителя на основе цветов пинов
+    await updateDividerColors();
 };
 

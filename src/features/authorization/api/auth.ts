@@ -40,6 +40,8 @@ class auth {
 
         if (response instanceof Response && response.ok) {
             await this.fetchUserData();
+            const body = await response.json();
+            this.API.setCSRFToken(body.data.csrf_token);
         }
 
         return response;
@@ -52,6 +54,9 @@ class auth {
         const response = await this.API.post('/api/v1/auth/registration', userData);
 
         if (response instanceof Response && response.ok) {
+            const body = await response.json();
+            this.API.setCSRFToken(body.data.csrf_token);
+
             this.userData = {
                 email: userData.email,
                 username: userData.username,
@@ -81,6 +86,7 @@ class auth {
 
         if (response instanceof Response && response.ok) {
             await this.clearUserData();
+            sessionStorage.clear();
         }
 
         return response;
