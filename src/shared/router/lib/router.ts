@@ -9,8 +9,6 @@ import { API } from 'shared/api';
 interface AppState {
     lastPage: string | null,
     activePage: string | null,
-    activeTab: string | null,
-    lastTab: string | null,
     href: string | null,
     isShowingToast: boolean,
     isShowingPopup: boolean,
@@ -19,8 +17,6 @@ interface AppState {
 export const appState: AppState = {
     lastPage: null,
     activePage: null,
-    activeTab: null,
-    lastTab: null,
     href: null,
     isShowingToast: false,
     isShowingPopup: false,
@@ -40,7 +36,7 @@ export const navigate = async (
 
     let renderProps;
     let newHref;
-    let newTab;
+    // let newTab;
 
     if (match === 'profile') {
         renderProps = page;
@@ -59,13 +55,13 @@ export const navigate = async (
         newHref = route.href.toString();
     }
 
-    if (/^board\/\S+$/.test(page)) {
-        newTab = 'boards';
-    } else if (/^flow\/[a-zA-Z0-9]+$/.test(page)) {
-        newTab = 'pins';
-    } else {
-        newTab = null;
-    }
+    // if (/^board\/\S+$/.test(page)) {
+    //     newTab = 'boards';
+    // } else if (/^flow\/[a-zA-Z0-9]+$/.test(page)) {
+    //     newTab = 'pins';
+    // } else {
+    //     newTab = null;
+    // }
 
     if (match === appState.activePage && newHref === appState.href) {
         return;
@@ -78,8 +74,8 @@ export const navigate = async (
 
     appState.lastPage = appState.activePage;
     appState.activePage = match;
-    appState.lastTab = appState.activeTab;
-    appState.activeTab = newTab;
+    // appState.lastTab = appState.activeTab;
+    // appState.activeTab = newTab;
 
     document.title = route.title;
 
