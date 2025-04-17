@@ -19,4 +19,19 @@ export const App = async () => {
     });
 
     navigate(location.pathname.slice(1), true).finally();
+
+    if ('serviceWorker' in navigator) {
+        console.log(123);
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then((registration) => {
+                    console.log('SW registered: ', registration);
+                })
+                .catch((registrationError) => {
+                    console.error('SW registration failed: ', registrationError);
+                });
+        });
+    } else {
+        console.log('SW registration failed.');
+    }
 };

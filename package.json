@@ -57,6 +57,7 @@
   "dependencies": {
     "@vkid/sdk": "^2.0.0",
     "express": "^4.21.2",
-    "filemanager-webpack-plugin": "^8.0.0"
+    "filemanager-webpack-plugin": "^8.0.0",
+    "workbox-webpack-plugin": "^7.3.0"
   }
 }
