@@ -38,6 +38,7 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
         shortUsername: username[0]?.toUpperCase(),
         author_pfp: ok ? userData.avatar : null,
         own: own,
+        createBoardButton: !loadPins,
     };
 
     page.innerHTML = ProfilePageTemplate(config);
