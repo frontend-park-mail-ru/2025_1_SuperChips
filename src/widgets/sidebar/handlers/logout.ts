@@ -13,7 +13,12 @@ export const logoutHandler = async (event: Event) => {
         button.classList.replace('sidebar-button', 'sidebar-button_confirm');
         window.addEventListener(
             'click',
-            handleClickOutside(button, 'sidebar-button_confirm', 'sidebar-button', 'logout-toast'),
+            handleClickOutside(
+                button,
+                'sidebar-button_confirm',
+                'sidebar-button',
+                'logout-toast'
+            ),
             { once: true }
         );
         const toast = '<div id="logout-toast" class="logout-toast">Вы уверены, что хотите выйти?</div>';

@@ -28,7 +28,7 @@
 }
 
 .create-pin-button {
-    margin-top: 12px;
+    margin-top: 16px;
     width: $input-width;
     height: $input-height;
     border-radius: $border-radius;
@@ -66,11 +66,11 @@
 .toggle-area {
     display: flex;
     gap: 12px;
-    margin-top: 12px;
+    margin-top: 24px;
 }
 
 .delete-pin-button, .delete-pin-button_confirm {
-    margin-top: 12px;
+    margin-top: 24px;
     display: flex;
     align-items: center;
     width: 130px;

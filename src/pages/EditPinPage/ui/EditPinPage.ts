@@ -6,15 +6,14 @@ import { Auth } from 'features/authorization';
 import { API } from 'shared/api';
 import { newPinPageTemplate } from 'pages/NewPinPage';
 import { deletePin } from '../handlers/deletePin';
-
+import './EditPinPage.scss';
 
 export const EditPinPage = async (pinID: string) => {
     const page = document.createElement('div');
 
     const response = await API.get(`/api/v1/flows?id=${pinID}`);
     if (response instanceof Error || !response.ok) {
-        navigate('feed').finally();
-        return page;
+        return null;
     }
 
     const pin = (await response.json()).data;

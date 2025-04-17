@@ -1,38 +1,36 @@
-import { API } from 'shared/api';
 import { Toast } from 'shared/components/Toast';
-import { handleClickOutside } from 'shared/handlers/handleClickOutside';
+import { closePopup } from 'widgets/BoardPopup';
+import { API } from 'shared/api';
+import { root } from 'app/app';
+import template from '../ui/ConfirmPopup.hbs';
 
 export const deletePin = async (pinID: string) => {
-    const button = document.querySelector<HTMLDivElement>('.delete-pin-button')
-        || document.querySelector<HTMLDivElement>('.delete-pin-button_confirm');
-    if (!button) return;
+    const popup = document.createElement('div');
+    popup.innerHTML = template({});
 
-    if (button.classList.contains('delete-pin-button')) {
-        button.classList.replace('delete-pin-button', 'delete-pin-button_confirm');
-        setTimeout(() => {
-            window.addEventListener(
-                'click',
-                handleClickOutside(button,
-                    'delete-pin-button_confirm',
-                    'delete-pin-button',
-                    'asd'
-                ),
-                { once: true }
-            );
-        },
-        100
-        );
-    } else {
-        const response = await API.delete(`/api/v1/flows?id=${pinID}`);
-        if (response instanceof Error || !response.ok) {
-            Toast('Ошибка при удалении flow', 'error');
-            return response;
-        }
+    popup.querySelector<HTMLButtonElement>('#cancel-button')?.addEventListener('click', cancelDelete);
+    popup.querySelector<HTMLButtonElement>('#confirm-button')?.addEventListener('click', () => confirmDelete(pinID));
 
-        Toast('flow удален', 'message');
-        document.querySelector(`#pin-${pinID}`)?.remove();
-        history.go(-2);
-    }
+    setTimeout(() => document.addEventListener('click', closePopup), 100);
+    document.addEventListener('keydown', closePopup);
+    root.appendChild(popup);
 };
 
+
+const confirmDelete = async (pinID: string) => {
+    const response = await API.delete(`/api/v1/flows?id=${pinID}`);
+    if (response instanceof Error || !response.ok) {
+        Toast('Ошибка при удалении flow', 'error');
+        return response;
+    }
+
+    Toast('flow удален', 'message');
+    document.querySelector(`#pin-${pinID}`)?.remove();
+    history.go(-2);
+};
+
+const cancelDelete = () => {
+    document.querySelector('#popup')?.remove();
+    document.removeEventListener('click', cancelDelete);
+};
 

@@ -1,6 +1,5 @@
 import { IFeed, toTop } from 'pages/FeedPage';
 import { Masonry } from 'shared/models/Masonry';
-import { navigate } from 'shared/router';
 import { fillBoardFeed } from '../lib/fillBoardFeed';
 import { boardFeedScroll } from '../handlers/boardFeedScroll';
 import { API } from 'shared/api';
@@ -29,8 +28,7 @@ export const BoardPage = async (boardID: string) => {
 
     const boardRequest = await API.get(`/api/v1/boards/${boardID}`);
     if (boardRequest instanceof Error || !boardRequest.ok) {
-        navigate('feed').finally();
-        return page;
+        return null;
     }
     const body = await boardRequest.json();
     if (!body.data) return page;

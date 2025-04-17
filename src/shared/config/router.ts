@@ -12,7 +12,7 @@ import { EditPinPage } from 'pages/EditPinPage';
 export interface Route {
     href: string | RegExp,
     title: string,
-    render: (params: string) => Promise<HTMLDivElement>,
+    render: (params: string) => Promise<HTMLDivElement | null>,
     nonAuthOnly?: boolean,
     authOnly?: boolean,
     hasNavbar?: boolean,

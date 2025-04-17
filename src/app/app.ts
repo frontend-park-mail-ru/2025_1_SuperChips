@@ -19,4 +19,14 @@ export const App = async () => {
     });
 
     navigate(location.pathname.slice(1), true).finally();
+
+    try {
+        if ('serviceWorker' in navigator) {
+            await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+        } else {
+            console.warn('⚠️ Service Worker not supported in this browser');
+        }
+    } catch {
+
+    }
 };

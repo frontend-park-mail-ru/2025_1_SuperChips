@@ -1,21 +1,54 @@
-.delete-pin-toast {
-    position: fixed;
-    bottom: 36px;
-    left: 210px;
-    transform: translateX(-50%);
-    background-color: #fff;
-    padding: 12px 24px;
-    border-radius: 20px;
-    border: solid 1px #000;
-    z-index: 1000;
-    animation: fadeIn 0.2s ease;
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
 
-    @keyframes fadeIn {
-        from {
-            transform: translate(-50%, 20px);
-        }
-        to {
-            transform: translate(-50%, 0px);
-        }
+.delete-popup {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    background-color: $white;
+    width: 440px;
+    height: 260px;
+    border-radius: $border-radius;
+    border: 1px solid $black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 40px;
+
+    &__header {
+        font-size: 36px;
+    }
+
+    &__content {
+        font-size: 18px;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
     }
 }
+
+.cancel-button, .confirm-button {
+    width: 100px;
+    height: 44px;
+    border: none;
+    border-radius: $border-radius;
+    color: #fff;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.cancel-button {
+    background-color: $text-gray;
+}
+
+.confirm-button {
+    background-color: $error-color;
+}
+

@@ -1,13 +1,17 @@
 export const handleClickOutside = (
     element: HTMLElement,
-    activeClass: string,
-    inactiveClass: string,
-    popupId: string
+    activeClass: string | null = null,
+    inactiveClass: string | null = null,
+    popupId: string | null = null
 ) => {
     const clickHandler = (e: Event) => {
         if (!element.contains(e.target as Node)) {
-            element.classList.replace(activeClass, inactiveClass);
-            document.querySelector(`#${popupId}`)?.remove();
+            if (activeClass && inactiveClass) {
+                element.classList.replace(activeClass, inactiveClass);
+            }
+            if (popupId) {
+                document.querySelector(`#${popupId}`)?.remove();
+            }
             window.removeEventListener('click', clickHandler);
         }
     };

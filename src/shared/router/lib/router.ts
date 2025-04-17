@@ -89,12 +89,14 @@ export const navigate = async (
         history.pushState({ ...history.state, ...appState }, '', newHref);
     }
 
-    window.scrollTo({ top: 0 });
-    updateBars(route);
-    cleanup();
     const newPage = await route.render(renderProps);
-    root.innerHTML = '';
-    root.appendChild(newPage);
+    if (newPage) {
+        root.innerHTML = '';
+        root.appendChild(newPage);
+        window.scrollTo({ top: 0 });
+        updateBars(route);
+        cleanup();
+    }
 };
 
 

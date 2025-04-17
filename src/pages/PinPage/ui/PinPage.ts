@@ -15,15 +15,13 @@ export const PinPage = async (pinID: string) => {
 
     const pinRequest = await API.get(`/api/v1/flows?id=${pinID}`);
     if (pinRequest instanceof Error || !pinRequest.ok) {
-        navigate('feed').finally();
-        return container;
+        return null;
     }
     const pinData = (await pinRequest.json()).data;
 
     const authorRequest = await API.get(`/api/v1/users/${pinData.author_username}`);
     if (authorRequest instanceof Error || !authorRequest.ok) {
-        navigate('feed').finally();
-        return container;
+        return null;
     }
     const userData = (await authorRequest.json()).data;
     const ok = await checkAvatar(userData?.avatar);
