@@ -1,6 +1,6 @@
 import type { ITabItem } from 'shared/components/tabBar';
-import type { IFeed } from 'pages/FeedPage';
 import { TabBar } from 'shared/components/tabBar';
+import type { IFeed } from 'pages/FeedPage';
 import { checkAvatar } from 'shared/utils';
 import { profileTabBarHandler } from '../handlers/tabBarHandler';
 import { BoardPopup } from 'widgets/BoardPopup';
@@ -18,8 +18,7 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
     const page = document.createElement('div');
 
     const own = Auth.userData ? username === Auth.userData.username : false;
-    const loadPins = appState.lastTab === 'pins';
-    appState.activeTab = loadPins ? 'pins' : 'boards';
+    const loadPins = appState.activeTab === 'pins';
     let userData;
 
     if (own) {

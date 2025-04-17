@@ -78,8 +78,7 @@ export const navigate = async (
 
     appState.lastPage = appState.activePage;
     appState.activePage = match;
-    appState.lastTab = appState.activeTab;
-    appState.activeTab = newTab;
+    if (newTab) appState.activeTab = newTab;
 
     document.title = route.title;
 
