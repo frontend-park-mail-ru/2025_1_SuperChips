@@ -35,7 +35,7 @@ module.exports = {
                 }
             },
             {
-                // TODO после РК убрать noEscape, продумать санитайзинг
+                // TODO после РК убрать noEscape, проработать с Эмре, санитайзинг
                 test: /\.hbs$/,
                 use: [
                     {
@@ -77,7 +77,7 @@ module.exports = {
         ]
     },
     optimization: {
-        minimize: true,
+        minimize: process.env.NODE_ENV === 'production',
         minimizer: [
             new TerserPlugin({
                 terserOptions: {

@@ -52,9 +52,12 @@
     align-items: center;
     gap: $spacing-sm;
 
+    img {
+        @include icon;
+    }
+
     &:hover {
         cursor: pointer;
-
         img {
             content: url("/public/icons/plus-active.svg");
         }

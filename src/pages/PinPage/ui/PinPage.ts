@@ -36,7 +36,7 @@ export const PinPage = async (pinID: string) => {
         author: userData?.username,
         username: userData?.public_name,
         hasText: !!pinData.header || !!pinData.description,
-        own: userData.public_name === Auth.userData?.public_name,
+        own: userData.username === Auth.userData?.username,
     };
 
     container.innerHTML = template(config);

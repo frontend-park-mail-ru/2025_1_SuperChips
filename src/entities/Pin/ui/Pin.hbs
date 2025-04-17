@@ -3,14 +3,14 @@
     {{#if authorized}}
         <div class="dropdown-block" id="dropdown-button">
             <div class="hidden pin__dropdown-board">{{boardToSave}}</div>
-            <img src="/public/icons/arrow-down.svg" class="icon hidden pin__dropdown-button" alt="">
+            <img src="/public/icons/arrow-down.svg" class="hidden pin__dropdown-button" alt="">
         </div>
         <button class="hidden pin__save-button">Сохранить</button>
-        {{#if mutable}}
-            <img src="/public/icons/delete.svg" class="hidden icon pin__delete-button" alt="">
+        {{#if canRemove}}
+            <img src="/public/icons/delete.svg" class="hidden pin__delete-button" alt="">
         {{/if}}
         {{#if canEdit}}
-            <img src="/public/icons/edit.svg" class="hidden icon pin__edit-button" alt="">
+            <img src="/public/icons/edit.svg" class="hidden pin__edit-button" alt="">
         {{/if}}
     {{/if}}
 </div>

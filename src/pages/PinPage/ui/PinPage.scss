@@ -13,26 +13,10 @@
 }
 
 .box-1 {
-    border-radius: $border-radius;
-    height: 584px;
-    width: 404px;
-    background-color: $button-dark;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
+    &__pin {
+        @include big-pin-container;
 
-    transition: all ease-in 300ms;
-
-    &:hover {
-        transform: scaleY(0.99) translateZ(5px);
     }
-
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-
 }
 
 .box-2 {
@@ -102,8 +86,7 @@
 
 
 .like, .like_active {
-    width: $icon-size;
-    height: $icon-size;
+    @include icon;
 
     &:hover {
         cursor: pointer;
@@ -136,16 +119,16 @@
 .one-pin-header {
     margin-top: 30px;
     font-size: 24px;
+    font-weight: bold;
 }
 
 .one-pin-description {
     margin-top: 10px;
-    white-space: pre;
+    white-space: pre-wrap;
 }
 
 .dropdown-icon {
-    width: $icon-size;
-    height: $icon-size;
+    @include icon;
     cursor: pointer;
 }
 
@@ -155,11 +138,16 @@
     font-weight: bold;
 }
 
+.buttons__box-2 {
+    display: flex;
+    gap: 16px;
+}
+
 .edit-button {
     @include flex-center;
-    position: absolute;
-    top: $navbar-height;
-    right: 20px;
+    //position: absolute;
+    //top: $navbar-height;
+    //right: 20px;
     width: 40px;
     height: 40px;
     border-radius: 50%;

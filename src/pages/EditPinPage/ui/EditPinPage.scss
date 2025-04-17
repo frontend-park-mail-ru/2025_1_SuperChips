@@ -1,0 +1,21 @@
+.delete-pin-toast {
+    position: fixed;
+    bottom: 36px;
+    left: 210px;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 12px 24px;
+    border-radius: 20px;
+    border: solid 1px #000;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+
+    @keyframes fadeIn {
+        from {
+            transform: translate(-50%, 20px);
+        }
+        to {
+            transform: translate(-50%, 0px);
+        }
+    }
+}

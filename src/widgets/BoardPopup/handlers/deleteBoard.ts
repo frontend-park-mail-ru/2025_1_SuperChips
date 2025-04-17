@@ -1,7 +1,7 @@
 import { API } from 'shared/api';
-import { removeBoardName } from 'features/boardLoader';
+import { BoardStorage } from 'features/boardLoader';
 
-export const deleteBoard = async (boardID: string) => {
+export const deleteBoard = async (boardID: number) => {
     const button = document.querySelector<HTMLButtonElement>('#popup-button');
     if (!button) return;
 
@@ -17,7 +17,7 @@ export const deleteBoard = async (boardID: string) => {
 
         const name = document.querySelector<HTMLDivElement>(`#board-${boardID}-name`);
         if (name) {
-            removeBoardName(name.textContent || '');
+            BoardStorage.removeBoard(boardID);
         }
 
         const boardPreview = document.querySelector<HTMLDivElement>(`#board-${boardID}`);

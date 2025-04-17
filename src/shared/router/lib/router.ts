@@ -12,6 +12,8 @@ interface AppState {
     href: string | null,
     isShowingToast: boolean,
     isShowingPopup: boolean,
+    lastTab: string | null,
+    activeTab: string | null,
 }
 
 export const appState: AppState = {
@@ -20,6 +22,8 @@ export const appState: AppState = {
     href: null,
     isShowingToast: false,
     isShowingPopup: false,
+    lastTab: null,
+    activeTab: null,
 };
 
 
@@ -36,7 +40,7 @@ export const navigate = async (
 
     let renderProps;
     let newHref;
-    // let newTab;
+    let newTab;
 
     if (match === 'profile') {
         renderProps = page;
@@ -55,13 +59,13 @@ export const navigate = async (
         newHref = route.href.toString();
     }
 
-    // if (/^board\/\S+$/.test(page)) {
-    //     newTab = 'boards';
-    // } else if (/^flow\/[a-zA-Z0-9]+$/.test(page)) {
-    //     newTab = 'pins';
-    // } else {
-    //     newTab = null;
-    // }
+    if (/^board\/\S+$/.test(page)) {
+        newTab = 'boards';
+    } else if (/^flow\/[a-zA-Z0-9]+$/.test(page)) {
+        newTab = 'pins';
+    } else {
+        newTab = null;
+    }
 
     if (match === appState.activePage && newHref === appState.href) {
         return;
@@ -74,15 +78,15 @@ export const navigate = async (
 
     appState.lastPage = appState.activePage;
     appState.activePage = match;
-    // appState.lastTab = appState.activeTab;
-    // appState.activeTab = newTab;
+    appState.lastTab = appState.activeTab;
+    appState.activeTab = newTab;
 
     document.title = route.title;
 
     if (replace) {
-        history.replaceState({ ...appState }, '', newHref);
+        history.replaceState({ ...history.state, ...appState }, '', newHref);
     } else {
-        history.pushState({ ...appState }, '', newHref);
+        history.pushState({ ...history.state, ...appState }, '', newHref);
     }
 
     window.scrollTo({ top: 0 });
@@ -122,7 +126,6 @@ const findMatch = async (page: string) => {
             match = 'feed';
         }
     }
-
     return match;
 };
 

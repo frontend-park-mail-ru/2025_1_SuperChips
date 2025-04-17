@@ -3,8 +3,8 @@ import type { IUser } from 'entities/User';
 import type { ISignupFormData } from 'pages/SignupPage';
 import { API } from 'shared/api';
 import { Navbar } from 'widgets/navbar';
-import { fetchUserBoards } from 'features/boardLoader';
 import { USER_OWN_PINS_BOARD, USER_SAVED_PINS_BOARD } from 'shared/config/constants';
+import { BoardStorage } from 'features/boardLoader';
 
 type TLoginData = {
     email: string;
@@ -85,7 +85,7 @@ class auth {
 
         if (response instanceof Response && response.ok) {
             await this.clearUserData();
-            sessionStorage.clear();
+            BoardStorage.clear();
         }
 
         return response;
@@ -111,7 +111,7 @@ class auth {
             };
 
             await Navbar();
-            await fetchUserBoards(data.username);
+            await BoardStorage.fetchUserBoards();
         }
     };
 

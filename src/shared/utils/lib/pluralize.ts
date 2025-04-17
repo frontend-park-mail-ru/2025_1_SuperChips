@@ -1,5 +1,8 @@
 export const pluralize = (word: string, count: number) => {
     if (word.toLowerCase() === 'пин' || word.toLowerCase() === 'подписчик') {
+        if (count === 0) {
+            return 'нет ' + word + 'ов';
+        }
         if (11 <= count % 100 && count % 100 <= 19) {
             return count.toString() + ' ' + word + 'ов';
         } else if (count % 10 === 1) {

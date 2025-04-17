@@ -28,7 +28,8 @@ const validateNewPassword = (event: Event) => {
     const container = target.closest('.input-container');
     if (target.id !== 'newPassword' || !container) return;
 
-    const validationResult = validatePassword(target.value);
+    const oldPassword = document.querySelector<HTMLInputElement>('#currentPassword')?.value;
+    const validationResult = validatePassword(target.value, oldPassword);
     toggleInputError(container, validationResult);
 
     const confirmInput = document.querySelector<HTMLInputElement>('#confirmPassword');

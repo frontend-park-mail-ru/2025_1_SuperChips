@@ -5,6 +5,7 @@ import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api';
 import { newPinPageTemplate } from 'pages/NewPinPage';
+import { deletePin } from '../handlers/deletePin';
 
 
 export const EditPinPage = async (pinID: string) => {
@@ -45,9 +46,8 @@ export const EditPinPage = async (pinID: string) => {
     placeholder?.replaceWith(Input(config.input));
 
     const newPinForm = page.querySelector<HTMLFormElement>('.new-pin-form');
+    const submitButton = page.querySelector('.create-pin-button');
     newPinForm?.addEventListener('submit', () => editPin(pinID));
-
-    const submitButton = page.querySelector('.create-flow-button');
     submitButton?.addEventListener('click', () => editPin(pinID));
 
     const title = page?.querySelector<HTMLInputElement>('#title');
@@ -59,6 +59,11 @@ export const EditPinPage = async (pinID: string) => {
 
     const checkbox = newToggle.querySelector<HTMLInputElement>('input');
     if (checkbox) checkbox.checked = pin.is_private;
+
+    const deleteButton = page.querySelector('#delete-pin-button');
+    deleteButton?.addEventListener('click', () => {
+        deletePin(pinID);
+    });
 
     return page;
 };

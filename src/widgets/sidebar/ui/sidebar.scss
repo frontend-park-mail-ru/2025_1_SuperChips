@@ -1,4 +1,5 @@
 @use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
 
 .sidebar {
     background: $gradient-dark;
@@ -70,6 +71,7 @@
 }
 
 .sidebar-button__icon {
+    @include icon;
     cursor: inherit;
     opacity: 0.8;
 }
@@ -79,27 +81,13 @@
 }
 
 .go-back-button {
+    @include icon;
     cursor: pointer;
 }
 
 .logout-toast {
-    position: fixed;
-    bottom: 36px;
-    left: 210px;
-    transform: translateX(-50%);
-    background-color: #fff;
-    padding: 12px 24px;
-    border-radius: 20px;
-    border: solid 1px #000;
-    z-index: 1000;
-    animation: fadeIn 0.2s ease;
+    @include confirm-toast;
 
-    @keyframes fadeIn {
-        from {
-            transform: translate(-50%, 20px);
-        }
-        to {
-            transform: translate(-50%, 0px);
-        }
-    }
+    left: 210px;
+    bottom: 36px;
 }

@@ -92,7 +92,11 @@
     flex-shrink: 0;
     justify-content: center;
     margin-right: $spacing-lg;
-    background-color: white;
+    background-color: transparent;
+
+    &:not(:has(img)) {
+        background-color: white;
+    }
 
     img {
         min-width: 100%;
@@ -119,4 +123,43 @@
     background-color: white;
     color: black;
     user-select: none;
+}
+
+@mixin icon {
+    -webkit-user-drag: none;
+    width: $icon-size;
+    height: $icon-size;
+}
+
+@mixin confirm-toast {
+    position: fixed;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 12px 24px;
+    border-radius: 20px;
+    border: solid 1px #000;
+    z-index: 1000;
+}
+
+@mixin big-pin-container {
+    border-radius: $border-radius;
+    max-height: calc(100vh - $navbar-height - 30px);
+    max-width: 404px;
+    background-color: $button-dark;
+    overflow: hidden;
+    width: $card-big-width;
+
+    transition: all ease-in 300ms;
+
+    &:hover {
+        transform: scaleY(0.99) translateZ(5px);
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+        max-height: inherit;
+        object-fit: contain;
+        display: block;
+    }
 }

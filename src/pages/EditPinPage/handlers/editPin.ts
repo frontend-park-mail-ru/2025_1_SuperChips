@@ -1,6 +1,5 @@
 import { API } from 'shared/api';
 import { Toast } from 'shared/components/Toast';
-import { navigate } from 'shared/router';
 
 interface IPinUpdateProps {
     flow_id: number
@@ -29,6 +28,6 @@ export const editPin = async (pinID: string) => {
 
     if (response instanceof Response && response.ok) {
         Toast('Flow был успешно обновлен', 'success', 5000);
-        navigate(`flow/${pinID}`).finally();
+        history.back();
     }
 };

@@ -33,7 +33,7 @@ export const NewPinPage = async () => {
     newPinForm?.addEventListener('submit', createPin);
     newPinForm?.insertAdjacentElement('afterbegin', ImageInput());
 
-    const submitButton = page.querySelector('.create-flow-button');
+    const submitButton = page.querySelector('.create-pin-button');
     submitButton?.addEventListener('click', createPin);
 
     const toggle = page.querySelector('.toggle-placeholder');

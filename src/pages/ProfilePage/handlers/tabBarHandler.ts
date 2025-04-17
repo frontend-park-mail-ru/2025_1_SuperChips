@@ -1,14 +1,15 @@
 import type { IFeed } from 'pages/FeedPage';
 import { boardFeedScroll } from 'pages/BoardPage';
 import { UserPins } from 'widgets/UserPins';
-import { UserBoard } from 'widgets/UserBoard';
+import { UserBoards } from 'widgets/UserBoard';
+import { appState } from 'shared/router';
 
 
 const profilePageState = {
     currentTab: 'pin',
 };
 
-export const handleTabBar = async (tabId: string, username: string) => {
+export const profileTabBarHandler = async (tabId: string, username: string) => {
     const content = document.querySelector<IFeed>('#feed');
     if (!content) return;
 
@@ -18,15 +19,15 @@ export const handleTabBar = async (tabId: string, username: string) => {
         content.innerHTML = '';
         await UserPins(username);
         newBoard?.classList.add('hidden');
-        history.state.lastTab = 'pins';
+        appState.activeTab = 'pins';
     } else if (tabId === 'boards' && profilePageState.currentTab !== 'boards') {
         window.removeEventListener('scroll', boardFeedScroll);
         if (content.masonry) {
             content.masonry = null;
         }
         content.innerHTML = '';
-        await UserBoard(username);
+        await UserBoards(username);
         newBoard?.classList.remove('hidden');
-        history.state.lastTab = 'boards';
+        appState.activeTab = 'boards';
     }
 };

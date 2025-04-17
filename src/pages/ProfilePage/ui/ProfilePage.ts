@@ -1,14 +1,15 @@
 import type { ITabItem } from 'shared/components/tabBar';
-import { TabBar } from 'shared/components/tabBar';
 import type { IFeed } from 'pages/FeedPage';
+import { TabBar } from 'shared/components/tabBar';
 import { checkAvatar } from 'shared/utils';
-import { handleTabBar } from '../handlers/tabBarHandler';
+import { profileTabBarHandler } from '../handlers/tabBarHandler';
 import { BoardPopup } from 'widgets/BoardPopup';
 import { UserPins } from 'widgets/UserPins';
-import { UserBoard } from 'widgets/UserBoard';
+import { UserBoards } from 'widgets/UserBoard';
 import { Auth } from 'features/authorization';
 import { root } from 'app/app';
 import { API } from 'shared/api';
+import { appState } from 'shared/router';
 import ProfilePageTemplate from './ProfilePage.hbs';
 import './ProfilePage.scss';
 
@@ -17,7 +18,8 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
     const page = document.createElement('div');
 
     const own = Auth.userData ? username === Auth.userData.username : false;
-    const loadPins = history.state.lastTab === 'pins';
+    const loadPins = appState.lastTab === 'pins';
+    appState.activeTab = loadPins ? 'pins' : 'boards';
     let userData;
 
     if (own) {
@@ -47,7 +49,7 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
     ];
 
     const newTabBar = TabBar(tabs, 'horizontal', (tabId) => {
-        handleTabBar(tabId, username);
+        profileTabBarHandler(tabId, username);
     });
     const tabBar = page.querySelector('.tab-bar-placeholder');
     tabBar?.replaceWith(newTabBar);
@@ -63,7 +65,7 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
         if (loadPins) {
             await UserPins(username);
         } else {
-            await UserBoard(username);
+            await UserBoards(username);
         }
         delayedFill.disconnect();
     });

@@ -1,11 +1,6 @@
 <div class="one-pin-page" id="page">
-    {{#if own}}
-        <div class="edit-button" id="edit-pin">
-            <img src="/public/icons/edit.svg" alt="edit pin">
-        </div>
-    {{/if}}
-    <div class="box-1">
-        <img src="{{media_url}}" id="pin-{{flow_id}}" alt="{{description}}">
+    <div>
+        <img class="box-1__pin" src="{{media_url}}" id="pin-{{flow_id}}" alt="{{description}}">
     </div>
     <div class="box-2">
         {{#if hasText}}
@@ -34,17 +29,24 @@
                         <img
                                 id="like"
                                 src="/public/icons/like{{#if is_liked}}-filled{{/if}}.svg"
-                                class="like{{#if is_liked}}_active{{/if}} icon"
+                                class="like{{#if is_liked}}_active{{/if}}"
                                 alt="like button"
                         >
                         <p id="like-count">{{like_count}}</p>
                     </div>
                 </div>
-                <div class="box-2__save-button">
-                    <p class="save-button__text" id="save-button-text">Мои flow</p>
-                    <img id="dropdown-button" class="dropdown-icon icon" src="/public/icons/arrow-down.svg"
-                         alt="select board to save">
-                    <button class="save-button">Сохранить</button>
+                <div class="buttons__box-2">
+                    {{#if own}}
+                        <div class="edit-button" id="edit-pin">
+                            <img src="/public/icons/edit.svg" alt="edit pin">
+                        </div>
+                    {{/if}}
+                    <div class="box-2__save-button">
+                        <p class="save-button__text" id="save-button-text">Мои flow</p>
+                        <img id="dropdown-button" class="dropdown-icon" src="/public/icons/arrow-down.svg"
+                             alt="select board to save">
+                        <button class="save-button">Сохранить</button>
+                    </div>
                 </div>
             </div>
         {{/if}}
