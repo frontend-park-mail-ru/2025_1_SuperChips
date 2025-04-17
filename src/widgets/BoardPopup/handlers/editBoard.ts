@@ -1,7 +1,7 @@
 import { API } from 'shared/api';
-import { addBoardName, removeBoardName } from 'features/boardLoader';
+import { BoardStorage } from 'features/boardLoader';
 
-export const editBoard = async (boardID: string) => {
+export const editBoard = async (boardID: number) => {
     const input = document.querySelector<HTMLInputElement>('#board-name');
     const privateCheckbox = document.querySelector<HTMLInputElement>('#isPrivate');
     const boardName = document.querySelector(`#board-${boardID}-name`);
@@ -16,23 +16,23 @@ export const editBoard = async (boardID: string) => {
 
     const response = await API.put(`/api/v1/boards/${boardID}`, body);
 
-    if (response instanceof Response && response.status === 200) {
+    if (response instanceof Response && response.ok) {
+        BoardStorage.updateBoard(boardID, { is_private: privateCheckbox.checked });
         if (boardName && newName !== '') {
-            removeBoardName(boardName.textContent ? boardName.textContent : '');
-            addBoardName(newName);
+            BoardStorage.updateBoard(boardID, { is_private: privateCheckbox.checked });
             boardName.textContent = newName;
         }
 
         const lock = document.querySelector<HTMLImageElement>(`#private-icon-${boardID}`);
-        if (lock) {
+
+        if (lock && !privateCheckbox.checked) {
             lock.remove();
-        } else {
+        } else if (privateCheckbox.checked) {
             const preview = document.querySelector<HTMLDivElement>(`#board-${boardID}-preview`);
             const icon = document.createElement('img');
             icon.src = '/public/icons/lock.svg';
             icon.id = `private-icon-${boardID}`;
-            icon.classList.add('private-icon', 'hidden');
-
+            icon.classList.add('preview__icon-private', 'hidden');
             preview?.appendChild(icon);
         }
     }

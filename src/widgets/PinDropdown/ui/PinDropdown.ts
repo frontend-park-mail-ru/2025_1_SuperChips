@@ -1,7 +1,6 @@
 import type { ITabItem } from 'shared/components/tabBar';
 import { TabBar } from 'shared/components/tabBar';
-import { getBoardNames } from 'features/boardLoader';
-import { handleTabBar } from '../handlers/handleTabBar';
+import { pinDropdownTabBarHandler } from '../handlers/pinDropdownTabBarHandler';
 import { findPosition } from '../lib/findPosition';
 import { closePopup, toggleScroll } from 'widgets/BoardPopup';
 import { USER_OWN_PINS_BOARD, USER_SAVED_PINS_BOARD } from 'shared/config/constants';
@@ -10,6 +9,7 @@ import { root } from 'app/app';
 import template from './PinDropdown.hbs';
 import './PinDropdown.scss';
 import { createPinDropdown } from '../handlers/createHandler';
+import { BoardStorage } from 'features/boardLoader';
 
 
 export const PinDropdown = (pinID: string) => {
@@ -27,12 +27,12 @@ export const PinDropdown = (pinID: string) => {
         dropdown.style.top = `${position.y}px`;
     }
 
-    const boardToSave = sessionStorage.getItem('boardToSave');
+    const boardToSave = BoardStorage.boardToSave;
     const tabs: ITabItem[] = [
         { id: '0', title: 'Мои flow', active: boardToSave === USER_SAVED_PINS_BOARD }
     ];
 
-    const boardList = getBoardNames();
+    const boardList = BoardStorage.getBoardNames();
     boardList?.forEach((name, index) => {
         if (name !== USER_SAVED_PINS_BOARD && name !== USER_OWN_PINS_BOARD) {
             tabs.push({ id: (index + 1).toString(), title: name, active: name === boardToSave });
@@ -42,7 +42,7 @@ export const PinDropdown = (pinID: string) => {
     const tabBar = container.querySelector('.tab-bar-placeholder');
     if (tabBar) {
         const newTabBar = TabBar(tabs, 'vertical', (tabId) => {
-            handleTabBar(tabId).finally();
+            pinDropdownTabBarHandler(tabId).finally();
         });
         tabBar?.replaceWith(newTabBar);
         newTabBar.style.gap = '0';

@@ -10,8 +10,8 @@
             </div>
         {{/each}}
         {{#if mutable}}
-            <img class="hidden icon icon preview__icon-delete" src="/public/icons/delete.svg" alt="delete board">
-            <img class="hidden icon preview__icon-edit" src="/public/icons/edit.svg" alt="edit board">
+            <img class="hidden preview__icon-delete" src="/public/icons/delete.svg" alt="delete board">
+            <img class="hidden preview__icon-edit" src="/public/icons/edit.svg" alt="edit board">
         {{/if}}
         {{#if is_private}}
             <img id="private-icon-{{id}}" class="preview__icon-private hidden" src="/public/icons/lock.svg" alt="">
@@ -19,6 +19,6 @@
     </div>
     <div class="board-container__name">
         <p id="board-{{id}}-name" class="bold label white ">{{name}}</p>
-        <p class="input-text white">{{flow_count}}</p>
+        <p class="input-text white">{{flowCountPluralized}}</p>
     </div>
 </div>

@@ -2,9 +2,9 @@ import { Board } from 'entities/Board';
 import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
 import { appState } from 'shared/router';
-import { addBoardName } from 'features/boardLoader';
+import { BoardStorage } from 'features/boardLoader';
 
-export const createBoard = async () => {
+export const createBoard = async (newBoardToSave: boolean = false) => {
     if (!Auth.userData) return;
 
     const input = document.querySelector<HTMLInputElement>('#board-name');
@@ -31,13 +31,30 @@ export const createBoard = async () => {
         is_private: privateCheckbox.checked,
     });
 
-    addBoardName(input.value.trim(), id);
+    BoardStorage.addBoard({
+        id: id,
+        name: input.value.trim(),
+        is_private: privateCheckbox.checked,
+        flow_count: 0,
+        own: true,
+        preview: [],
+    });
+
 
     if (appState.activePage === 'profile' && appState.activeTab === 'boards') {
         const feed = document.querySelector('#feed');
         const emptyPage = document.querySelector('.empty-page');
         emptyPage?.remove();
         feed?.appendChild(newBoard);
+    }
+
+    if (newBoardToSave) {
+        BoardStorage.boardToSave = input.value.trim();
+        const labels = document.querySelectorAll('.pin__dropdown-board');
+        const newName = input.value.trim();
+        labels.forEach((label) => {
+            label.textContent = newName;
+        });
     }
 
     const background = document.querySelector<HTMLDivElement>('.black-background');

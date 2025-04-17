@@ -26,8 +26,7 @@
         margin-top: 10px;
 
         img {
-            width: $icon-size;
-            height: $icon-size;
+            @include icon;
         }
 
         &:hover {

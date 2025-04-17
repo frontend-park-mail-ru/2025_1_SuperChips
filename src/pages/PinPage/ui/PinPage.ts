@@ -15,15 +15,13 @@ export const PinPage = async (pinID: string) => {
 
     const pinRequest = await API.get(`/api/v1/flows?id=${pinID}`);
     if (pinRequest instanceof Error || !pinRequest.ok) {
-        navigate('feed').finally();
-        return container;
+        return null;
     }
     const pinData = (await pinRequest.json()).data;
 
     const authorRequest = await API.get(`/api/v1/users/${pinData.author_username}`);
     if (authorRequest instanceof Error || !authorRequest.ok) {
-        navigate('feed').finally();
-        return container;
+        return null;
     }
     const userData = (await authorRequest.json()).data;
     const ok = await checkAvatar(userData?.avatar);
@@ -35,6 +33,8 @@ export const PinPage = async (pinID: string) => {
         shortUsername: userData?.username[0].toUpperCase(),
         author: userData?.username,
         username: userData?.public_name,
+        hasText: !!pinData.header || !!pinData.description,
+        own: userData.username === Auth.userData?.username,
     };
 
     container.innerHTML = template(config);
@@ -54,6 +54,9 @@ export const PinPage = async (pinID: string) => {
     const pfp = container.querySelector<HTMLDivElement>('.one-pin__author-area__tag');
     name?.addEventListener('click', () => navigate(config.author));
     pfp?.addEventListener('click', () => navigate(config.author));
+
+    const editButton = container.querySelector('#edit-pin');
+    editButton?.addEventListener('click', () => navigate(`flow/edit/${pinID}`).finally());
 
     return container;
 };

@@ -6,7 +6,8 @@ import { ValidationResult } from './types';
  * @returns {(boolean|string)[]}
  */
 export const validatePassword = (
-    password: string
+    password: string,
+    oldPassword?: string,
 ): ValidationResult => {
     const regex = /^[a-zA-Z0-9._\-@#$%&*!]+$/;
 
@@ -21,6 +22,10 @@ export const validatePassword = (
         return { isValid: false, error: 'Пароль должен быть не более 96 символов' };
     } else if (password.length < 8) {
         return { isValid: false, error: 'Пароль должен быть не менее 8 символов' };
+    }
+
+    if (password === oldPassword) {
+        return { isValid: false, error: 'Новый пароль должен отличаться' };
     }
 
     return { isValid: true, error: '' };
