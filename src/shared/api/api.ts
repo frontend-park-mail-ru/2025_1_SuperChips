@@ -10,10 +10,12 @@ type TMethods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
  */
 class Api {
     readonly #apiBaseUrl: string;
-    #csrf;
+    private csrf: string;
+
     constructor() {
         this.#apiBaseUrl = API_BASE_URL;
-        this.#csrf = new CSRF();
+        const csrf = localStorage.getItem('csrf');
+        this.csrf = csrf ? csrf : '';
     }
 
     /**
@@ -56,15 +58,7 @@ class Api {
                 credentials: 'include',
                 body: bodyPayload,
             };
-
-            const response = await fetch(url, state);
-
-            const CSRFToken = response.headers.get('X-CSRF-TOKEN') ?? localStorage.getItem('csrf');
-            if (CSRFToken) {
-                this.#csrf.set(CSRFToken);
-            }
-
-            return response;
+            return await fetch(url, state);
         } catch {
             const message = method === 'GET'
                 ? 'Ошибка при получении данных. Попробуйте еще раз'
@@ -94,7 +88,7 @@ class Api {
         body: object | FormData | null = null
     ): Promise<Response|Error> {
         const headers: HeadersInit = {
-            'X-CSRF-Token': this.#csrf.get(),
+            'X-CSRF-Token': this.csrf,
         };
 
         return this.request('POST', url, headers, body);
@@ -108,7 +102,7 @@ class Api {
         body: object | FormData | null = null
     ): Promise<Response|Error> {
         const headers = {
-            'X-CSRF-Token': this.#csrf.get(),
+            'X-CSRF-Token': this.csrf,
             'Content-Type': 'multipart/form-data',
         };
 
@@ -122,7 +116,7 @@ class Api {
         url: string
     ): Promise<Response|Error> {
         const headers = {
-            'X-CSRF-Token': this.#csrf.get(),
+            'X-CSRF-Token': this.csrf,
         };
 
         return this.request('DELETE', url, headers);
@@ -136,7 +130,7 @@ class Api {
         body: object | FormData
     ): Promise<Response|Error> {
         const headers: HeadersInit = {
-            'X-CSRF-Token': this.#csrf.get(),
+            'X-CSRF-Token': this.csrf,
         };
 
         return this.request('PATCH', url, headers, body);
@@ -155,25 +149,16 @@ class Api {
             return new Error('Could not fetch');
         }
     }
-}
 
-
-/**
- * Класс для хранения и работы с CSRF токенами
- */
-class CSRF {
-    #csrfToken: string;
-    constructor() {
-        this.#csrfToken = '';
-    }
-
-    get() {
-        return this.#csrfToken;
-    }
-
-    set(csrf: string) {
-        this.#csrfToken = csrf;
+    setCSRFToken(
+        token: string,
+    ) {
+        localStorage.setItem('csrf', token);
+        this.csrf = token;
     }
 }
+
+
+
 
 export const API = new Api();
