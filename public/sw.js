@@ -76,7 +76,8 @@ self.addEventListener('fetch', (event) => {
             caches.match(request).then(cachedResponse => {
                 return cachedResponse || fetch(request).then(response => {
                     const responseClone = response.clone();
-                    caches.open(CACHE_NAME).then(cache => cache.put(request, responseClone));
+                    if (request.method !== 'HEAD')
+                        caches.open(CACHE_NAME).then(cache => cache.put(request, responseClone));
                     return response;
                 });
             })
