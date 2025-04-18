@@ -51,10 +51,7 @@ class boardStorage {
 
     //  Удаляет доску из хранилища
     removeBoard(boardID: number) {
-        const index = this.ownBoardList.findIndex(item => item.id === boardID);
-        if (index > -1) {
-            this.ownBoardList.splice(index, 1);
-        }
+        this.ownBoardList = this.ownBoardList.filter((item: IBoardProps) => item.id !== boardID);
     }
 
     // Изменяет свойства доски в хранилище

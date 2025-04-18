@@ -1,8 +1,5 @@
 import type { IFeed } from 'pages/FeedPage';
-import { boardFeedScroll } from 'pages/BoardPage';
-import { UserPins } from 'widgets/UserPins';
-import { UserBoards } from 'widgets/UserBoard';
-import { appState } from 'shared/router';
+import { navigate } from 'shared/router';
 
 
 const profilePageState = {
@@ -16,18 +13,12 @@ export const profileTabBarHandler = async (tabId: string, username: string) => {
     const newBoard = document.querySelector('.create-board');
 
     if (tabId === 'pins' && profilePageState.currentTab !== 'pins') {
-        content.innerHTML = '';
-        await UserPins(username);
-        newBoard?.classList.add('hidden');
-        appState.activeTab = 'pins';
+        navigate(`${username}/flows`, true).finally();
     } else if (tabId === 'boards' && profilePageState.currentTab !== 'boards') {
-        window.removeEventListener('scroll', boardFeedScroll);
         if (content.masonry) {
             content.masonry = null;
         }
-        content.innerHTML = '';
-        await UserBoards(username);
+        navigate(`${username}/boards`, true).finally();
         newBoard?.classList.remove('hidden');
-        appState.activeTab = 'boards';
     }
 };

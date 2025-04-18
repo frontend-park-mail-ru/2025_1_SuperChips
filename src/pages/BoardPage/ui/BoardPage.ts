@@ -66,7 +66,8 @@ export const BoardPage = async (boardID: string) => {
 
     delayedFill.observe(root, { childList: true });
 
-    window.addEventListener('scroll', boardFeedScroll);
+    setTimeout(() => window.addEventListener('scroll', boardFeedScroll), 100);
+
 
     const scrollButton = page.querySelector<HTMLDivElement>('.scroll-to-top');
     scrollButton?.addEventListener('click', toTop);

@@ -56,7 +56,7 @@ export const PinPage = async (pinID: string) => {
     pfp?.addEventListener('click', () => navigate(config.author));
 
     const editButton = container.querySelector('#edit-pin');
-    editButton?.addEventListener('click', () => navigate(`flow/edit/${pinID}`).finally());
+    editButton?.addEventListener('click', () => navigate(`flow/edit/${pinID}`, true).finally());
 
     return container;
 };

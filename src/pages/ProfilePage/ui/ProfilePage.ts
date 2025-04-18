@@ -14,21 +14,29 @@ import ProfilePageTemplate from './ProfilePage.hbs';
 import './ProfilePage.scss';
 
 
-export const ProfilePage = async (username: string): Promise<HTMLDivElement> => {
+export const ProfilePage = async (username: string, tab: string): Promise<HTMLDivElement> => {
     const page = document.createElement('div');
 
     const own = Auth.userData ? username === Auth.userData.username : false;
-    const loadPins = appState.activeTab === 'pins';
+    const isPinTabActive = tab === 'pins';
     let userData;
+
+    const isLastVisited = (
+        ['profile', 'profilePins', 'profileBoards', null].includes(appState.lastPage)
+        && username === appState.lastVisited.username
+    );
 
     if (own) {
         userData = Auth.userData;
-    } else {
+    } else if (!isLastVisited) {
         const response = await API.get(`/api/v1/users/${username}`);
         if (!(response instanceof Response && response.ok)) return page;
 
         const body = await response.json();
         userData = body.data;
+        appState.lastVisited = body.data;
+    } else {
+        userData = appState.lastVisited;
     }
 
     const ok = await checkAvatar(userData.avatar);
@@ -38,14 +46,14 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
         shortUsername: username[0]?.toUpperCase(),
         author_pfp: ok ? userData.avatar : null,
         own: own,
-        createBoardButton: !loadPins,
+        showCreateBoardButton: !isPinTabActive && own,
     };
 
     page.innerHTML = ProfilePageTemplate(config);
 
     const tabs: ITabItem[] = [
-        { id: 'pins', title: 'Flow', active: loadPins },
-        { id: 'boards', title: 'Доски', active: !loadPins }
+        { id: 'pins', title: 'Flow', active: isPinTabActive },
+        { id: 'boards', title: 'Доски', active: !isPinTabActive }
     ];
 
     const newTabBar = TabBar(tabs, 'horizontal', (tabId) => {
@@ -62,7 +70,7 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
 
 
     const delayedFill: MutationObserver = new MutationObserver(async () => {
-        if (loadPins) {
+        if (isPinTabActive) {
             await UserPins(username);
         } else {
             await UserBoards(username);

@@ -5,7 +5,6 @@ const { CleanWebpackPlugin }  = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { GenerateSW } = require('workbox-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -115,32 +114,6 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: 'css/[name].[contenthash].min.css',
             chunkFilename: 'css/[id].[contenthash].min.css'
-        }),
-
-        isProd && new GenerateSW({
-            swDest: path.resolve(__dirname, 'dist', 'sw.js'),
-            clientsClaim: true,
-            skipWaiting: true,
-            runtimeCaching: [
-                {
-                    urlPattern: /\/api\/.*$/,
-                    handler: 'NetworkFirst',
-                    options: {
-                        cacheName: 'api-cache',
-                    },
-                },
-                {
-                    urlPattern: /\.(?:png|jpg|jpeg|svg|gif)$/,
-                    handler: 'CacheFirst',
-                    options: {
-                        cacheName: 'image-cache',
-                        expiration: {
-                            maxEntries: 50,
-                            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 дней
-                        },
-                    },
-                }
-            ]
         }),
 
     ].filter(Boolean),

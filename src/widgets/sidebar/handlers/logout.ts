@@ -1,5 +1,6 @@
-import { navigate } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
+import { Toast } from 'shared/components/Toast';
 
 export const logoutHandler = async (event: Event) => {
     event.preventDefault();
@@ -11,16 +12,16 @@ export const logoutHandler = async (event: Event) => {
     const clickHandler = (e: Event) => {
         if (!button.contains(e.target as Node)) {
             button.classList.replace('sidebar-button_confirm', 'sidebar-button');
-            document.querySelector('#logout-toast')?.remove();
+            document.querySelector('.logout-toast')?.remove();
             window.removeEventListener('click', clickHandler);
+            appState.isShowingToast = false;
         }
     };
 
     if (button.classList.contains('sidebar-button')) {
         button.classList.replace('sidebar-button', 'sidebar-button_confirm');
         window.addEventListener('click', clickHandler);
-        const toast = '<div id="logout-toast" class="logout-toast">Вы уверены, что хотите выйти?</div>';
-        document.body.insertAdjacentHTML('beforeend', toast);
+        Toast('Вы уверены, что хотите выйти?', 'message', 5000, 'logout-toast');
     } else {
         await Auth.logout();
         navigate('feed', true).finally();

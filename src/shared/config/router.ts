@@ -15,9 +15,9 @@ export interface Route {
     render: (params: string) => Promise<HTMLDivElement | null>,
     nonAuthOnly?: boolean,
     authOnly?: boolean,
-    hasNavbar?: boolean,
-    hasSidebar?: boolean,
-    hasBackButton?: boolean,
+    noNavbar?: boolean,
+    noSidebar?: boolean,
+    noBackButton?: boolean,
 }
 
 interface MenuConfig {
@@ -36,56 +36,63 @@ export const config: RouterConfig = {
             title: 'Авторизация',
             render: LoginPage,
             nonAuthOnly: true,
+            noNavbar: true,
+            noSidebar: true,
+            noBackButton: true,
         },
         signup: {
             href: '/signup',
             title: 'Регистрация',
             render: SignupPage,
             nonAuthOnly: true,
+            noNavbar: true,
+            noSidebar: true,
+            noBackButton: true,
         },
         settings: {
             href: '/settings',
             title: 'Настройки',
             render: SettingsPage,
             authOnly: true,
-            hasNavbar: true,
-            hasSidebar: true,
-            hasBackButton: true
         },
         feed: {
             href: '/feed',
             title: 'Лента',
             render: FeedPage,
-            hasNavbar: true,
-            hasSidebar: true,
+            noBackButton: true,
         },
         newPin: {
             href: '/flow/new',
             title: 'Новый flow',
             render: NewPinPage,
             authOnly: true,
-            hasSidebar: true,
-            hasNavbar: true,
-            hasBackButton: true
         },
         editPin: {
             href: /^flow\/edit\/\S+$/,
             title: 'Изменение flow',
             render: (pinID: string) => EditPinPage(pinID),
             authOnly: true,
-            hasSidebar: true,
-            hasNavbar: true,
-            hasBackButton: true
         },
         profile: {
             href: /^[a-zA-Z0-9._\-@#$%&*!]+$/,
             title: 'Профиль',
             render: (username: string) => {
-                return ProfilePage(username);
+                return ProfilePage(username, 'boards');
             },
-            hasNavbar: true,
-            hasSidebar: true,
-            hasBackButton: true
+        },
+        profileBoards: {
+            href: /^[a-zA-Z0-9._\-@#$%&*!]+\/boards$/,
+            title: 'Профиль',
+            render: (username: string) => {
+                return ProfilePage(username, 'boards');
+            },
+        },
+        profilePins: {
+            title: 'Профиль',
+            href: /^[a-zA-Z0-9._\-@#$%&*!]+\/flows$/,
+            render: (username: string) => {
+                return ProfilePage(username, 'pins');
+            },
         },
         pin: {
             href: /^flow\/[a-zA-Z0-9]+$/,
@@ -93,9 +100,6 @@ export const config: RouterConfig = {
             render: (flowID: string) => {
                 return PinPage(flowID);
             },
-            hasNavbar: true,
-            hasSidebar: true,
-            hasBackButton: true,
         },
         board: {
             href: /^board\/\S+$/,
@@ -103,9 +107,6 @@ export const config: RouterConfig = {
             render: (boardID: string) => {
                 return BoardPage(boardID);
             },
-            hasNavbar: true,
-            hasSidebar: true,
-            hasBackButton: true,
         }
     }
 };

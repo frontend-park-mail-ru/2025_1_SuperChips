@@ -86,8 +86,15 @@
 }
 
 .logout-toast {
-    @include confirm-toast;
+    position: fixed;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 12px 24px;
+    border-radius: 20px;
+    border: solid 1px #000;
+    z-index: 1000;
 
     left: 210px;
     bottom: 36px;
+    color: black;
 }

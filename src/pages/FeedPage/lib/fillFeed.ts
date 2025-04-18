@@ -1,5 +1,4 @@
 import type { IPinProps } from 'entities/Pin/model/types';
-import { debouncedFeedScroll } from '../handlers/handleScroll';
 import { Pin } from 'entities/Pin';
 import { Footer } from '../components/footer/footer';
 import { loadFeedPictures } from 'features/imageLoader';
@@ -20,7 +19,6 @@ export const fillFeed = async () => {
         if (!rootElement) return;
 
         rootElement.insertAdjacentHTML('beforeend', Footer().innerHTML);
-        window.removeEventListener('scroll', debouncedFeedScroll);
         feedState.isLoading = false;
 
         return null;
