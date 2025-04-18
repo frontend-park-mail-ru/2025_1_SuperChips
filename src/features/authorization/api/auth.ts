@@ -85,7 +85,9 @@ class auth {
 
         if (response instanceof Response && response.ok) {
             await this.clearUserData();
+
             BoardStorage.clear();
+
         }
 
         return response;
