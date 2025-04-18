@@ -7,18 +7,17 @@
     left: 50vw;
     transform: translate(-50%, -50%);
     background-color: $white;
-    width: 440px;
-    height: 260px;
+    width: 560px;
+    height: 296px;
     border-radius: $border-radius;
-    border: 1px solid $black;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
-    padding: 30px 40px;
+    padding: 40px 64px;
 
     &__header {
         font-size: 36px;
+        font-weight: bold;
     }
 
     &__content {
@@ -27,17 +26,16 @@
 
     &__buttons {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-between;
         width: 100%;
     }
 }
 
 .cancel-button, .confirm-button {
-    width: 100px;
+    width: 200px;
     height: 44px;
     border: none;
     border-radius: $border-radius;
-    color: #fff;
 
     &:hover {
         cursor: pointer;
@@ -45,9 +43,11 @@
 }
 
 .cancel-button {
-    background-color: $text-gray;
+    color: #000;
+    background-color: #bebebe;
 }
 
 .confirm-button {
+    color: #fff;
     background-color: $error-color;
 }

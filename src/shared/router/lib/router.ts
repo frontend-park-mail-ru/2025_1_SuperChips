@@ -37,6 +37,9 @@ export const navigate = async (
     const match = await findMatch(page);
     const route = config.menu[match];
 
+    appState.lastPage = appState.activePage;
+    appState.activePage = match;
+
     let renderProps = '';
     let newHref = route.href.toString();
 
@@ -44,6 +47,7 @@ export const navigate = async (
     case 'profile':
         renderProps = page;
         newHref = `/${page}/boards`;
+        appState.activePage = 'profileBoards';
         break;
     case 'pin':
         renderProps = page.split('/')[1];
@@ -71,8 +75,6 @@ export const navigate = async (
         return;
     }
 
-    appState.lastPage = appState.activePage;
-    appState.activePage = match;
     appState.href = newHref;
     document.title = route.title;
 

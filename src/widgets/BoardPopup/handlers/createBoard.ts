@@ -40,8 +40,7 @@ export const createBoard = async (newBoardToSave: boolean = false) => {
         preview: [],
     });
 
-
-    if (appState.activePage === 'profile' && appState.activeTab === 'boards') {
+    if (appState.activePage === 'profileBoards') {
         const feed = document.querySelector('#feed');
         const emptyPage = document.querySelector('.empty-page');
         emptyPage?.remove();
