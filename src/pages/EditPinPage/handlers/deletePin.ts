@@ -26,7 +26,7 @@ const confirmDelete = async (pinID: string) => {
 
     Toast('flow удален', 'message');
     document.querySelector(`#pin-${pinID}`)?.remove();
-    history.go(-2);
+    history.go(-1);
 };
 
 const cancelDelete = () => {
