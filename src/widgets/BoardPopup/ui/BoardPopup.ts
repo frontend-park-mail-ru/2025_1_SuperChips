@@ -7,6 +7,7 @@ import { createBoard } from '../handlers/createBoard';
 import { deleteBoard } from '../handlers/deleteBoard';
 import { editBoard } from '../handlers/editBoard';
 import { root } from 'app/app';
+import { BoardStorage } from 'features/boardLoader';
 import template from './BoardPopup.hbs';
 import './BoardPopup.scss';
 
@@ -14,7 +15,12 @@ import './BoardPopup.scss';
 export type TPopupType = 'edit' | 'delete' | 'create';
 
 
-export const BoardPopup = (type: TPopupType, boardID: string | null = null, boardName: string | null = null) => {
+export const BoardPopup = (
+    type: TPopupType,
+    boardID: number | null = null,
+    boardName: string | null = null,
+    newBoardToSave?: boolean
+) => {
     toggleScroll('disabled');
 
     if (type === 'edit' || type === 'delete') {
@@ -31,7 +37,7 @@ export const BoardPopup = (type: TPopupType, boardID: string | null = null, boar
             inputLabel: 'Название новой доски',
             create: true,
             type: 'create',
-            handler: createBoard,
+            handler: () => createBoard(newBoardToSave),
         },
         edit: {
             header: `Изменение доски ${boardName}`,
@@ -70,10 +76,19 @@ export const BoardPopup = (type: TPopupType, boardID: string | null = null, boar
     });
     if (newInput) input?.replaceWith(newInput);
 
+    if (type === 'edit' && boardID) {
+        const board = BoardStorage.getBoard(boardID);
+        if (!board) return;
+
+        const checkbox = popup.querySelector<HTMLInputElement>('#isPrivate');
+        if (checkbox) {
+            checkbox.checked = board.is_private;
+        }
+    }
+
     newInput?.addEventListener('input', () => {
         debouncedInputHandler(type, boardName);
     });
-
 
     const cross = popup.querySelector<HTMLImageElement>('.popup__close');
 

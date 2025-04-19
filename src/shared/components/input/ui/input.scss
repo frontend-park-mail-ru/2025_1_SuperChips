@@ -1,4 +1,5 @@
 @use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
 
 .input, .input__field, .input--invalid {
     height: $input-height;
@@ -34,6 +35,7 @@
     }
 
     &__error {
+        @include icon;
         position: absolute;
         right: $spacing-sm;
         top: 50%;
@@ -41,13 +43,12 @@
     }
 
     &__toggle-password {
+        @include icon;
         position: absolute;
         right: $spacing-sm;
         top: 50%;
         transform: translateY(-50%);
         cursor: pointer;
-        width: $icon-size;
-        height: $icon-size;
         color: $text-gray;
     }
 

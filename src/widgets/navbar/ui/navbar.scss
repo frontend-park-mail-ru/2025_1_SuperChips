@@ -27,6 +27,9 @@ $border-radius: 20px;
 }
 
 .navbar-logo {
+    img {
+        -webkit-user-drag: none;
+    }
     align-self: center;
     margin: 0 $spacing-md;
     float: left;

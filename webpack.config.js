@@ -6,9 +6,10 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-    mode: 'development',
+    mode: isProd ? 'production' : 'development',
     entry: './src/index.ts',
     resolve: {
         modules: [
@@ -35,8 +36,18 @@ module.exports = {
                 }
             },
             {
+                // TODO после РК убрать noEscape, проработать с Эмре, санитайзинг
                 test: /\.hbs$/,
-                use: 'handlebars-loader'
+                use: [
+                    {
+                        loader: 'handlebars-loader',
+                        options: {
+                            precompileOptions: {
+                                noEscape: true
+                            }
+                        }
+                    }
+                ]
             },
             {
                 test: /\.css$/,
@@ -67,7 +78,7 @@ module.exports = {
         ]
     },
     optimization: {
-        minimize: true,
+        minimize: process.env.NODE_ENV === 'production',
         minimizer: [
             new TerserPlugin({
                 terserOptions: {
@@ -99,13 +110,18 @@ module.exports = {
                 }
             ]
         }),
+
         new MiniCssExtractPlugin({
             filename: 'css/[name].[contenthash].min.css',
             chunkFilename: 'css/[id].[contenthash].min.css'
         }),
-    ],
+
+    ].filter(Boolean),
     devServer: {
         server: 'https',
+        devMiddleware: {
+            writeToDisk: true,
+        },
         static: {
             directory: path.resolve(__dirname, 'dist'),
         },

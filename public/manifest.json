@@ -1,0 +1,16 @@
+{
+  "name": "Yourflow",
+  "short_name": "Flow",
+  "description": "Приложение для поиска вдохновения",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#666666",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/public/icons",
+      "sizes": "24x24",
+      "type": "image/svg"
+    }
+  ]
+}

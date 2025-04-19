@@ -1,12 +1,13 @@
 import type { IPinProps } from '../model/types';
 import { PinDropdown } from 'widgets/PinDropdown';
-import { deletePin } from '../handlers/deletePin';
 import { navigate } from 'shared/router';
 import { savePinToBoard } from '../handlers/savePinToBoard';
 import { removePinFromBoard } from '../handlers/removePinFromBoard';
 import { Auth } from 'features/authorization';
+import { BoardStorage } from 'features/boardLoader';
 import './Pin.scss';
 import template from './Pin.hbs';
+import { USER_SAVED_PINS_BOARD } from 'shared/config/constants';
 
 
 export const Pin = (params: IPinProps) => {
@@ -16,12 +17,12 @@ export const Pin = (params: IPinProps) => {
         ...params,
         authorized: !!Auth.userData,
         mutable: params.canDelete || params.canRemove,
-        boardToSave: sessionStorage.getItem('boardToSave') || 'Мои flow',
+        boardToSave: BoardStorage.boardToSave === USER_SAVED_PINS_BOARD ? 'Мои flow' : BoardStorage.boardToSave,
     };
 
     container.innerHTML = template(config);
 
-    const dropdownButton = container.querySelector('.pin__dropdown-button');
+    const dropdownButton = container.querySelector('.dropdown-block');
     dropdownButton?.addEventListener('click', (event) => {
         event.stopPropagation();
         PinDropdown(config.pinID);
@@ -40,21 +41,15 @@ export const Pin = (params: IPinProps) => {
             if (!config.boardID) return;
             removePinFromBoard(config.pinID, config.boardID).finally();
         });
-    } else if (deleteButton && config.canDelete) {
-        deleteButton.addEventListener('click', (event) => {
-            event.stopPropagation();
-            deletePin(config.pinID).finally();
-        });
     }
 
     const editButton = container.querySelector('.pin__edit-button');
-    if (editButton && config.canDelete) {
+    if (editButton && config.canEdit) {
         editButton.addEventListener('click', (event) => {
             event.stopPropagation();
             navigate(`flow/edit/${params.pinID}`).finally();
         });
     }
-
 
     const pin = container.querySelector('.pin') as HTMLDivElement;
     pin.addEventListener('click', () => navigate(`flow/${config.pinID}`));

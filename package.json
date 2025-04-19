@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode production",
-    "start": "webpack serve",
+    "build": "cross-env NODE_ENV=production webpack --mode production",
+    "start": "cross-env NODE_ENV=development webpack serve --mode development",
     "linter": "eslint ./ --fix",
     "check-types": "tsc --noEmit"
   },
@@ -35,6 +35,7 @@
     "babel-loader": "^10.0.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^13.0.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
     "eslint": "^8.57.1",
@@ -55,7 +56,9 @@
     "webpack-dev-server": "^5.2.0"
   },
   "dependencies": {
+    "@vkid/sdk": "^2.0.0",
     "express": "^4.21.2",
-    "filemanager-webpack-plugin": "^8.0.0"
+    "filemanager-webpack-plugin": "^8.0.0",
+    "workbox-webpack-plugin": "^7.3.0"
   }
 }

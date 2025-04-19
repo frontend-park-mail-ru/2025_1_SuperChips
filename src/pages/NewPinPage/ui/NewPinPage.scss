@@ -5,6 +5,10 @@
     @include main-page;
 }
 
+.edit-pin__image {
+    @include big-pin-container;
+}
+
 .new-pin-form {
     grid-area: page;
     display: flex;
@@ -13,7 +17,6 @@
 .description-box {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     max-width: $input-width;
     color: $text-light;
     margin-left: $spacing-xxl;
@@ -24,7 +27,8 @@
 
 }
 
-.create-flow-button {
+.create-pin-button {
+    margin-top: 16px;
     width: $input-width;
     height: $input-height;
     border-radius: $border-radius;
@@ -62,27 +66,21 @@
 .toggle-area {
     display: flex;
     gap: 12px;
-    margin-top: 12px;
+    margin-top: 24px;
 }
 
-.edit-pin__image {
-    border-radius: $border-radius;
-    height: 584px;
-    width: 404px;
-    background-color: $button-dark;
-    overflow: hidden;
+.delete-pin-button, .delete-pin-button_confirm {
+    margin-top: 24px;
     display: flex;
     align-items: center;
-    object-fit: contain;
-
-    transition: all ease-in 300ms;
+    width: 130px;
+    gap: 12px;
 
     &:hover {
-        transform: scaleY(0.99) translateZ(5px);
+        cursor: pointer;
     }
 
-    img {
-        width: 100%;
-        height: 100%;
+    &_confirm {
+        color: $error-color;
     }
 }

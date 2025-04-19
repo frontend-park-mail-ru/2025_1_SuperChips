@@ -1,0 +1,53 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+.delete-popup {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    background-color: $white;
+    width: 560px;
+    height: 296px;
+    border-radius: $border-radius;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 64px;
+
+    &__header {
+        font-size: 36px;
+        font-weight: bold;
+    }
+
+    &__content {
+        font-size: 18px;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+.cancel-button, .confirm-button {
+    width: 200px;
+    height: 44px;
+    border: none;
+    border-radius: $border-radius;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.cancel-button {
+    color: #000;
+    background-color: #bebebe;
+}
+
+.confirm-button {
+    color: #fff;
+    background-color: $error-color;
+}

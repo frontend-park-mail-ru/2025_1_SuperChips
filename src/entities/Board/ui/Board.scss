@@ -3,7 +3,6 @@
 
 .board-container {
     margin-bottom: $spacing-xl;
-    max-width: 362px;
 
     &:hover {
         [class*="preview__icon"] {
@@ -74,6 +73,7 @@
 
 .preview {
     &__icon-delete, &__icon-edit {
+        @include icon;
         position: absolute;
         bottom: 10px;
 
@@ -91,6 +91,7 @@
     }
 
     &__icon-private {
+        @include icon;
         position: absolute;
         right: 10px;
         top: 10px;

@@ -1,9 +1,10 @@
 import { navigate } from 'shared/router';
 import { Navbar } from 'widgets/navbar';
 import { Sidebar } from 'widgets/sidebar';
+import { Auth } from 'features/authorization';
 import './styles/fonts.scss';
 import './styles/common.scss';
-import { Auth } from 'features/authorization';
+
 
 export const root = document.getElementById('root') as HTMLDivElement;
 

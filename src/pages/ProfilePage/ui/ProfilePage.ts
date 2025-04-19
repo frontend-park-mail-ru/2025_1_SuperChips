@@ -1,31 +1,42 @@
 import type { ITabItem } from 'shared/components/tabBar';
-import type { IFeed } from 'pages/FeedPage';
 import { TabBar } from 'shared/components/tabBar';
+import type { IFeed } from 'pages/FeedPage';
 import { checkAvatar } from 'shared/utils';
-import { handleTabBar } from '../handlers/tabBarHandler';
+import { profileTabBarHandler } from '../handlers/tabBarHandler';
 import { BoardPopup } from 'widgets/BoardPopup';
 import { UserPins } from 'widgets/UserPins';
+import { UserBoards } from 'widgets/UserBoard';
 import { Auth } from 'features/authorization';
 import { root } from 'app/app';
 import { API } from 'shared/api';
+import { appState } from 'shared/router';
 import ProfilePageTemplate from './ProfilePage.hbs';
 import './ProfilePage.scss';
 
 
-export const ProfilePage = async (username: string): Promise<HTMLDivElement> => {
+export const ProfilePage = async (username: string, tab: string): Promise<HTMLDivElement> => {
     const page = document.createElement('div');
 
     const own = Auth.userData ? username === Auth.userData.username : false;
+    const isPinTabActive = tab === 'pins';
     let userData;
+
+    const isLastVisited = (
+        ['profile', 'profilePins', 'profileBoards', null].includes(appState.lastPage)
+        && username === appState.lastVisited.username
+    );
 
     if (own) {
         userData = Auth.userData;
-    } else {
+    } else if (!isLastVisited) {
         const response = await API.get(`/api/v1/users/${username}`);
         if (!(response instanceof Response && response.ok)) return page;
 
         const body = await response.json();
         userData = body.data;
+        appState.lastVisited = body.data;
+    } else {
+        userData = appState.lastVisited;
     }
 
     const ok = await checkAvatar(userData.avatar);
@@ -35,17 +46,18 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
         shortUsername: username[0]?.toUpperCase(),
         author_pfp: ok ? userData.avatar : null,
         own: own,
+        showCreateBoardButton: !isPinTabActive && own,
     };
 
     page.innerHTML = ProfilePageTemplate(config);
 
     const tabs: ITabItem[] = [
-        { id: 'pins', title: 'Flow', active: true },
-        { id: 'boards', title: 'Доски', active: false }
+        { id: 'pins', title: 'Flow', active: isPinTabActive },
+        { id: 'boards', title: 'Доски', active: !isPinTabActive }
     ];
 
     const newTabBar = TabBar(tabs, 'horizontal', (tabId) => {
-        handleTabBar(tabId, username);
+        profileTabBarHandler(tabId, username);
     });
     const tabBar = page.querySelector('.tab-bar-placeholder');
     tabBar?.replaceWith(newTabBar);
@@ -56,8 +68,13 @@ export const ProfilePage = async (username: string): Promise<HTMLDivElement> => 
     const feed = page.querySelector<IFeed>('.profile__feed');
     if (!feed) return page;
 
+
     const delayedFill: MutationObserver = new MutationObserver(async () => {
-        await UserPins(username);
+        if (isPinTabActive) {
+            await UserPins(username);
+        } else {
+            await UserBoards(username);
+        }
         delayedFill.disconnect();
     });
 

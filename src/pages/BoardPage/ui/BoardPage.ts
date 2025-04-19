@@ -1,6 +1,5 @@
 import { IFeed, toTop } from 'pages/FeedPage';
 import { Masonry } from 'shared/models/Masonry';
-import { navigate } from 'shared/router';
 import { fillBoardFeed } from '../lib/fillBoardFeed';
 import { boardFeedScroll } from '../handlers/boardFeedScroll';
 import { API } from 'shared/api';
@@ -16,7 +15,6 @@ export const boardFeedState = {
     page: 0,
     boardID: '',
     own: false,
-    canDelete: false,
     canRemove: false,
     canEdit: false,
 };
@@ -30,8 +28,7 @@ export const BoardPage = async (boardID: string) => {
 
     const boardRequest = await API.get(`/api/v1/boards/${boardID}`);
     if (boardRequest instanceof Error || !boardRequest.ok) {
-        navigate('feed').finally();
-        return page;
+        return null;
     }
     const body = await boardRequest.json();
     if (!body.data) return page;
@@ -43,7 +40,6 @@ export const BoardPage = async (boardID: string) => {
         name: body.data.name,
     };
 
-    boardFeedState.canDelete = body.data.name === USER_OWN_PINS_BOARD && own;
     boardFeedState.canEdit = body.data.name === USER_OWN_PINS_BOARD && own;
     boardFeedState.canRemove = body.data.name !== USER_OWN_PINS_BOARD && own;
 
@@ -70,7 +66,8 @@ export const BoardPage = async (boardID: string) => {
 
     delayedFill.observe(root, { childList: true });
 
-    window.addEventListener('scroll', boardFeedScroll);
+    setTimeout(() => window.addEventListener('scroll', boardFeedScroll), 100);
+
 
     const scrollButton = page.querySelector<HTMLDivElement>('.scroll-to-top');
     scrollButton?.addEventListener('click', toTop);

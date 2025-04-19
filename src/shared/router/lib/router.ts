@@ -1,27 +1,28 @@
-import type { Route } from 'shared/config/router';
-import { config } from 'shared/config/router';
 import type { IFeed } from 'pages/FeedPage';
 import { debouncedFeedScroll } from 'pages/FeedPage';
+import type { IUser } from 'entities/User';
+import { findMatch } from './findMatch';
+import { updateBars } from './updateBars';
+import { boardFeedScroll } from 'pages/BoardPage';
 import { root } from 'app/app';
-import { Auth } from 'features/authorization';
-import { API } from 'shared/api';
+import { config } from 'shared/config/router';
 
 interface AppState {
     lastPage: string | null,
     activePage: string | null,
-    activeTab: string | null,
     href: string | null,
     isShowingToast: boolean,
     isShowingPopup: boolean,
+    lastVisited: Partial<IUser>,
 }
 
 export const appState: AppState = {
     lastPage: null,
     activePage: null,
-    activeTab: null,
     href: null,
     isShowingToast: false,
     isShowingPopup: false,
+    lastVisited: {},
 };
 
 
@@ -33,119 +34,78 @@ export const navigate = async (
     page: string,
     replace = false
 ): Promise<void> => {
-
     const match = await findMatch(page);
     const route = config.menu[match];
 
-    let renderProps;
-    let newHref;
+    appState.lastPage = appState.activePage;
+    appState.activePage = match;
 
-    if (match === 'profile') {
+    let renderProps = '';
+    let newHref = route.href.toString();
+
+    switch (match) {
+    case 'profile':
         renderProps = page;
+        newHref = `/${page}/boards`;
+        appState.activePage = 'profileBoards';
+        break;
+    case 'pin':
+        renderProps = page.split('/')[1];
         newHref = `/${page}`;
-    } else if (match === 'pin') {
-        renderProps = page.slice(5);
+        break;
+    case 'board':
+        renderProps = page.split('/')[1];
         newHref = `/${page}`;
-    } else if (match === 'board') {
-        renderProps = page.slice(6);
+        break;
+    case 'editPin':
+        renderProps = page.split('/')[2];
         newHref = `/${page}`;
-    } else if (match === 'editPin') {
-        renderProps = page.slice(10);
+        break;
+    case 'profileBoards':
+        renderProps = page.split('/')[0];
         newHref = `/${page}`;
-    } else {
-        renderProps = '';
-        newHref = route.href.toString();
+        break;
+    case 'profilePins':
+        renderProps = page.split('/')[0];
+        newHref = `/${page}`;
+        break;
     }
 
     if (match === appState.activePage && newHref === appState.href) {
         return;
     }
 
-
-    updateBars(route);
-    cleanup();
-
-    const newPage = await route.render(renderProps);
-    root.innerHTML = '';
-    root.appendChild(newPage);
-
-    window.scrollTo({ top: 0 });
-
-
-    if (appState.activePage === 'feed' && newHref !== '/feed') {
-        window.removeEventListener('scroll', debouncedFeedScroll);
-    }
-
-    appState.activePage = match;
+    appState.href = newHref;
     document.title = route.title;
 
     if (replace) {
-        history.replaceState({ page: page }, '', newHref);
+        history.replaceState({ ...history.state, ...appState }, '', newHref);
     } else {
-        appState.lastPage = newHref;
-        history.pushState({ page: page }, '', newHref);
+        history.pushState({ ...history.state, ...appState }, '', newHref);
+    }
+
+    const newPage = await route.render(renderProps);
+    if (newPage) {
+        root.innerHTML = '';
+        root.appendChild(newPage);
+        window.scrollTo({ top: 0 });
+        updateBars(route);
+        cleanup(newHref);
     }
 };
 
 
-const findMatch = async (page: string) => {
-    let match = null;
-
-    for (const [key, route] of Object.entries(config.menu)) {
-        if (typeof route.href === 'string' && route.href.slice(1) === page) {
-            match = key;
-            break;
-        } else if (route.href instanceof RegExp && route.href.test(page)) {
-            match = key;
-            break;
-        }
-    }
-
-    if (
-        !match ||
-        config.menu[match].nonAuthOnly && !!Auth.userData ||
-        config.menu[match].authOnly && !Auth.userData
-    ) {
-        match = 'feed';
-    }
-
-
-    if (match === 'profile') {
-        const userExists = await API.get(`/api/v1/users/${page}`);
-        if (userExists instanceof Error || !userExists.ok) {
-            match = 'feed';
-        }
-    }
-
-    return match;
-};
-
-
-const updateBars = (route: Route) => {
-    const navbar = document.querySelector<HTMLDivElement>('.navbar');
-    const showNavbar = route.hasNavbar;
-    navbar?.classList.toggle('display-none', !showNavbar);
-
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    if (scrollbarWidth > 0 && navbar) {
-        navbar.style.paddingRight = `${scrollbarWidth}px`;
-    } else if (scrollbarWidth <= 0 && navbar) {
-        navbar.style.paddingRight = '0';
-    }
-
-    const sidebarButtons = document.querySelector<HTMLDivElement>('.sidebar__button-container');
-    const showSidebar = route.hasSidebar && !!Auth.userData;
-    sidebarButtons?.classList.toggle('display-none', !showSidebar);
-
-    const backButton = document.getElementById('go-back-button');
-    const showBackButton = route.hasBackButton;
-    backButton?.classList.toggle('hidden', !showBackButton);
-};
-
-
-const cleanup = () => {
+const cleanup = (newHref: string) => {
     const feed = document.querySelector<IFeed>('#feed');
+    const boardRegex = /^board\/\S+$/;
     if (feed?.masonry) {
         feed.masonry.destroy();
+    }
+
+    if (newHref !== '/feed') {
+        window.removeEventListener('scroll', debouncedFeedScroll);
+    }
+    if (!boardRegex.test(newHref)) {
+        window.removeEventListener('scroll', boardFeedScroll);
     }
 };

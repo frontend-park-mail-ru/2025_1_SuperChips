@@ -2,7 +2,6 @@ import type { IPinProps } from 'entities/Pin/model/types';
 import { loadUserPictures } from 'features/imageLoader';
 import { navigate } from 'shared/router';
 import { Pin } from 'entities/Pin';
-import { boardFeedScroll } from '../handlers/boardFeedScroll';
 import { emptyFeedPageTemplate } from 'widgets/UserPins';
 import { boardFeedState } from '../ui/BoardPage';
 
@@ -24,12 +23,10 @@ export const fillBoardFeed = async () => {
     }
 
     if (pictures?.status === 404) {
-        window.removeEventListener('scroll', boardFeedScroll);
         return;
     }
 
     if (!pictures?.data) return;
-
 
     pictures.data.forEach((item) => {
         const config: IPinProps = {

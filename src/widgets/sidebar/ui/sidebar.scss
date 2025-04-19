@@ -1,4 +1,5 @@
 @use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
 
 .sidebar {
     background: $gradient-dark;
@@ -38,17 +39,19 @@
     }
 }
 
-.sidebar-button {
+.sidebar-button, .sidebar-button_confirm {
     width: $button-height;
     height: $button-height;
     border-radius: 50%;
     border: none;
-    background-color: $button-dark;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+}
 
+.sidebar-button {
+    background-color: $button-dark;
     &:hover {
         background-color: $button-hover;
     }
@@ -62,7 +65,13 @@
     }
 }
 
+.sidebar-button_confirm {
+    background-color: $error-color;
+    opacity: 1;
+}
+
 .sidebar-button__icon {
+    @include icon;
     cursor: inherit;
     opacity: 0.8;
 }
@@ -72,5 +81,20 @@
 }
 
 .go-back-button {
+    @include icon;
     cursor: pointer;
+}
+
+.logout-toast {
+    position: fixed;
+    transform: translateX(-50%);
+    background-color: #fff;
+    padding: 12px 24px;
+    border-radius: 20px;
+    border: solid 1px #000;
+    z-index: 1000;
+
+    left: 210px;
+    bottom: 36px;
+    color: black;
 }

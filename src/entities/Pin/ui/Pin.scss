@@ -1,4 +1,5 @@
 @use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
 
 
 .pin {
@@ -29,24 +30,16 @@
         object-fit: cover;
     }
 
-    &__save-button, &__dropdown-button, &__dropdown-board,
-    &__delete-button, &__save-button_active, &__edit-button {
+    &__save-button, &__delete-button,
+    &__save-button_active, &__edit-button {
         position: absolute;
         z-index: 50;
     }
 
-    &__edit-button {
-        bottom: 10px;
-        right: 34px;
-        width: $icon-size;
-        height: $icon-size;
-    }
-
-    &__delete-button {
+    &__edit-button, &__delete-button {
+        @include icon;
         bottom: 10px;
         right: 10px;
-        width: $icon-size;
-        height: $icon-size;
     }
 
     &__save-button {
@@ -60,7 +53,6 @@
             border-radius: $border-radius;
             border: none;
         }
-
         &:hover {
             background-color: $black;
             color: $white;
@@ -84,6 +76,10 @@
 
         right: 106px;
         top: 16px;
+
+        img {
+            @include icon;
+        }
     }
 
     &__dropdown-board {
@@ -97,4 +93,14 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+}
+
+.dropdown-block {
+    position: absolute;
+    top: 16px;
+    left: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+    height: 32px;
 }

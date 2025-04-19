@@ -1,9 +1,9 @@
 import type { IBoardProps } from '../model/types';
 import { pluralize } from 'shared/utils';
 import { BoardPopup } from 'widgets/BoardPopup';
+import { navigate } from 'shared/router';
 import BoardTemplate from './Board.hbs';
 import './Board.scss';
-import { navigate } from 'shared/router';
 
 
 /**
@@ -17,6 +17,7 @@ export const Board = (params: IBoardProps) => {
         preview: ['', '', ''],
         is_private: params.is_private && params.own,
         mutable: params.own && !params.permanent,
+        flowCountPluralized: '',
     };
 
     const min = params?.preview ? params.preview.length : 0;
@@ -26,7 +27,8 @@ export const Board = (params: IBoardProps) => {
         }
     }
 
-    config.flow_count = pluralize('пин', Number(config.flow_count));
+    config.flowCountPluralized = pluralize('пин', Number(config.flow_count));
+
     container.innerHTML = BoardTemplate(config);
 
     const pen = container.querySelector<HTMLImageElement>('.preview__icon-edit');

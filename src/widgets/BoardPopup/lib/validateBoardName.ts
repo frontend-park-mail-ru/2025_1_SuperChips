@@ -1,13 +1,13 @@
 import type { TPopupType } from '../ui/BoardPopup';
 import type { ValidationResult } from 'shared/validation';
-import { getBoardNames } from 'features/boardLoader';
+import { BoardStorage } from 'features/boardLoader';
 
 export const validateBoardName = (type: TPopupType, boardName: string | null): ValidationResult => {
     const input = document.querySelector<HTMLInputElement>('#board-name');
 
     if (!input) return { isValid: true, error: '' };
 
-    const boardNames = getBoardNames();
+    const boardNames = BoardStorage.getBoardNames();
 
     const newName = input.value.trim();
 
