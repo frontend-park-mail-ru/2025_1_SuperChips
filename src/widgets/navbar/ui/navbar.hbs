@@ -9,14 +9,22 @@
             aria-label="Main logo"
     />
 </a>
-<input
-        type="text"
-        class="search-form"
-        placeholder="Поиск..."
-        id="search"
-        aria-label="Search input"
-        maxlength="120"
-/>
+<div class="search-form-container">
+    <input
+            type="text"
+            class="search-form__input"
+            placeholder="Поиск..."
+            id="search"
+            aria-label="Search input"
+            maxlength="120"
+    />
+    <img
+            src="/public/icons/filter.svg"
+            class="search-form__filter"
+            id="filter-button"
+            alt="filter"
+    >
+</div>
 
 {{#if authorized}}
 <div class="navbar__profile-picture">

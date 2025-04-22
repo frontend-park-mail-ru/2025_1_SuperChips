@@ -3,6 +3,9 @@ import { handleLogin } from '../handlers/loginHandler';
 import { fillPictureBox } from '../lib/fillPictureBox';
 import { navigate } from 'shared/router';
 import { Input } from 'shared/components/input';
+import { root } from 'app/app';
+import * as VKID from '@vkid/sdk';
+import { Scheme } from '@vkid/sdk';
 import loginTemplate from '../authPage/authPageTemplate.hbs';
 import '../authPage/authPage.scss';
 import './login.scss';
@@ -75,6 +78,17 @@ export const LoginPage = async () => {
     if (rootElement) {
         observer.observe(rootElement, { childList: true });
     }
+
+    const VKIDobserver = new MutationObserver(() => {
+        const container = document.querySelector<HTMLElement>('#VkIdSdkOneTap');
+        if (container) {
+            const oneTap = new VKID.OneTap();
+            oneTap.render({ container: container, scheme: Scheme.DARK });
+        }
+        VKIDobserver.disconnect();
+    });
+
+    VKIDobserver.observe(root, { childList: true });
 
     return page;
 };

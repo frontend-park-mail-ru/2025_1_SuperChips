@@ -12,16 +12,62 @@
     grid-template-columns: 404px auto;
 }
 
-.box-1 {
-    &__pin {
-        @include big-pin-container;
-
-    }
+.one-pin__box-1__pin {
+    @include big-pin-container;
 }
 
-.box-2 {
-    margin-left: 60px;
-    color: #fff;
+.one-pin {
+    &-header {
+        margin-top: 30px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    &-description {
+        margin-top: 10px;
+        white-space: pre-wrap;
+    }
+
+    &__short-username {
+        font-size: $font-size-xxl;
+        color: black;
+        font-weight: bold;
+    }
+
+    &__author-area {
+        display: flex;
+        align-items: center;
+        margin-right: auto;
+        margin-top: 20px;
+
+        &__pfp {
+            @include profile-picture-small;
+            @include flex-center;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        &__username {
+            white-space: nowrap;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        &__tag {
+            white-space: nowrap;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    &__box-2 {
+        margin-left: 60px;
+        color: #fff;
+    }
 
     &__buttons {
         display: flex;
@@ -35,52 +81,56 @@
             display: flex;
             gap: 16px;
         }
-    }
 
-    &__save-button {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-
-        img {
-            width: 18px;
-            height: 18px;
+        &__box-2 {
+            display: flex;
+            gap: 16px;
         }
     }
 
-    &__text-area {
-        text-wrap: wrap;
-        gap: 24px;
+    &__edit-button {
+        @include flex-center;
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #333;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__dropdown-block {
+        display: flex;
+        justify-content: space-between;
+        width: 100px;
+        max-height: 40px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__save-block {
+        display: flex;
+        align-items: center;
+        gap: 16px;
     }
 }
 
-.one-pin__author-area {
-    display: flex;
-    align-items: center;
-    margin-right: auto;
-    margin-top: 20px;
+.save-button {
+    background-color: #fff;
+    color: #000;
+    width: 94px;
+    height: 44px;
+    border-radius: $border-radius;
+    border: none;
+    flex-shrink: 0;
 
-    &__pfp {
-        @include profile-picture-small;
-        @include flex-center;
-
-        &:hover {
-            cursor: pointer;
-        }
-    }
-
-    &__username {
-        white-space: nowrap;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    &__tag {
-        white-space: nowrap;
-
-        &:hover {
-            cursor: pointer;
-        }
+    &:hover {
+        background-color: #000;
+        color: #fff;
     }
 }
 
@@ -99,59 +149,4 @@
 
 .like_active {
     content: url("/public/icons/like-filled.svg");
-}
-
-.save-button {
-    background-color: #fff;
-    color: #000;
-    width: 94px;
-    height: 44px;
-    border-radius: $border-radius;
-    border: none;
-    flex-shrink: 0;
-
-    &:hover {
-        background-color: #000;
-        color: #fff;
-    }
-}
-
-.one-pin-header {
-    margin-top: 30px;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.one-pin-description {
-    margin-top: 10px;
-    white-space: pre-wrap;
-}
-
-.dropdown-icon {
-    @include icon;
-    cursor: pointer;
-}
-
-.short-username {
-    font-size: $font-size-xxl;
-    color: black;
-    font-weight: bold;
-}
-
-.buttons__box-2 {
-    display: flex;
-    gap: 16px;
-}
-
-.edit-button {
-    @include flex-center;
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #333;
-
-    &:hover {
-        cursor: pointer;
-    }
 }

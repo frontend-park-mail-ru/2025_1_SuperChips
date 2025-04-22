@@ -38,6 +38,8 @@ export const Navbar = async () => {
     const pfp = navbar.querySelector('.navbar__profile-picture');
     pfp?.addEventListener('click', goToProfile);
 
+    // const filter = navbar.querySelector('#filter-button');
+
     return navbar;
 };
 

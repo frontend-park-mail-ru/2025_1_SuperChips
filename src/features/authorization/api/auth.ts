@@ -64,14 +64,7 @@ class auth {
             };
 
             await Navbar();
-            await API.post(
-                `/api/v1/users/${userData.username}/boards`,
-                { name: USER_OWN_PINS_BOARD, is_private: false }
-            );
-            await API.post(
-                `/api/v1/users/${userData.username}/boards`,
-                { name: USER_SAVED_PINS_BOARD, is_private: false }
-            );
+            await BoardStorage.fetchUserBoards();
         }
 
         return response;

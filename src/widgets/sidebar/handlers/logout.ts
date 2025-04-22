@@ -21,7 +21,7 @@ export const logoutHandler = async (event: Event) => {
     if (button.classList.contains('sidebar-button')) {
         button.classList.replace('sidebar-button', 'sidebar-button_confirm');
         window.addEventListener('click', clickHandler);
-        Toast('Вы уверены, что хотите выйти?', 'message', 5000, 'logout-toast');
+        Toast('Вы уверены, что хотите выйти?', 'message', 3000, 'logout-toast');
     } else {
         await Auth.logout();
         navigate('feed', true).finally();

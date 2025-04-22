@@ -1,0 +1,186 @@
+<!--Кнопка темная тема-->
+<div>
+    <script src="https://unpkg.com/@vkid/sdk@<3.0.0/dist-sdk/umd/index.js"></script>
+    <script type="text/javascript">
+        if ('VKIDSDK' in window) {
+            const VKID = window.VKIDSDK;
+
+            VKID.Config.init({
+                app: 53441005,
+                // redirectUrl: 'https://yourflow.ru/feed',
+                redirectUrl: 'https://localhost:8000/feed',
+                responseMode: VKID.ConfigResponseMode.Callback,
+                source: VKID.ConfigSource.LOWCODE,
+                scope: 'vkid.personal_info', // Заполните нужными доступами по необходимости
+            });
+
+            const oneTap = new VKID.OneTap();
+
+            oneTap.render({
+                container: document.currentScript.parentElement,
+                scheme: 'dark',
+                showAlternativeLogin: true,
+                styles: {
+                    borderRadius: 20
+                }
+            })
+                .on(VKID.WidgetEvents.ERROR, vkidOnError)
+                .on(VKID.OneTapInternalEvents.LOGIN_SUCCESS, function (payload) {
+                    const code = payload.code;
+                    const deviceId = payload.device_id;
+
+                    VKID.Auth.exchangeCode(code, deviceId)
+                        .then(vkidOnSuccess)
+                        .catch(vkidOnError);
+                });
+
+            function vkidOnSuccess(data) {
+                // Обработка полученного результата
+                console.log(data);
+            }
+
+            function vkidOnError(error) {
+                // Обработка ошибки
+                console.log(error);
+            }
+        }
+    </script>
+</div>
+
+<!--Попап темная тема-->
+<div>
+    <script src="https://unpkg.com/@vkid/sdk@<3.0.0/dist-sdk/umd/index.js"></script>
+    <script type="text/javascript">
+        if ('VKIDSDK' in window) {
+            const VKID = window.VKIDSDK;
+
+            VKID.Config.init({
+                app: 53441005,
+                // redirectUrl: 'https://yourflow.ru/feed',
+                redirectUrl: 'https://localhost:8000/feed',
+                responseMode: VKID.ConfigResponseMode.Callback,
+                source: VKID.ConfigSource.LOWCODE,
+                scope: '', // Заполните нужными доступами по необходимости
+            });
+
+            const floatingOneTap = new VKID.FloatingOneTap();
+
+            floatingOneTap.render({
+                scheme: 'dark',
+                appName: 'yourflow',
+                showAlternativeLogin: true
+            })
+                .on(VKID.WidgetEvents.ERROR, vkidOnError)
+                .on(VKID.FloatingOneTapInternalEvents.LOGIN_SUCCESS, function (payload) {
+                    const code = payload.code;
+                    const deviceId = payload.device_id;
+
+                    VKID.Auth.exchangeCode(code, deviceId)
+                        .then(vkidOnSuccess)
+                        .catch(vkidOnError);
+                });
+
+            function vkidOnSuccess(data) {
+                floatingOneTap.close();
+
+                // Обработка полученного результата
+            }
+
+            function vkidOnError(error) {
+                // Обработка ошибки
+            }
+        }
+    </script>
+</div>
+
+
+<!--кнопка светлая тема-->
+<div>
+    <script src="https://unpkg.com/@vkid/sdk@<3.0.0/dist-sdk/umd/index.js"></script>
+    <script type="text/javascript">
+        if ('VKIDSDK' in window) {
+            const VKID = window.VKIDSDK;
+
+            VKID.Config.init({
+                app: 53441005,
+                // redirectUrl: 'https://yourflow.ru/feed',
+                redirectUrl: 'https://localhost:8000/feed',
+                responseMode: VKID.ConfigResponseMode.Callback,
+                source: VKID.ConfigSource.LOWCODE,
+                scope: '', // Заполните нужными доступами по необходимости
+            });
+
+            const oneTap = new VKID.OneTap();
+
+            oneTap.render({
+                container: document.currentScript.parentElement,
+                showAlternativeLogin: true,
+                styles: {
+                    borderRadius: 20
+                }
+            })
+                .on(VKID.WidgetEvents.ERROR, vkidOnError)
+                .on(VKID.OneTapInternalEvents.LOGIN_SUCCESS, function (payload) {
+                    const code = payload.code;
+                    const deviceId = payload.device_id;
+
+                    VKID.Auth.exchangeCode(code, deviceId)
+                        .then(vkidOnSuccess)
+                        .catch(vkidOnError);
+                });
+
+            function vkidOnSuccess(data) {
+                // Обработка полученного результата
+            }
+
+            function vkidOnError(error) {
+                // Обработка ошибки
+            }
+        }
+    </script>
+</div>
+
+<!--Попап светлая тема-->
+<div>
+    <script src="https://unpkg.com/@vkid/sdk@<3.0.0/dist-sdk/umd/index.js"></script>
+    <script type="text/javascript">
+        if ('VKIDSDK' in window) {
+            const VKID = window.VKIDSDK;
+
+            VKID.Config.init({
+                app: 53441005,
+                // redirectUrl: 'https://yourflow.ru/feed',
+                redirectUrl: 'https://localhost:8000/feed',
+                responseMode: VKID.ConfigResponseMode.Callback,
+                source: VKID.ConfigSource.LOWCODE,
+                scope: '', // Заполните нужными доступами по необходимости
+            });
+
+            const floatingOneTap = new VKID.FloatingOneTap();
+
+            floatingOneTap.render({
+                appName: 'yourflow',
+                showAlternativeLogin: true
+            })
+                .on(VKID.WidgetEvents.ERROR, vkidOnError)
+                .on(VKID.FloatingOneTapInternalEvents.LOGIN_SUCCESS, function (payload) {
+                    const code = payload.code;
+                    const deviceId = payload.device_id;
+
+                    VKID.Auth.exchangeCode(code, deviceId)
+                        .then(vkidOnSuccess)
+                        .catch(vkidOnError);
+                });
+
+            function vkidOnSuccess(data) {
+                floatingOneTap.close();
+
+                // Обработка полученного результата
+            }
+
+            function vkidOnError(error) {
+                // Обработка ошибки
+            }
+        }
+    </script>
+</div>
