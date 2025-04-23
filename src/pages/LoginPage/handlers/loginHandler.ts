@@ -16,15 +16,14 @@ export const handleLogin = async (event: Event) => {
         password: '',
     };
 
-    const valid = validateEmail(inputData.email).isValid && validatePassword(inputData.password).isValid;
-    if (!valid) return;
-
     const inputs: NodeListOf<HTMLInputElement> = target.querySelectorAll('.input__field');
     inputs.forEach(input => {
         const key = input.id as keyof ILoginInputData;
-
         inputData[key] = input.value.trim();
     });
+
+    const valid = validateEmail(inputData.email).isValid && validatePassword(inputData.password).isValid;
+    if (!valid) return;
 
     const response = await Auth.login(inputData);
     if (response instanceof Error) return;

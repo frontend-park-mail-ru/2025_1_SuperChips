@@ -1,7 +1,9 @@
-import { API } from 'shared/api';
-import { navigate } from 'shared/router';
-import { Toast } from 'shared/components/Toast';
+// import { API } from 'shared/api';
+// import { navigate } from 'shared/router';
+// import { Toast } from 'shared/components/Toast';
 import { validateUsername } from 'shared/validation';
+import { Auth } from 'features/authorization';
+// import { Navbar } from 'widgets/navbar';
 
 
 export const VKIDRegisterHandler = async (accessToken: string) => {
@@ -17,14 +19,16 @@ export const VKIDRegisterHandler = async (accessToken: string) => {
         username: username,
     };
 
-    const register = await API.post('/api/v1/auth/external/register', body);
-    console.log(register);
-    if (register instanceof Response && register.ok) {
-        // await Auth.fetchUserData();
-        // await Navbar();
-        // await Sidebar();
-        navigate('feed').finally();
-    } else {
-        Toast('Ошибка при регистрации, попробуйте немного позже', 'error', 5000);
-    }
+    await Auth.VKIDRegister(body);
+
+    // const register = await API.post('/api/v1/auth/vkid/register', body);
+    // if (register instanceof Response && register.ok) {
+    //     const body = await register.json();
+    //
+    //     await Auth.fetchUserData();
+    //     await Navbar();
+    //     navigate('feed').finally();
+    // } else {
+    //     Toast('Ошибка при регистрации, попробуйте немного позже', 'error', 5000);
+    // }
 };
