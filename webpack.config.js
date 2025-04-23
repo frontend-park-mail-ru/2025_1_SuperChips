@@ -108,6 +108,10 @@ module.exports = {
                         ignore: ['**/index.html', '**/sw.js']
                     }
                 },
+                {
+                    from: path.resolve(__dirname, 'public/sw.js'),
+                    to: path.resolve(__dirname, 'dist/sw.js'),
+                }
             ]
         }),
 
