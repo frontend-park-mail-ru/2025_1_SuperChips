@@ -25,9 +25,3 @@ export const OneTapButtonObserver = () => {
     });
     return VKIDObserver;
 };
-
-
-
-
-
-
