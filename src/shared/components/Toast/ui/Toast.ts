@@ -13,9 +13,10 @@ export const Toast = (
     appState.isShowingToast = true;
 
     const toast = document.createElement('div');
-    toast.className = `toast-${type}`;
     if (className) {
         toast.classList.add(className);
+    } else {
+        toast.className = `toast-${type}`;
     }
 
     toast.textContent = message;

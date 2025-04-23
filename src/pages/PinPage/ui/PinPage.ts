@@ -48,7 +48,7 @@ export const PinPage = async (pinID: string) => {
     });
 
     const likeButton = container.querySelector<HTMLImageElement>('#like');
-    likeButton?.addEventListener('click', () => likeHandler(pinID));
+    likeButton?.parentElement?.addEventListener('click', () => likeHandler(pinID));
 
     const saveButton = container.querySelector('.save-button');
     saveButton?.addEventListener('click', () => savePinToBoard(pinID));

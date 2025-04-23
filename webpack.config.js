@@ -105,9 +105,9 @@ module.exports = {
                     from: path.resolve(__dirname, 'public'),
                     to: path.resolve(__dirname, 'dist', 'public'),
                     globOptions: {
-                        ignore: ['**/index.html']
+                        ignore: ['**/index.html', '**/sw.js']
                     }
-                }
+                },
             ]
         }),
 

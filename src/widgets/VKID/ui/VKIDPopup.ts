@@ -39,5 +39,8 @@ export const VKIDPopup = (accessToken: string) => {
     submitButton?.addEventListener('click', () => VKIDRegisterHandler(accessToken));
 
     const form = popup.querySelector<HTMLFormElement>('#username-form');
-    form?.addEventListener('submit', () => VKIDRegisterHandler(accessToken));
+    form?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        VKIDRegisterHandler(accessToken).finally();
+    });
 };

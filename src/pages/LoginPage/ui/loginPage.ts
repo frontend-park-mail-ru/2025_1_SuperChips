@@ -1,3 +1,4 @@
+import { OneTapButtonObserver } from 'widgets/VKID';
 import { debouncedLoginButton } from '../handlers/loginButtonHandler';
 import { handleLogin } from '../handlers/loginHandler';
 import { fillPictureBox } from '../lib/fillPictureBox';
@@ -7,7 +8,6 @@ import { root } from 'app/app';
 import loginTemplate from '../authPage/authPageTemplate.hbs';
 import '../authPage/authPage.scss';
 import './login.scss';
-import { OneTapButtonObserver } from 'shared/components/VKID';
 
 
 /**
@@ -79,9 +79,7 @@ export const LoginPage = async () => {
         observer.observe(rootElement, { childList: true });
     }
 
-
     const VKIDObserver = OneTapButtonObserver();
-
     VKIDObserver.observe(root, { childList: true });
 
     return page;

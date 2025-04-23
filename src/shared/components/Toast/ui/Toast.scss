@@ -1,6 +1,6 @@
 .toast-error, .toast-success, .toast-message {
   position: fixed;
-  bottom: 20px;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
   background-color: #2f2f2f;
@@ -8,6 +8,14 @@
   border-radius: 20px;
   z-index: 1000;
   animation: fadeIn 0.3s ease-out;
+  min-height: 48px;
+  max-height: 200px;
+  max-width: 500px;
+  display: block;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  overflow: hidden;
 
   @keyframes fadeIn {
     from {

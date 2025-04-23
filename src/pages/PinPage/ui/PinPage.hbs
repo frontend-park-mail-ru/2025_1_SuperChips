@@ -1,22 +1,14 @@
 <div class="one-pin-page" id="page">
-
-
     <div class="one-pin__box-1">
         <img class="one-pin__box-1__pin" src="{{media_url}}" id="pin-{{flow_id}}" alt="{{description}}">
     </div>
-
-
     <div class="one-pin__box-2">
-
-
         {{#if hasText}}
             <div class="one-pin__box-2__text-area">
                 <div class="one-pin-header">{{header}}</div>
                 <div class="one-pin-description">{{description}}</div>
             </div>
         {{/if}}
-
-
         <div class="one-pin__author-area">
             <div class="one-pin__author-area__pfp">
                 {{#if author_pfp}}
@@ -30,8 +22,6 @@
                 <p class="one-pin__author-area__tag">@{{author}}</p>
             </div>
         </div>
-
-
         {{#if authorized}}
             <div class="one-pin__buttons">
                 <div>
@@ -45,10 +35,6 @@
                         <p id="like-count">{{like_count}}</p>
                     </div>
                 </div>
-
-
-
-
                 <div class="one-pin__buttons__box-2">
                     {{#if own}}
                         <div class="one-pin__edit-button" id="edit-pin">
@@ -63,10 +49,6 @@
                         <button class="save-button">Сохранить</button>
                     </div>
                 </div>
-
-
-
-
             </div>
         {{/if}}
     </div>

@@ -1,11 +1,11 @@
+import type { IInputConfig } from 'shared/components/input/model/types';
 import { debouncedPasswordConfirm } from '../handlers/passwordConfirm';
 import { debouncedSignupButton } from '../handlers/signupButtonHandler';
 import { authPageTemplate, fillPictureBox } from 'pages/LoginPage';
 import { signupHandler } from '../handlers/signupHandler';
 import { Input } from 'shared/components/input';
 import { navigate } from 'shared/router';
-import { IInputConfig } from 'shared/components/input/model/types';
-import { OneTapButtonObserver } from 'shared/components/VKID';
+import { OneTapButtonObserver } from 'widgets/VKID';
 import { root } from 'app/app';
 import './signup.scss';
 

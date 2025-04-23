@@ -2,7 +2,7 @@
  * Создает обработчик событий, который вызывает заполняющую функцию при скролле
  */
 export const scrollHandler = async (filler: () => Promise<void | undefined | null>) => {
-    const threshold = 700;
+    const threshold = window.innerHeight * 2;
     const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - threshold;
     if (scrolledToBottom) {
         await filler();

@@ -1,13 +1,12 @@
 import type { IProfileSettings } from 'widgets/ProfileSettings';
 import type { IUser } from 'entities/User';
 import type { ISignupFormData } from 'pages/SignupPage';
-import { API } from 'shared/api';
+import type { IVKIDLogin, IVKIDRegister } from 'widgets/VKID';
 import { Navbar } from 'widgets/navbar';
+import { navigate } from 'shared/router';
+import { API } from 'shared/api';
 import { BoardStorage } from 'features/boardLoader';
-import { IVKIDLogin, IVKIDRegister } from '../../../shared/components/VKID';
-import { navigate } from '../../../shared/router';
-import { Toast } from '../../../shared/components/Toast';
-import { VKIDPopup } from '../../../shared/components/VKID/ui/VKIDPopup';
+
 
 type TLoginData = {
     email: string;
@@ -65,11 +64,9 @@ class auth {
 
             await Navbar();
             await navigate('feed');
-        } else if (login instanceof Response && login.status === 404) {
-            VKIDPopup(data.access_token);
-        } else {
-            Toast('Ошибка при авторизации, попробуйте немного позже', 'error', 5000);
         }
+
+        return login;
     }
 
     /**
@@ -108,9 +105,9 @@ class auth {
             await BoardStorage.fetchUserBoards();
             await Navbar();
             navigate('feed').finally();
-        } else {
-            Toast('Ошибка при регистрации, попробуйте немного позже', 'error', 5000);
         }
+
+        return register;
     }
 
     /**
