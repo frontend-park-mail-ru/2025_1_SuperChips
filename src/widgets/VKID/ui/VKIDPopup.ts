@@ -1,5 +1,6 @@
 import { closePopup } from 'widgets/BoardPopup';
 import { VKIDRegisterHandler } from '../handlers/VKIDRegisterHandler';
+import { debouncedVKIDButtonHandler } from '../handlers/VKIDUsernameValidation';
 import { Input } from 'shared/components/input';
 import { root } from 'app/app';
 import { appState } from 'shared/router';
@@ -43,4 +44,5 @@ export const VKIDPopup = (accessToken: string) => {
         event.preventDefault();
         VKIDRegisterHandler(accessToken).finally();
     });
+    form?.addEventListener('input', debouncedVKIDButtonHandler);
 };

@@ -131,7 +131,7 @@ class auth {
                 birthday: new Date(data.birthday),
                 shortUsername: data.username[0].toUpperCase(),
                 authorized: true,
-                public_name: data.publicName || data.username,
+                public_name: data.public_name || data.username,
                 id: data.user_id,
             };
 
