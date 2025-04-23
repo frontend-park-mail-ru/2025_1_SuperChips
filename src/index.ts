@@ -1,9 +1,10 @@
 import { App } from './app/app';
 import * as VKID from '@vkid/sdk';
+import { VKID_APP_ID } from 'shared/config/constants';
 
 await App();
 
-// TODO убрать комменты на проде
+// TODO убрать комменты на проде (на дев-сервере вызывает ошибки)
 // try {
 //     if ('serviceWorker' in navigator) {
 //         await navigator.serviceWorker.register('/sw.js', { scope: '/' });
@@ -15,7 +16,8 @@ await App();
 // }
 
 VKID.Config.init({
-    app: 53441005, // Идентификатор приложения
+    app: VKID_APP_ID, // Идентификатор приложения
     redirectUrl: 'https://localhost',
     scope: 'email',
+    responseMode: VKID.ConfigResponseMode.Callback,
 });

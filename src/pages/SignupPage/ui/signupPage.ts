@@ -4,8 +4,10 @@ import { authPageTemplate, fillPictureBox } from 'pages/LoginPage';
 import { signupHandler } from '../handlers/signupHandler';
 import { Input } from 'shared/components/input';
 import { navigate } from 'shared/router';
-import './signup.scss';
 import { IInputConfig } from 'shared/components/input/model/types';
+import { OneTapButtonObserver } from 'shared/components/VKID';
+import { root } from 'app/app';
+import './signup.scss';
 
 
 interface SignupPageConfig {
@@ -103,6 +105,10 @@ export const SignupPage = async (): Promise<HTMLDivElement> => {
     const rootElement = document.getElementById('root');
     if (rootElement)
         observer.observe(rootElement, { childList: true });
+
+    const VKIDObserver = OneTapButtonObserver();
+
+    VKIDObserver.observe(root, { childList: true });
 
     return page;
 };

@@ -4,11 +4,11 @@ import { fillPictureBox } from '../lib/fillPictureBox';
 import { navigate } from 'shared/router';
 import { Input } from 'shared/components/input';
 import { root } from 'app/app';
-import * as VKID from '@vkid/sdk';
-import { Scheme } from '@vkid/sdk';
 import loginTemplate from '../authPage/authPageTemplate.hbs';
 import '../authPage/authPage.scss';
 import './login.scss';
+import { OneTapButtonObserver } from 'shared/components/VKID';
+
 
 /**
  * Генерирует страницу логина и создает обработчики событий
@@ -79,16 +79,12 @@ export const LoginPage = async () => {
         observer.observe(rootElement, { childList: true });
     }
 
-    const VKIDobserver = new MutationObserver(() => {
-        const container = document.querySelector<HTMLElement>('#VkIdSdkOneTap');
-        if (container) {
-            const oneTap = new VKID.OneTap();
-            oneTap.render({ container: container, scheme: Scheme.DARK });
-        }
-        VKIDobserver.disconnect();
-    });
 
-    VKIDobserver.observe(root, { childList: true });
+    const VKIDObserver = OneTapButtonObserver();
+
+    VKIDObserver.observe(root, { childList: true });
 
     return page;
 };
+
+

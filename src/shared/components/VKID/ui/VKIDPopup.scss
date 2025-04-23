@@ -1,0 +1,41 @@
+@use 'shared/styles/mixins' as *;
+@use 'shared/styles/variables' as *;
+
+.VKID-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: $board-popup-width;
+    height: $board-popup-height;
+    border-radius: $border-radius;
+    padding: $spacing-xl $spacing-xxl;
+    z-index: 1500;
+    background-color: $white;
+    display: flex;
+    flex-direction: column;
+
+    &__button {
+        background-color: $black;
+        color: $white;
+        border: none;
+        border-radius: $border-radius;
+        width: $input-width;
+        height: $button-height;
+        margin-top: 52px;
+
+        &:hover {
+            cursor: pointer;
+            opacity: 0.8;
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            background-color: $disabled-color;
+        }
+    }
+
+    .input-container {
+        margin-top: $spacing-sm;
+    }
+}

@@ -2,16 +2,13 @@ import { config } from 'shared/config/router';
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api';
 import { appState } from './router';
-import { parseQuery } from 'shared/utils';
-import * as VKID from '@vkid/sdk';
+// import { parseQuery } from 'shared/utils';
+// import * as VKID from '@vkid/sdk';
 
 export const findMatch = async (page: string) => {
-    const query = parseQuery(window.location.href);
-    if (query?.code && query?.device_id) {
-        debugger;
-        // const result = await VKID.Auth.exchangeCode(query.code, query.device_id);
-        // console.log(result);
-    }
+    // const query = parseQuery(window.location.href);
+    // if (query?.code && query?.device_id) {
+    // }
 
     let match = null;
 
