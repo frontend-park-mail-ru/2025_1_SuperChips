@@ -1,4 +1,4 @@
-import type { IPinProps } from 'entities/Pin/model/types';
+import type { IPinProps } from 'entities/Pin';
 import { Pin } from 'entities/Pin';
 import { Footer } from '../components/footer/footer';
 import { loadFeedPictures } from 'features/imageLoader';

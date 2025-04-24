@@ -2,10 +2,32 @@
 
 .feed-filter {
     position: fixed;
-    width: $search-filter-width;
-    padding-right: $spacing-lg;
     left: $sidebar-width;
     top: $navbar-height;
+    width: $search-filter-width;
+    padding-right: $spacing-lg;
+
+    // Подготовка к анимации
+    transform: translate(-20%, 0);
+    animation: FilterFadeIn 0.2s ease-out forwards;
+
+    @keyframes FilterFadeIn {
+        from {
+            transform: translateX(-20%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes FilterFadeOut {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-20%);
+        }
+    }
 }
 
 .feed-filter-placeholder {
@@ -24,4 +46,12 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+
+    label:hover {
+        cursor: pointer;
+    }
+
+    input:hover {
+        cursor: pointer;
+    }
 }

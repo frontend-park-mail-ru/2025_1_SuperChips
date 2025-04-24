@@ -24,7 +24,7 @@ export const Toast = (
     document.body.appendChild(toast);
 
     setTimeout(() => {
-        toast.style.animation = 'fadeOut 0.3s ease-out';
+        toast.style.animation = 'ToastFadeOut 0.3s ease-out';
         setTimeout(() => {
             toast.remove();
             appState.isShowingToast = false;

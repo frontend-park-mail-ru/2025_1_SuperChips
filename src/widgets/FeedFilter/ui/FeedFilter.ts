@@ -1,5 +1,5 @@
 import { handleFeedRadioButtons } from '../handlers/handleFeedRadioButtons';
-import { feedState } from 'pages/FeedPage';
+import { searchFeedState } from 'pages/FeedPage';
 import './FeedFilter.scss';
 import template from './FeedFilter.hbs';
 
@@ -9,7 +9,7 @@ export const FeedFilter = () => {
     container.classList.add('feed-filter-placeholder');
     container.id = 'feed-filter';
 
-    const filter = feedState.filter;
+    const filter = searchFeedState.filter;
 
     const config = {
         filterItem: [

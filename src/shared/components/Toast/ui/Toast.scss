@@ -7,7 +7,7 @@
   padding: 12px 24px;
   border-radius: 20px;
   z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
+    animation: ToastFadeIn 0.3s ease-out;
   min-height: 48px;
   max-height: 200px;
   max-width: 500px;
@@ -17,7 +17,7 @@
   overflow-wrap: break-word;
   overflow: hidden;
 
-  @keyframes fadeIn {
+    @keyframes ToastFadeIn {
     from {
       transform: translate(-50%, -20px);
     }
@@ -26,7 +26,7 @@
     }
   }
 
-  @keyframes fadeOut {
+    @keyframes ToastFadeOut {
     from {
       transform: translate(-50%, 0);
     }

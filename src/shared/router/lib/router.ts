@@ -1,11 +1,12 @@
 import type { IFeed } from 'pages/FeedPage';
-import { debouncedFeedScroll } from 'pages/FeedPage';
+import { debouncedFeedScroll, searchFeedState } from 'pages/FeedPage';
 import type { IUser } from 'entities/User';
 import { findMatch } from './findMatch';
 import { updateBars } from './updateBars';
 import { boardFeedScroll } from 'pages/BoardPage';
 import { root } from 'app/app';
 import { config } from 'shared/config/router';
+
 
 interface AppState {
     lastPage: string | null,
@@ -110,4 +111,10 @@ const cleanup = (newHref: string) => {
     if (!boardRegex.test(newHref)) {
         window.removeEventListener('scroll', boardFeedScroll);
     }
+
+    const searchInput = document.querySelector<HTMLInputElement>('#search');
+    if (searchInput) {
+        searchInput.value = '';
+    }
+    searchFeedState.filter = 'flows';
 };

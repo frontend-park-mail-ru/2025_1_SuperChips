@@ -63,8 +63,17 @@ $border-radius: 20px;
         @include icon;
         position: absolute;
         top: 25%;
-        left: 10px;
+        left: $spacing-sm;
 
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &__clear {
+        position: absolute;
+        top: 25%;
+        right: $spacing-sm + $spacing-lg;
         &:hover {
             cursor: pointer;
         }

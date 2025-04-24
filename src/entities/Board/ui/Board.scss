@@ -3,6 +3,7 @@
 
 .board-container {
     margin-bottom: $spacing-xl;
+    transition: all 0.3s ease;
 
     &:hover {
         [class*="preview__icon"] {

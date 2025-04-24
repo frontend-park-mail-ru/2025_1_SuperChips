@@ -1,18 +1,31 @@
-import { feedState } from 'pages/FeedPage';
+import { fillSearchFeed, searchFeedState } from 'pages/FeedPage';
 
-export const handleFeedRadioButtons = (event: Event) => {
+export const handleFeedRadioButtons = async (event: Event) => {
     const target = event.target as HTMLElement;
-    if (target.tagName !== 'INPUT') return;
+    const input = document.querySelector<HTMLInputElement>('#search');
+
+    if (target.tagName !== 'INPUT' || !input) return;
+
+    let changed = false;
 
     switch (target.id) {
     case 'filter-flows':
-        feedState.filter = 'flows';
+        changed = searchFeedState.filter !== 'flows';
+        searchFeedState.filter = 'flows';
         break;
     case 'filter-boards':
-        feedState.filter = 'boards';
+        changed = searchFeedState.filter !== 'boards';
+        searchFeedState.filter = 'boards';
         break;
     case 'filter-users':
-        feedState.filter = 'users';
+        changed = searchFeedState.filter !== 'users';
+        searchFeedState.filter = 'users';
         break;
+    }
+
+    searchFeedState.page = 1;
+
+    if (input.value !== '' && changed) {
+        await fillSearchFeed();
     }
 };
