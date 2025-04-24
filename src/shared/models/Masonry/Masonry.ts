@@ -87,7 +87,7 @@ export class Masonry {
     /**
      *  Задает координаты каждого элемента в контейнере
      */
-    private layout(){
+    layout() {
         this.measureColumns();
 
         this.items.forEach((item) => {

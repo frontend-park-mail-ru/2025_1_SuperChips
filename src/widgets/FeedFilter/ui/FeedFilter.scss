@@ -1,0 +1,27 @@
+@use 'shared/styles/variables' as *;
+
+.feed-filter {
+    position: fixed;
+    width: $search-filter-width;
+    padding-right: $spacing-lg;
+    left: $sidebar-width;
+    top: $navbar-height;
+}
+
+.feed-filter-placeholder {
+    min-width: $search-filter-width;
+}
+
+.filter-block {
+    display: flex;
+    flex-direction: column;
+    margin-top: $spacing-sm;
+    gap: $spacing-sm;
+}
+
+.filter-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
