@@ -22,8 +22,8 @@ export const handleFeedRadioButtons = async (event: Event) => {
         searchFeedState.filter = 'users';
         break;
     }
-
     searchFeedState.page = 1;
+    searchFeedState.query = input.value;
 
     if (input.value !== '' && changed) {
         await fillSearchFeed();
