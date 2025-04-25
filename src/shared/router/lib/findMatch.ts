@@ -24,6 +24,10 @@ export const findMatch = async (page: string) => {
         match = 'feed';
     }
 
+    if (match === 'profile') {
+        match = 'profileBoards';
+    }
+
     if (match === 'profile' || match === 'profilePins' || match === 'profileBoards') {
         const username = page.split('/')[0];
         if (username === appState.lastVisited.username) return match;

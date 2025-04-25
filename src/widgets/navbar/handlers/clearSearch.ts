@@ -1,5 +1,8 @@
 import type { IFeed } from 'pages/FeedPage';
 import { debouncedFeedScroll, feedState, fillFeed, searchFeedScroll, searchFeedState } from 'pages/FeedPage';
+import { closeFilter } from './closeFilter';
+import { Masonry } from '../../../shared/models/Masonry';
+import { appState } from '../../../shared/router';
 
 
 export const clearSearch = async () => {
@@ -10,7 +13,7 @@ export const clearSearch = async () => {
         input.value = '';
     }
 
-    searchFeedState.filter = '';
+    searchFeedState.filter = 'flows';
     searchFeedState.query = '';
     searchFeedState.page = 1;
 
@@ -19,9 +22,16 @@ export const clearSearch = async () => {
     const feed = document.querySelector<IFeed>('#feed');
     if (!feed) return;
 
+    feed.masonry?.destroy();
+    feed.masonry = new Masonry(feed, { itemSelector: '.pin' });
+
     feed.innerHTML = '';
     await fillFeed();
 
-    window.addEventListener('scroll', debouncedFeedScroll);
+    if (appState.activePage === 'feed') {
+        window.addEventListener('scroll', debouncedFeedScroll);
+    }
     window.removeEventListener('scroll', searchFeedScroll);
+
+    closeFilter();
 };

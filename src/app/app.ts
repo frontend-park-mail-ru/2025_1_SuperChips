@@ -14,6 +14,8 @@ export const App = async () => {
     await Navbar();
     await Sidebar();
 
+    // root.appendChild(UserCard());
+    
     window.addEventListener('popstate', () => {
         navigate(location.pathname.slice(1), true).finally();
     });

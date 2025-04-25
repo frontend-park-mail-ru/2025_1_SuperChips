@@ -47,11 +47,6 @@ export const navigate = async (
     let newHref = route.href.toString();
 
     switch (match) {
-    case 'profile':
-        renderProps = page;
-        newHref = `/${page}/boards`;
-        appState.activePage = 'profileBoards';
-        break;
     case 'pin':
         renderProps = page.split('/')[1];
         newHref = `/${page}`;
@@ -115,6 +110,7 @@ const cleanup = (newHref: string) => {
     const searchInput = document.querySelector<HTMLInputElement>('#search');
     if (searchInput) {
         searchInput.value = '';
+        searchFeedState.query = '';
+        document.querySelector('.search-form__clear')?.classList.add('hidden');
     }
-    searchFeedState.filter = 'flows';
 };

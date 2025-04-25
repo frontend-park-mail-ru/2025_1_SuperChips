@@ -2,6 +2,7 @@ import { Toast } from 'shared/components/Toast';
 import { fillSearchFeed, searchFeedState } from 'pages/FeedPage/lib/fillSearchFeed';
 import { debouncedFeedScroll, searchFeedScroll } from 'pages/FeedPage';
 import { API } from 'shared/api';
+import { appState, navigate } from 'shared/router';
 
 
 export const search = async (event: Event) => {
@@ -22,13 +23,17 @@ export const search = async (event: Event) => {
         Toast('По данному запросу ничего не найдено', 'message', 3000);
         return;
     } else if (response.ok) {
-        searchFeedState.filter = filter;
-        searchFeedState.query = query;
-        searchFeedState.page = 1;
+        if (appState.activePage !== 'feed') {
+            navigate('feed').finally();
+        }
 
         setTimeout(async () => {
+            searchFeedState.filter = filter;
+            searchFeedState.query = query;
+            searchFeedState.page = 1;
             await fillSearchFeed();
         }, 0);
+
         window.removeEventListener('scroll', debouncedFeedScroll);
         window.addEventListener('scroll', searchFeedScroll);
     }

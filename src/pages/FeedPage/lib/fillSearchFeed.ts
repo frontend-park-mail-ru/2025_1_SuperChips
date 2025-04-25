@@ -1,18 +1,21 @@
 import type { IFeed } from '../ui/FeedPage';
+import type { IUser } from 'entities/User';
 import type { IPicture } from 'features/imageLoader';
 import type { IPinProps } from 'entities/Pin';
 import { Pin } from 'entities/Pin';
 import type { IBoardProps } from 'entities/Board';
 import { Board } from 'entities/Board';
 import { Masonry } from 'shared/models/Masonry';
+import { Toast } from 'shared/components/Toast';
 import { searchFeedScroll } from '../handlers/handleScroll';
+import { UserCard } from 'entities/UserCard';
 import { API } from 'shared/api';
 
 
 export const searchFeedState = {
     page: 1,
     query: '',
-    filter: '',
+    filter: 'flows',
 };
 
 
@@ -23,7 +26,11 @@ export const fillSearchFeed = async () => {
     const URI = `/api/v1/search/${searchFeedState.filter}?query=${searchFeedState.query}&page=${searchFeedState.page}&size=20`;
     const response = await API.get(URI);
 
-    if (!(response instanceof Response && response.ok)) {
+    if (response instanceof Response && response.status === 404) {
+        Toast('По данному запросу ничего не найдено', 'message');
+        window.removeEventListener('scroll', searchFeedScroll);
+        return;
+    } else if (!(response instanceof Response && response.ok)) {
         window.removeEventListener('scroll', searchFeedScroll);
         return;
     }
@@ -36,7 +43,11 @@ export const fillSearchFeed = async () => {
             feed.masonry = new Masonry(feed, { itemSelector: '.board-container', columnWidth: 362 });
         } else if (searchFeedState.filter === 'flows') {
             feed.masonry?.destroy();
-            feed.masonry = new Masonry(feed, { itemSelector: '.pin', columnWidth: 206 });
+            feed.masonry = new Masonry(feed, { itemSelector: '.pin', columnWidth: 210 });
+        } else if (searchFeedState.filter === 'users') {
+            feed.masonry?.destroy();
+            feed.masonry = new Masonry(feed, { itemSelector: '.user-card', columnWidth: 460 });
+            console.log(feed.masonry);
         }
     }
 
@@ -58,7 +69,9 @@ export const fillSearchFeed = async () => {
         });
         break;
     case 'users':
-        // TODO добавить, когда будет правильно работать на бэкенде
+        body.data.forEach((user: IUser) => {
+            feed.appendChild(UserCard(user));
+        });
         break;
     }
 

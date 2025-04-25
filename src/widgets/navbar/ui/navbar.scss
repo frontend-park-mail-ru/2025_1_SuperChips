@@ -106,3 +106,7 @@ $border-radius: 20px;
 .display-none {
     display: none;
 }
+
+.not-allowed:hover {
+    cursor: not-allowed;
+}

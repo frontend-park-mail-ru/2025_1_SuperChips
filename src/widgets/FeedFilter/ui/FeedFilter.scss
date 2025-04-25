@@ -30,6 +30,12 @@
     }
 }
 
+.feed-filter__header {
+    font-size: 32px;
+    font-weight: bold;
+    color: white
+}
+
 .feed-filter-placeholder {
     min-width: $search-filter-width;
 }
