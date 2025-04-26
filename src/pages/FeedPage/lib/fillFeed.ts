@@ -3,6 +3,7 @@ import { Pin } from 'entities/Pin';
 import { Footer } from '../components/footer/footer';
 import { loadFeedPictures } from 'features/imageLoader';
 import { feedState } from '../ui/FeedPage';
+import { Auth } from '../../../features/authorization';
 
 
 /**
@@ -38,5 +39,28 @@ export const fillFeed = async () => {
 
     feedState.isLoading = false;
     feedState.pageNum++;
+
+
+    if (feedState.pageNum === 5) {
+        if (!localStorage.getItem('CSAT1')) {
+            localStorage.setItem('CSAT1', '123');
+            const frame = document.querySelector<HTMLIFrameElement>('#CSAT-frame');
+            frame?.contentWindow?.postMessage({
+                type: 'render-iframe',
+                data: { poll: Auth.pollList[0] }
+            }, '*');
+            if (frame) {
+                frame.classList.remove('display-none');
+                frame.style.cssText = `
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    border: none;
+    width: 520px;
+    height: 250px;
+    z-index: 9999;`;
+            }
+        }
+    }
 };
 

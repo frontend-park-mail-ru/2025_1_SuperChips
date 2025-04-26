@@ -1,5 +1,3 @@
-// import { API } from 'shared/api';
-
 import { CSATState } from '../ui/CSAT';
 import { API } from '../../../shared/api';
 
@@ -10,10 +8,12 @@ export const handleCSATSubmit = async (pollID: number) => {
     const body = CSATState.pages.map((item) => {
         return {
             type: item.type,
-            content: item.text,
+            content: item.value,
             question_id: item.question_id,
         };
     });
+
+    console.log(body);
 
     const response = await API.post(`/api/v1/polls/${pollID}/answers`, { answers: body });
 

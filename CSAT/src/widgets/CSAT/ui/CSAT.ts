@@ -31,35 +31,6 @@ interface ICSATPoll {
 }
 
 
-// export const CSATState: ICSATState = {
-//     pages: [
-//         {
-//             text: 'Насколько вам нравится VK',
-//             order: 1,
-//             type: 'stars',
-//             value: 0,
-//             id: 1
-//         },
-//         {
-//             text: 'Насколько вам нравится Яндекс',
-//             order: 2,
-//             type: 'text',
-//             value: '',
-//             id: 2
-//         },
-//         {
-//             text: 'Насколько вам нравится Google',
-//             order: 3,
-//             type: 'stars',
-//             value: 0,
-//             id: 3,
-//         }
-//     ],
-//     page: 1,
-//     length: 3,
-//     canSubmit: false,
-// };
-
 export const CSATState: ICSATState = {
     pages: [],
     page: 1,
@@ -68,9 +39,7 @@ export const CSATState: ICSATState = {
 };
 
 
-// для переключения по страницам указывать номер и делать перерендер
 export const CSAT = async (poll: ICSATPoll) => {
-    // const iframe = document.querySelector<HTMLIFrameElement>('#CSAT-frame');
     const iframeDoc = document;
 
     const container = document.createElement('div');
@@ -82,7 +51,7 @@ export const CSAT = async (poll: ICSATPoll) => {
     }
 
     const currentPage = CSATState.pages[CSATState.page - 1];
-
+    console.log(currentPage, CSATState);
     const config = {
         header: currentPage.text,
         stars: currentPage.type === 'stars',
@@ -110,7 +79,8 @@ export const CSAT = async (poll: ICSATPoll) => {
         if (!prevCSAT) return;
 
         saveCSATState();
-        CSATState.page = Math.min(CSATState.page + 1, CSATState.length);
+        CSATState.page = CSATState.page + 1 <= CSATState.pages.length ? CSATState.page + 1 : 1;
+        // CSATState.page = Math.min(CSATState.page + 1, CSATState.length);
         const newCSAT = CSAT(poll);
         prevCSAT.replaceWith(await newCSAT);
     });
@@ -123,18 +93,21 @@ export const CSAT = async (poll: ICSATPoll) => {
         if (!prevCSAT) return;
 
         saveCSATState();
-        CSATState.page = Math.max(CSATState.page - 1, 0);
+        CSATState.page = CSATState.page - 1 > 1 ? CSATState.page - 1 : 1;
         const newCSAT = CSAT(poll);
         prevCSAT.replaceWith(await newCSAT);
     });
 
 
     const button = container.querySelector('.CSAT-submit');
+    const button2 = container.querySelector('#CSAT-submit');
     button?.addEventListener('click', async () => handleCSATSubmit(poll.id));
+    button2?.addEventListener('click', async () => handleCSATSubmit(poll.id));
     container.querySelector('#CSAT-close')?.addEventListener('click', closeCSAT);
 
     container.addEventListener(starBarClickEvent, validateSubmitButton);
     container.addEventListener('input', validateSubmitButton);
+    container.addEventListener(starBarClickEvent, saveCSATState);
 
 
     return container;

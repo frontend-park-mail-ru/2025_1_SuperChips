@@ -36,24 +36,5 @@ export const App = async () => {
             }
         };
     }
-
-    setTimeout(() => {
-        const frame = document.querySelector<HTMLIFrameElement>('#CSAT-frame');
-        frame?.contentWindow?.postMessage({
-            type: 'render-iframe',
-            data: { poll: Auth.pollList[0] }
-        }, '*');
-        if (frame) {
-            frame.classList.remove('display-none');
-            frame.style.cssText = `
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    border: none;
-    width: 520px;
-    height: 250px;
-    z-index: 9999;
-`;
-        }    }, 5000);
 }
 ;
