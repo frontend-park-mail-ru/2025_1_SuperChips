@@ -15,7 +15,8 @@ try {
 }
 
 VKID.Config.init({
-    app: VKID_APP_ID, // Идентификатор приложения
+    app: VKID_APP_ID,
+    // redirectUrl: 'https://yourflow.ru',
     redirectUrl: 'https://localhost',
     scope: 'email',
     responseMode: VKID.ConfigResponseMode.Callback,

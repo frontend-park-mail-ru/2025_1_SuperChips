@@ -1,0 +1,8 @@
+<div class="star-rating">
+    {{#each stars}}
+        <span
+                class="star {{#if active}}start{{/if}}"
+                id="star-{{this.value}}"
+        >★</span>
+    {{/each}}
+</div>

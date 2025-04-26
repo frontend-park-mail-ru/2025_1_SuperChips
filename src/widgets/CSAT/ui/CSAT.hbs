@@ -1,0 +1,36 @@
+<div class="label">{{header}}</div>
+<img src="/public/icons/cross-grey.svg" alt="close frame" id="CSAT-close" class="CSAT-close">
+{{#if stars}}
+    <div class="star-bar-placeholder"></div>
+{{/if}}
+{{#if text}}
+    <label for="CSAT-answer" class="display-none black"></label>
+    <textarea
+            class="CSAT-textarea"
+            id="CSAT-answer"
+            cols="30"
+            rows="10"
+            maxlength="512"
+    >{{value}}</textarea>
+{{/if}}
+{{#if onlyQuestion}}
+    <button class="CSAT-submit" disabled="disabled">Отправить результаты</button>
+{{else if firstQuestion}}
+    <div class="CSAT__buttons-container">
+        <button class="CSAT-prev" id="CSAT-prev" disabled="{{disabled}}">Назад</button>
+        <button class="CSAT-next" id="CSAT-next">Вперед</button>
+    </div>
+{{else if lastQuestion}}
+    <div class="CSAT__buttons-container">
+        <button class="CSAT-prev" id="CSAT-prev">Назад</button>
+        <button class="CSAT-next" id="CSAT-submit" {{#unless canSubmit}}disabled="disabled"{{/unless}}>Отправить</button>
+    </div>
+{{else}}
+    <div class="CSAT__buttons-container">
+        <button class="CSAT-prev" id="CSAT-prev">Назад</button>
+        <button class="CSAT-next" id="CSAT-next">Вперед</button>
+    </div>
+{{/if}}
+{{#unless onlyQuestion}}
+    <div class="CSAT-counter">{{page}}/{{total}}</div>
+{{/unless}}

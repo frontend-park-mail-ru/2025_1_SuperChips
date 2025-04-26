@@ -47,7 +47,6 @@ export const fillSearchFeed = async () => {
         } else if (searchFeedState.filter === 'users') {
             feed.masonry?.destroy();
             feed.masonry = new Masonry(feed, { itemSelector: '.user-card', columnWidth: 460 });
-            console.log(feed.masonry);
         }
     }
 

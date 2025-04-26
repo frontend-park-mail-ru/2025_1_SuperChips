@@ -1,0 +1,19 @@
+.star-rating {
+    display: inline-flex;
+    font-size: 32px;
+    line-height: 1;
+    padding: 10px 0;
+    max-height: 60px;
+}
+
+.star {
+    font-size: 40px;
+    color: #ccc;
+    cursor: pointer;
+    padding: 0 2px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: scale(1.2);
+    }
+}
