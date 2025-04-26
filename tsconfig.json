@@ -17,6 +17,7 @@
     "src/**/*",
     "src/**/*.d.ts",
     "src/pages/SettingsPage/components/**/*.d.ts",
-    "src/pages/SettingsPage/handlers/**/*.d.ts"
+    "src/pages/SettingsPage/handlers/**/*.d.ts",
+    "CSAT/**/*"
   ]
 }

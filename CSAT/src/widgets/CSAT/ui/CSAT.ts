@@ -1,5 +1,5 @@
 import { handleCSATSubmit } from '../handlers/handleCSATSubmit';
-import { StarBar, starBarClickEvent } from 'shared/components/StarBar';
+import { StarBar, starBarClickEvent } from '../../../shared/components/StarBar';
 // import { API } from 'shared/api';
 import template from './CSAT.hbs';
 import './CSAT.scss';
@@ -23,51 +23,62 @@ interface ICSATState {
     canSubmit: boolean,
 }
 
+interface ICSATPoll {
+    id: number;
+    header: string;
+    questions: ICSATQuestion[];
+    delay: number;
+}
+
+
+// export const CSATState: ICSATState = {
+//     pages: [
+//         {
+//             text: 'Насколько вам нравится VK',
+//             order: 1,
+//             type: 'stars',
+//             value: 0,
+//             id: 1
+//         },
+//         {
+//             text: 'Насколько вам нравится Яндекс',
+//             order: 2,
+//             type: 'text',
+//             value: '',
+//             id: 2
+//         },
+//         {
+//             text: 'Насколько вам нравится Google',
+//             order: 3,
+//             type: 'stars',
+//             value: 0,
+//             id: 3,
+//         }
+//     ],
+//     page: 1,
+//     length: 3,
+//     canSubmit: false,
+// };
 
 export const CSATState: ICSATState = {
-    pages: [
-        {
-            text: 'Насколько вам нравится VK',
-            order: 1,
-            type: 'stars',
-            value: 0,
-            id: 1
-        },
-        {
-            text: 'Насколько вам нравится Яндекс',
-            order: 2,
-            type: 'text',
-            value: '',
-            id: 2
-        },
-        {
-            text: 'Насколько вам нравится Google',
-            order: 3,
-            type: 'stars',
-            value: 0,
-            id: 3,
-        }
-    ],
+    pages: [],
     page: 1,
-    length: 3,
+    length: 0,
     canSubmit: false,
 };
 
 
 // для переключения по страницам указывать номер и делать перерендер
-export const CSAT = async (poll: string) => {
+export const CSAT = async (poll: ICSATPoll) => {
+    // const iframe = document.querySelector<HTMLIFrameElement>('#CSAT-frame');
+    const iframeDoc = document;
+
     const container = document.createElement('div');
     container.classList.add('CSAT-popup');
 
     if (CSATState.pages.length === 0) {
         CSATState.page = 1;
-
-        // TODO
-        // const response = API.get(`/api/v1/polls?${poll}`);
-        // if (!(response instanceof Response && response.ok)) return container;
-
-        // const body = await response.json();
-        // CSATState.pages = body.data.questions;
+        CSATState.pages = poll.questions;
     }
 
     const currentPage = CSATState.pages[CSATState.page - 1];
@@ -95,7 +106,7 @@ export const CSAT = async (poll: string) => {
 
     const nextButton = container.querySelector<HTMLButtonElement>('.CSAT-next');
     nextButton?.addEventListener('click', async () => {
-        const prevCSAT = document.querySelector('.CSAT-popup');
+        const prevCSAT = iframeDoc.querySelector('.CSAT-popup');
         if (!prevCSAT) return;
 
         saveCSATState();
@@ -107,7 +118,8 @@ export const CSAT = async (poll: string) => {
 
     const prevButton = container.querySelector<HTMLButtonElement>('.CSAT-prev');
     prevButton?.addEventListener('click', async () => {
-        const prevCSAT = document.querySelector('.CSAT-popup');
+        const prevCSAT = iframeDoc.querySelector('.CSAT-popup');
+
         if (!prevCSAT) return;
 
         saveCSATState();
@@ -117,7 +129,8 @@ export const CSAT = async (poll: string) => {
     });
 
 
-    container.querySelector('#CSAT-submit')?.addEventListener('click', handleCSATSubmit);
+    const button = container.querySelector('.CSAT-submit');
+    button?.addEventListener('click', async () => handleCSATSubmit(poll.id));
     container.querySelector('#CSAT-close')?.addEventListener('click', closeCSAT);
 
     container.addEventListener(starBarClickEvent, validateSubmitButton);
@@ -129,10 +142,13 @@ export const CSAT = async (poll: string) => {
 
 
 const saveCSATState = () => {
+    // const iframe = document.querySelector<HTMLIFrameElement>('#CSAT-frame');
+    const iframeDoc = document;
+
     const type = CSATState.pages[CSATState.page - 1].type;
 
     if (type === 'stars') {
-        const list = Array.from(document.querySelectorAll<HTMLSpanElement>('.star'));
+        const list = Array.from(iframeDoc.querySelectorAll<HTMLSpanElement>('.star'));
         const count = list.filter((item) =>
             item.classList.contains('active')
         ).length;
@@ -140,7 +156,7 @@ const saveCSATState = () => {
         CSATState.pages[CSATState.page - 1].value = count.toString();
         CSATState.canSubmit = true;
     } else if (type === 'text') {
-        const textarea = document.querySelector<HTMLTextAreaElement>('.CSAT-textarea');
+        const textarea = iframeDoc.querySelector<HTMLTextAreaElement>('.CSAT-textarea');
         if (!textarea) return;
 
         CSATState.pages[CSATState.page - 1].value = textarea.value;

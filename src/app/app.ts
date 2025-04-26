@@ -4,21 +4,56 @@ import { Sidebar } from 'widgets/sidebar';
 import { Auth } from 'features/authorization';
 import './styles/fonts.scss';
 import './styles/common.scss';
+import { API } from '../shared/api';
 
 
 export const root = document.getElementById('root') as HTMLDivElement;
 
+
 export const App = async () => {
     await Auth.fetchUserData();
+    await Auth.fetchPolls();
 
     await Navbar();
     await Sidebar();
 
-    // root.appendChild(UserCard());
-    
     window.addEventListener('popstate', () => {
         navigate(location.pathname.slice(1), true).finally();
     });
 
     navigate(location.pathname.slice(1), true).finally();
-};
+
+    if (Auth.userData) {
+        const newFrame = document.createElement('iframe');
+        newFrame.classList.add('display-none');
+        newFrame.classList.add('CSAT-iframe');
+        newFrame.src = '/iframe.html';
+        newFrame.id = 'CSAT-frame';
+        document.body.appendChild(newFrame);
+        window.onmessage = (event) => {
+            if (event.data === 'close-iframe') {
+                newFrame.classList.add('display-none');
+            }
+        };
+    }
+
+    setTimeout(() => {
+        const frame = document.querySelector<HTMLIFrameElement>('#CSAT-frame');
+        frame?.contentWindow?.postMessage({
+            type: 'render-iframe',
+            data: { poll: Auth.pollList[0] }
+        }, '*');
+        if (frame) {
+            frame.classList.remove('display-none');
+            frame.style.cssText = `
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    border: none;
+    width: 520px;
+    height: 250px;
+    z-index: 9999;
+`;
+        }    }, 5000);
+}
+;

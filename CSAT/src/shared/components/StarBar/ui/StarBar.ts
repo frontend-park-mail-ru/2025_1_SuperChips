@@ -4,6 +4,9 @@ import './StarBar.scss';
 
 
 export const StarBar = (barValue: number) => {
+    // const iframe = document.querySelector<HTMLIFrameElement>('#CSAT-frame');
+    const iframeDoc = document;
+
     const container = document.createElement('div');
     const color = getStarColor(barValue);
 

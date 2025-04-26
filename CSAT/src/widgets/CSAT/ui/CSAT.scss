@@ -17,8 +17,12 @@
   }
 
   &-submit {
-    width: 440px;
+    //width: 440px;
     height: 44px;
+
+    width: 100%;
+    max-width: 440px;
+
     background-color: #000;
     color: white;
     border: none;
@@ -53,9 +57,12 @@
   }
 
   &__buttons-container {
-    width: 50%;
+    width: 100%;
+    justify-content: space-around;
+
+    //width: 50%;
     display: flex;
-    justify-content: space-between;
+    //justify-content: space-between;
   }
 
   &-counter {

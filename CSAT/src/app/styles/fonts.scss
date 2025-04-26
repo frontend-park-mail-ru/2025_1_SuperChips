@@ -1,0 +1,58 @@
+@use 'shared/styles/variables' as *;
+
+@font-face {
+    font-family: 'FuturaPT';
+    src: url('/public/fonts/futura-pt-book.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FuturaPT';
+    src: url('/public/fonts/futura-pt-demi.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+.header {
+    font-size: 36px;
+}
+
+.subheader {
+    font-size: 18px;
+    color: $text-gray;
+}
+
+.label {
+    font-size: 20px;
+}
+
+.link-label {
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.input {
+    &-text {
+        font-size: 14px;
+        color: $text-light;
+    }
+
+    &-field-label {
+        font-size: 16px;
+    }
+}
+
+.error-label {
+    font-size: 14px;
+    color: $error-color;
+}
+
+.bold {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.white {
+    color: #fff;
+}

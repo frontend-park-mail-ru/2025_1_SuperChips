@@ -10,7 +10,10 @@ const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
     mode: isProd ? 'production' : 'development',
-    entry: './src/index.ts',
+    entry: {
+        main: './src/index.ts',
+        iframe: './CSAT/src/index.ts'
+    },
     resolve: {
         modules: [
             path.resolve(__dirname, 'src'),
@@ -99,13 +102,20 @@ module.exports = {
             filename: 'index.html'
         }),
 
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, 'public', 'iframe.html'),
+            filename: 'iframe.html',
+            chunks: ['iframe'],
+            inject: true
+        }),
+
         new CopyWebpackPlugin({
             patterns: [
                 {
                     from: path.resolve(__dirname, 'public'),
                     to: path.resolve(__dirname, 'dist', 'public'),
                     globOptions: {
-                        ignore: ['**/index.html', '**/sw.js']
+                        ignore: ['**/index.html', '**/iframe.html', '**/sw.js']
                     }
                 },
                 {

@@ -1,4 +1,4 @@
-@import 'shared/styles/variables';
+@use 'shared/styles/variables' as *;
 
 * {
     margin: 0;
@@ -7,8 +7,8 @@
     font-family: 'Inter', sans-serif;
 }
 
-#root {
-    background-color: $primary-dark;
+body {
+    //background-color: $primary-dark;
 }
 
 .header {

@@ -20,6 +20,23 @@ interface IUserData extends IUser {
     id?: string,
 }
 
+type TQuestionType = 'stars' | 'text';
+
+interface ICSATQuestion {
+    text: string,
+    order: number | null,
+    type: TQuestionType,
+    value: number | string,
+    id: number,
+}
+
+interface ICSATPoll {
+    id: number;
+    header: string;
+    questions: ICSATQuestion[];
+    delay: number;
+}
+
 /**
  * Класс, использующийся для аутентификации пользователя
  * Для одной сессии создается только один класс
@@ -27,10 +44,12 @@ interface IUserData extends IUser {
 class auth {
     private API: typeof API;
     userData: IUserData | null;
+    pollList: ICSATPoll[];
 
     constructor() {
         this.API = API;
         this.userData = null;
+        this.pollList = [];
     }
 
     /**
@@ -166,6 +185,14 @@ class auth {
         await Navbar();
         await BoardStorage.fetchUserBoards();
         BoardStorage.boardToSave = USER_SAVED_PINS_BOARD;
+    }
+
+    async fetchPolls() {
+        const response = await API.get('/api/v1/polls');
+        if (response instanceof Response && response.ok) {
+            const body = await response.json();
+            body.data.forEach((item:ICSATPoll) => this.pollList.push(item));
+        }
     }
 }
 

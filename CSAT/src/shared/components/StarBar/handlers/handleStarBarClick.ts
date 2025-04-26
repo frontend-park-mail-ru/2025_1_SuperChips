@@ -1,11 +1,14 @@
 export const starBarClickEvent = 'starBarClick';
 
 export const handleStarBarClick = (event: Event) => {
+    // const iframe = document.querySelector<HTMLIFrameElement>('#CSAT-frame');
+    const iframeDoc = document;
+
     const target = event.target as HTMLElement;
     const index = +target.id.split('-')[1];
 
     const color = getStarColor(index);
-    const stars = document.querySelectorAll<HTMLSpanElement>('.star');
+    const stars = iframeDoc.querySelectorAll<HTMLSpanElement>('.star');
 
     for (let i = 0; i < stars.length; i++) {
         stars[i].style.color = i < index ? color : '#ccc';
