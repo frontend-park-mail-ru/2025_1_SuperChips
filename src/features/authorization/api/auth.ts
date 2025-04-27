@@ -1,10 +1,13 @@
 import type { IProfileSettings } from 'widgets/ProfileSettings';
 import type { IUser } from 'entities/User';
 import type { ISignupFormData } from 'pages/SignupPage';
-import { API } from 'shared/api';
+import type { IVKIDLogin, IVKIDRegister } from 'widgets/VKID';
 import { Navbar } from 'widgets/navbar';
-import { USER_OWN_PINS_BOARD, USER_SAVED_PINS_BOARD } from 'shared/config/constants';
+import { navigate } from 'shared/router';
+import { API } from 'shared/api';
 import { BoardStorage } from 'features/boardLoader';
+import { USER_SAVED_PINS_BOARD } from 'shared/config/constants';
+
 
 type TLoginData = {
     email: string;
@@ -39,12 +42,26 @@ class auth {
         const response = await this.API.post('/api/v1/auth/login', { email, password });
 
         if (response instanceof Response && response.ok) {
-            await this.fetchUserData();
             const body = await response.json();
-            this.API.setCSRFToken(body.data.csrf_token);
+            await this.initUser(body.data.csrf_token);
         }
 
         return response;
+    }
+
+    /**
+     * Авторизация пользователя через VK ID
+     */
+    async VKIDLogin(data: IVKIDLogin) {
+        const login = await API.post('/api/v1/auth/vkid/login', data);
+
+        if (login instanceof Response && login.ok) {
+            const body = await login.json();
+            await this.initUser(body.data.csrf_token);
+            await navigate('feed');
+        }
+
+        return login;
     }
 
     /**
@@ -55,26 +72,30 @@ class auth {
 
         if (response instanceof Response && response.ok) {
             const body = await response.json();
-            this.API.setCSRFToken(body.data.csrf_token);
+            await this.initUser(body.data.csrf_token);
 
             this.userData = {
                 email: userData.email,
                 username: userData.username,
                 public_name: userData.username,
             };
-
-            await Navbar();
-            await API.post(
-                `/api/v1/users/${userData.username}/boards`,
-                { name: USER_OWN_PINS_BOARD, is_private: false }
-            );
-            await API.post(
-                `/api/v1/users/${userData.username}/boards`,
-                { name: USER_SAVED_PINS_BOARD, is_private: false }
-            );
         }
 
         return response;
+    }
+
+    /**
+     * Регистрация нового пользователя через VK ID
+     */
+    async VKIDRegister(data: IVKIDRegister) {
+        const register = await API.post('/api/v1/auth/vkid/register', data);
+        if (register instanceof Response && register.ok) {
+            const body = await register.json();
+            await this.initUser(body.data.csrf_token);
+            navigate('feed').finally();
+        }
+
+        return register;
     }
 
     /**
@@ -87,7 +108,9 @@ class auth {
             await this.clearUserData();
 
             BoardStorage.clear();
-
+            const sidebarButtons = document.querySelector<HTMLDivElement>('.sidebar__button-container');
+            sidebarButtons?.classList.toggle('display-none');
+            document.querySelector('.logout-toast')?.remove();
         }
 
         return response;
@@ -108,7 +131,7 @@ class auth {
                 birthday: new Date(data.birthday),
                 shortUsername: data.username[0].toUpperCase(),
                 authorized: true,
-                public_name: data.publicName || data.username,
+                public_name: data.public_name || data.username,
                 id: data.user_id,
             };
 
@@ -136,6 +159,14 @@ class auth {
             };
         }
     };
+
+    async initUser(csrf_token: string) {
+        this.API.setCSRFToken(csrf_token);
+        await this.fetchUserData();
+        await Navbar();
+        await BoardStorage.fetchUserBoards();
+        BoardStorage.boardToSave = USER_SAVED_PINS_BOARD;
+    }
 }
 
 export const Auth = new auth();

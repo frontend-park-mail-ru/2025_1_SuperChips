@@ -34,6 +34,7 @@ export const inputHandler = () => {
 
         input.value = '';
         selectButton?.classList.remove('display-none');
+        hint?.classList.remove('display-none');
         clearButton?.classList.add('display-none');
     }
 };

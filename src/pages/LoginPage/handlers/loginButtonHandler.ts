@@ -1,5 +1,4 @@
-import { validatePassword } from 'shared/validation';
-import { validateEmail } from 'shared/validation';
+import { validateEmail, validatePassword } from 'shared/validation';
 import { debounce } from 'shared/utils';
 
 const loginButtonHandler = () => {
@@ -11,10 +10,8 @@ const loginButtonHandler = () => {
     const password = passwordField.value;
     const email = emailField.value;
 
-
     const valid = (validatePassword(password).isValid && validateEmail(email).isValid);
-
-    const button = document.querySelector<HTMLButtonElement>('.button');
+    const button = document.querySelector<HTMLButtonElement>('.auth-page-button');
     if (button) button.disabled = !valid;
 };
 

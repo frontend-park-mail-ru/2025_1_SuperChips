@@ -3,7 +3,10 @@ import './navbar.scss';
 import { navigate } from 'shared/router';
 import { goToFeed } from '../handlers/goToFeed';
 import { checkAvatar } from 'shared/utils';
+import { openFilter } from '../handlers/openFilter';
+import { search } from '../handlers/search';
 import { Auth } from 'features/authorization';
+import { clearSearch } from '../handlers/clearSearch';
 
 
 /**
@@ -37,6 +40,15 @@ export const Navbar = async () => {
 
     const pfp = navbar.querySelector('.navbar__profile-picture');
     pfp?.addEventListener('click', goToProfile);
+
+    const filter = navbar.querySelector('#filter-button');
+    filter?.addEventListener('click', openFilter);
+
+    const searchBar = navbar.querySelector('.search-form-container');
+    searchBar?.addEventListener('submit', search);
+
+    const clearButton = navbar.querySelector('.search-form__clear');
+    clearButton?.addEventListener('click', clearSearch);
 
     return navbar;
 };

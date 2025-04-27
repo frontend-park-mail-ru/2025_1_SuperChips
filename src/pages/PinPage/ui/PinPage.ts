@@ -2,11 +2,12 @@ import { PinDropdown } from 'widgets/PinDropdown';
 import { likeHandler } from '../handlers/likeHandler';
 import { savePinToBoard } from 'entities/Pin';
 import { navigate } from 'shared/router';
+import { checkAvatar } from 'shared/utils';
 import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
+import { BoardStorage } from 'features/boardLoader';
 import './PinPage.scss';
 import template from './PinPage.hbs';
-import { checkAvatar } from 'shared/utils';
 
 
 export const PinPage = async (pinID: string) => {
@@ -35,17 +36,19 @@ export const PinPage = async (pinID: string) => {
         username: userData?.public_name,
         hasText: !!pinData.header || !!pinData.description,
         own: userData.username === Auth.userData?.username,
+        boardToSave: BoardStorage.getBoardToSave(),
     };
 
     container.innerHTML = template(config);
 
-    const dropdownButton = container.querySelector<HTMLImageElement>('#dropdown-button');
-    dropdownButton?.addEventListener('click', () => {
-        PinDropdown(pinID);
+    const dropdownButton = container.querySelector('#dropdown-button');
+    dropdownButton?.addEventListener('click', (event) => {
+        event.stopPropagation();
+        PinDropdown(config.pinID);
     });
 
     const likeButton = container.querySelector<HTMLImageElement>('#like');
-    likeButton?.addEventListener('click', () => likeHandler(pinID));
+    likeButton?.parentElement?.addEventListener('click', () => likeHandler(pinID));
 
     const saveButton = container.querySelector('.save-button');
     saveButton?.addEventListener('click', () => savePinToBoard(pinID));

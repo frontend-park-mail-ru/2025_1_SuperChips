@@ -1,13 +1,26 @@
 import { App } from './app/app';
+import * as VKID from '@vkid/sdk';
+import { VKID_APP_ID } from 'shared/config/constants';
 
 await App();
 
+const isProd = process.env.NODE_ENV === 'production';
 
-try {
-    if ('serviceWorker' in navigator) {
-        await navigator.serviceWorker.register('/sw.js', { scope: '/' });
-    } else {
-        console.warn('⚠️ Service Worker not supported in this browser');
+if (isProd) {
+    try {
+        if ('serviceWorker' in navigator) {
+            await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+        } else {
+            console.warn('⚠️ Service Worker not supported in this browser');
+        }
+    } catch {
+        console.error('Failed to register a Service Worker');
     }
-} catch {
 }
+
+VKID.Config.init({
+    app: VKID_APP_ID, // Идентификатор приложения
+    redirectUrl: isProd ? 'https://yourflow.ru' : 'https://localhost',
+    scope: 'email',
+    responseMode: VKID.ConfigResponseMode.Callback,
+});

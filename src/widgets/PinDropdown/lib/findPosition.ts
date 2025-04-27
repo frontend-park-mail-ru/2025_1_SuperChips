@@ -7,7 +7,6 @@ export const findPosition = (pinID: string) => {
     const rect = pin?.getBoundingClientRect();
     if (!rect) return { x: 0, y: 0 };
 
-
     let x = rect.left - 80;
     let y = rect.top + 60;
 
@@ -18,6 +17,9 @@ export const findPosition = (pinID: string) => {
     if (x + dropdownWidth > window.innerWidth) {
         x = window.innerWidth - (dropdownWidth) - 40;
     }
+
+    x = Math.max(0, x);
+    y = Math.max(0, y);
 
     return { x: x, y: y };
 };

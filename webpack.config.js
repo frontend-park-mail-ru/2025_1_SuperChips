@@ -105,8 +105,12 @@ module.exports = {
                     from: path.resolve(__dirname, 'public'),
                     to: path.resolve(__dirname, 'dist', 'public'),
                     globOptions: {
-                        ignore: ['**/index.html']
+                        ignore: ['**/index.html', '**/sw.js']
                     }
+                },
+                {
+                    from: path.resolve(__dirname, 'public/sw.js'),
+                    to: path.resolve(__dirname, 'dist/sw.js'),
                 }
             ]
         }),
@@ -143,7 +147,7 @@ module.exports = {
         }],
         historyApiFallback: true,
         compress: true,
-        port: 8000,
+        port: 443,
         allowedHosts: 'all',
     }
 };

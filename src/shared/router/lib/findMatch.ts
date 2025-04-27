@@ -24,12 +24,15 @@ export const findMatch = async (page: string) => {
         match = 'feed';
     }
 
-    // TODO когда на бэке будет HEAD (`/api/v1/users/${page}`) заменить проверку на него вместо GET
+    if (match === 'profile') {
+        match = 'profileBoards';
+    }
+
     if (match === 'profile' || match === 'profilePins' || match === 'profileBoards') {
         const username = page.split('/')[0];
         if (username === appState.lastVisited.username) return match;
 
-        const userExists = await API.get(`/api/v1/users/${username}`);
+        const userExists = await API.head(`/api/v1/users/${username}`);
         if (userExists instanceof Error || !userExists.ok) {
             match = 'feed';
         }

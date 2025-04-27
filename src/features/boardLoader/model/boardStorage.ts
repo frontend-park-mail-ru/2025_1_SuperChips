@@ -81,6 +81,10 @@ class boardStorage {
         return board ? board.id : null;
     }
 
+    getBoardToSave() {
+        return this.boardToSave === USER_SAVED_PINS_BOARD ? 'Мои flow' : this.boardToSave;
+    }
+
     // Очищает хранилище
     clear() {
         this.ownBoardList = [];

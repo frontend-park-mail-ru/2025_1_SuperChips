@@ -40,7 +40,6 @@ export const createPin = async () => {
         Toast('Flow был успешно создан', 'message', 5000);
 
         const body = await response.json();
-        await savePinToBoard(body.data.flow_id, USER_OWN_PINS_BOARD);
         navigate(`flow/${body.data.flow_id}`, true).finally();
     }
 };

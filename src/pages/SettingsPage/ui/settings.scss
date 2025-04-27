@@ -160,7 +160,10 @@
     margin-right: $spacing-lg;
     display: flex;
     justify-content: center;
-    background-color: $white;
+
+    &:not(:has(img)) {
+        background-color: white;
+    }
 
     img {
         min-width: 100%;

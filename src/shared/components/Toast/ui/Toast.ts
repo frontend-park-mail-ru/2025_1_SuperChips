@@ -13,9 +13,10 @@ export const Toast = (
     appState.isShowingToast = true;
 
     const toast = document.createElement('div');
-    toast.className = `toast-${type}`;
     if (className) {
         toast.classList.add(className);
+    } else {
+        toast.className = `toast-${type}`;
     }
 
     toast.textContent = message;
@@ -23,7 +24,7 @@ export const Toast = (
     document.body.appendChild(toast);
 
     setTimeout(() => {
-        toast.style.animation = 'fadeOut 0.3s ease-out';
+        toast.style.animation = 'ToastFadeOut 0.3s ease-out';
         setTimeout(() => {
             toast.remove();
             appState.isShowingToast = false;
