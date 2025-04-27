@@ -8,25 +8,33 @@
 
 .message, .message-own {
     position: relative;
-    word-wrap: break-word;
     min-width: 150px;
     max-width: 300px;
     min-height: 44px;
     border-radius: $border-radius;
-    padding: $spacing-sm $spacing-sm $spacing-lg $spacing-sm;
-    //padding: $spacing-sm;
-    color: $white;
+    padding: $spacing-sm;
+
+    &__time {
+        display: inline-block;
+        margin-left: $spacing-xl;
+        float: right;
+        clear: left;
+        color: $disabled-color;
+        font-size: 14px;
+        transform: translateY(40%);
+    }
+
+    &__text {
+        display: inline-block;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-all;
+        color: $white;
+    }
 }
 
 .message {
     background-color: #333;
-
-    &__time {
-        position: absolute;
-        right: $spacing-sm;
-        bottom: $spacing-xs;
-        color: $white;
-    }
 }
 
 
