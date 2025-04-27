@@ -1,6 +1,7 @@
 import type { Route } from 'shared/config/router';
 import { Auth } from 'features/authorization';
 import { appState } from 'shared/router';
+import { closeFilter, openFilter } from 'widgets/navbar';
 
 
 export const updateBars = (route: Route) => {
@@ -16,9 +17,8 @@ export const updateBars = (route: Route) => {
     const showBackButton = !route.noBackButton;
     backButton?.classList.toggle('hidden', !showBackButton);
 
-    if (appState.activePage !== 'feed') {
-        document.querySelector('#filter-button')?.classList.add('not-allowed');
-    } else {
-        document.querySelector('#filter-button')?.classList.remove('not-allowed');
-    }
+    const filter = document.querySelector<HTMLImageElement>('#filter-button');
+    filter?.classList.toggle('filter-active', appState.activePage === 'feed');
+    filter?.addEventListener('click', openFilter);
+    filter?.removeEventListener('click', closeFilter);
 };

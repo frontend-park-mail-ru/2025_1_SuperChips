@@ -4,7 +4,7 @@ import { validateUsername } from 'shared/validation';
 
 const VKIDButtonHandler = () => {
     const submitButton = document.querySelector<HTMLButtonElement>('.VKID-popup__button');
-    const usernameInput = document.querySelector<HTMLInputElement>('#username');
+    const usernameInput = document.querySelector<HTMLInputElement>('#VKID-username');
     const container = usernameInput?.closest('.input-container');
     if (!usernameInput || !container || !submitButton) return;
 

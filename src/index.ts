@@ -4,19 +4,23 @@ import { VKID_APP_ID } from 'shared/config/constants';
 
 await App();
 
-try {
-    if ('serviceWorker' in navigator) {
-        await navigator.serviceWorker.register('/sw.js', { scope: '/' });
-    } else {
-        console.warn('⚠️ Service Worker not supported in this browser');
+const isProd = process.env.NODE_ENV === 'production';
+
+if (isProd) {
+    try {
+        if ('serviceWorker' in navigator) {
+            await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+        } else {
+            console.warn('⚠️ Service Worker not supported in this browser');
+        }
+    } catch {
+        console.error('Failed to register a Service Worker');
     }
-} catch {
-    console.error('Failed to register a Service Worker');
 }
 
 VKID.Config.init({
     app: VKID_APP_ID, // Идентификатор приложения
-    redirectUrl: 'https://localhost',
+    redirectUrl: isProd ? 'https://yourflow.ru' : 'https://localhost',
     scope: 'email',
     responseMode: VKID.ConfigResponseMode.Callback,
 });

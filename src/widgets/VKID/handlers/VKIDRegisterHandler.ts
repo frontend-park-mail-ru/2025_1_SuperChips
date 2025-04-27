@@ -6,7 +6,7 @@ import { Auth } from 'features/authorization';
 
 export const VKIDRegisterHandler = async (accessToken: string) => {
 
-    const input = document.querySelector<HTMLInputElement>('#username');
+    const input = document.querySelector<HTMLInputElement>('#VKID-username');
     if (!input) return;
     const username = input.value;
 

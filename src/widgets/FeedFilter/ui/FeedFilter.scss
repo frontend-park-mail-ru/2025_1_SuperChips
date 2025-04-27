@@ -1,4 +1,5 @@
 @use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
 
 .feed-filter {
     position: fixed;
@@ -6,28 +7,11 @@
     top: $navbar-height;
     width: $search-filter-width;
     padding-right: $spacing-lg;
+    background: $gradient-dark;
+    height: calc(100vh - $navbar-height);
+    z-index: 50;
 
-    // Подготовка к анимации
-    transform: translate(-20%, 0);
-    animation: FilterFadeIn 0.2s ease-out forwards;
-
-    @keyframes FilterFadeIn {
-        from {
-            transform: translateX(-20%);
-        }
-        to {
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes FilterFadeOut {
-        from {
-            transform: translateX(0);
-        }
-        to {
-            transform: translateX(-20%);
-        }
-    }
+    @include side-menu-animation;
 }
 
 .feed-filter__header {

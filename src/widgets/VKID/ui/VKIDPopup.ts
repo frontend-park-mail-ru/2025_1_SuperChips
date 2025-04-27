@@ -22,7 +22,7 @@ export const VKIDPopup = (accessToken: string) => {
 
     const newInput = Input({
         type: 'text',
-        id: 'username',
+        id: 'VKID-username',
         inputLabel: 'Имя пользователя',
         errorMessage: 'Пользователь с таким именем уже существует',
         maxlength: 32,

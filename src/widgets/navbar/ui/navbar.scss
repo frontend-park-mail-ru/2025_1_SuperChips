@@ -64,10 +64,7 @@ $border-radius: 20px;
         position: absolute;
         top: 25%;
         left: $spacing-sm;
-
-        &:hover {
-            cursor: pointer;
-        }
+        opacity: 0.5;
     }
 
     &__clear {
@@ -107,6 +104,10 @@ $border-radius: 20px;
     display: none;
 }
 
-.not-allowed:hover {
-    cursor: not-allowed;
+.filter-active {
+    opacity: 1;
+
+    &:hover {
+        cursor: pointer;
+    }
 }
