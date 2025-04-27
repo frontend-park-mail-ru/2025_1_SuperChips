@@ -1,5 +1,6 @@
 import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
+import { validateEmail, validatePassword } from 'shared/validation';
 
 interface ILoginInputData {
     email: string,
@@ -18,9 +19,11 @@ export const handleLogin = async (event: Event) => {
     const inputs: NodeListOf<HTMLInputElement> = target.querySelectorAll('.input__field');
     inputs.forEach(input => {
         const key = input.id as keyof ILoginInputData;
-
         inputData[key] = input.value.trim();
     });
+
+    const valid = validateEmail(inputData.email).isValid && validatePassword(inputData.password).isValid;
+    if (!valid) return;
 
     const response = await Auth.login(inputData);
     if (response instanceof Error) return;

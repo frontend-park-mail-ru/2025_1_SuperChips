@@ -1,0 +1,19 @@
+<div class="feed-filter">
+    <div class="feed-filter__header">Фильтры</div>
+    <form class="filter-block">
+        {{#each filterItem}}
+            <div class="filter-item">
+                <label
+                        for="{{this.id}}"
+                        class="subheader white"
+                >{{this.title}}</label>
+                <input
+                        type="radio"
+                        id="{{this.id}}"
+                        {{#if this.checked}}checked="checked"{{/if}}
+                        name="filter-radio-buttons"
+                >
+            </div>
+        {{/each}}
+    </form>
+</div>

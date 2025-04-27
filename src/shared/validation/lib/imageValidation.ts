@@ -13,7 +13,7 @@ export const validateImage = (image: File): ValidationResult => {
     if (image.size > MAX_IMAGE_SIZE) {
         return {
             isValid: false,
-            error: 'Размер должен быть не более 3 Мб',
+            error: 'Размер файла должен быть не более 10 Мб',
         };
     }
 

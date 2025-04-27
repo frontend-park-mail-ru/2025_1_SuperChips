@@ -1,18 +1,14 @@
 import type { Route } from 'shared/config/router';
 import { closeChatList, openChatList } from 'widgets/sidebar';
 import { Auth } from 'features/authorization';
+import { appState } from 'shared/router';
+import { closeFilter, openFilter } from 'widgets/navbar';
+
 
 export const updateBars = (route: Route) => {
     const navbar = document.querySelector<HTMLDivElement>('.navbar');
     const showNavbar = !route.noNavbar;
     navbar?.classList.toggle('display-none', !showNavbar);
-
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    if (scrollbarWidth > 0 && navbar) {
-        navbar.style.paddingRight = `${scrollbarWidth}px`;
-    } else if (scrollbarWidth <= 0 && navbar) {
-        navbar.style.paddingRight = '0';
-    }
 
     const sidebarButtons = document.querySelector<HTMLDivElement>('.sidebar__button-container');
     const showSidebar = !route.noSidebar && !!Auth.userData;
@@ -21,6 +17,11 @@ export const updateBars = (route: Route) => {
     const backButton = document.getElementById('go-back-button');
     const showBackButton = !route.noBackButton;
     backButton?.classList.toggle('hidden', !showBackButton);
+
+    const filter = document.querySelector<HTMLImageElement>('#filter-button');
+    filter?.classList.toggle('filter-active', appState.activePage === 'feed');
+    filter?.addEventListener('click', openFilter);
+    filter?.removeEventListener('click', closeFilter);
 
     const chatButton = document.querySelector('#chats');
     chatButton?.addEventListener('click', openChatList);

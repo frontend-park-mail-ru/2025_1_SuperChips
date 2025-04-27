@@ -7,6 +7,7 @@ import './feed.scss';
 export const feedState = {
     isLoading: false,
     pageNum: 1,
+    filter: 'flows',
 };
 
 export interface IFeed extends HTMLDivElement {

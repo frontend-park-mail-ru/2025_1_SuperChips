@@ -1,0 +1,47 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+.feed-filter {
+    position: fixed;
+    left: $sidebar-width;
+    top: $navbar-height;
+    width: $search-filter-width;
+    padding-right: $spacing-lg;
+    background: $gradient-dark;
+    height: calc(100vh - $navbar-height);
+    z-index: 50;
+
+    @include side-menu-animation;
+}
+
+.feed-filter__header {
+    font-size: 32px;
+    font-weight: bold;
+    color: white
+}
+
+.feed-filter-placeholder {
+    min-width: $search-filter-width;
+}
+
+.filter-block {
+    display: flex;
+    flex-direction: column;
+    margin-top: $spacing-sm;
+    gap: $spacing-sm;
+}
+
+.filter-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    label:hover {
+        cursor: pointer;
+    }
+
+    input:hover {
+        cursor: pointer;
+    }
+}

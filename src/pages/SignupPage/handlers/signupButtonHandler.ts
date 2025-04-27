@@ -6,7 +6,7 @@ import { getInputData } from '../lib/getInputData';
 const signupButtonHandler = (): void => {
     const inputData = getInputData();
 
-    const button = document.querySelector<HTMLButtonElement>('.button');
+    const button = document.querySelector<HTMLButtonElement>('.auth-page-button');
     if (!button) return;
 
     button.disabled = !validateSignup(inputData);

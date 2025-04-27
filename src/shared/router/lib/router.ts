@@ -1,11 +1,12 @@
 import type { IFeed } from 'pages/FeedPage';
-import { debouncedFeedScroll } from 'pages/FeedPage';
+import { debouncedFeedScroll, searchFeedState } from 'pages/FeedPage';
 import type { IUser } from 'entities/User';
 import { findMatch } from './findMatch';
 import { updateBars } from './updateBars';
 import { boardFeedScroll } from 'pages/BoardPage';
 import { root } from 'app/app';
 import { config } from 'shared/config/router';
+
 
 interface AppState {
     lastPage: string | null,
@@ -44,11 +45,6 @@ export const navigate = async (
     let newHref = route.href.toString();
 
     switch (match) {
-    case 'profile':
-        renderProps = page;
-        newHref = `/${page}/boards`;
-        appState.activePage = 'profileBoards';
-        break;
     case 'pin':
         renderProps = page.split('/')[1];
         newHref = `/${page}`;
@@ -107,5 +103,12 @@ const cleanup = (newHref: string) => {
     }
     if (!boardRegex.test(newHref)) {
         window.removeEventListener('scroll', boardFeedScroll);
+    }
+
+    const searchInput = document.querySelector<HTMLInputElement>('#search');
+    if (searchInput) {
+        searchInput.value = '';
+        searchFeedState.query = '';
+        document.querySelector('.search-form__clear')?.classList.add('hidden');
     }
 };
