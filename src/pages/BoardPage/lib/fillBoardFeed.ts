@@ -34,6 +34,8 @@ export const fillBoardFeed = async () => {
             url: item.media_url,
             pinID: item.flow_id,
             saved: own,
+            width: item.width,
+            height: item.height,
         };
         feed.insertBefore(Pin(config), feed.firstChild);
     });

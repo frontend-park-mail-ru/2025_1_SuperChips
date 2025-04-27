@@ -39,11 +39,12 @@ $spacing-xxl: 60px;
 
 // Z-индексы
 $z-navbar: 100;
-$z-sidebar: 50;
+$z-sidebar: 100;
 $z-modal: 1000;
 
 // Градиенты
 $gradient-dark: linear-gradient(to bottom, $primary-dark, $secondary-dark) fixed;
+$gradient-purple: linear-gradient(to right, #7b2cbf, #3c096c, #130f40);
 
 // Типографика
 $font-family-base: 'FuturaPT', sans-serif;
@@ -79,3 +80,5 @@ $board-popup-width: 560px;
 $board-popup-height: 350px;
 
 $divider-height: 12px;
+
+$textarea-max-height: 200px;

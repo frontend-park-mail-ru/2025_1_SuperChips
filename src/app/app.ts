@@ -19,4 +19,13 @@ export const App = async () => {
     });
 
     navigate(location.pathname.slice(1), true).finally();
+
+    // TODO REMOVE
+    setTimeout(
+        () => {
+            document.querySelector<HTMLAnchorElement>('#chats')?.click();
+            document.querySelector<HTMLAnchorElement>('#chat-1')?.click();
+        },
+        0
+    );
 };

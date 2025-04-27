@@ -7,7 +7,7 @@ import { Auth } from 'features/authorization';
 import { BoardStorage } from 'features/boardLoader';
 import './Pin.scss';
 import template from './Pin.hbs';
-import { USER_SAVED_PINS_BOARD } from 'shared/config/constants';
+import { PIN_WIDTH, USER_SAVED_PINS_BOARD } from 'shared/config/constants';
 
 
 export const Pin = (params: IPinProps) => {
@@ -21,6 +21,14 @@ export const Pin = (params: IPinProps) => {
     };
 
     container.innerHTML = template(config);
+
+    const pin = container.querySelector('.pin') as HTMLDivElement;
+    pin.addEventListener('click', () => navigate(`flow/${config.pinID}`));
+
+    if (params.width && params.height) {
+        pin.style.width = PIN_WIDTH + 'px';
+        pin.style.height = (params.height * PIN_WIDTH) / params.width + 'px';
+    }
 
     const dropdownButton = container.querySelector('.dropdown-block');
     dropdownButton?.addEventListener('click', (event) => {
@@ -50,9 +58,6 @@ export const Pin = (params: IPinProps) => {
             navigate(`flow/edit/${params.pinID}`).finally();
         });
     }
-
-    const pin = container.querySelector('.pin') as HTMLDivElement;
-    pin.addEventListener('click', () => navigate(`flow/${config.pinID}`));
 
     return pin;
 };

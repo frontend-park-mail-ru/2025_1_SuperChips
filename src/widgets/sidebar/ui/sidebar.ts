@@ -2,6 +2,7 @@ import { logoutHandler } from '../handlers/logout';
 import { appState, navigate } from 'shared/router';
 import sidebarTemplate from './sidebar.hbs';
 import './sidebar.scss';
+import { openChatList } from '../handlers/openChatList';
 
 /**
  * Генерирует сайдбар для главных страниц (лента, профиль и тд)
@@ -15,7 +16,7 @@ export const Sidebar = async () => {
     const buttons = [
         {
             id: 'newPin',
-            source: '/public/icons/new-pin.svg',
+            source: '/public/icons/plus-white.svg',
             alt: 'add new pin',
             active: true
         },
@@ -23,7 +24,7 @@ export const Sidebar = async () => {
             id: 'chats',
             source: '/public/icons/chat.svg',
             alt: 'chats',
-            active: false
+            active: true
         },
         {
             id: 'settings',
@@ -62,6 +63,9 @@ export const Sidebar = async () => {
             navigate('feed');
         }
     });
+
+    const chatButton = sidebar.querySelector('#chats');
+    chatButton?.addEventListener('click', openChatList);
 
     return sidebar;
 };

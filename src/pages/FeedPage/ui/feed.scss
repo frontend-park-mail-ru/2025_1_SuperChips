@@ -5,7 +5,7 @@
     background: $gradient-dark;
     display: grid;
     grid-template-columns: $sidebar-width auto;
-    grid-template-rows: 100px auto;
+    grid-template-rows: $navbar-height auto;
     grid-template-areas:
         "header header"
         "sidebar page";

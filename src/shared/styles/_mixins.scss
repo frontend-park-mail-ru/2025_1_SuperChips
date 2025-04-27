@@ -28,6 +28,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    word-break: break-all;
+    overflow-wrap: anywhere;
 }
 
 @mixin no-select {
@@ -53,7 +55,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    min-height: calc(100vh - $navbar-height);
+    min-height: calc(100vh - $navbar-height + 10px);
     padding-right: $feed-padding;
 }
 
@@ -62,7 +64,7 @@
     opacity: 0.1;
 }
 
-@mixin popup-scroll() {
+@mixin popup-scroll($color, $bg-color) {
     overflow-y: auto;
 
     &::-webkit-scrollbar {
@@ -70,13 +72,13 @@
     }
 
     &::-webkit-scrollbar-track {
-        background: #f1f1f1;
+        background: $color;
         border-radius: 5px;
         margin: 20px 0;
     }
 
     &::-webkit-scrollbar-thumb {
-        background: #888;
+        background: $bg-color;
         border-radius: 5px;
         border: 2px solid transparent;
         background-clip: content-box;
@@ -103,11 +105,6 @@
         min-height: 100%;
         object-fit: cover;
         margin: 0;
-    }
-
-    &:hover {
-        opacity: $opacity-80;
-        cursor: pointer;
     }
 }
 
@@ -152,4 +149,38 @@
         object-fit: contain;
         display: block;
     }
+}
+
+@mixin side-menu-animation {
+    transform: translate(-100%, 0);
+    animation: FadeInHorizontal 0.3s ease-out forwards;
+
+    @keyframes FadeInHorizontal {
+        from {
+            transform: translateX(-100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes FadeOutHorizontal {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-100%);
+        }
+    }
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin small-icon {
+    width: 12px;
+    height: 12px;
+    -webkit-user-drag: none;
 }

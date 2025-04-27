@@ -4,7 +4,7 @@
 
 .profile {
     grid-area: page;
-    min-height: calc(100vh - $navbar-height);
+    min-height: calc(100vh - $navbar-height + 10px);
 
     &-page {
         @include main-page();
@@ -59,7 +59,7 @@
     &:hover {
         cursor: pointer;
         img {
-            content: url("/public/icons/plus-active.svg");
+            content: url("/public/icons/plus-white-filled.svg");
         }
     }
 }

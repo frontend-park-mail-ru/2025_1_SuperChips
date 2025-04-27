@@ -1,4 +1,5 @@
 import type { Route } from 'shared/config/router';
+import { closeChatList, openChatList } from 'widgets/sidebar';
 import { Auth } from 'features/authorization';
 
 export const updateBars = (route: Route) => {
@@ -20,4 +21,8 @@ export const updateBars = (route: Route) => {
     const backButton = document.getElementById('go-back-button');
     const showBackButton = !route.noBackButton;
     backButton?.classList.toggle('hidden', !showBackButton);
+
+    const chatButton = document.querySelector('#chats');
+    chatButton?.addEventListener('click', openChatList);
+    chatButton?.removeEventListener('click', closeChatList);
 };

@@ -32,6 +32,8 @@ export const fillFeed = async () => {
         const config: IPinProps = {
             url: item.media_url,
             pinID: item.flow_id,
+            width: item.width,
+            height: item.height,
         };
         feed.appendChild(Pin(config));
     });

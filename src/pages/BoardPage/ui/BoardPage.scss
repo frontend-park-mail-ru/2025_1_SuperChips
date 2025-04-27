@@ -4,7 +4,7 @@
 
 .board {
     grid-area: page;
-    min-height: calc(100vh - $navbar-height);
+    min-height: calc(100vh - $navbar-height + 10px);
 
     &-page {
         @include main-page();

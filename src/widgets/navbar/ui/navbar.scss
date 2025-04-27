@@ -54,6 +54,11 @@ $border-radius: 20px;
 
 .navbar__profile-picture {
     @include profile-picture-small;
+
+    &:hover {
+        opacity: $opacity-80;
+        cursor: pointer;
+    }
 }
 
 .shortUsername {
