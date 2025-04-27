@@ -16,8 +16,8 @@ const body = {
         messages: [
             {
                 sender: 'asdasdasd',
-                message: 'bibaasdsdadassdaasdasasdasdasdasdasdasdsaddasdasdasdsadasddassdabobaasdasdasdasdadsasd',
-                timestamp: '2025-04-26T22:13:00Z',
+                message: 'bibaasdsdadassdaasdasasdassaddasdasdasdsadaasassddassdabobaasdasdasdasdadsasd',
+                timestamp: '2020-04-26T22:13:00Z',
                 read: false,
             },
             {
@@ -46,7 +46,7 @@ const body = {
             },
             {
                 sender: 'valekir',
-                message: 'bibaboba',
+                message: 'bibabobaasdasasdadsdasadsdasadsdasdasdasasdasdasdas',
                 timestamp: '2025-04-21T22:13:00Z',
                 read: true,
             },

@@ -1,11 +1,13 @@
 <div class="message{{#if own}}-own{{/if}}">
-    {{message}}
-    <span class="message__time">
-        {{#if this.sent}}
-            <img src="/public/icons/chat-sent.svg" alt="">
-        {{else if this.read}}
-            <img src="/public/icons/chat-read.svg" alt="">
-        {{/if}}
-        {{time}}
-    </span>
+    <div class="message__text">
+        {{message}}
+        <div class="message__time">
+            {{#if this.sent}}
+                <img src="/public/icons/chat-sent.svg" alt="">
+            {{else if this.read}}
+                <img src="/public/icons/chat-read.svg" alt="">
+            {{/if}}
+            {{time}}
+        </div>
+    </div>
 </div>

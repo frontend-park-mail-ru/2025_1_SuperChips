@@ -11,7 +11,7 @@
     height: calc(100vh - $navbar-height);
     padding-bottom: 36px;
     background: $gradient-dark;
-    z-index: 50;
+    z-index: 75;
     @include side-menu-animation;
 }
 
@@ -31,6 +31,10 @@
     &__profile-picture {
         @include profile-picture-small;
         grid-area: pfp;
+
+        .short-username {
+            @include short-username;
+        }
     }
 }
 
