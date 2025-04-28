@@ -4,6 +4,7 @@ import { navigate } from 'shared/router';
 import { Pin } from 'entities/Pin';
 import { emptyFeedPageTemplate } from 'widgets/UserPins';
 import { boardFeedState } from '../ui/BoardPage';
+import { boardFeedScroll } from '../handlers/boardFeedScroll';
 
 
 export const fillBoardFeed = async () => {
@@ -23,6 +24,7 @@ export const fillBoardFeed = async () => {
     }
 
     if (pictures?.status === 404) {
+        window.removeEventListener('scroll', boardFeedScroll);
         return;
     }
 
@@ -34,6 +36,8 @@ export const fillBoardFeed = async () => {
             url: item.media_url,
             pinID: item.flow_id,
             saved: own,
+            width: item.width,
+            height: item.height,
         };
         feed.insertBefore(Pin(config), feed.firstChild);
     });

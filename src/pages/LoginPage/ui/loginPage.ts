@@ -2,7 +2,7 @@ import { OneTapButtonObserver } from 'widgets/VKID';
 import { debouncedLoginButton } from '../handlers/loginButtonHandler';
 import { handleLogin } from '../handlers/loginHandler';
 import { fillPictureBox } from '../lib/fillPictureBox';
-import { navigate } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 import { Input } from 'shared/components/input';
 import { root } from 'app/app';
 import loginTemplate from '../authPage/authPageTemplate.hbs';
@@ -41,7 +41,8 @@ export const LoginPage = async () => {
         redirectBtn: 'Регистрация',
         submitBtn: 'Вход',
         header: 'Вход',
-        subheader: 'Добро пожаловать во flow!'
+        subheader: 'Добро пожаловать во flow!',
+        mobile: appState.mobile,
     };
 
     const html = loginTemplate(config);

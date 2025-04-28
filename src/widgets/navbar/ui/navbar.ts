@@ -1,6 +1,6 @@
 import navbarTemplate from './navbar.hbs';
 import './navbar.scss';
-import { navigate } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 import { goToFeed } from '../handlers/goToFeed';
 import { checkAvatar } from 'shared/utils';
 import { openFilter } from '../handlers/openFilter';
@@ -26,6 +26,7 @@ export const Navbar = async () => {
         authorized: !!userData,
         shortUsername: userData?.username[0].toUpperCase(),
         avatar: ok ? userData?.avatar : null,
+        mobile: appState.mobile,
     };
 
     navbar.innerHTML = navbarTemplate(config);

@@ -91,3 +91,26 @@
     }
 }
 
+.user-profile__header {
+    font-size: 36px;
+}
+
+@media (max-width: $mobile-width) {
+    .profile {
+        min-height: calc(100vh - 2 * $navbar-height-mobile);
+    }
+    .profile__feed, .box-1__menu, .user-profile__header {
+        padding: 0 $mobile-horizontal-padding;
+    }
+    .author-area {
+        display: block;
+        padding: 0 $mobile-horizontal-padding;
+
+        &__box-2 {
+            margin-top: $spacing-sm;
+        }
+    }
+    .box-1__menu, .user-profile__header {
+        padding: 0;
+    }
+}

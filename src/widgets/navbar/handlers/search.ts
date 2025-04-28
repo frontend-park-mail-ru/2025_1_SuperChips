@@ -15,7 +15,7 @@ export const search = async (event: Event) => {
     const query = encodeURIComponent(searchInput.value);
     const filter = searchFeedState.filter;
     const URI = `/api/v1/search/${filter}?query=${query}&page=1&size=1`;
-    const response = await API.get(URI);
+    const response = await API.head(URI);
 
     if (response instanceof Error) {
         return;

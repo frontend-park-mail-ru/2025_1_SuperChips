@@ -14,16 +14,16 @@ export const Sidebar = async () => {
 
     const buttons = [
         {
-            id: 'newPin',
-            source: '/public/icons/new-pin.svg',
-            alt: 'add new pin',
-            active: true
-        },
-        {
             id: 'chats',
             source: '/public/icons/chat.svg',
             alt: 'chats',
             active: false
+        },
+        {
+            id: 'newPin',
+            source: '/public/icons/new-pin.svg',
+            alt: 'add new pin',
+            active: true
         },
         {
             id: 'settings',
@@ -31,12 +31,12 @@ export const Sidebar = async () => {
             alt: 'settings',
             active: true,
         },
-        {
-            id: 'logout',
-            source: '/public/icons/log-out.svg',
-            alt: 'logout',
-            active: true,
-        }
+        // {
+        //     id: 'logout',
+        //     source: '/public/icons/log-out.svg',
+        //     alt: 'logout',
+        //     active: true,
+        // }
     ];
 
     sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({ buttons }));

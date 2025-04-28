@@ -9,13 +9,14 @@
 }
 
 .login-container {
-    width: 572px;
+    width: $auth-page-form-width;
     background-color: $white;
     z-index: $z-navbar;
 }
 
 .login-form {
     margin-top: 54px;
+    max-width: $auth-page-form-width;
 }
 
 .login-box-1 {
@@ -28,4 +29,15 @@
     gap: 4px;
     margin-top: $spacing-sm;
     font-size: $font-size-lg;
+    max-width: $input-width;
+}
+
+@media (max-width: $mobile-width) {
+    $auth-page-padding: clamp($mobile-horizontal-padding, 8%, $auth-page-form-width);
+    .login-box-1 {
+        padding: 112px $auth-page-padding 0 $auth-page-padding;
+    }
+    .login-container {
+        width: 100%;
+    }
 }

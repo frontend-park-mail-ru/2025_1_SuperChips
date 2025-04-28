@@ -1,9 +1,10 @@
-import type { IFeed } from 'pages/FeedPage';
-import { toTop } from 'pages/FeedPage';
+import { IFeed, toTop } from 'pages/FeedPage';
 import { Masonry } from 'shared/models/Masonry';
 import { findBoardID } from '../lib/findBoardID';
-import { Auth } from 'features/authorization';
 import { boardFeedScroll, boardFeedState, fillBoardFeed } from 'pages/BoardPage';
+import { Auth } from 'features/authorization';
+import { appState } from 'shared/router';
+import { PIN_WIDTH, PIN_WIDTH_MOBILE } from 'shared/config/constants';
 import './UserPins.scss';
 
 
@@ -22,17 +23,20 @@ export const UserPins = async (username: string) => {
         <img src="/public/icons/arrow-up.svg" alt="scroll to top">
     </div>`;
 
-    if (!feed.masonry) {
+    // const delayedFill = new MutationObserver(async () => {
+    setTimeout(async () => {
+        const feed = document.querySelector<IFeed>('#feed');
+        if (!feed) return;
         feed.masonry = new Masonry(
             feed, {
                 itemSelector: '.pin',
-                columnWidth: 205,
+                columnWidth: appState.mobile ? PIN_WIDTH_MOBILE : PIN_WIDTH,
                 gutter: 20,
             }
         );
-    }
 
-    await fillBoardFeed();
+        await fillBoardFeed();
+    }, 100);
 
     const scrollButton = feed.querySelector('.scroll-to-top');
     scrollButton?.addEventListener('click', toTop);

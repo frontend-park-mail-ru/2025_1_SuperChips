@@ -23,6 +23,8 @@ export const fillPictureBox = async (pageNum: number) => {
             url: item.media_url,
             pinID: item.flow_id,
             saved: true,
+            width: item.width,
+            height: item.height,
         };
         newFrame.appendChild(Pin(config));
     });

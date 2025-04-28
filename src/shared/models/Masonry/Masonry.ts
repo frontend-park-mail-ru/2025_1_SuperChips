@@ -12,9 +12,9 @@ export class Masonry {
     private colsHeight: number[];
     private colWidth: number;
     private colsNum: number;
-    private offsetX: number;
     private observer!: MutationObserver;
     private resizeTimeout: number | null = null;
+    private offsetX: number;
     private readonly RESIZE_DELAY = 250;
 
     constructor(container: HTMLElement, options: Partial<MasonryOptions>) {
@@ -28,9 +28,8 @@ export class Masonry {
         this.items = [];
         this.colsHeight = [];
         this.colWidth = 0;
-        this.offsetX = 0;
         this.colsNum = 0;
-
+        this.offsetX = 0;
         this.init();
         this.setupMutationObserver();
     }
@@ -53,7 +52,7 @@ export class Masonry {
         this.colsNum = Math.floor(containerWidth / this.colWidth);
 
         const totalWidth = this.colsNum * this.colWidth - this.options.gutter;
-        this.offsetX = (containerWidth - totalWidth - 30) / 2;
+        this.offsetX = (containerWidth - totalWidth) / 2;
 
         this.colsHeight = new Array(this.colsNum).fill(0);
     }
@@ -148,34 +147,13 @@ export class Masonry {
 
                     if (newItems.length > 0) {
                         this.items.push(...newItems);
-                        this.waitForImagesLoad(newItems).then(() => this.layout());
+                        this.layout();
                     }
                 }
             });
         });
 
         this.observer.observe(this.container, { childList: true, subtree: true });
-    }
-
-    /**
-     * Функция для создания задержки перед повторным распределением элементов в контейнере при загрузке новых картинок
-     */
-    private waitForImagesLoad(items: HTMLElement[]): Promise<void[]> {
-        const imagePromises: Promise<void>[] = [];
-
-        items.forEach(item => {
-            const images = item.getElementsByTagName('img');
-            Array.from(images).forEach(img => {
-                if (!img.complete) {
-                    imagePromises.push(new Promise(resolve => {
-                        img.addEventListener('load', () => resolve());
-                        img.addEventListener('error', () => resolve());
-                    }));
-                }
-            });
-        });
-
-        return Promise.all(imagePromises);
     }
 
     /**

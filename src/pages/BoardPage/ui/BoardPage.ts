@@ -5,9 +5,10 @@ import { boardFeedScroll } from '../handlers/boardFeedScroll';
 import { API } from 'shared/api';
 import { root } from 'app/app';
 import { Auth } from 'features/authorization';
-import { USER_OWN_PINS_BOARD } from 'shared/config/constants';
+import { PIN_WIDTH, PIN_WIDTH_MOBILE, USER_OWN_PINS_BOARD } from 'shared/config/constants';
 import './BoardPage.scss';
 import template from './BoardPage.hbs';
+import { appState } from '../../../shared/router';
 
 
 export const boardFeedState = {
@@ -55,7 +56,7 @@ export const BoardPage = async (boardID: string) => {
         feed.masonry = new Masonry(
             feed, {
                 itemSelector: '.pin',
-                columnWidth: 205,
+                columnWidth: appState.mobile ? PIN_WIDTH_MOBILE : PIN_WIDTH,
                 gutter: 20,
             }
         );

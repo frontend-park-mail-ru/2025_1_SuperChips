@@ -24,6 +24,10 @@ $border-radius: 20px;
     align-items: center;
     justify-content: space-between;
     z-index: $z-navbar;
+
+    &__search-icon {
+        display: none;
+    }
 }
 
 .navbar-logo {
@@ -109,5 +113,40 @@ $border-radius: 20px;
 
     &:hover {
         cursor: pointer;
+    }
+}
+
+@media (max-width: $mobile-width) {
+    .navbar {
+        height: $navbar-height-mobile;
+        padding: 12px;
+
+        &__profile-picture {
+            width: 44px;
+            height: 44px;
+            margin-right: 0;
+        }
+
+        &-logo {
+            margin: 0;
+        }
+
+        &__search-icon {
+            display: block;
+        }
+
+        &__pfp-box {
+            display: flex;
+            gap: 12px;
+            cursor: pointer;
+        }
+    }
+
+    .feed-redirect {
+        margin-right: 0;
+    }
+
+    .search-form-container {
+        display: none;
     }
 }

@@ -98,3 +98,21 @@
         top: 10px;
     }
 }
+
+
+@media (max-width: $mobile-width) {
+    .board-container {
+        width: 100%;
+
+        &__preview {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 66% 34%;
+            grid-template-rows: 50% 50%;
+            grid-template-areas:
+            "img-0 img-1"
+            "img-0 img-2";
+        }
+
+    }
+}

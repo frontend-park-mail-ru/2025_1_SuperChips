@@ -14,6 +14,7 @@ interface AppState {
     href: string | null,
     isShowingToast: boolean,
     isShowingPopup: boolean,
+    mobile: boolean,
     lastVisited: Partial<IUser>,
 }
 
@@ -24,6 +25,7 @@ export const appState: AppState = {
     isShowingToast: false,
     isShowingPopup: false,
     lastVisited: {},
+    mobile: false,
 };
 
 

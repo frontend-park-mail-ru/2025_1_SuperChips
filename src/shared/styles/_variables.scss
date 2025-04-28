@@ -17,6 +17,9 @@ $black: #000;
 $transparent: transparent;
 $semi-transparent: #E8E8E81a;
 
+// Ширина viewport
+$mobile-width: 768px;
+
 // Размеры
 $navbar-height: 88px;
 $sidebar-width: 92px;
@@ -84,3 +87,12 @@ $search-filter-width: 240px;
 
 $user-card-width: 460px;
 $user-card-min-height: 260px;
+
+$auth-page-form-width: 572px;
+
+// Размеры для адаптива
+$input-width-mobile: 280px;
+$mobile-horizontal-padding: 16px;
+$pin-min-width: 164px;
+$navbar-height-mobile: 60px;
+$sidebar-height-mobile: 60px;

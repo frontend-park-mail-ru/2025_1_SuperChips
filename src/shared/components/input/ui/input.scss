@@ -1,6 +1,7 @@
 @use 'shared/styles/variables' as *;
 @use 'shared/styles/mixins' as *;
 
+
 .input, .input__field, .input--invalid {
     height: $input-height;
     border-radius: $border-radius;
@@ -12,14 +13,13 @@
     max-width: $input-width;
 }
 
-
 .input {
-    width: $input-width;
+    max-width: $input-width;
     margin-top: $spacing-xs;
     position: relative;
 
     &__field {
-        width: $input-width;
+        max-width: $input-width;
         border: none;
         padding: $spacing-sm 60px $spacing-sm $spacing-lg;
 
@@ -57,9 +57,19 @@
     }
 
     &--invalid {
-        width: $input-width;
+        max-width: $input-width;
         border: 2px solid $error-color;
         appearance: none;
+    }
+}
+
+@media (max-width: $mobile-width) {
+    .input,
+    .input__field,
+    .input--invalid,
+    .input-container {
+        width: 100%;
+        min-width: $input-width-mobile;
     }
 }
 

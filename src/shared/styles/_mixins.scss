@@ -46,15 +46,15 @@
         "header header"
         "sidebar page";
     gap: 0;
-}
 
-@mixin content-area {
-    grid-area: page;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    min-height: calc(100vh - $navbar-height);
-    padding-right: $feed-padding;
+    @media (max-width: $mobile-width) {
+        grid-template-areas:
+            'header'
+            'page'
+            'sidebar';
+        grid-template-columns: 1fr;
+        grid-template-rows: $navbar-height-mobile auto $sidebar-height-mobile;
+    }
 }
 
 @mixin transparent-active {
@@ -103,6 +103,12 @@
         min-height: 100%;
         object-fit: cover;
         margin: 0;
+    }
+
+    p {
+        font-size: $font-size-xxl;
+        color: black;
+        font-weight: bold;
     }
 
     &:hover {

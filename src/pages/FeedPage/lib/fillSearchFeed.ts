@@ -10,6 +10,8 @@ import { Toast } from 'shared/components/Toast';
 import { searchFeedScroll } from '../handlers/handleScroll';
 import { UserCard } from 'entities/UserCard';
 import { API } from 'shared/api';
+import { appState } from '../../../shared/router';
+import { PIN_WIDTH, PIN_WIDTH_MOBILE } from '../../../shared/config/constants';
 
 
 export const searchFeedState = {
@@ -40,13 +42,22 @@ export const fillSearchFeed = async () => {
 
         if (searchFeedState.filter === 'boards') {
             feed?.masonry?.destroy();
-            feed.masonry = new Masonry(feed, { itemSelector: '.board-container', columnWidth: 362 });
+            feed.masonry = new Masonry(feed, {
+                itemSelector: '.board-container',
+                columnWidth: 362
+            });
         } else if (searchFeedState.filter === 'flows') {
             feed.masonry?.destroy();
-            feed.masonry = new Masonry(feed, { itemSelector: '.pin', columnWidth: 210 });
+            feed.masonry = new Masonry(feed, {
+                itemSelector: '.pin',
+                columnWidth: appState.mobile ? PIN_WIDTH_MOBILE : PIN_WIDTH,
+            });
         } else if (searchFeedState.filter === 'users') {
             feed.masonry?.destroy();
-            feed.masonry = new Masonry(feed, { itemSelector: '.user-card', columnWidth: 460 });
+            feed.masonry = new Masonry(feed, {
+                itemSelector: '.user-card',
+                columnWidth: 460
+            });
         }
     }
 
@@ -58,6 +69,8 @@ export const fillSearchFeed = async () => {
             const config: IPinProps = {
                 url: item.media_url,
                 pinID: item.flow_id,
+                width: item.width,
+                height: item.height,
             };
             feed.appendChild(Pin(config));
         });

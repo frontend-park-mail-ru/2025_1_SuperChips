@@ -45,3 +45,12 @@
         background-position: 0% 50%;
     }
 }
+
+@media (max-width: $mobile-width) {
+    .board {
+        min-height: calc(100vh - 2 * $navbar-height-mobile);
+    }
+    .board__header, .divider {
+        margin-left: $mobile-horizontal-padding;
+    }
+}

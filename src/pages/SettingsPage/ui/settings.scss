@@ -2,7 +2,6 @@
 @use 'shared/styles/mixins' as *;
 
 .settings-page {
-    @include main-page;
     min-height: 100vh;
     color: $text-light;
     position: relative;
@@ -22,6 +21,8 @@
         z-index: 0;
         pointer-events: none;
     }
+
+    @include main-page;
 }
 
 .settings-container {
