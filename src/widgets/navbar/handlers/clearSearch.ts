@@ -1,9 +1,8 @@
 import type { IFeed } from 'pages/FeedPage';
 import { debouncedFeedScroll, feedState, fillFeed, searchFeedScroll, searchFeedState } from 'pages/FeedPage';
 import { closeFilter } from './closeFilter';
-import { Masonry } from '../../../shared/models/Masonry';
-import { appState } from '../../../shared/router';
-import { PIN_WIDTH, PIN_WIDTH_MOBILE } from '../../../shared/config/constants';
+import { Masonry } from 'shared/models/Masonry';
+import { appState } from 'shared/router';
 
 
 export const clearSearch = async () => {
@@ -26,7 +25,8 @@ export const clearSearch = async () => {
     feed.masonry?.destroy();
     feed.masonry = new Masonry(feed, {
         itemSelector: '.pin',
-        columnWidth: appState.mobile ? PIN_WIDTH_MOBILE : PIN_WIDTH,
+        columnWidth: appState.pinWidth,
+        gutter: appState.mobile ? 10 : 20,
     });
 
     feed.innerHTML = '';

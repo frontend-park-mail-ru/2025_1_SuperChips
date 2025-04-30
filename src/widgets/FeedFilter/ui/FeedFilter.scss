@@ -11,37 +11,44 @@
     height: calc(100vh - $navbar-height);
     z-index: 50;
 
-    @include side-menu-animation;
-}
+    @include side-menu-animation-left;
 
-.feed-filter__header {
-    font-size: 32px;
-    font-weight: bold;
-    color: white
-}
-
-.feed-filter-placeholder {
-    min-width: $search-filter-width;
-}
-
-.filter-block {
-    display: flex;
-    flex-direction: column;
-    margin-top: $spacing-sm;
-    gap: $spacing-sm;
-}
-
-.filter-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-
-    label:hover {
-        cursor: pointer;
+    &__header {
+        font-size: 32px;
+        font-weight: bold;
+        color: white
     }
 
-    input:hover {
-        cursor: pointer;
+    &-placeholder {
+        min-width: $search-filter-width;
+    }
+}
+
+.filter {
+    &-block {
+        display: flex;
+        flex-direction: column;
+        margin-top: $spacing-sm;
+        gap: $spacing-sm;
+    }
+
+    &-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        label, input {
+            cursor: pointer;
+        }
+    }
+}
+
+@media (max-width: $mobile-width) {
+    .feed-filter {
+        left: 0;
+        top: $navbar-height-mobile;
+        padding: 0 $mobile-horizontal-padding;
+        width: 100%;
     }
 }

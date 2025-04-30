@@ -63,8 +63,14 @@ class boardStorage {
     }
 
     // Вовращает доску из хранлища по ID
-    getBoard(boardID: number) {
+    getBoardByID(boardID: number) {
         return this.ownBoardList.find((item) => item.id === Number(boardID));
+    }
+
+    // Вовращает доску из хранлища по имени
+    getBoardByName(name: string | null | undefined) {
+        if (!name) return;
+        return this.ownBoardList.find((item) => item.name === name);
     }
 
     // Вовращает список имен досок в хранилище
@@ -73,7 +79,9 @@ class boardStorage {
     }
 
     // Ищет ID доски по названию
-    getIDbyName(boardName: string) {
+    getIDbyName(boardName: string | undefined | null) {
+        if (!boardName) return null;
+
         if (boardName === 'Мои flow') {
             boardName = USER_SAVED_PINS_BOARD;
         }

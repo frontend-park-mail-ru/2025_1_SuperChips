@@ -2,25 +2,9 @@
 @use 'shared/styles/mixins' as *;
 
 .settings-page {
-    min-height: 100vh;
     color: $text-light;
     position: relative;
     overflow: hidden;
-
-    &::after {
-        content: '';
-        position: absolute;
-        bottom: -100px;
-        right: -100px;
-        width: 600px;
-        height: 600px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: bottom right;
-        opacity: 0.8;
-        z-index: 0;
-        pointer-events: none;
-    }
 
     @include main-page;
 }
@@ -190,5 +174,40 @@
 
     &:hover {
         background-color: $background-light;
+    }
+}
+
+@media (max-width: $mobile-width) {
+    .settings-container {
+        flex-direction: column;
+        margin: 0;
+        padding: 0 $mobile-horizontal-padding;
+        gap: $spacing-md;
+        width: 100%;
+        height: 100%;
+    }
+
+    .settings-page {
+        min-height: calc(100vh - $navbar-height-mobile - $sidebar-height-mobile);
+        grid-template-rows: $navbar-height-mobile calc(100vh - $navbar-height-mobile - $sidebar-height-mobile) $sidebar-height-mobile;
+
+        &::after {
+            height: 0;
+            display: none;
+        }
+    }
+
+    .form-field textarea {
+        height: 180px;
+        margin-bottom: $spacing-sm;
+    }
+    .settings-content-container {
+        margin: 0;
+    }
+    .settings-form {
+        gap: 0;
+    }
+    .tab-bar {
+        margin: 0;
     }
 }

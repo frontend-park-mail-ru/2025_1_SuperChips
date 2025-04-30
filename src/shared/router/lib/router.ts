@@ -14,8 +14,11 @@ interface AppState {
     href: string | null,
     isShowingToast: boolean,
     isShowingPopup: boolean,
+    isFilterOpen: boolean,
     mobile: boolean,
     lastVisited: Partial<IUser>,
+    pinWidth: number,
+    loggedWithVKID: boolean,
 }
 
 export const appState: AppState = {
@@ -24,8 +27,11 @@ export const appState: AppState = {
     href: null,
     isShowingToast: false,
     isShowingPopup: false,
+    isFilterOpen: false,
     lastVisited: {},
     mobile: false,
+    pinWidth: 210,
+    loggedWithVKID: false,
 };
 
 
@@ -113,4 +119,8 @@ const cleanup = (newHref: string) => {
         searchFeedState.query = '';
         document.querySelector('.search-form__clear')?.classList.add('hidden');
     }
+
+    const filter = document.querySelector('.feed-filter-placeholder');
+    filter?.remove();
+    appState.isFilterOpen = false;
 };

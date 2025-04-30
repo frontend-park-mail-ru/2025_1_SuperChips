@@ -4,7 +4,6 @@ import { findBoardID } from '../lib/findBoardID';
 import { boardFeedScroll, boardFeedState, fillBoardFeed } from 'pages/BoardPage';
 import { Auth } from 'features/authorization';
 import { appState } from 'shared/router';
-import { PIN_WIDTH, PIN_WIDTH_MOBILE } from 'shared/config/constants';
 import './UserPins.scss';
 
 
@@ -12,7 +11,7 @@ export const UserPins = async (username: string) => {
     boardFeedState.page = 1;
     boardFeedState.own = Auth.userData ? Auth.userData.username === username : false;
     boardFeedState.canEdit = boardFeedState.own;
-    boardFeedState.canRemove = !boardFeedState.own;
+    boardFeedState.canRemove = false;
     await findBoardID(username);
 
     const feed = document.querySelector<IFeed>('.profile__feed');
@@ -23,15 +22,14 @@ export const UserPins = async (username: string) => {
         <img src="/public/icons/arrow-up.svg" alt="scroll to top">
     </div>`;
 
-    // const delayedFill = new MutationObserver(async () => {
     setTimeout(async () => {
         const feed = document.querySelector<IFeed>('#feed');
         if (!feed) return;
         feed.masonry = new Masonry(
             feed, {
                 itemSelector: '.pin',
-                columnWidth: appState.mobile ? PIN_WIDTH_MOBILE : PIN_WIDTH,
-                gutter: 20,
+                columnWidth: appState.pinWidth,
+                gutter: appState.mobile ? 10 : 20,
             }
         );
 

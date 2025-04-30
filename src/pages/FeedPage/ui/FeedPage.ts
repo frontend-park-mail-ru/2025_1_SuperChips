@@ -2,7 +2,6 @@ import { Masonry } from 'shared/models/Masonry';
 import { fillFeed } from '../lib/fillFeed';
 import { debouncedFeedScroll } from '../handlers/handleScroll';
 import { appState } from 'shared/router';
-import { PIN_WIDTH, PIN_WIDTH_MOBILE } from 'shared/config/constants';
 import feedTemplate from './FeedPage.hbs';
 import './feed.scss';
 
@@ -36,8 +35,8 @@ export const FeedPage = async () => {
         feed.masonry = new Masonry(
             feed, {
                 itemSelector: '.pin',
-                columnWidth: appState.mobile ? PIN_WIDTH_MOBILE : PIN_WIDTH,
-                gutter: 20,
+                columnWidth: appState.pinWidth,
+                gutter: appState.mobile ? 10 : 20,
             }
         );
 

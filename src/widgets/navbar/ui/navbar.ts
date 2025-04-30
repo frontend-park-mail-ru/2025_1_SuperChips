@@ -45,6 +45,9 @@ export const Navbar = async () => {
     const filter = navbar.querySelector('#filter-button');
     filter?.addEventListener('click', openFilter);
 
+    const searchIcon = navbar.querySelector('.navbar__search-icon');
+    searchIcon?.addEventListener('click', openFilter);
+
     const searchBar = navbar.querySelector('.search-form-container');
     searchBar?.addEventListener('submit', search);
 

@@ -34,6 +34,8 @@
     }
 
     &_disabled {
+        background: transparent;
+        border: none;
         opacity: 0.5;
     }
 }
@@ -82,6 +84,8 @@
 .go-back-button {
     @include icon;
     cursor: pointer;
+    background: none;
+    border: none;
 }
 
 .logout-toast {
@@ -113,9 +117,5 @@
         margin-bottom: 0;
         justify-content: center;
         width: 100%;
-    }
-
-    .go-back-button {
-        display: none;
     }
 }

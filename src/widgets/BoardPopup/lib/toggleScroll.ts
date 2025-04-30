@@ -1,3 +1,5 @@
+import { appState } from 'shared/router';
+
 type TScrollState = 'enabled' | 'disabled';
 
 export const toggleScroll = (state: TScrollState) => {
@@ -9,7 +11,7 @@ export const toggleScroll = (state: TScrollState) => {
     document.body.style.paddingRight = padding;
 
     const navbar = document.querySelector<HTMLDivElement>('#navbar');
-    if (navbar) {
+    if (navbar && !appState.mobile) {
         navbar.style.paddingRight = padding;
     }
 };

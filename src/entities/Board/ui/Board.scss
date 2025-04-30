@@ -107,12 +107,11 @@
         &__preview {
             width: 100%;
             display: grid;
-            grid-template-columns: 66% 34%;
-            grid-template-rows: 50% 50%;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 1fr 1fr;
             grid-template-areas:
             "img-0 img-1"
             "img-0 img-2";
         }
-
     }
 }

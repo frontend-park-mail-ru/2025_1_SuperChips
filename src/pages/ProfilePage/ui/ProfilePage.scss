@@ -44,6 +44,7 @@
         color: #fff;
         display: flex;
         align-items: center;
+        gap: $spacing-sm;
     }
 }
 
@@ -105,11 +106,13 @@
     .author-area {
         display: block;
         padding: 0 $mobile-horizontal-padding;
+        margin: 0;
 
         &__box-2 {
             margin-top: $spacing-sm;
         }
     }
+
     .box-1__menu, .user-profile__header {
         padding: 0;
     }

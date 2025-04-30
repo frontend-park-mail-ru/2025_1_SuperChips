@@ -116,6 +116,39 @@ $border-radius: 20px;
     }
 }
 
+.mobile-search-form {
+    &__input {
+        flex-grow: 1;
+        height: 44px;
+        padding: $spacing-sm;
+        border-radius: $border-radius;
+        border: none;
+
+        &:focus {
+            background-color: $background-focus;
+            color: $text-focus;
+            outline: none;
+        }
+    }
+
+    &-container {
+        position: relative;
+        width: 100%;
+        display: flex;
+    }
+
+    &__clear {
+        position: absolute;
+        top: 25%;
+        right: $spacing-sm + $spacing-lg;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+
 @media (max-width: $mobile-width) {
     .navbar {
         height: $navbar-height-mobile;

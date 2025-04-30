@@ -2,6 +2,7 @@ import { createProfileSettings } from 'widgets/ProfileSettings';
 import { createSecuritySettings } from 'widgets/SecuritySettings';
 import './settings.scss';
 import { TabBar } from 'shared/components/tabBar';
+import { appState } from 'shared/router';
 
 
 export const SettingsPage = async () => {
@@ -16,25 +17,27 @@ export const SettingsPage = async () => {
         { id: 'security', title: 'Безопасность', active: false }
     ];
 
-    const tabBar = TabBar(tabs, 'vertical', async (tabId: string) => {
-        const contentContainer = mainContent.querySelector('.settings-content-container');
-        if (contentContainer) {
-            contentContainer.remove();
-        }
+    if (!appState.loggedWithVKID) {
+        const direction = appState.mobile ? 'horizontal' : 'vertical';
+        const tabBar = TabBar(tabs, direction, async (tabId: string) => {
+            const contentContainer = mainContent.querySelector('.settings-content-container');
+            if (contentContainer) {
+                contentContainer.remove();
+            }
 
-        const newContentContainer = document.createElement('div');
-        newContentContainer.classList.add('settings-content-container');
+            const newContentContainer = document.createElement('div');
+            newContentContainer.classList.add('settings-content-container');
 
-        if (tabId === 'profile') {
-            newContentContainer.appendChild(await createProfileSettings());
-        } else if (tabId === 'security') {
-            newContentContainer.appendChild(createSecuritySettings());
-        }
+            if (tabId === 'profile') {
+                newContentContainer.appendChild(await createProfileSettings());
+            } else if (tabId === 'security') {
+                newContentContainer.appendChild(createSecuritySettings());
+            }
 
-        mainContent.appendChild(newContentContainer);
-    });
-
-    mainContent.appendChild(tabBar);
+            mainContent.appendChild(newContentContainer);
+        });
+        mainContent.appendChild(tabBar);
+    }
 
     const initialContent = document.createElement('div');
     initialContent.classList.add('settings-content-container');

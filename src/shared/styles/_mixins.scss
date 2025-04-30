@@ -158,13 +158,17 @@
         object-fit: contain;
         display: block;
     }
+
+    @media (max-width: $mobile-width) {
+        max-width: 100%;
+    }
 }
 
-@mixin side-menu-animation {
+@mixin side-menu-animation-left {
     transform: translate(-100%, 0);
-    animation: FadeInHorizontal 0.3s ease-out forwards;
+    animation: FadeInHorizontalLeft 0.3s ease-out forwards;
 
-    @keyframes FadeInHorizontal {
+    @keyframes FadeInHorizontalLeft {
         from {
             transform: translateX(-100%);
         }
@@ -173,7 +177,7 @@
         }
     }
 
-    @keyframes FadeOutHorizontal {
+    @keyframes FadeOutHorizontalLeft {
         from {
             transform: translateX(0);
         }

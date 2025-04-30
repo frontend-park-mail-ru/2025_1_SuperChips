@@ -27,7 +27,7 @@ export const signupHandler = async (event: SubmitEvent): Promise<void> => {
 
         if (!emailIcon || !message || !usernameIcon) return;
 
-        message.textContent = 'Пользователь с такой почтой или именем уже существует';
+        message.textContent = 'Почта или имя уже заняты';
         message.classList.remove('hidden');
         emailIcon.classList.remove('hidden');
         usernameIcon.classList.remove('hidden');

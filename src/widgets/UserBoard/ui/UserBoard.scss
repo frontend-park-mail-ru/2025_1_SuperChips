@@ -1,14 +1,6 @@
 @use 'shared/styles/mixins' as *;
 @use 'shared/styles/variables' as *;
 
-.board-list {
-    @include flex-center;
-
-    width: 100px;
-    height: 100px;
-    background-color: #00f;
-}
-
 .empty-page__create-board {
     width: 252px;
     height: 44px;

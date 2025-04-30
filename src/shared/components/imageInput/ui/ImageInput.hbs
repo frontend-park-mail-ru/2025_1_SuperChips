@@ -9,11 +9,14 @@
     <img src="/public/icons/cross.svg" id="clear-button" class="image-input__clear-button display-none" alt="">
     <button class="image-input__button" id="image-input-button">
         <img src="/public/icons/upload.svg" alt="upload image" id="upload-image" class="upload-icon">
-        <p>
-            Выберите файл или перетащите его сюда
-        </p>
+    {{#if mobile}}
+        <p> Поддерживаются файлы в формате <br> .png, .jpg, .jpeg, .gif не более 10 Мб </p>
     </button>
-    <p class="image-input__hint">
-        Поддерживаются файлы в формате <br> .png, .jpg, .jpeg, .gif не более 10 Мб
-    </p>
+    {{else}}
+        <p> Выберите файл или перетащите его сюда </p>
+        </button>
+        <p class="image-input__hint">
+            Поддерживаются файлы в формате <br> .png, .jpg, .jpeg, .gif не более 10 Мб
+        </p>
+    {{/if}}
 </div>

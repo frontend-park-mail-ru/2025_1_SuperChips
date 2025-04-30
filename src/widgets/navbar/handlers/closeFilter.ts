@@ -1,6 +1,7 @@
 import type { IFeed } from 'pages/FeedPage';
 import { openFilter } from './openFilter';
 import { appState } from 'shared/router';
+import { toggleScroll } from 'widgets/BoardPopup';
 
 
 export const closeFilter = () => {
@@ -9,19 +10,23 @@ export const closeFilter = () => {
     const feedFilter = document.querySelector<HTMLDivElement>('.feed-filter');
     const filterPlaceholder = document.querySelector('.feed-filter-placeholder');
 
+    if (appState.mobile) {
+        toggleScroll('enabled');
+    }
+
     if (!feed || !feedFilter) return;
 
     feedFilter.style.position = '';
-    feedFilter.style.animation = 'FadeOutHorizontal 0.3s ease-out';
+    feedFilter.style.animation = 'FadeOutHorizontalLeft 0.3s ease-out';
 
-    const filter = document.querySelector('#filter-button');
+    const filter = document.querySelector('#filter-button') ||
+        document.querySelector<HTMLElement>('.navbar__search-icon');
+
     filter?.addEventListener('click', openFilter);
     filter?.removeEventListener('click', closeFilter);
 
     setTimeout(() => {
         filterPlaceholder?.remove();
-        if (feed.masonry) {
-            feed.masonry.layout();
-        }
+        appState.isFilterOpen = false;
     }, 300);
 };

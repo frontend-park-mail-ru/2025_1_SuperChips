@@ -1,5 +1,6 @@
 import { logoutHandler } from '../handlers/logout';
 import { appState, navigate } from 'shared/router';
+import { Auth } from 'features/authorization';
 import sidebarTemplate from './sidebar.hbs';
 import './sidebar.scss';
 
@@ -11,6 +12,9 @@ export const Sidebar = async () => {
     if (!sidebar) return ;
 
     sidebar.classList.add('sidebar');
+    if (!Auth.userData) {
+        sidebar.classList.add('hidden');
+    }
 
     const buttons = [
         {
@@ -31,15 +35,25 @@ export const Sidebar = async () => {
             alt: 'settings',
             active: true,
         },
-        // {
-        //     id: 'logout',
-        //     source: '/public/icons/log-out.svg',
-        //     alt: 'logout',
-        //     active: true,
-        // }
+        {
+            id: 'logout',
+            source: '/public/icons/log-out.svg',
+            alt: 'logout',
+            active: true,
+        }
     ];
 
-    sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({ buttons }));
+    if (appState.mobile) {
+        buttons.unshift({
+            id: 'go-back-button',
+            source: '/public/icons/arrow-left.svg',
+            alt: 'go back',
+            active: true,
+        });
+    }
+
+
+    sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({ buttons, mobile: appState.mobile }));
 
     const logout = sidebar.querySelector('#logout');
     logout?.addEventListener('click', logoutHandler);

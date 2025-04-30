@@ -10,8 +10,7 @@ import { Toast } from 'shared/components/Toast';
 import { searchFeedScroll } from '../handlers/handleScroll';
 import { UserCard } from 'entities/UserCard';
 import { API } from 'shared/api';
-import { appState } from '../../../shared/router';
-import { PIN_WIDTH, PIN_WIDTH_MOBILE } from '../../../shared/config/constants';
+import { appState } from 'shared/router';
 
 
 export const searchFeedState = {
@@ -50,7 +49,8 @@ export const fillSearchFeed = async () => {
             feed.masonry?.destroy();
             feed.masonry = new Masonry(feed, {
                 itemSelector: '.pin',
-                columnWidth: appState.mobile ? PIN_WIDTH_MOBILE : PIN_WIDTH,
+                columnWidth: appState.pinWidth,
+                gutter: appState.mobile ? 10 : 20,
             });
         } else if (searchFeedState.filter === 'users') {
             feed.masonry?.destroy();

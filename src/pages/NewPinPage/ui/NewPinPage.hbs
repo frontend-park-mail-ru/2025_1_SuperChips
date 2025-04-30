@@ -6,8 +6,8 @@
             </div>
         {{/if}}
         <div class="description-box">
-            <div>
-                <h1 class="header">{{header}}</h1>
+            <div id="description-wrapper">
+                {{#unless mobile}}<h1 class="header">{{header}}</h1>{{/unless}}
                 <form class="description-box_form" id="description-box_form">
                     <div class="input-placeholder"></div>
                 </form>

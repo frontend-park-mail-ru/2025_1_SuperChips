@@ -5,14 +5,13 @@ import { savePinToBoard } from '../handlers/savePinToBoard';
 import { removePinFromBoard } from '../handlers/removePinFromBoard';
 import { Auth } from 'features/authorization';
 import { BoardStorage } from 'features/boardLoader';
-import { PIN_WIDTH, PIN_WIDTH_MOBILE, USER_SAVED_PINS_BOARD } from 'shared/config/constants';
+import { USER_SAVED_PINS_BOARD } from 'shared/config/constants';
 import './Pin.scss';
 import template from './Pin.hbs';
 
 
 export const Pin = (params: IPinProps) => {
     const container = document.createElement('div');
-
     const config = {
         ...params,
         authorized: !!Auth.userData,
@@ -27,13 +26,10 @@ export const Pin = (params: IPinProps) => {
     pin.addEventListener('click', () => navigate(`flow/${config.pinID}`));
 
 
-    const pinWidth = appState.mobile ? PIN_WIDTH_MOBILE : PIN_WIDTH;
+    const pinWidth = appState.pinWidth;
     if (params.width && params.height) {
         pin.style.width = pinWidth + 'px';
         pin.style.height = (params.height * pinWidth) / params.width + 'px';
-    } else {
-        pin.style.width = PIN_WIDTH_MOBILE + 'px';
-        pin.style.height = (params.height * PIN_WIDTH_MOBILE) / params.width + 'px';
     }
 
     const dropdownButton = container.querySelector('.dropdown-block');

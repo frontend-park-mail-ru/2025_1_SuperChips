@@ -2,13 +2,14 @@ import { IFeed, toTop } from 'pages/FeedPage';
 import { Masonry } from 'shared/models/Masonry';
 import { fillBoardFeed } from '../lib/fillBoardFeed';
 import { boardFeedScroll } from '../handlers/boardFeedScroll';
+import { openBoardSettings } from 'widgets/BoardSettings';
 import { API } from 'shared/api';
 import { root } from 'app/app';
 import { Auth } from 'features/authorization';
-import { PIN_WIDTH, PIN_WIDTH_MOBILE, USER_OWN_PINS_BOARD } from 'shared/config/constants';
+import { appState } from 'shared/router';
+import { USER_OWN_PINS_BOARD, USER_SAVED_PINS_BOARD } from 'shared/config/constants';
 import './BoardPage.scss';
 import template from './BoardPage.hbs';
-import { appState } from '../../../shared/router';
 
 
 export const boardFeedState = {
@@ -34,11 +35,12 @@ export const BoardPage = async (boardID: string) => {
     const body = await boardRequest.json();
     if (!body.data) return page;
 
-    boardFeedState.own = Auth.userData ? Auth.userData.id === body.data.author_id : false;
-    const own = boardFeedState.own;
+    const own = Auth.userData ? Auth.userData.id === body.data.author_id : false;
+    boardFeedState.own = own;
 
     const config = {
         name: body.data.name,
+        mutable: boardFeedState.own && body.data.name !== USER_OWN_PINS_BOARD && body.data.name !== USER_SAVED_PINS_BOARD,
     };
 
     boardFeedState.canEdit = body.data.name === USER_OWN_PINS_BOARD && own;
@@ -56,8 +58,8 @@ export const BoardPage = async (boardID: string) => {
         feed.masonry = new Masonry(
             feed, {
                 itemSelector: '.pin',
-                columnWidth: appState.mobile ? PIN_WIDTH_MOBILE : PIN_WIDTH,
-                gutter: 20,
+                columnWidth: appState.pinWidth,
+                gutter: appState.mobile ? 10 : 20,
             }
         );
 
@@ -69,9 +71,11 @@ export const BoardPage = async (boardID: string) => {
 
     setTimeout(() => window.addEventListener('scroll', boardFeedScroll), 100);
 
-
     const scrollButton = page.querySelector<HTMLDivElement>('.scroll-to-top');
     scrollButton?.addEventListener('click', toTop);
+
+    const settingsButton = page.querySelector('.board__settings-button');
+    settingsButton?.addEventListener('click', openBoardSettings);
 
     return page;
 };

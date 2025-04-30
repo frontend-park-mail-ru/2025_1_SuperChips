@@ -22,6 +22,9 @@
 
     &__content {
         font-size: 18px;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     &__buttons {
@@ -50,4 +53,18 @@
 .confirm-button {
     color: #fff;
     background-color: $error-color;
+}
+
+@media (max-width: $mobile-width) {
+    .about-textarea {
+        height: 200px;
+    }
+    .delete-popup {
+        width: clamp(300px, 90%, 560px);
+        padding: 20px;
+    }
+
+    .cancel-button, .confirm-button {
+        width: 120px;
+    }
 }

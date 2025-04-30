@@ -82,3 +82,10 @@
 .display-none {
     display: none;
 }
+
+@media (max-width: $mobile-width) {
+    .image-input {
+        width: 100%;
+        height: 340px;
+    }
+}
