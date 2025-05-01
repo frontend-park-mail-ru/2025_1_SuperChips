@@ -101,12 +101,13 @@
         &__count {
             grid-area: counter;
             @include flex-center;
-            min-width: $icon-size + 6px;
-            height: $icon-size;
-            padding: 0 4px;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 3px;
             background-color: #777;
-            border-radius: $border-radius;
+            border-radius: 10px;
             justify-self: flex-end;
+            font-size: 12px;
         }
     }
 }
