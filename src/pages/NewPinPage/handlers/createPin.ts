@@ -38,5 +38,7 @@ export const createPin = async () => {
 
         const body = await response.json();
         navigate(`flow/${body.data.flow_id}`, true).finally();
+    } else {
+        Toast('Ошибка при создании flow, попробуйте позже');
     }
 };

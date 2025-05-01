@@ -1,9 +1,10 @@
-import type { IFeed } from 'pages/FeedPage';
-import { debouncedFeedScroll, searchFeedState } from 'pages/FeedPage';
+import { Masonry } from 'shared/models/Masonry';
 import type { IUser } from 'entities/User';
+import { omit } from 'shared/utils';
 import { findMatch } from './findMatch';
 import { updateBars } from './updateBars';
 import { boardFeedScroll } from 'pages/BoardPage';
+import { debouncedFeedScroll, searchFeedState } from 'pages/FeedPage';
 import { root } from 'app/app';
 import { config } from 'shared/config/router';
 
@@ -19,6 +20,7 @@ interface AppState {
     lastVisited: Partial<IUser>,
     pinWidth: number,
     loggedWithVKID: boolean,
+    masonryInstance: Masonry | null,
 }
 
 export const appState: AppState = {
@@ -32,6 +34,7 @@ export const appState: AppState = {
     mobile: false,
     pinWidth: 210,
     loggedWithVKID: false,
+    masonryInstance: null,
 };
 
 
@@ -82,10 +85,11 @@ export const navigate = async (
     appState.href = newHref;
     document.title = route.title;
 
+    const appStateWithoutMasonry = omit(appState, 'masonryInstance');
     if (replace) {
-        history.replaceState({ ...history.state, ...appState }, '', newHref);
+        history.replaceState({ ...history.state, ...appStateWithoutMasonry }, '', newHref);
     } else {
-        history.pushState({ ...history.state, ...appState }, '', newHref);
+        history.pushState({ ...history.state, ...appStateWithoutMasonry }, '', newHref);
     }
 
     const newPage = await route.render(renderProps);
@@ -100,10 +104,10 @@ export const navigate = async (
 
 
 const cleanup = (newHref: string) => {
-    const feed = document.querySelector<IFeed>('#feed');
     const boardRegex = /^board\/\S+$/;
-    if (feed?.masonry) {
-        feed.masonry.destroy();
+
+    if (appState.masonryInstance) {
+        appState.masonryInstance.destroy();
     }
 
     if (newHref !== '/feed') {

@@ -11,9 +11,6 @@ export const feedState = {
     filter: 'flows',
 };
 
-export interface IFeed extends HTMLDivElement {
-    masonry: Masonry | null;
-}
 
 /**
  * Генерирует страницу ленты и создает обработчики событий
@@ -30,16 +27,15 @@ export const FeedPage = async () => {
     window.addEventListener('scroll', debouncedFeedScroll);
 
     const delayedFill = new MutationObserver(async () => {
-        const feed = document.querySelector<IFeed>('.feed');
+        const feed = document.querySelector<HTMLElement>('#feed');
         if (!feed) return;
-        feed.masonry = new Masonry(
+        appState.masonryInstance = new Masonry(
             feed, {
                 itemSelector: '.pin',
                 columnWidth: appState.pinWidth,
                 gutter: appState.mobile ? 10 : 20,
             }
         );
-
         await fillFeed();
         delayedFill.disconnect();
     });

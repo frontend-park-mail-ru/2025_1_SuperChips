@@ -1,4 +1,3 @@
-import type { IFeed } from 'pages/FeedPage';
 import { openFilter } from './openFilter';
 import { appState } from 'shared/router';
 import { toggleScroll } from 'widgets/BoardPopup';
@@ -6,7 +5,7 @@ import { toggleScroll } from 'widgets/BoardPopup';
 
 export const closeFilter = () => {
     if (appState.activePage !== 'feed') return;
-    const feed = document.querySelector<IFeed>('#feed');
+    const feed = document.querySelector('#feed');
     const feedFilter = document.querySelector<HTMLDivElement>('.feed-filter');
     const filterPlaceholder = document.querySelector('.feed-filter-placeholder');
 

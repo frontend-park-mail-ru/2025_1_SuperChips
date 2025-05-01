@@ -1,4 +1,4 @@
-import { IFeed, toTop } from 'pages/FeedPage';
+import { toTop } from 'pages/FeedPage';
 import { Masonry } from 'shared/models/Masonry';
 import { fillBoardFeed } from '../lib/fillBoardFeed';
 import { boardFeedScroll } from '../handlers/boardFeedScroll';
@@ -53,9 +53,9 @@ export const BoardPage = async (boardID: string) => {
     page.innerHTML = template(config);
 
     const delayedFill = new MutationObserver(async () => {
-        const feed = document.querySelector<IFeed>('#feed');
+        const feed = document.querySelector<HTMLElement>('#feed');
         if (!feed) return;
-        feed.masonry = new Masonry(
+        appState.masonryInstance = new Masonry(
             feed, {
                 itemSelector: '.pin',
                 columnWidth: appState.pinWidth,

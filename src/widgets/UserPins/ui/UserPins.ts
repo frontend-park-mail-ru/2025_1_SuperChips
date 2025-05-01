@@ -1,4 +1,4 @@
-import { IFeed, toTop } from 'pages/FeedPage';
+import { toTop } from 'pages/FeedPage';
 import { Masonry } from 'shared/models/Masonry';
 import { findBoardID } from '../lib/findBoardID';
 import { boardFeedScroll, boardFeedState, fillBoardFeed } from 'pages/BoardPage';
@@ -14,7 +14,7 @@ export const UserPins = async (username: string) => {
     boardFeedState.canRemove = false;
     await findBoardID(username);
 
-    const feed = document.querySelector<IFeed>('.profile__feed');
+    const feed = document.querySelector('.profile__feed');
     if (!feed) return;
 
     feed.innerHTML += `
@@ -23,9 +23,9 @@ export const UserPins = async (username: string) => {
     </div>`;
 
     setTimeout(async () => {
-        const feed = document.querySelector<IFeed>('#feed');
+        const feed = document.querySelector<HTMLElement>('#feed');
         if (!feed) return;
-        feed.masonry = new Masonry(
+        appState.masonryInstance = new Masonry(
             feed, {
                 itemSelector: '.pin',
                 columnWidth: appState.pinWidth,

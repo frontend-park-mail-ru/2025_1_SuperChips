@@ -1,4 +1,3 @@
-import type { IFeed } from 'pages/FeedPage';
 import { debouncedFeedScroll, feedState, fillFeed, searchFeedScroll, searchFeedState } from 'pages/FeedPage';
 import { closeFilter } from './closeFilter';
 import { Masonry } from 'shared/models/Masonry';
@@ -19,11 +18,11 @@ export const clearSearch = async () => {
 
     feedState.pageNum = 1;
 
-    const feed = document.querySelector<IFeed>('#feed');
+    const feed = document.querySelector<HTMLElement>('#feed');
     if (!feed) return;
 
-    feed.masonry?.destroy();
-    feed.masonry = new Masonry(feed, {
+    appState.masonryInstance?.destroy();
+    appState.masonryInstance = new Masonry(feed, {
         itemSelector: '.pin',
         columnWidth: appState.pinWidth,
         gutter: appState.mobile ? 10 : 20,

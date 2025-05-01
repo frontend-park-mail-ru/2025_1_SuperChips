@@ -1,4 +1,3 @@
-import type { IFeed } from '../ui/FeedPage';
 import type { IUser } from 'entities/User';
 import type { IPicture } from 'features/imageLoader';
 import type { IPinProps } from 'entities/Pin';
@@ -21,7 +20,7 @@ export const searchFeedState = {
 
 
 export const fillSearchFeed = async () => {
-    const feed = document.querySelector<IFeed>('#feed');
+    const feed = document.querySelector<HTMLElement>('#feed');
     if (!feed) return;
 
     const URI = `/api/v1/search/${searchFeedState.filter}?query=${searchFeedState.query}&page=${searchFeedState.page}&size=20`;
@@ -40,21 +39,21 @@ export const fillSearchFeed = async () => {
         feed.innerHTML = '';
 
         if (searchFeedState.filter === 'boards') {
-            feed?.masonry?.destroy();
-            feed.masonry = new Masonry(feed, {
+            appState.masonryInstance?.destroy();
+            appState.masonryInstance = new Masonry(feed, {
                 itemSelector: '.board-container',
                 columnWidth: 362
             });
         } else if (searchFeedState.filter === 'flows') {
-            feed.masonry?.destroy();
-            feed.masonry = new Masonry(feed, {
+            appState.masonryInstance?.destroy();
+            appState.masonryInstance = new Masonry(feed, {
                 itemSelector: '.pin',
                 columnWidth: appState.pinWidth,
                 gutter: appState.mobile ? 10 : 20,
             });
         } else if (searchFeedState.filter === 'users') {
-            feed.masonry?.destroy();
-            feed.masonry = new Masonry(feed, {
+            appState.masonryInstance?.destroy();
+            appState.masonryInstance = new Masonry(feed, {
                 itemSelector: '.user-card',
                 columnWidth: 460
             });

@@ -1,5 +1,4 @@
-import type { IFeed } from 'pages/FeedPage';
-import { navigate } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 
 
 const profilePageState = {
@@ -7,7 +6,7 @@ const profilePageState = {
 };
 
 export const profileTabBarHandler = async (tabId: string, username: string) => {
-    const content = document.querySelector<IFeed>('#feed');
+    const content = document.querySelector('#feed');
     if (!content) return;
 
     const newBoard = document.querySelector('.create-board');
@@ -15,8 +14,8 @@ export const profileTabBarHandler = async (tabId: string, username: string) => {
     if (tabId === 'pins' && profilePageState.currentTab !== 'pins') {
         navigate(`${username}/flows`, true).finally();
     } else if (tabId === 'boards' && profilePageState.currentTab !== 'boards') {
-        if (content.masonry) {
-            content.masonry = null;
+        if (appState.masonryInstance) {
+            appState.masonryInstance = null;
         }
         navigate(`${username}/boards`, true).finally();
         newBoard?.classList.remove('hidden');

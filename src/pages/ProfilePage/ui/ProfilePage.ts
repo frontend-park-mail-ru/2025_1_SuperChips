@@ -1,6 +1,5 @@
 import type { ITabItem } from 'shared/components/tabBar';
 import { TabBar } from 'shared/components/tabBar';
-import type { IFeed } from 'pages/FeedPage';
 import { checkAvatar } from 'shared/utils';
 import { profileTabBarHandler } from '../handlers/tabBarHandler';
 import { BoardPopup } from 'widgets/BoardPopup';
@@ -65,7 +64,7 @@ export const ProfilePage = async (username: string, tab: string): Promise<HTMLDi
     const newBoard = page.querySelector('.create-board');
     newBoard?.addEventListener('click', () => BoardPopup('create'));
 
-    const feed = page.querySelector<IFeed>('.profile__feed');
+    const feed = page.querySelector('.profile__feed');
     if (!feed) return page;
 
 
