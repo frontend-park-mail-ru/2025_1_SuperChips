@@ -62,8 +62,11 @@ $border-radius: 20px;
     &__filter {
         @include icon;
         position: absolute;
-        top: 25%;
-        left: $spacing-sm;
+        top: 28%;
+        left: 20px;
+        -webkit-user-drag: none;
+        height: 22px;
+        width: 24px;
         opacity: 0.5;
     }
 
