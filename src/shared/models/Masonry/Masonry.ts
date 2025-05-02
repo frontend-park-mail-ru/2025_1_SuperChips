@@ -1,9 +1,10 @@
+import { getWidthBySelector } from 'shared/utils';
+
 interface MasonryOptions {
     itemSelector: string;
     columnWidth: number;
     gutter: number;
 }
-
 
 export class Masonry {
     private readonly container: HTMLElement;
@@ -12,9 +13,9 @@ export class Masonry {
     private colsHeight: number[];
     private colWidth: number;
     private colsNum: number;
-    private offsetX: number;
     private observer!: MutationObserver;
     private resizeTimeout: number | null = null;
+    private offsetX: number;
     private readonly RESIZE_DELAY = 250;
 
     constructor(container: HTMLElement, options: Partial<MasonryOptions>) {
@@ -28,160 +29,145 @@ export class Masonry {
         this.items = [];
         this.colsHeight = [];
         this.colWidth = 0;
-        this.offsetX = 0;
         this.colsNum = 0;
-
+        this.offsetX = 0;
         this.init();
         this.setupMutationObserver();
     }
 
-
     private init() {
         this.items = Array.from(this.container.querySelectorAll(this.options.itemSelector));
         this.measureColumns();
-        this.layout();
+        this.layoutAll();
         window.addEventListener('resize', this.handleResize);
     }
 
+    private measureColumns() {
+        this.options.columnWidth = getWidthBySelector(this.options.itemSelector);
 
-    /**
-     * Ищет суммарную ширину ленты, которая складывается из оффсета контейнера и ширины каждой колонки с отступом
-     */
-    private measureColumns(){
-        const containerWidth = this.container.offsetWidth;
-        this.colWidth = this.options.columnWidth + this.options.gutter;
-        this.colsNum = Math.floor(containerWidth / this.colWidth);
+        const colWidth = this.options.columnWidth + this.options.gutter;
+        const containerWidth = this.container.clientWidth;
+        this.offsetX = (containerWidth - (Math.floor(containerWidth / (colWidth)) * (colWidth) - this.options.gutter)) / 2;
 
-        const totalWidth = this.colsNum * this.colWidth - this.options.gutter;
-        this.offsetX = (containerWidth - totalWidth - 30) / 2;
+        this.colWidth = colWidth;
+        this.colsNum = Math.max(1, Math.floor(containerWidth / this.colWidth));
 
         this.colsHeight = new Array(this.colsNum).fill(0);
     }
 
-    /**
-     * Ищет номер колонки с минимальной высотой
-     */
     private getColPosition(colSpan: number): { col: number; y: number } {
         const colGroup: number[] = [];
-
         for (let i = 0; i <= this.colsNum - colSpan; i++) {
             colGroup[i] = Math.max(...this.colsHeight.slice(i, i + colSpan));
         }
-
         const minY = Math.min(...colGroup);
         const col = colGroup.indexOf(minY);
-
         return { col, y: minY };
     }
 
-
-    /**
-     * Изменяет высоту контейнера
-     */
-    private setContainerHeight(){
+    private setContainerHeight() {
         const maxY = Math.max(...this.colsHeight);
         this.container.style.height = `${maxY}px`;
     }
 
+    private placeItem(item: HTMLElement) {
+        const width = item.offsetWidth;
+        const height = item.offsetHeight;
 
-    /**
-     *  Задает координаты каждого элемента в контейнере
-     */
-    layout() {
-        this.measureColumns();
+        if (width === 0 || height === 0) {
+            this.deferLayout(item);
+            return;
+        }
 
-        this.items.forEach((item) => {
-            const colSpan = Math.min(Math.ceil(item.offsetWidth / this.colWidth), this.colsNum);
-            const colPos = this.getColPosition(colSpan);
+        const colSpan = Math.min(Math.ceil(width / this.colWidth), this.colsNum);
+        const { col, y } = this.getColPosition(colSpan);
 
-            const containerOffsetLeft = this.container.offsetLeft;
-            const containerOffsetTop = this.container.offsetTop;
+        const x = col * this.colWidth + this.offsetX;
 
-            const x = colPos.col * this.colWidth + containerOffsetLeft + this.offsetX;
-            const y = colPos.y + containerOffsetTop;
+        item.style.position = 'absolute';
+        item.style.left = `${x + this.container.offsetLeft}px`;
+        item.style.top = `${y + this.container.offsetTop}px`;
 
-            item.style.position = 'absolute';
-            item.style.left = `${x}px`;
-            item.style.top = `${y}px`;
+        const itemHeight = height + this.options.gutter;
+        for (let i = col; i < col + colSpan; i++) {
+            this.colsHeight[i] = y + itemHeight;
+        }
+    }
 
-            const itemHeightWithGutter = item.offsetHeight + this.options.gutter;
-            for (let i = colPos.col; i < colPos.col + colSpan; i++) {
-                this.colsHeight[i] = y + itemHeightWithGutter - containerOffsetTop;
-            }
-        });
-
+    private layoutNew(newItems: HTMLElement[]) {
+        newItems.forEach(item => this.placeItem(item));
         this.setContainerHeight();
     }
 
-    /**
-     * Функция для обработки изменения размера окна с задержкой
-     */
+    private layoutAll() {
+        this.measureColumns();
+        this.items.forEach(item => this.placeItem(item));
+        this.setContainerHeight();
+    }
+
     private handleResize = () => {
         if (this.resizeTimeout) {
             window.clearTimeout(this.resizeTimeout);
         }
-
         this.resizeTimeout = window.setTimeout(() => {
-            this.layout();
+            this.layoutAll();
             this.resizeTimeout = null;
         }, this.RESIZE_DELAY);
     };
 
-
-    /**
-     * Создает observer, который работает при добавлении новых элементов в контейнер
-     */
     private setupMutationObserver() {
-        this.observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'childList' && (mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0)) {
-                    const newItems: HTMLElement[] = [];
-                    const array = mutation.addedNodes.length > 0 ? mutation.addedNodes : mutation.removedNodes;
-
-                    Array.from(array).forEach((node) => {
-                        if (node instanceof HTMLElement) {
-                            if (node.matches(this.options.itemSelector)) {
-                                newItems.push(node);
-                            }
+        this.observer = new MutationObserver(mutations => {
+            const added: HTMLElement[] = [];
+            mutations.forEach(mutation => {
+                if (mutation.type === 'childList') {
+                    mutation.addedNodes.forEach(node => {
+                        if (node instanceof HTMLElement && node.matches(this.options.itemSelector)) {
+                            added.push(node);
                         }
                     });
-
-                    if (newItems.length > 0) {
-                        this.items.push(...newItems);
-                        this.waitForImagesLoad(newItems).then(() => this.layout());
-                    }
+                    mutation.removedNodes.forEach(node => {
+                        if (node instanceof HTMLElement && node.matches(this.options.itemSelector)) {
+                            this.items = this.items.filter(item => item !== node);
+                        }
+                    });
                 }
             });
+            if (added.length > 0) {
+                this.items.push(...added);
+                this.layoutNew(added);
+            }
         });
-
-        this.observer.observe(this.container, { childList: true, subtree: true });
+        this.observer.observe(this.container, { childList: true, subtree: false });
     }
 
-    /**
-     * Функция для создания задержки перед повторным распределением элементов в контейнере при загрузке новых картинок
-     */
-    private waitForImagesLoad(items: HTMLElement[]): Promise<void[]> {
-        const imagePromises: Promise<void>[] = [];
+    private deferLayout(item: HTMLElement) {
+        const img = item.querySelector<HTMLImageElement>('img');
+        if (!img) return;
+        const imgPromise = (img: HTMLImageElement) => {
+            return img.complete
+                ? Promise.resolve()
+                : new Promise<void>(resolve => {
+                    img.addEventListener('load', () => resolve(), { once: true });
+                    img.addEventListener('error', () => resolve(), { once: true });
+                });
+        };
 
-        items.forEach(item => {
-            const images = item.getElementsByTagName('img');
-            Array.from(images).forEach(img => {
-                if (!img.complete) {
-                    imagePromises.push(new Promise(resolve => {
-                        img.addEventListener('load', () => resolve());
-                        img.addEventListener('error', () => resolve());
-                    }));
-                }
-            });
+        imgPromise(img).then(() => {
+            const width = img.width;
+            const height = img.height;
+
+            if (width > 0 && height > 0) {
+                item.style.width = width + 'px';
+                item.style.height = height + 'px';
+
+                this.placeItem(item);
+                this.setContainerHeight();
+            }
+
         });
-
-        return Promise.all(imagePromises);
     }
 
-    /**
-     *  Деструктор
-     */
-    public destroy(){
+    public destroy() {
         window.removeEventListener('resize', this.handleResize);
         if (this.resizeTimeout) {
             window.clearTimeout(this.resizeTimeout);

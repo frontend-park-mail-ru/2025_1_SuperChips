@@ -1,7 +1,7 @@
 import type { IBoardProps } from '../model/types';
 import { pluralize } from 'shared/utils';
 import { BoardPopup } from 'widgets/BoardPopup';
-import { navigate } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 import BoardTemplate from './Board.hbs';
 import './Board.scss';
 
@@ -18,6 +18,7 @@ export const Board = (params: IBoardProps) => {
         is_private: params.is_private && params.own,
         mutable: params.own && !params.permanent,
         flowCountPluralized: '',
+        mobile: appState.mobile,
     };
 
     const min = params?.preview ? params.preview.length : 0;

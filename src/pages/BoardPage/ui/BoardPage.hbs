@@ -1,6 +1,13 @@
 <div class="board">
-    <div class="board__header" id="header">{{name}}</div>
-    <div class="divider"></div>
+    <div class="board__box-1">
+        <div class="board__header" id="header">
+            {{name}}
+            {{#if mutable}}
+                <img class="board__settings-button" src="/public/icons/settings-icon.svg" alt="board settings">
+            {{/if}}
+        </div>
+        <div class="divider"></div>
+    </div>
     <div class="board__feed" id="feed"></div>
     <div class="scroll-to-top hidden">
         <img src="/public/icons/arrow-up.svg" alt="scroll to top">

@@ -1,6 +1,6 @@
 import navbarTemplate from './navbar.hbs';
 import './navbar.scss';
-import { navigate } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 import { goToFeed } from '../handlers/goToFeed';
 import { checkAvatar } from 'shared/utils';
 import { openFilter } from '../handlers/openFilter';
@@ -26,6 +26,7 @@ export const Navbar = async () => {
         authorized: !!userData,
         shortUsername: userData?.username[0].toUpperCase(),
         avatar: ok ? userData?.avatar : null,
+        mobile: appState.mobile,
     };
 
     navbar.innerHTML = navbarTemplate(config);
@@ -35,7 +36,7 @@ export const Navbar = async () => {
         navigate('login').finally();
     });
 
-    const anchorButton = navbar.querySelector('#scroll-to-top');
+    const anchorButton = navbar.querySelector('.navbar-logo');
     anchorButton?.addEventListener('click', goToFeed);
 
     const pfp = navbar.querySelector('.navbar__profile-picture');
@@ -43,6 +44,9 @@ export const Navbar = async () => {
 
     const filter = navbar.querySelector('#filter-button');
     filter?.addEventListener('click', openFilter);
+
+    const searchIcon = navbar.querySelector('.navbar__search-icon');
+    searchIcon?.addEventListener('click', openFilter);
 
     const searchBar = navbar.querySelector('.search-form-container');
     searchBar?.addEventListener('submit', search);

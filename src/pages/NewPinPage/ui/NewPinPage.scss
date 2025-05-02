@@ -84,3 +84,32 @@
         color: $error-color;
     }
 }
+
+@media (max-width: $mobile-width) {
+    .new-pin {
+        &-form {
+            flex-direction: column;
+            width: 100%;
+            padding: 0 $mobile-horizontal-padding;
+            justify-content: initial;
+            align-items: center;
+        }
+    }
+
+    .description-wrapper, .create-pin-button, .create-pin-button {
+        width: 100%;
+        max-width: 404px;
+    }
+    .description-box {
+        margin-left: 0;
+        width: 100%;
+        max-width: 404px;
+
+    }
+    .about-textarea {
+        height: 100px;
+    }
+    .delete-pin-button {
+        width: 100%;
+    }
+}

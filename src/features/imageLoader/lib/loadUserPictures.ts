@@ -19,7 +19,6 @@ export const loadUserPictures = async (page: number, boardID: string): Promise<I
     if (!body.data) {
         return { status: 404 };
     }
-
     boardFeedState.isLoading = false;
     return { status: boardImagesRequest.status, data: body.data };
 };

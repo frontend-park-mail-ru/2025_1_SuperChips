@@ -4,7 +4,7 @@ import { debouncedSignupButton } from '../handlers/signupButtonHandler';
 import { authPageTemplate, fillPictureBox } from 'pages/LoginPage';
 import { signupHandler } from '../handlers/signupHandler';
 import { Input } from 'shared/components/input';
-import { navigate } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 import { OneTapButtonObserver } from 'widgets/VKID';
 import { root } from 'app/app';
 import './signup.scss';
@@ -17,6 +17,7 @@ interface SignupPageConfig {
     submitBtn: string;
     header: string;
     subheader: string;
+    mobile: boolean,
     inputs: IInputConfig[];
 }
 
@@ -31,6 +32,7 @@ export const SignupPage = async (): Promise<HTMLDivElement> => {
         submitBtn: 'Зарегистрироваться',
         header: 'Регистрация',
         subheader: 'Ещё пару шагов и вы с flow!',
+        mobile: appState.mobile,
         inputs: [
             {
                 type: 'email',

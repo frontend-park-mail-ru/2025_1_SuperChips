@@ -70,6 +70,16 @@
     }
 }
 
+@media (max-width: $mobile-width) {
+    .inputTransparent,
+    .inputTransparent__field,
+    .inputTransparent--invalid,
+    .inputTransparent-container {
+        min-width: $input-width-mobile;
+        width: 100%;
+    }
+}
+
 .required {
     color: $error-color;
 }

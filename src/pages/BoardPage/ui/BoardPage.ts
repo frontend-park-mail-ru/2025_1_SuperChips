@@ -1,11 +1,13 @@
-import { IFeed, toTop } from 'pages/FeedPage';
+import { toTop } from 'pages/FeedPage';
 import { Masonry } from 'shared/models/Masonry';
 import { fillBoardFeed } from '../lib/fillBoardFeed';
-import { boardFeedScroll } from '../handlers/boardFeedScroll';
+import { openBoardSettings } from 'widgets/BoardSettings';
+import { registerScrollHandler } from 'features/scrollHandler';
 import { API } from 'shared/api';
 import { root } from 'app/app';
 import { Auth } from 'features/authorization';
-import { USER_OWN_PINS_BOARD } from 'shared/config/constants';
+import { appState } from 'shared/router';
+import { USER_OWN_PINS_BOARD, USER_SAVED_PINS_BOARD } from 'shared/config/constants';
 import './BoardPage.scss';
 import template from './BoardPage.hbs';
 
@@ -33,11 +35,12 @@ export const BoardPage = async (boardID: string) => {
     const body = await boardRequest.json();
     if (!body.data) return page;
 
-    boardFeedState.own = Auth.userData ? Auth.userData.id === body.data.author_id : false;
-    const own = boardFeedState.own;
+    const own = Auth.userData ? Auth.userData.id === body.data.author_id : false;
+    boardFeedState.own = own;
 
     const config = {
         name: body.data.name,
+        mutable: boardFeedState.own && body.data.name !== USER_OWN_PINS_BOARD && body.data.name !== USER_SAVED_PINS_BOARD,
     };
 
     boardFeedState.canEdit = body.data.name === USER_OWN_PINS_BOARD && own;
@@ -50,13 +53,12 @@ export const BoardPage = async (boardID: string) => {
     page.innerHTML = template(config);
 
     const delayedFill = new MutationObserver(async () => {
-        const feed = document.querySelector<IFeed>('#feed');
+        const feed = document.querySelector<HTMLElement>('#feed');
         if (!feed) return;
-        feed.masonry = new Masonry(
+        appState.masonryInstance = new Masonry(
             feed, {
                 itemSelector: '.pin',
-                columnWidth: 205,
-                gutter: 20,
+                gutter: appState.mobile ? 10 : 20,
             }
         );
 
@@ -66,11 +68,13 @@ export const BoardPage = async (boardID: string) => {
 
     delayedFill.observe(root, { childList: true });
 
-    setTimeout(() => window.addEventListener('scroll', boardFeedScroll), 100);
-
+    registerScrollHandler(fillBoardFeed);
 
     const scrollButton = page.querySelector<HTMLDivElement>('.scroll-to-top');
     scrollButton?.addEventListener('click', toTop);
+
+    const settingsButton = page.querySelector('.board__settings-button');
+    settingsButton?.addEventListener('click', openBoardSettings);
 
     return page;
 };

@@ -28,12 +28,6 @@
         white-space: pre-wrap;
     }
 
-    &__short-username {
-        font-size: $font-size-xxl;
-        color: black;
-        font-weight: bold;
-    }
-
     &__author-area {
         display: flex;
         align-items: center;
@@ -42,11 +36,7 @@
 
         &__pfp {
             @include profile-picture-small;
-            @include flex-center;
-
-            &:hover {
-                cursor: pointer;
-            }
+            cursor: pointer;
         }
 
         &__username {
@@ -57,14 +47,16 @@
 
         &__tag {
             white-space: nowrap;
-
-            &:hover {
-                cursor: pointer;
-            }
+            cursor: pointer;
         }
     }
 
+    &__box-1 {
+        grid-area: box-1;
+    }
+
     &__box-2 {
+        grid-area: box-2;
         margin-left: 60px;
         color: #fff;
     }
@@ -80,10 +72,7 @@
         &__button {
             display: flex;
             gap: 16px;
-
-            &:hover {
-                cursor: pointer;
-            }
+            cursor: pointer;
         }
 
         &__box-2 {
@@ -99,10 +88,7 @@
         height: 40px;
         border-radius: 50%;
         background-color: #333;
-
-        &:hover {
-            cursor: pointer;
-        }
+        cursor: pointer;
     }
 
     &__dropdown-block {
@@ -110,10 +96,7 @@
         justify-content: space-between;
         width: 100px;
         max-height: 40px;
-
-        &:hover {
-            cursor: pointer;
-        }
+        cursor: pointer;
     }
 
     &__save-block {
@@ -142,10 +125,7 @@
 
 .like, .like_active {
     @include icon;
-
-    &:hover {
-        cursor: pointer;
-    }
+    cursor: pointer;
 }
 
 .like {
@@ -154,4 +134,52 @@
 
 .like_active {
     content: url("/public/icons/like-filled.svg");
+}
+
+@media (max-width: $mobile-width) {
+    .one-pin {
+        &-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100vw;
+            padding: 0 $mobile-horizontal-padding;
+        }
+
+        &__box-1 {
+            position: relative;
+        }
+
+        &__buttons {
+            width: 100%;
+            padding: 0;
+        }
+
+        &__dropdown-block {
+            width: $icon-size;
+        }
+
+        &__box-1, &__box-2 {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            max-width: 404px;
+        }
+
+        &__edit-button {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+    }
+
+    .one-pin__box-1__pin {
+        max-height: 100%;
+        width: 100%;
+        max-width: 404px;
+    }
+
+    .pin__dropdown-board {
+        display: none;
+    }
 }

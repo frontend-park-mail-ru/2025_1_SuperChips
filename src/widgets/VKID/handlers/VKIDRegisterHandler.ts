@@ -24,7 +24,7 @@ export const VKIDRegisterHandler = async (accessToken: string) => {
         if (container) {
             toggleInputError(container, {
                 isValid: false,
-                error: 'Пользователь с такой почтой или именем уже существует'
+                error: 'Почта или имя уже заняты'
             });
         }
     } else if (!(response instanceof Response && response.ok)) {
