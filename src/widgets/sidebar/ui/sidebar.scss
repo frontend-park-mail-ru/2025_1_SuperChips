@@ -6,7 +6,7 @@
     position: fixed;
     left: 0;
     top: $navbar-height;
-    height: calc(100% - $navbar-height);
+    height: calc(100vh - $navbar-height);
     width: $sidebar-width;
     display: flex;
     flex-direction: column;
@@ -25,15 +25,10 @@
 }
 
 .sidebar-button {
-    &:hover {
-        cursor: pointer;
-    }
-
-    &_disabled:hover {
-        cursor: not-allowed;
-    }
+    cursor: pointer;
 
     &_disabled {
+        cursor: not-allowed;
         background: transparent;
         border: none;
         opacity: 0.5;
@@ -53,6 +48,7 @@
 
 .sidebar-button {
     background-color: $button-dark;
+    transition: all ease 0.2s;
     &:hover {
         background-color: $button-hover;
     }
@@ -100,6 +96,32 @@
     left: 210px;
     bottom: 36px;
     color: black;
+}
+
+.sidebar-button {
+    &#chats:hover img {
+        content: url('/public/icons/chat-active.svg');
+    }
+
+    &#newPin:hover img {
+        content: url('/public/icons/plus-white-filled.svg');
+    }
+
+    &#settings:hover img {
+        content: url('/public/icons/settings-filled.svg');
+    }
+}
+
+.chat-icon-active img {
+    content: url('/public/icons/chat-active.svg');
+}
+
+.new-pin-icon-active img {
+    content: url('/public/icons/plus-white-filled.svg');
+}
+
+.settings-icon-active img {
+    content: url('/public/icons/settings-filled.svg');
 }
 
 @media (max-width: $mobile-width) {

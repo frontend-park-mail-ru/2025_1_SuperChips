@@ -40,3 +40,9 @@
         font-size: 18px;
     }
 }
+
+@media (max-width: $mobile-width) {
+    .contact-list__header {
+        padding-right: 0;
+    }
+}

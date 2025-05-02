@@ -37,8 +37,6 @@
         position: relative;
         width: 100%;
         min-height: $input-height; // Keep min-height
-        // max-height: $textarea-max-height; // Remove or adjust if needed, max-height is on the field now
-        // height: 44px; // Remove fixed height
         padding-right: $spacing-lg;
         display: flex;
         align-items: flex-end; // Align items to the bottom
@@ -53,22 +51,18 @@
         transition: all 0.2s ease;
         padding: 10px 60px $spacing-sm 20px;
         width: 100%;
-        // height: 100%; // Change to auto
         height: auto;
         min-height: 44px; // Ensure minimum height matches original container height
         max-height: 120px; // Limit growth to ~5 lines
-        // overflow-y: hidden; // Change to auto
         overflow-y: auto;
         resize: none;
         white-space: pre-wrap;
         word-wrap: break-word;
         line-height: 1.4; // Add line-height for better height calculation
 
-        // Hide scrollbar for Chrome, Safari and Opera
         &::-webkit-scrollbar {
             display: none;
         }
-        // Hide scrollbar for IE, Edge and Firefox
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
 
@@ -106,8 +100,32 @@
     height: 18px;
     position: absolute;
     right: $spacing-xl + 8px;
-    // top: 50%; // Change alignment
-    // transform: translateY(-50%); // Change alignment
     bottom: 13px; // Align with the bottom of the input field's first line
     cursor: pointer;
+}
+
+@media (max-width: $mobile-width) {
+    .chat {
+        height: calc(100vh - 2 * $navbar-height-mobile);
+
+        &__input-container {
+            padding-right: 0;
+        }
+
+        &-header {
+            padding: 0;
+        }
+
+        &__input-field {
+            margin-bottom: $spacing-md;
+            padding-right: $spacing-lg + 18px;
+        }
+    }
+    .message-own {
+        margin-right: 0 !important;
+    }
+    .send-button {
+        right: $spacing-lg;
+        bottom: $spacing-md + 13px;
+    }
 }

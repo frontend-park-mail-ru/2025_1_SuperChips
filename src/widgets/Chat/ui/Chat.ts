@@ -16,7 +16,7 @@ const body = {
         messages: [
             {
                 sender: 'valekir',
-                message: 'Привет! Не откажусь, собираемся завтра, на пляже. Не забудь свою доску и хорошее настроение',
+                message: 'Привет! Не откажусь, собираемся завтра, на пляже. Не забудь свою доску и хорошее настроение hadskjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjasdasdasdsdasadasdsadasdasdsa',
                 timestamp: '2025-04-21T22:13:00Z',
                 read: true,
             },

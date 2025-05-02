@@ -18,10 +18,10 @@ export const editPin = async (pinID: string) => {
     if (privateInput) {
         payload.is_private = privateInput.checked;
     }
-    if (titleInput && titleInput?.value !== '') {
+    if (titleInput) {
         payload.header = titleInput.value;
     }
-    if (aboutInput && aboutInput?.value !== '') {
+    if (aboutInput) {
         payload.description = aboutInput.value;
     }
 

@@ -26,9 +26,10 @@
 
     &__text {
         display: inline-block;
+        max-width: 100%;
         overflow-wrap: break-word;
-        word-wrap: break-word;
-        word-break: break-all;
+        word-break: keep-all;
+        white-space: normal;
         color: $white;
     }
 }

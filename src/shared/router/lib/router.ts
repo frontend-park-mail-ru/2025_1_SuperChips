@@ -16,6 +16,7 @@ interface AppState {
     isShowingToast: boolean,
     isShowingPopup: boolean,
     isFilterOpen: boolean,
+    isChatOpen: boolean,
     mobile: boolean,
     lastVisited: Partial<IUser>,
     loggedWithVKID: boolean,
@@ -30,6 +31,7 @@ export const appState: AppState = {
     isShowingToast: false,
     isShowingPopup: false,
     isFilterOpen: false,
+    isChatOpen: false,
     lastVisited: {},
     mobile: false,
     loggedWithVKID: false,
@@ -56,24 +58,18 @@ export const navigate = async (
     let newHref = route.href.toString();
 
     switch (match) {
-    case 'pin':
-        renderProps = page.split('/')[1];
+    case 'profileBoards':
+    case 'profilePins':
+        renderProps = page.split('/')[0];
         newHref = `/${page}`;
         break;
+    case 'pin':
     case 'board':
         renderProps = page.split('/')[1];
         newHref = `/${page}`;
         break;
     case 'editPin':
         renderProps = page.split('/')[2];
-        newHref = `/${page}`;
-        break;
-    case 'profileBoards':
-        renderProps = page.split('/')[0];
-        newHref = `/${page}`;
-        break;
-    case 'profilePins':
-        renderProps = page.split('/')[0];
         newHref = `/${page}`;
         break;
     }
@@ -128,4 +124,12 @@ const cleanup = (newHref: string) => {
     const filter = document.querySelector('.feed-filter-placeholder');
     filter?.remove();
     appState.isFilterOpen = false;
+
+    document.querySelector('#chats')?.classList.remove('chat-icon-active');
+    if (newHref !== '/flow/new') {
+        document.querySelector('#newPin')?.classList.remove('new-pin-icon-active');
+    }
+    if (newHref !== '/settings') {
+        document.querySelector('#settings')?.classList.remove('settings-icon-active');
+    }
 };
