@@ -12,11 +12,17 @@
     margin-top: $spacing-lg;
     background: $secondary-dark;
     border: solid 1px $stroke-color;
-
     transition: all 0.3s ease;
 
     &__username-block {
         display: flex;
+        align-items: center;
+        gap: $spacing-md;
+    }
+
+    &__info {
+        flex: 1;
+        min-width: 0;
     }
 
     &__avatar {
@@ -38,12 +44,38 @@
 
     &__username {
         font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     &__about {
         margin-top: $spacing-lg;
         color: $white;
         word-wrap: break-word;
+    }
+
+    &__chat-button {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(121, 121, 121, 0.358);
+        border-radius: 40px;
+        border: none;
+        padding: $spacing-xs;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        
+        img {
+            width: 24px;
+            height: 24px;
+        }
+        
+        &:hover {
+            opacity: 0.8;
+        }
     }
 
     &__subscribe-button {

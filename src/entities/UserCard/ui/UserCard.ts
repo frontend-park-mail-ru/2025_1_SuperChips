@@ -10,7 +10,7 @@ interface IUserCardProps {
     about: string;
     subscribers_count: number;
     isSubscribed?: boolean;
-    email?: string; // Опциональное поле для совместимости с IUser
+    email?: string;
 }
 
 export const UserCard = (user: IUserCardProps) => {
@@ -18,14 +18,21 @@ export const UserCard = (user: IUserCardProps) => {
     container.classList.add('user-card');
 
     const config = {
-        username: user.username,
+        username: user.public_name || user.username,
         avatar: user.avatar,
         about: user.about,
-        shortUsername: user.username[0].toUpperCase(),
+        shortUsername: (user.public_name || user.username)[0].toUpperCase(),
         subscribers: pluralize('подписчик', user.subscribers_count || 0),
         isSubscribed: user.isSubscribed
     };
 
     container.innerHTML = template(config);
+
+    const chatButton = container.querySelector('.user-card__chat-button');
+    chatButton?.addEventListener('click', () => {
+        // Здесь будет логика открытия чата с пользователем
+        console.log(`Open chat with ${user.username}`);
+    });
+
     return container;
 };

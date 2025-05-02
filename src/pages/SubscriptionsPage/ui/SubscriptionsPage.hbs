@@ -4,18 +4,9 @@
             <div class="header white bold">
                 {{header}}
             </div>
-            {{#if own}}
             <div class="tab-bar-placeholder"></div>
-            {{else}}
-            <button class="author__subscribe-button" id="subscribe-{{username}}">
-                <img src="/public/icons/followers.svg" alt="subscribe">
-                <span>Подписаться</span>
-            </button>
-            <div class="tab-bar-placeholder"></div>
-            {{/if}}
         </div>
         <div class="subscriptions__users">
-            <!-- Карточки пользователей будут добавлены динамически через JavaScript -->
         </div>
     </div>
 </div>

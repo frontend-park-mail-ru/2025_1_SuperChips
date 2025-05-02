@@ -4,19 +4,19 @@
 .profile {
     grid-area: page;
     min-height: calc(100vh - $navbar-height);
-    padding: $spacing-lg $spacing-xl;
 
     &-page {
         @include main-page();
     }
 
     &__feed {
+        column-gap: $spacing-xl;
+        grid-area: page;
         display: flex;
+        justify-content: flex-start;
         flex-wrap: wrap;
-        gap: 20px;
         width: 100%;
         margin-top: $spacing-xl;
-        align-items: flex-start;
     }
 }
 
@@ -24,17 +24,21 @@
     display: flex;
     justify-content: space-between;
     margin-right: $spacing-lg;
-    align-items: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
 
     &__box-1 {
         display: flex;
         flex-direction: column;
         gap: 18px;
+        flex: 1;
+        min-width: 0;
     }
 
     &__box-2 {
         display: flex;
         align-items: center;
+        margin-top: $spacing-lg;
     }
 }
 
@@ -65,8 +69,31 @@
 }
 
 .author {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: $spacing-md;
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        flex: 1;
+    }
+
     &__name {
         color: white;
+        font-size: $font-size-lg;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__followers {
+        color: $text-light;
+        font-size: $font-size-sm;
+        margin-top: $spacing-xs;
     }
 
     &__profile-picture {
@@ -78,7 +105,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-right: $spacing-lg;
+        flex-shrink: 0;
 
         img {
             margin: 0;
@@ -90,18 +117,44 @@
 
         p {
             color: $black;
+            font-weight: bold;
+            font-size: $font-size-xl;
         }
     }
     
+    &__chat-button {
+        background: none;
+        border: none;
+        padding: $spacing-sm;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        
+        img {
+            width: 24px;
+            height: 24px;
+        }
+        
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
     &__subscribe-button {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
         background-color: $semi-transparent;
         border: none;
         border-radius: $border-radius;
         color: $white;
         padding: $spacing-sm $spacing-md;
         cursor: pointer;
-        margin-left: $spacing-md;
         transition: all 0.2s ease;
+        white-space: nowrap;
+        flex-shrink: 0;
         
         &:hover {
             background-color: rgba($white, 0.3);
@@ -119,6 +172,7 @@
         padding: $spacing-sm $spacing-md;
         cursor: pointer;
         transition: all 0.2s ease;
+        white-space: nowrap;
         
         img {
             width: 18px;
@@ -222,4 +276,3 @@
         }
     }
 }
-

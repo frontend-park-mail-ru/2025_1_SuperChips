@@ -16,12 +16,10 @@ import './ProfilePage.scss';
 export const ProfilePage = async (username: string, tab: string = 'pins'): Promise<HTMLDivElement> => {
     const page = document.createElement('div');
 
-    // Проверяем, просматриваем ли мы свой профиль или профиль другого пользователя
     const own = Auth.userData ? username === Auth.userData.username : false;
     const isPinTabActive = tab === 'pins';
     let userData;
 
-    // Проверяем, есть ли данные пользователя в кэше
     const isLastVisited = (
         ['profile', 'profilePins', 'profileBoards', null].includes(appState.lastPage)
         && username === appState.lastVisited?.username
@@ -60,12 +58,14 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
             userBio: userData.about || null,
             isSubscribed: userData.isSubscribed || false,
             safeUsername: username.replace(/[^a-zA-Z0-9_-]/g, '-'),
-            userData: userData // Добавляем данные пользователя в шаблон
+            userData: {
+                ...userData,
+                followersCount: userData.followersCount || 0
+            }
         };
 
         page.innerHTML = ProfilePageTemplate(config);
 
-        // Создаем табы
         const tabs: ITabItem[] = [
             { id: 'pins', title: 'Flow', active: isPinTabActive },
             { id: 'boards', title: 'Доски', active: !isPinTabActive }
@@ -77,17 +77,14 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
         const tabBar = page.querySelector('.tab-bar-placeholder');
         tabBar?.replaceWith(newTabBar);
 
-        // Обработчик кнопки создания доски
         const newBoard = page.querySelector('.create-board');
         newBoard?.addEventListener('click', () => BoardPopup('create'));
         
-        // Обработчик кнопки подписок
         const subscriptionsButton = page.querySelector('#subscriptions-button');
         subscriptionsButton?.addEventListener('click', () => {
             navigate(`${username}/subscriptions`);
         });
 
-        // Обработчик кнопки подписки
         const subscribeButton = page.querySelector(`#subscribe-${config.safeUsername}`);
         if (subscribeButton) {
             subscribeButton.addEventListener('click', async () => {
@@ -104,13 +101,11 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
             });
         }
 
-        // Загружаем контент
         const feed = page.querySelector<IFeed>('.profile__feed');
         if (feed) {
             const delayedFill: MutationObserver = new MutationObserver(async () => {
                 try {
                     if (isPinTabActive) {
-                        // Создаем элемент описания
                         if (userData.about) {
                             const description = document.createElement('div');
                             description.classList.add('pin', 'description-pin');

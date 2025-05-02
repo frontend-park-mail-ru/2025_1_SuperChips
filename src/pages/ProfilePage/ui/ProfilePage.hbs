@@ -8,43 +8,45 @@
                 </div>
                 <div class="box-1__menu">
                     <div id="tabBar" class="tab-bar-placeholder"></div>
-                    <div class="create-board{{#unless showCreateBoardButton}} hidden{{/unless}}">
-                            <img src="/public/icons/new-pin.svg" alt="create new board">
-                            <div class="label">
-                                создать доску
-                            </div>
-                        </div>
-                    {{#if own}}
-                        <button class="author__subscriptions-button" id="subscriptions-button">
-                            <img src="/public/icons/followers.svg" alt="subscriptions">
-                            <span>Подписки</span>
-                        </button>
-                    {{/if}}
-                </div>
-            </div>
-            {{#unless own}}
-            <div class="author-area__box-2">
-                <div class="author-area__box-2">
-                    <div class="author">
-                        {{#if userData.avatar}}
-                            <img src="{{userData.avatar}}" alt="Profile Picture" class="author__profile-picture">
-                        {{else}}
-                            <div class="author__profile-picture">
-                                <p>{{userData.public_name.[0]}}</p>
-                            </div>
-                        {{/if}}
-                        <h1 class="author__name">{{userData.public_name}}</h1>
-                    </div>
-                    <button class="author__subscribe-button" id="subscribe-{{safeUsername}}">
-                        {{#if isSubscribed}}
-                            Отписаться
-                        {{else}}
-                            Подписаться
-                        {{/if}}
+                    <button class="author__subscriptions-button" id="subscriptions-button">
+                        <img src="/public/icons/followers.svg" alt="subscriptions">
+                        <span>Подписки</span>
                     </button>
+                    <div class="create-board{{#unless showCreateBoardButton}} hidden{{/unless}}">
+                        <img src="/public/icons/new-pin.svg" alt="create new board">
+                        <div class="label">
+                            создать доску
+                        </div>
+                    </div>
                 </div>
             </div>
-            {{/unless}}
+            <div class="author-area__box-2">
+                <div class="author">
+                    {{#if userData.avatar}}
+                        <img src="{{userData.avatar}}" alt="Profile Picture" class="author__profile-picture">
+                    {{else}}
+                        <div class="author__profile-picture">
+                            <p>{{userData.public_name.[0]}}</p>
+                        </div>
+                    {{/if}}
+                    <div class="author__info">
+                        <h1 class="author__name">{{userData.public_name}}</h1>
+                        <div class="author__followers">{{userData.followersCount}} подписчиков</div>
+                    </div>
+                    {{#unless own}}
+                        <button class="author__chat-button">
+                            <img src="/public/icons/chat.svg" alt="Chat">
+                        </button>
+                        <button class="author__subscribe-button" id="subscribe-{{safeUsername}}">
+                            {{#if isSubscribed}}
+                                <span>Отписаться</span>
+                            {{else}}
+                                <span>Подписаться</span>
+                            {{/if}}
+                        </button>
+                    {{/unless}}
+                </div>
+            </div>
         </div>
         <div id="feed" class="profile__feed">
         </div>
