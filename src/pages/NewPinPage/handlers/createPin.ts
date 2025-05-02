@@ -1,8 +1,6 @@
 import { Toast } from 'shared/components/Toast';
 import { API } from 'shared/api';
-import { savePinToBoard } from 'entities/Pin';
-import { USER_OWN_PINS_BOARD } from 'shared/config/constants';
-import { navigate } from '../../../shared/router';
+import { navigate } from 'shared/router';
 
 export const createPin = async () => {
     const imageInput = document.querySelector<HTMLInputElement>('.image-input__field');

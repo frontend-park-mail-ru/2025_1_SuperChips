@@ -1,8 +1,8 @@
 import type { IFeed } from 'pages/FeedPage';
 import { debouncedFeedScroll, feedState, fillFeed, searchFeedScroll, searchFeedState } from 'pages/FeedPage';
 import { closeFilter } from './closeFilter';
-import { Masonry } from '../../../shared/models/Masonry';
-import { appState } from '../../../shared/router';
+import { Masonry } from 'shared/models/Masonry';
+import { appState } from 'shared/router';
 
 
 export const clearSearch = async () => {

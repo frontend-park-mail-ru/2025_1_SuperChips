@@ -12,43 +12,43 @@ import './Message.scss';
 const body = {
     data: {
         avatar: 'https://yourflow.ru/static/avatars/8651b82f-a1e6-404d-a07a-43f7cded9793.jpg',
-        username: 'valekir',
+        username: 'asdasdasd',
         messages: [
             {
+                sender: 'valekir',
+                message: 'Привет! Не откажусь, собираемся завтра, на пляже. Не забудь свою доску и хорошее настроение',
+                timestamp: '2025-04-21T22:13:00Z',
+                read: true,
+            },
+            {
                 sender: 'asdasdasd',
-                message: 'bibaasdsdadassdaasdasasdassaddasdasdasdsadaasassddassdabobaasdasdasdasdadsasd',
-                timestamp: '2020-04-26T22:13:00Z',
-                read: false,
-            },
-            {
-                sender: 'valekir',
-                message: 'bibaboba',
-                timestamp: '2025-04-25T22:13:00Z',
-                read: true,
-            },
-            {
-                sender: 'valekir',
-                message: 'bibaboba',
-                timestamp: '2025-04-24T22:13:00Z',
-                read: true,
-            },
-            {
-                sender: 'valekir',
-                message: 'bibaboba',
-                timestamp: '2025-04-23T22:13:00Z',
-                read: true,
-            },
-            {
-                sender: 'valekir',
-                message: 'bibaboba',
+                message: 'Летом?',
                 timestamp: '2025-04-22T22:13:00Z',
                 read: true,
             },
             {
-                sender: 'valekir',
-                message: 'bibabobaasdasasdadsdasadsdasadsdasdasdasasdasdasdas',
-                timestamp: '2025-04-21T22:13:00Z',
+                sender: 'asdasdasd',
+                message: 'Через час?',
+                timestamp: '2025-04-23T22:13:00Z',
                 read: true,
+            },
+            {
+                sender: 'asdasdasd',
+                message: 'Завтра?',
+                timestamp: '2025-04-24T22:13:00Z',
+                read: true,
+            },
+            {
+                sender: 'asdasdasd',
+                message: 'Сегодня?',
+                timestamp: '2025-04-25T22:13:00Z',
+                read: true,
+            },
+            {
+                sender: 'asdasdasd',
+                message: 'Привет! Как тебе моя новая доска? Когда пойдем ловить волны?',
+                timestamp: '2020-04-26T22:13:00Z',
+                read: false,
             },
         ],
     }
