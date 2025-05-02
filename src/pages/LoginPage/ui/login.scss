@@ -9,17 +9,22 @@
 }
 
 .login-container {
-    width: 572px;
+    width: $auth-page-form-width;
     background-color: $white;
     z-index: $z-navbar;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 112px 66px 0 66px;
 }
 
 .login-form {
     margin-top: 54px;
+    max-width: $auth-page-form-width;
 }
 
 .login-box-1 {
-    padding: 112px 66px 0 66px;
+    max-width: $input-width;
 }
 
 .login-redirect {
@@ -28,4 +33,22 @@
     gap: 4px;
     margin-top: $spacing-sm;
     font-size: $font-size-lg;
+    max-width: $input-width;
+}
+
+@media (max-width: $mobile-width) {
+    $auth-page-padding: clamp($mobile-horizontal-padding, 8%, $auth-page-form-width);
+    .login-container {
+        padding: 112px $auth-page-padding 0 $auth-page-padding;
+        width: 100%;
+    }
+    .login-box-1 {
+        width: 100%;
+    }
+}
+
+@media (max-width: 320px) {
+    .login-redirect {
+        display: block;
+    }
 }

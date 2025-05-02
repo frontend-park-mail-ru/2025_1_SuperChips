@@ -1,7 +1,7 @@
 import { PinDropdown } from 'widgets/PinDropdown';
 import { likeHandler } from '../handlers/likeHandler';
 import { savePinToBoard } from 'entities/Pin';
-import { navigate } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 import { checkAvatar } from 'shared/utils';
 import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
@@ -37,6 +37,7 @@ export const PinPage = async (pinID: string) => {
         hasText: !!pinData.header || !!pinData.description,
         own: userData.username === Auth.userData?.username,
         boardToSave: BoardStorage.getBoardToSave(),
+        mobile: appState.mobile,
     };
 
     container.innerHTML = template(config);

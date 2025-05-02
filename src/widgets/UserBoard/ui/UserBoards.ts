@@ -1,4 +1,3 @@
-import type { IFeed } from 'pages/FeedPage';
 import type { IBoardProps } from 'entities/Board';
 import { Board } from 'entities/Board';
 import { BoardPopup } from 'widgets/BoardPopup';
@@ -10,7 +9,7 @@ import './UserBoard.scss';
 
 
 export const UserBoards = async (username: string) => {
-    const feed = document.querySelector<IFeed>('#feed');
+    const feed = document.querySelector<HTMLElement>('#feed');
     if (!feed) return;
     feed.style.height = 'auto';
 

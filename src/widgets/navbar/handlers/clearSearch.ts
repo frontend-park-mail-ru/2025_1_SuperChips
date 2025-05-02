@@ -1,5 +1,5 @@
-import type { IFeed } from 'pages/FeedPage';
-import { debouncedFeedScroll, feedState, fillFeed, searchFeedScroll, searchFeedState } from 'pages/FeedPage';
+import { feedState, fillFeed, searchFeedState } from 'pages/FeedPage';
+import { registerScrollHandler } from 'features/scrollHandler';
 import { closeFilter } from './closeFilter';
 import { Masonry } from 'shared/models/Masonry';
 import { appState } from 'shared/router';
@@ -13,25 +13,30 @@ export const clearSearch = async () => {
         input.value = '';
     }
 
-    searchFeedState.filter = 'flows';
-    searchFeedState.query = '';
-    searchFeedState.page = 1;
+    if (searchFeedState.page > 1) {
+        searchFeedState.filter = 'flows';
+        searchFeedState.query = '';
+        searchFeedState.page = 1;
 
-    feedState.pageNum = 1;
+        feedState.pageNum = 1;
 
-    const feed = document.querySelector<IFeed>('#feed');
-    if (!feed) return;
+        const feed = document.querySelector<HTMLElement>('#feed');
+        if (!feed) return;
 
-    feed.masonry?.destroy();
-    feed.masonry = new Masonry(feed, { itemSelector: '.pin' });
+        feed.innerHTML = '';
 
-    feed.innerHTML = '';
-    await fillFeed();
+        appState.masonryInstance?.destroy();
+        appState.masonryInstance = new Masonry(feed, {
+            itemSelector: '.pin',
+            gutter: appState.mobile ? 10 : 20,
+        });
 
-    if (appState.activePage === 'feed') {
-        window.addEventListener('scroll', debouncedFeedScroll);
+        await fillFeed();
+
+        if (appState.activePage === 'feed') {
+            registerScrollHandler(fillFeed);
+        }
+
+        closeFilter();
     }
-    window.removeEventListener('scroll', searchFeedScroll);
-
-    closeFilter();
 };

@@ -10,22 +10,29 @@
 
 .signup-container {
     padding: 52px 66px 0 66px;
-    width: 572px;
+    width: $auth-page-form-width;
     background-color: $white;
     z-index: $z-navbar;
 }
 
 .signup-form {
     margin-top: 24px;
-}
-
-.signup-box-1 {
+    max-width: $auth-page-form-width;
 }
 
 .signup-redirect {
     display: flex;
     justify-content: center;
     gap: 4px;
+    max-width: $input-width;
     margin-top: $spacing-sm;
     font-size: $font-size-lg;
+}
+
+@media (max-width: $mobile-width) {
+    $auth-page-padding: clamp($mobile-horizontal-padding, 8%, $auth-page-form-width);
+    .signup-container {
+        width: 100%;
+        padding: 52px $auth-page-padding 0 $auth-page-padding;
+    }
 }

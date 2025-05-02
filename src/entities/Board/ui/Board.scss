@@ -4,6 +4,7 @@
 .board-container {
     margin-bottom: $spacing-xl;
     transition: all 0.3s ease;
+    width: 362px;
 
     &:hover {
         [class*="preview__icon"] {
@@ -19,7 +20,6 @@
         position: relative;
         border-radius: $border-radius;
         overflow: hidden;
-        width: 362px;
         height: 250px;
 
         display: grid;
@@ -96,5 +96,23 @@
         position: absolute;
         right: 10px;
         top: 10px;
+    }
+}
+
+
+@media (max-width: $mobile-width) {
+    .board-container {
+        width: 100%;
+        max-width: clamp(250px, 95%, 362px);
+
+        &__preview {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 66% 34%;
+            grid-template-rows: 50% 50%;
+            grid-template-areas:
+            "img-0 img-1"
+            "img-0 img-2";
+        }
     }
 }

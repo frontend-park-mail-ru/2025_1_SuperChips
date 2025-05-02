@@ -9,46 +9,47 @@
             aria-label="Main logo"
     />
 </a>
-<form class="search-form-container">
-    <input
-            type="text"
-            class="search-form__input"
-            placeholder="Поиск..."
-            id="search"
-            aria-label="Search input"
-            maxlength="120"
-    />
-    <img
-            src="/public/icons/filter.svg"
-            class="search-form__filter"
-            id="filter-button"
-            alt="filter"
-    >
-    <img
-            src="/public/icons/cross-grey.svg"
-            class="search-form__clear hidden"
-            id="clear-search"
-            alt="clear search"
-    >
-</form>
-
-{{#if authorized}}
-<div class="navbar__profile-picture">
-    {{#if avatar}}
+    <form class="search-form-container">
+        <input
+                type="text"
+                class="search-form__input"
+                placeholder="Поиск..."
+                id="search"
+                aria-label="Search input"
+                maxlength="120"
+        />
         <img
-                src={{avatar}}
-                alt="profile picture"
-                aria-label="User profile"
+                src="/public/icons/filter.svg"
+                class="search-form__filter"
+                id="filter-button"
+                alt="filter"
         >
-    {{else}}
-        <p class="shortUsername">{{shortUsername}}</p>
-    {{/if}}
-</div>
+        <img
+                src="/public/icons/cross-grey.svg"
+                class="search-form__clear hidden"
+                id="clear-search"
+                alt="clear search"
+        >
+    </form>
+<div class="navbar__pfp-box">
+{{#if authorized}}
+    <div class="navbar__profile-picture">
+        {{#if avatar}}
+            <img
+                    src={{avatar}}
+                    alt="profile picture"
+                    aria-label="User profile"
+            >
+        {{else}}
+            <p class="shortUsername">{{shortUsername}}</p>
+        {{/if}}
+    </div>
 {{else}}
-<button
-    class="feed-redirect"
-    id="goToLogin"
->
-    Войти
-</button>
+    <button
+            class="feed-redirect"
+            id="goToLogin"
+    >
+        Войти
+    </button>
 {{/if}}
+</div>

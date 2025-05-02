@@ -20,7 +20,7 @@
         color: $white;
         border: none;
         border-radius: $border-radius;
-        width: $input-width;
+        width: 100%;
         height: $button-height;
         margin-top: 52px;
 
@@ -37,5 +37,17 @@
 
     .input-container {
         margin-top: $spacing-sm;
+    }
+}
+
+
+@media (max-width: $mobile-width) {
+    .VKID-popup {
+        width: clamp(350px, 90%, 560px);
+        padding: $spacing-lg $spacing-xl;
+
+        .input-container {
+            margin-top: $spacing-xl;
+        }
     }
 }

@@ -79,6 +79,7 @@ class auth {
                 email: userData.email,
                 username: userData.username,
                 public_name: userData.username,
+                is_external: false,
             };
         }
 
@@ -168,6 +169,7 @@ class auth {
         await Navbar();
         await BoardStorage.fetchUserBoards();
         BoardStorage.boardToSave = USER_SAVED_PINS_BOARD;
+        document.querySelector('.sidebar')?.classList.remove('hidden');
     }
 }
 

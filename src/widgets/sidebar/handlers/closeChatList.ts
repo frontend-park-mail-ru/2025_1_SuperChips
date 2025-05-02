@@ -10,7 +10,7 @@ export const closeChatList = () => {
     chatButton.removeEventListener('click', closeChatList);
 
     chatList.style.position = '';
-    chatList.style.animation = 'FadeOutHorizontal 0.3s ease-out';
+    chatList.style.animation = 'FadeOutHorizontalLeft 0.3s ease-out';
 
     setTimeout(() => {
         chatList.remove();

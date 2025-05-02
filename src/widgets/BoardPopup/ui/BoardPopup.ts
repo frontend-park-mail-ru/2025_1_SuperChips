@@ -77,7 +77,7 @@ export const BoardPopup = (
     if (newInput) input?.replaceWith(newInput);
 
     if (type === 'edit' && boardID) {
-        const board = BoardStorage.getBoard(boardID);
+        const board = BoardStorage.getBoardByID(boardID);
         if (!board) return;
 
         const checkbox = popup.querySelector<HTMLInputElement>('#isPrivate');

@@ -71,5 +71,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .VKID-wrapper {
+    min-width: $input-width-mobile;
+    max-width: $input-width;
     margin-top: 16px;
+}
+
+
+@media (max-width: $mobile-width) {
+    .picture-box, .background, .background-vector,
+    .page-logo, {
+        display: none;
+    }
+
+    .auth-page-button {
+        min-width: $input-width-mobile;
+        max-width: $input-width;
+        width: 100%;
+    }
 }

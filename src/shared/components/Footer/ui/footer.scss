@@ -12,6 +12,10 @@
     background: $gradient-dark;
 
     p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         z-index: $z-modal;
     }
 }
@@ -24,4 +28,20 @@
     width: 100%;
     height: 292px;
     -webkit-user-drag: none;
+}
+
+@media (max-width: $mobile-width) {
+    .worm-container {
+        height: 180px;
+        width: 100%;
+        margin-left: 0;
+        overflow: clip;
+        bottom: $sidebar-height-mobile;
+    }
+
+    .wormy {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
 }

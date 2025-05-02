@@ -1,6 +1,8 @@
-import { fillFeed } from '../lib/fillFeed';
-import { debouncedFeedScroll } from '../handlers/handleScroll';
 import { Masonry } from 'shared/models/Masonry';
+import { fillFeed } from '../lib/fillFeed';
+import { registerScrollHandler } from 'features/scrollHandler';
+import { appState } from 'shared/router';
+import { fillSearchFeed, searchFeedState } from '../lib/fillSearchFeed';
 import feedTemplate from './FeedPage.hbs';
 import './feed.scss';
 
@@ -10,9 +12,6 @@ export const feedState = {
     filter: 'flows',
 };
 
-export interface IFeed extends HTMLDivElement {
-    masonry: Masonry | null;
-}
 
 /**
  * Генерирует страницу ленты и создает обработчики событий
@@ -26,28 +25,27 @@ export const FeedPage = async () => {
     const scrollButton = page.querySelector('.scroll-to-top');
     scrollButton?.addEventListener('click', toTop);
 
-    window.addEventListener('scroll', debouncedFeedScroll);
 
-    const delayedFill = new MutationObserver(async () => {
-        const feed = document.querySelector<IFeed>('.feed');
+    setTimeout(async () => {
+        const feed = document.querySelector<HTMLElement>('#feed');
         if (!feed) return;
-        feed.masonry = new Masonry(
+
+        appState.masonryInstance = new Masonry(
             feed, {
                 itemSelector: '.pin',
-                columnWidth: 205,
-                gutter: 20,
+                gutter: appState.mobile ? 10 : 20,
             }
         );
 
-        await fillFeed();
-        delayedFill.disconnect();
-    });
-
-
-    const rootElement = document.getElementById('root');
-    if (rootElement) {
-        delayedFill.observe(rootElement, { childList: true });
-    }
+        if (searchFeedState.query === '') {
+            registerScrollHandler(fillFeed);
+            await fillFeed();
+            await fillFeed();
+        } else {
+            registerScrollHandler(fillSearchFeed);
+            await fillSearchFeed();
+        }
+    }, 0);
 
     return page;
 };

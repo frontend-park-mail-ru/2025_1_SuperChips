@@ -6,7 +6,7 @@ export interface IPicture {
     is_private: boolean,
     like_count: number,
     width: number,
-    height: number
+    height: number,
 }
 
 export interface ILoadedPictures {

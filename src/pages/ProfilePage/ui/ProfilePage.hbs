@@ -2,7 +2,7 @@
     <div class="profile">
         <div class="author-area">
             <div class="author-area__box-1">
-                <div class="header white bold">
+                <div class="user-profile__header white bold">
                     {{header}}
                 </div>
                 <div class="box-1__menu">
@@ -17,17 +17,15 @@
             </div>
             {{#unless own}}
             <div class="author-area__box-2">
-                <div class="author-area__box-2">
-                    <div class="author__profile-picture">
-                        {{#if author_pfp}}
-                            <img src="{{author_pfp}}" alt="profile picture" class="author__profile-picture">
-                        {{else}}
-                            <p class="bold header">{{shortUsername}}</p>
-                        {{/if}}
-                    </div>
-                    <div class="author__name">
-                        <p class="bold label">@{{username}}</p>
-                    </div>
+                <div class="author__profile-picture">
+                    {{#if author_pfp}}
+                        <img src="{{author_pfp}}" alt="profile picture" class="author__profile-picture">
+                    {{else}}
+                        <p class="bold header">{{shortUsername}}</p>
+                    {{/if}}
+                </div>
+                <div class="author__name">
+                    <p class="bold label">@{{username}}</p>
                 </div>
             </div>
             {{/unless}}

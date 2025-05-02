@@ -1,8 +1,9 @@
 import { logoutHandler } from '../handlers/logout';
+import { openChatList } from '../handlers/openChatList';
 import { appState, navigate } from 'shared/router';
+import { Auth } from 'features/authorization';
 import sidebarTemplate from './sidebar.hbs';
 import './sidebar.scss';
-import { openChatList } from '../handlers/openChatList';
 
 /**
  * Генерирует сайдбар для главных страниц (лента, профиль и тд)
@@ -12,18 +13,21 @@ export const Sidebar = async () => {
     if (!sidebar) return ;
 
     sidebar.classList.add('sidebar');
+    if (!Auth.userData) {
+        sidebar.classList.add('hidden');
+    }
 
     const buttons = [
-        {
-            id: 'newPin',
-            source: '/public/icons/plus-white.svg',
-            alt: 'add new pin',
-            active: true
-        },
         {
             id: 'chats',
             source: '/public/icons/chat.svg',
             alt: 'chats',
+            active: true
+        },
+        {
+            id: 'newPin',
+            source: '/public/icons/plus-white.svg',
+            alt: 'add new pin',
             active: true
         },
         {
@@ -40,7 +44,17 @@ export const Sidebar = async () => {
         }
     ];
 
-    sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({ buttons }));
+    if (appState.mobile) {
+        buttons.unshift({
+            id: 'go-back-button',
+            source: '/public/icons/arrow-left.svg',
+            alt: 'go back',
+            active: true,
+        });
+    }
+
+
+    sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({ buttons, mobile: appState.mobile }));
 
     const logout = sidebar.querySelector('#logout');
     logout?.addEventListener('click', logoutHandler);

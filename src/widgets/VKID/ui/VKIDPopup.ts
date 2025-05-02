@@ -24,7 +24,7 @@ export const VKIDPopup = (accessToken: string) => {
         type: 'text',
         id: 'VKID-username',
         inputLabel: 'Имя пользователя',
-        errorMessage: 'Пользователь с таким именем уже существует',
+        errorMessage: 'Почта или имя уже заняты',
         maxlength: 32,
         required: true,
     });

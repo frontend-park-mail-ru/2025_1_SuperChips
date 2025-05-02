@@ -12,7 +12,7 @@
     padding-bottom: 36px;
     background: $gradient-dark;
     z-index: 75;
-    @include side-menu-animation;
+    @include side-menu-animation-left;
 }
 
 

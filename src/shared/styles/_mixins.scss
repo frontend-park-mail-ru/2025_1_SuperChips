@@ -48,6 +48,15 @@
         "header header"
         "sidebar page";
     gap: 0;
+
+    @media (max-width: $mobile-width) {
+        grid-template-areas:
+            'header'
+            'page'
+            'sidebar';
+        grid-template-columns: 1fr;
+        grid-template-rows: $navbar-height-mobile auto $sidebar-height-mobile;
+    }
 }
 
 @mixin content-area {
@@ -106,6 +115,17 @@
         object-fit: cover;
         margin: 0;
     }
+
+    p {
+        font-size: $font-size-xxl;
+        color: black;
+        font-weight: bold;
+    }
+
+    &:hover {
+        opacity: $opacity-80;
+        cursor: pointer;
+    }
 }
 
 @mixin short-username {
@@ -149,36 +169,18 @@
         object-fit: contain;
         display: block;
     }
-}
 
-@mixin side-menu-animation {
-    transform: translate(-100%, 0);
-    animation: FadeInHorizontal 0.3s ease-out forwards;
-
-    @keyframes FadeInHorizontal {
-        from {
-            transform: translateX(-100%);
-        }
-        to {
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes FadeOutHorizontal {
-        from {
-            transform: translateX(0);
-        }
-        to {
-            transform: translateX(-100%);
-        }
+    @media (max-width: $mobile-width) {
+        max-width: 404px;
+        width: 100%;
     }
 }
 
-@mixin side-menu-animation {
+@mixin side-menu-animation-left {
     transform: translate(-100%, 0);
-    animation: FadeInHorizontal 0.3s ease-out forwards;
+    animation: FadeInHorizontalLeft 0.3s ease-out forwards;
 
-    @keyframes FadeInHorizontal {
+    @keyframes FadeInHorizontalLeft {
         from {
             transform: translateX(-100%);
         }
@@ -187,7 +189,7 @@
         }
     }
 
-    @keyframes FadeOutHorizontal {
+    @keyframes FadeOutHorizontalLeft {
         from {
             transform: translateX(0);
         }

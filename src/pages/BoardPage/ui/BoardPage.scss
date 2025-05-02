@@ -11,6 +11,9 @@
     }
 
     &__header {
+        display: flex;
+        justify-content: space-between;
+        padding-right: $feed-padding;
         margin-top: $spacing-md;
         font-size: $font-size-xl;
         color: $white;
@@ -20,8 +23,12 @@
     &__feed {
         margin-top: $spacing-xl;
     }
-}
 
+    &__settings-button {
+        @include icon;
+        cursor: pointer;
+    }
+}
 
 .divider {
     width: calc(100% - $feed-padding);
@@ -43,5 +50,22 @@
     }
     100% {
         background-position: 0% 50%;
+    }
+}
+
+@media (max-width: $mobile-width) {
+    .board {
+        min-height: calc(100vh - 2 * $navbar-height-mobile);
+
+        &__box-1 {
+            padding: 0 $mobile-horizontal-padding;
+        }
+
+        &__header {
+            padding: 0;
+        }
+    }
+    .divider {
+        width: 100%;
     }
 }

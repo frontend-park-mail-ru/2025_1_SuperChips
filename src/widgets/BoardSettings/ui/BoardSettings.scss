@@ -1,0 +1,100 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+.board-settings {
+    &-container {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 560px;
+        height: 100vh;
+        z-index: 1000;
+        background-color: #252525;
+        padding: 32px 68px;
+        color: $white;
+
+        .input-container {
+            margin-top: $spacing-md;
+        }
+
+        transform: translate(100%, 0);
+        animation: FadeInHorizontalRight 0.3s ease-out forwards;
+
+        @keyframes FadeInHorizontalRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes FadeOutHorizontalRight {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(100%);
+            }
+        }
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 36px;
+        font-weight: bold;
+    }
+
+    &__toggle-area {
+        display: flex;
+        gap: $spacing-md;
+        margin-top: $spacing-sm;
+    }
+
+    &__delete-button, &__confirm-button {
+        cursor: pointer;
+        display: flex;
+        gap: $spacing-md;
+        margin-top: $spacing-md;
+
+        img {
+            @include icon;
+        }
+    }
+
+    &__submit-button {
+        width: 100%;
+        height: $input-height;
+        color: $white;
+        background-color: $black;
+        cursor: pointer;
+        border: none;
+        border-radius: $border-radius;
+        transition: all ease 0.3s;
+        margin-top: 120px;
+
+        &:hover {
+            color: $black;
+            background-color: $white;
+        }
+    }
+
+    &__close-button {
+        cursor: pointer;
+    }
+
+    &__confirm-button {
+        color: $error-color;
+    }
+}
+
+@media (max-width: $mobile-width) {
+    .board-settings {
+        &-container {
+            width: 100vw;
+            padding: 32px $mobile-horizontal-padding;
+        }
+    }
+}
