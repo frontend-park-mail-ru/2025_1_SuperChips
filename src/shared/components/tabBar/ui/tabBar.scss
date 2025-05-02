@@ -7,6 +7,7 @@
   height: fit-content;
   border-radius: $border-radius;
   margin-right: $spacing-xl;
+  color: $white;
 }
 
 .vertical {
@@ -21,6 +22,7 @@
   position: relative;
   border-radius: $border-radius;
   overflow-wrap: break-word;
+  color: $white;
 
   &:hover {
       color: $text-gray;

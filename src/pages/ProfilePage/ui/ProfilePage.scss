@@ -44,6 +44,7 @@
         color: #fff;
         display: flex;
         align-items: center;
+        gap: $spacing-lg; // Add gap for spacing between buttons
     }
 }
 
@@ -83,11 +84,97 @@
         img {
             margin: 0;
             object-fit: cover;
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
         }
 
         p {
             color: $black;
         }
+    }
+    
+    // Style for subscribe button (no icon)
+    &__subscribe-button {
+        background-color: $semi-transparent;
+        border: none;
+        border-radius: $border-radius;
+        color: $white;
+        padding: $spacing-sm $spacing-md;
+        cursor: pointer;
+        margin-left: $spacing-md;
+        transition: all 0.2s ease;
+        
+        &:hover {
+            background-color: rgba($white, 0.3);
+        }
+    }
+
+    // Style for subscriptions button (with icon)
+    &__subscriptions-button {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        background-color: $semi-transparent;
+        border: none;
+        border-radius: $border-radius;
+        color: $white;
+        padding: $spacing-sm $spacing-md;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        
+        img {
+            width: 18px;
+            height: 18px;
+        }
+        
+        &:hover {
+            background-color: rgba($white, 0.3);
+        }
+    }
+}
+
+.profile-bio-card {
+    width: 210px; // Match pin width
+    border-radius: $border-radius;
+    background-color: $button-dark; // Match pin background
+    color: $text-light;
+    font-size: $font-size-sm;
+    padding: $spacing-md;
+    min-height: 150px; // Adjust min-height as needed
+    margin-bottom: 20px; // Match pin margin
+    transition: all 0.2s ease;
+    border: 1px solid transparent; // Start transparent
+    box-sizing: border-box; // Include padding and border in width
+    word-wrap: break-word; // Ensure text wraps
+    
+    &:hover {
+        border-color: rgba($white, 0.8);
+        background-color: $semi-transparent; // Slightly different hover from pin
+    }
+}
+
+// Hide bio card when not on the 'flow' tab (requires JS to add/remove class)
+.profile__feed--boards .profile-bio-card {
+    display: none;
+}
+
+.user-bio {
+    border-radius: $border-radius;
+    background-color: $transparent;
+    color: $text-light;
+    border: 1px solid rgba(70, 70, 70, 0.5);
+    font-size: $font-size-sm;
+    padding: $spacing-md;
+    min-height: 200px;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: $spacing-xl;
+    transition: all 0.2s ease;
+    
+    &:hover {
+        border-color: rgba($white, 0.8);
+        background-color: $semi-transparent;
     }
 }
 

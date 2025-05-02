@@ -1,0 +1,83 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+.subscriptions-page {
+    @include main-page();
+}
+
+.subscriptions {
+    grid-area: page;
+    min-height: calc(100vh - $navbar-height);
+    padding: $spacing-lg $spacing-xl;
+    
+    &__header {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-lg;
+        margin-bottom: $spacing-xl;
+        
+        .header {
+            font-size: $font-size-xl;
+            color: $white;
+            font-weight: bold;
+        }
+    }
+    
+    &__users {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+        gap: $spacing-xl;
+        width: 100%;
+        margin-top: $spacing-xl;
+    }
+}
+
+// Стили для кнопки подписки
+.author__subscribe-button {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    background-color: $semi-transparent;
+    border: none;
+    border-radius: $border-radius;
+    color: $white;
+    padding: $spacing-sm $spacing-md;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    align-self: flex-start;
+    margin-bottom: $spacing-md;
+    
+    img {
+        width: 18px;
+        height: 18px;
+    }
+    
+    &:hover {
+        background-color: rgba($white, 0.3);
+    }
+}
+
+// Стили для сообщения об ошибке
+.error-message {
+    color: $error-color;
+    font-size: $font-size-md;
+    margin-top: $spacing-lg;
+    text-align: center;
+    padding: $spacing-lg;
+    background-color: rgba($error-color, 0.1);
+    border-radius: $border-radius;
+}
+
+// Стили для кнопок подписки/отписки в карточках пользователей
+.user-card {
+    &__subscribe-button {
+        &.subscribed {
+            background-color: $black;
+            color: $white;
+            
+            &:hover {
+                background-color: $button-dark;
+            }
+        }
+    }
+}

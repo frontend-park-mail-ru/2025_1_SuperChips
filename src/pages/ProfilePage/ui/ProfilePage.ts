@@ -9,7 +9,7 @@ import { UserBoards } from 'widgets/UserBoard';
 import { Auth } from 'features/authorization';
 import { root } from 'app/app';
 import { API } from 'shared/api';
-import { appState } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 import ProfilePageTemplate from './ProfilePage.hbs';
 import './ProfilePage.scss';
 
@@ -47,6 +47,7 @@ export const ProfilePage = async (username: string, tab: string): Promise<HTMLDi
         author_pfp: ok ? userData.avatar : null,
         own: own,
         showCreateBoardButton: !isPinTabActive && own,
+        userBio: userData.about || null,
     };
 
     page.innerHTML = ProfilePageTemplate(config);
@@ -64,6 +65,12 @@ export const ProfilePage = async (username: string, tab: string): Promise<HTMLDi
 
     const newBoard = page.querySelector('.create-board');
     newBoard?.addEventListener('click', () => BoardPopup('create'));
+    
+    // Add event listener for subscriptions button
+    const subscriptionsButton = page.querySelector('#subscriptions-button');
+    subscriptionsButton?.addEventListener('click', () => {
+        navigate(`${username}/subscriptions`);
+    });
 
     const feed = page.querySelector<IFeed>('.profile__feed');
     if (!feed) return page;

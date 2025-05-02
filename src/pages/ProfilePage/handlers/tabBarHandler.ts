@@ -13,12 +13,17 @@ export const profileTabBarHandler = async (tabId: string, username: string) => {
     const newBoard = document.querySelector('.create-board');
 
     if (tabId === 'pins' && profilePageState.currentTab !== 'pins') {
+        content.classList.remove('profile__feed--boards'); // Show bio card
+        newBoard?.classList.add('hidden'); // Hide create board button
+        profilePageState.currentTab = 'pins';
         navigate(`${username}/flows`, true).finally();
     } else if (tabId === 'boards' && profilePageState.currentTab !== 'boards') {
         if (content.masonry) {
             content.masonry = null;
         }
         navigate(`${username}/boards`, true).finally();
-        newBoard?.classList.remove('hidden');
+        content.classList.add('profile__feed--boards'); // Hide bio card
+        newBoard?.classList.remove('hidden'); // Show create board button
+        profilePageState.currentTab = 'boards';
     }
 };

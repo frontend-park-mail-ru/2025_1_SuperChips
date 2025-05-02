@@ -3,7 +3,17 @@ import { pluralize } from 'shared/utils';
 import template from './UserCard.hbs';
 import './UserCard.scss';
 
-export const UserCard = (user: IUser) => {
+interface IUserCardProps {
+    username: string;
+    public_name: string;
+    avatar: string | null;
+    about: string;
+    subscribers_count: number;
+    isSubscribed?: boolean;
+    email?: string; // Опциональное поле для совместимости с IUser
+}
+
+export const UserCard = (user: IUserCardProps) => {
     const container = document.createElement('div');
     container.classList.add('user-card');
 
@@ -12,9 +22,9 @@ export const UserCard = (user: IUser) => {
         avatar: user.avatar,
         about: user.about,
         shortUsername: user.username[0].toUpperCase(),
-        subscribers: pluralize('подписчик', 121),
+        subscribers: pluralize('подписчик', user.subscribers_count || 0),
+        isSubscribed: user.isSubscribed
     };
-
 
     container.innerHTML = template(config);
     return container;

@@ -13,6 +13,12 @@
                                 создать доску
                             </div>
                         </div>
+                    {{#if own}}
+                        <button class="author__subscriptions-button" id="subscriptions-button">
+                            <img src="/public/icons/followers.svg" alt="subscriptions">
+                            <span>Подписки</span>
+                        </button>
+                    {{/if}}
                 </div>
             </div>
             {{#unless own}}
@@ -28,10 +34,17 @@
                     <div class="author__name">
                         <p class="bold label">@{{username}}</p>
                     </div>
+                    <button class="author__subscribe-button" id="subscribe-{{username}}">
+                        <span>Подписаться</span>
+                    </button>
                 </div>
             </div>
             {{/unless}}
         </div>
-        <div id="feed" class="profile__feed"></div>
+        <div id="feed" class="profile__feed">
+            {{#if userBio}}
+            <div class="user-bio profile-bio-card">{{userBio}}</div>
+            {{/if}}
+        </div>
     </div>
 </div>

@@ -1,0 +1,19 @@
+<div class="subscriptions-page">
+    <div class="subscriptions">
+        <div class="subscriptions__header">
+            <div class="header white bold">
+                {{header}}
+            </div>
+            {{#unless own}}
+            <button class="author__subscribe-button" id="subscribe-{{username}}">
+                <img src="/public/icons/followers.svg" alt="subscribe">
+                <span>Подписаться</span>
+            </button>
+            {{/unless}}
+            <div class="tab-bar-placeholder"></div>
+        </div>
+        <div class="subscriptions__users">
+            <!-- Карточки пользователей будут добавлены динамически через JavaScript -->
+        </div>
+    </div>
+</div>

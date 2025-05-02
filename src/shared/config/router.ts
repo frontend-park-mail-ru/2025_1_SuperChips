@@ -7,6 +7,7 @@ import { NewPinPage } from 'pages/NewPinPage';
 import { ProfilePage } from 'pages/ProfilePage';
 import { SettingsPage } from 'pages/SettingsPage';
 import { EditPinPage } from 'pages/EditPinPage';
+import { SubscriptionsPage } from 'pages/SubscriptionsPage';
 
 
 export interface Route {
@@ -92,6 +93,22 @@ export const config: RouterConfig = {
             href: /^[a-zA-Z0-9._\-@#$%&*!]+\/flows$/,
             render: (username: string) => {
                 return ProfilePage(username, 'pins');
+            },
+        },
+        subscriptions: {
+            href: /^[a-zA-Z0-9._\-@#$%&*!]+\/subscriptions$/,
+            title: 'Подписки',
+            render: (path: string) => {
+                const username = path.split('/')[0];
+                return SubscriptionsPage(username, 'subscriptions');
+            },
+        },
+        subscribers: {
+            href: /^[a-zA-Z0-9._\-@#$%&*!]+\/subscribers$/,
+            title: 'Подписчики',
+            render: (path: string) => {
+                const username = path.split('/')[0];
+                return SubscriptionsPage(username, 'subscribers');
             },
         },
         pin: {
