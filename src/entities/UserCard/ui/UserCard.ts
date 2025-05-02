@@ -12,7 +12,7 @@ export const UserCard = (user: IUser) => {
         avatar: user.avatar,
         about: user.about,
         shortUsername: user.username[0].toUpperCase(),
-        subscribers: pluralize('подписчик', 121),
+        subscribers: pluralize('подписчик', user.subscriber_count ?? 0),
     };
 
 

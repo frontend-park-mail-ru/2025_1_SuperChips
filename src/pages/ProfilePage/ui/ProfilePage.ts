@@ -21,7 +21,8 @@ export const ProfilePage = async (username: string, tab: string): Promise<HTMLDi
     let userData;
 
     const isLastVisited = (
-        ['profile', 'profilePins', 'profileBoards', null].includes(appState.lastPage)
+        !!appState.lastPage &&
+        ['profile', 'profilePins', 'profileBoards'].includes(appState.lastPage)
         && username === appState.lastVisited.username
     );
 

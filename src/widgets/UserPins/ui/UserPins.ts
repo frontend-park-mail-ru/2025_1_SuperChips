@@ -1,10 +1,11 @@
 import { toTop } from 'pages/FeedPage';
 import { Masonry } from 'shared/models/Masonry';
 import { findBoardID } from '../lib/findBoardID';
-import { boardFeedScroll, boardFeedState, fillBoardFeed } from 'pages/BoardPage';
+import { boardFeedState, fillBoardFeed } from 'pages/BoardPage';
 import { Auth } from 'features/authorization';
 import { appState } from 'shared/router';
 import './UserPins.scss';
+import { registerScrollHandler } from 'features/scrollHandler';
 
 
 export const UserPins = async (username: string) => {
@@ -28,7 +29,6 @@ export const UserPins = async (username: string) => {
         appState.masonryInstance = new Masonry(
             feed, {
                 itemSelector: '.pin',
-                columnWidth: appState.pinWidth,
                 gutter: appState.mobile ? 10 : 20,
             }
         );
@@ -39,6 +39,6 @@ export const UserPins = async (username: string) => {
     const scrollButton = feed.querySelector('.scroll-to-top');
     scrollButton?.addEventListener('click', toTop);
 
-    window.addEventListener('scroll', boardFeedScroll);
+    registerScrollHandler(fillBoardFeed);
 };
 

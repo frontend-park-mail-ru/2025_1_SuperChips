@@ -1,6 +1,6 @@
 import { Toast } from 'shared/components/Toast';
 import { fillSearchFeed, searchFeedState } from 'pages/FeedPage/lib/fillSearchFeed';
-import { debouncedFeedScroll, searchFeedScroll } from 'pages/FeedPage';
+import { closeFilter } from './closeFilter';
 import { API } from 'shared/api';
 import { appState, navigate } from 'shared/router';
 
@@ -27,14 +27,11 @@ export const search = async (event: Event) => {
             navigate('feed').finally();
         }
 
-        setTimeout(async () => {
-            searchFeedState.filter = filter;
-            searchFeedState.query = query;
-            searchFeedState.page = 1;
-            await fillSearchFeed();
-        }, 0);
+        Object.assign(searchFeedState, { filter, query, page: 1 });
 
-        window.removeEventListener('scroll', debouncedFeedScroll);
-        window.addEventListener('scroll', searchFeedScroll);
+        if (appState.mobile) {
+            closeFilter();
+        }
+        await fillSearchFeed();
     }
 };

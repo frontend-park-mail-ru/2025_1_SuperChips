@@ -13,7 +13,6 @@ $border-radius: 20px;
     align-items: center;
 }
 
-// Основные стили
 .navbar {
     position: fixed;
     background-color: $primary-dark;
@@ -24,10 +23,6 @@ $border-radius: 20px;
     align-items: center;
     justify-content: space-between;
     z-index: $z-navbar;
-
-    &__search-icon {
-        display: none;
-    }
 }
 
 .navbar-logo {
@@ -46,7 +41,7 @@ $border-radius: 20px;
         flex-grow: 1;
         height: $profile-picture-size;
         margin-right: $spacing-lg;
-        padding: $spacing-sm $spacing-sm $spacing-sm $spacing-xxl;
+        padding: $spacing-sm $spacing-sm + $spacing-lg $spacing-sm $spacing-xxl;
         border-radius: $border-radius;
         border: none;
 
@@ -164,10 +159,6 @@ $border-radius: 20px;
             margin: 0;
         }
 
-        &__search-icon {
-            display: block;
-        }
-
         &__pfp-box {
             display: flex;
             gap: 12px;
@@ -179,7 +170,22 @@ $border-radius: 20px;
         margin-right: 0;
     }
 
-    .search-form-container {
-        display: none;
+    .search-form {
+        &-container {
+            margin: 0 $spacing-sm;
+            height: 44px;
+            width: clamp(200px, 60%, 440px);
+        }
+
+        &__input {
+            margin: 0;
+            padding-left: 40px;
+            width: 100%;
+            height: 100%;
+        }
+
+        &__clear {
+            right: $spacing-sm;
+        }
     }
 }

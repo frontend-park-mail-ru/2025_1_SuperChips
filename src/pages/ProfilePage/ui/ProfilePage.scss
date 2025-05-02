@@ -4,7 +4,7 @@
 
 .profile {
     grid-area: page;
-    min-height: calc(100vh - $navbar-height);
+    min-height: 100vh;
 
     &-page {
         @include main-page();
@@ -97,9 +97,6 @@
 }
 
 @media (max-width: $mobile-width) {
-    .profile {
-        min-height: calc(100vh - 2 * $navbar-height-mobile);
-    }
     .profile__feed, .box-1__menu, .user-profile__header {
         padding: 0 $mobile-horizontal-padding;
     }

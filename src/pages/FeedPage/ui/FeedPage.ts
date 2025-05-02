@@ -1,6 +1,6 @@
 import { Masonry } from 'shared/models/Masonry';
 import { fillFeed } from '../lib/fillFeed';
-import { debouncedFeedScroll } from '../handlers/handleScroll';
+import { registerScrollHandler } from 'features/scrollHandler';
 import { appState } from 'shared/router';
 import feedTemplate from './FeedPage.hbs';
 import './feed.scss';
@@ -24,7 +24,7 @@ export const FeedPage = async () => {
     const scrollButton = page.querySelector('.scroll-to-top');
     scrollButton?.addEventListener('click', toTop);
 
-    window.addEventListener('scroll', debouncedFeedScroll);
+    registerScrollHandler(fillFeed);
 
     const delayedFill = new MutationObserver(async () => {
         const feed = document.querySelector<HTMLElement>('#feed');
@@ -32,10 +32,10 @@ export const FeedPage = async () => {
         appState.masonryInstance = new Masonry(
             feed, {
                 itemSelector: '.pin',
-                columnWidth: appState.pinWidth,
                 gutter: appState.mobile ? 10 : 20,
             }
         );
+        await fillFeed();
         await fillFeed();
         delayedFill.disconnect();
     });

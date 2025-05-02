@@ -1,8 +1,8 @@
 import { toTop } from 'pages/FeedPage';
 import { Masonry } from 'shared/models/Masonry';
 import { fillBoardFeed } from '../lib/fillBoardFeed';
-import { boardFeedScroll } from '../handlers/boardFeedScroll';
 import { openBoardSettings } from 'widgets/BoardSettings';
+import { registerScrollHandler } from 'features/scrollHandler';
 import { API } from 'shared/api';
 import { root } from 'app/app';
 import { Auth } from 'features/authorization';
@@ -58,7 +58,6 @@ export const BoardPage = async (boardID: string) => {
         appState.masonryInstance = new Masonry(
             feed, {
                 itemSelector: '.pin',
-                columnWidth: appState.pinWidth,
                 gutter: appState.mobile ? 10 : 20,
             }
         );
@@ -69,7 +68,7 @@ export const BoardPage = async (boardID: string) => {
 
     delayedFill.observe(root, { childList: true });
 
-    setTimeout(() => window.addEventListener('scroll', boardFeedScroll), 100);
+    registerScrollHandler(fillBoardFeed);
 
     const scrollButton = page.querySelector<HTMLDivElement>('.scroll-to-top');
     scrollButton?.addEventListener('click', toTop);

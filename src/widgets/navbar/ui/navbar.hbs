@@ -9,7 +9,6 @@
             aria-label="Main logo"
     />
 </a>
-{{#unless mobile}}
     <form class="search-form-container">
         <input
                 type="text"
@@ -32,10 +31,8 @@
                 alt="clear search"
         >
     </form>
-{{/unless}}
 <div class="navbar__pfp-box">
 {{#if authorized}}
-    <img src="/public/icons/search-icon.svg" alt="" class="navbar__search-icon">
     <div class="navbar__profile-picture">
         {{#if avatar}}
             <img

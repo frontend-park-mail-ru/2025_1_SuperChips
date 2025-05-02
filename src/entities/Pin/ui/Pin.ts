@@ -8,6 +8,7 @@ import { BoardStorage } from 'features/boardLoader';
 import { USER_SAVED_PINS_BOARD } from 'shared/config/constants';
 import './Pin.scss';
 import template from './Pin.hbs';
+import { getWidthBySelector } from 'shared/utils';
 
 
 export const Pin = (params: IPinProps) => {
@@ -26,7 +27,7 @@ export const Pin = (params: IPinProps) => {
     pin.addEventListener('click', () => navigate(`flow/${config.pinID}`));
 
 
-    const pinWidth = appState.pinWidth;
+    const pinWidth = getWidthBySelector('.pin');
     if (params.width && params.height) {
         pin.style.width = pinWidth + 'px';
         pin.style.height = (params.height * pinWidth) / params.width + 'px';

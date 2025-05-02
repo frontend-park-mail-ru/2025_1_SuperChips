@@ -1,3 +1,5 @@
+import { getWidthBySelector } from 'shared/utils';
+
 interface MasonryOptions {
     itemSelector: string;
     columnWidth: number;
@@ -41,6 +43,8 @@ export class Masonry {
     }
 
     private measureColumns() {
+        this.options.columnWidth = getWidthBySelector(this.options.itemSelector);
+
         const colWidth = this.options.columnWidth + this.options.gutter;
         const containerWidth = this.container.clientWidth;
         this.offsetX = (containerWidth - (Math.floor(containerWidth / (colWidth)) * (colWidth) - this.options.gutter)) / 2;

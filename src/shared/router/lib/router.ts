@@ -3,10 +3,10 @@ import type { IUser } from 'entities/User';
 import { omit } from 'shared/utils';
 import { findMatch } from './findMatch';
 import { updateBars } from './updateBars';
-import { boardFeedScroll } from 'pages/BoardPage';
-import { debouncedFeedScroll, searchFeedState } from 'pages/FeedPage';
+import { searchFeedState } from 'pages/FeedPage';
 import { root } from 'app/app';
 import { config } from 'shared/config/router';
+import { removeScrollHandler } from 'features/scrollHandler';
 
 
 interface AppState {
@@ -18,9 +18,9 @@ interface AppState {
     isFilterOpen: boolean,
     mobile: boolean,
     lastVisited: Partial<IUser>,
-    pinWidth: number,
     loggedWithVKID: boolean,
     masonryInstance: Masonry | null,
+    scrollHandler: (() => void) | null,
 }
 
 export const appState: AppState = {
@@ -32,9 +32,9 @@ export const appState: AppState = {
     isFilterOpen: false,
     lastVisited: {},
     mobile: false,
-    pinWidth: 210,
     loggedWithVKID: false,
     masonryInstance: null,
+    scrollHandler: null,
 };
 
 
@@ -85,36 +85,37 @@ export const navigate = async (
     appState.href = newHref;
     document.title = route.title;
 
-    const appStateWithoutMasonry = omit(appState, 'masonryInstance');
+    const clearAppState = omit(
+        appState,
+        'masonryInstance',
+        'scrollHandler'
+    );
     if (replace) {
-        history.replaceState({ ...history.state, ...appStateWithoutMasonry }, '', newHref);
+        history.replaceState({ ...history.state, ...clearAppState }, '', newHref);
     } else {
-        history.pushState({ ...history.state, ...appStateWithoutMasonry }, '', newHref);
+        history.pushState({ ...history.state, ...clearAppState }, '', newHref);
     }
 
     const newPage = await route.render(renderProps);
     if (newPage) {
+        cleanup(newHref);
+        updateBars(route);
         root.innerHTML = '';
         root.appendChild(newPage);
         window.scrollTo({ top: 0 });
-        updateBars(route);
-        cleanup(newHref);
     }
 };
 
 
 const cleanup = (newHref: string) => {
-    const boardRegex = /^board\/\S+$/;
+    const boardRegex = /^\/board\/\S+$/;
 
     if (appState.masonryInstance) {
         appState.masonryInstance.destroy();
     }
 
-    if (newHref !== '/feed') {
-        window.removeEventListener('scroll', debouncedFeedScroll);
-    }
-    if (!boardRegex.test(newHref)) {
-        window.removeEventListener('scroll', boardFeedScroll);
+    if (appState.scrollHandler && newHref !== '/feed' && !boardRegex.test(newHref)) {
+        removeScrollHandler();
     }
 
     const searchInput = document.querySelector<HTMLInputElement>('#search');

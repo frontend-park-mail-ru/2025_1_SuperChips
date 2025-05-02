@@ -4,7 +4,7 @@ import { navigate } from 'shared/router';
 import { Pin } from 'entities/Pin';
 import { emptyFeedPageTemplate } from 'widgets/UserPins';
 import { boardFeedState } from '../ui/BoardPage';
-import { boardFeedScroll } from '../handlers/boardFeedScroll';
+import { removeScrollHandler } from 'features/scrollHandler';
 
 
 export const fillBoardFeed = async () => {
@@ -24,7 +24,7 @@ export const fillBoardFeed = async () => {
     }
 
     if (pictures?.status === 404) {
-        window.removeEventListener('scroll', boardFeedScroll);
+        removeScrollHandler();
         return;
     }
 

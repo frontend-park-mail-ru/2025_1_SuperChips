@@ -1,6 +1,5 @@
 import { openFilter } from './openFilter';
 import { appState } from 'shared/router';
-import { toggleScroll } from 'widgets/BoardPopup';
 
 
 export const closeFilter = () => {
@@ -8,10 +7,6 @@ export const closeFilter = () => {
     const feed = document.querySelector('#feed');
     const feedFilter = document.querySelector<HTMLDivElement>('.feed-filter');
     const filterPlaceholder = document.querySelector('.feed-filter-placeholder');
-
-    if (appState.mobile) {
-        toggleScroll('enabled');
-    }
 
     if (!feed || !feedFilter) return;
 
