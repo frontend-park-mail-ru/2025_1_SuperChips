@@ -1,4 +1,4 @@
-import type { IChat } from '../model/types';
+import type { IChat } from 'features/chat';
 import { formatDateToReadable } from 'shared/utils';
 import { createNewChat } from '../handlers/createNewChat';
 import { openChat } from '../handlers/openChat';
@@ -7,12 +7,8 @@ import template from './ChatList.hbs';
 import './ChatList.scss';
 
 
-interface IResponse {
-    data: IChat[];
-}
-
 // TODO Написать логику для получения списка чатов с сервера
-const body: IResponse = {
+const body = {
     data: [
         {
             id: '1',
@@ -83,7 +79,7 @@ export const ChatList = (animated: boolean = false) => {
     if (!Auth.userData) return container;
     const currentUser = Auth.userData.username;
 
-    const chats = body.data.map((item) => {
+    const chats = body.data.map((item: IChat) => {
         const isLastOwn = currentUser === item.last_message.sender;
         return {
             username: item.username,

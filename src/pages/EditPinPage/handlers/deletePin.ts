@@ -18,7 +18,7 @@ export const deletePin = async (pinID: string) => {
 
 
 const confirmDelete = async (pinID: string) => {
-    const response = await API.delete(`/api/v1/flows?id=${pinID}`);
+    const response = await API.delete(`/flows?id=${pinID}`);
     if (response instanceof Error || !response.ok) {
         Toast('Ошибка при удалении flow', 'error');
         return response;

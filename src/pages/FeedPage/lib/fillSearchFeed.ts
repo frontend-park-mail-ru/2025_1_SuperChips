@@ -32,7 +32,7 @@ export const fillSearchFeed = async () => {
         registerScrollHandler(fillSearchFeed);
     }
 
-    const URI = `/api/v1/search/${searchFeedState.filter}?query=${searchFeedState.query}&page=${searchFeedState.page}&size=20`;
+    const URI = `/search/${searchFeedState.filter}?query=${searchFeedState.query}&page=${searchFeedState.page}&size=20`;
     const response = await API.get(URI);
 
 

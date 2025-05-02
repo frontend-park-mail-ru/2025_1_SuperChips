@@ -1,4 +1,4 @@
-import type { IMessage } from 'widgets/ChatList';
+import type { IMessage } from 'features/chat';
 import { formatDateToReadable } from 'shared/utils';
 import { closeChat } from '../handler/closeChat';
 import { Auth } from 'features/authorization';

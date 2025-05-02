@@ -14,13 +14,13 @@ export const PinPage = async (pinID: string) => {
     const container = document.createElement('div');
     container.classList.add('one-pin-page-wrapper');
 
-    const pinRequest = await API.get(`/api/v1/flows?id=${pinID}`);
+    const pinRequest = await API.get(`/flows?id=${pinID}`);
     if (pinRequest instanceof Error || !pinRequest.ok) {
         return null;
     }
     const pinData = (await pinRequest.json()).data;
 
-    const authorRequest = await API.get(`/api/v1/users/${pinData.author_username}`);
+    const authorRequest = await API.get(`/users/${pinData.author_username}`);
     if (authorRequest instanceof Error || !authorRequest.ok) {
         return null;
     }

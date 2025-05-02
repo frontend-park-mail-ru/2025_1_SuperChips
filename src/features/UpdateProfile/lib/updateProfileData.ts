@@ -4,7 +4,7 @@ import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
 
 export const updateProfileData = async (payload: IProfileSettings) => {
-    const response = await API.patch('/api/v1/profile/update', payload);
+    const response = await API.patch('/profile/update', payload);
 
     if (response instanceof Response && response.ok) {
         Toast('Профиль успешно обновлен', 'message');

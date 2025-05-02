@@ -40,7 +40,7 @@ class auth {
     async login(
         { email, password }: TLoginData
     ): Promise<Response|Error> {
-        const response = await this.API.post('/api/v1/auth/login', { email, password });
+        const response = await this.API.post('/auth/login', { email, password });
 
         if (response instanceof Response && response.ok) {
             const body = await response.json();
@@ -54,7 +54,7 @@ class auth {
      * Авторизация пользователя через VK ID
      */
     async VKIDLogin(data: IVKIDLogin) {
-        const login = await API.post('/api/v1/auth/vkid/login', data);
+        const login = await API.post('/auth/vkid/login', data);
 
         if (login instanceof Response && login.ok) {
             const body = await login.json();
@@ -69,7 +69,7 @@ class auth {
      Регистрация нового пользователя
      */
     async register(userData: ISignupFormData): Promise<Response|Error> {
-        const response = await this.API.post('/api/v1/auth/registration', userData);
+        const response = await this.API.post('/auth/registration', userData);
 
         if (response instanceof Response && response.ok) {
             const body = await response.json();
@@ -90,7 +90,7 @@ class auth {
      * Регистрация нового пользователя через VK ID
      */
     async VKIDRegister(data: IVKIDRegister) {
-        const register = await API.post('/api/v1/auth/vkid/register', data);
+        const register = await API.post('/auth/vkid/register', data);
         if (register instanceof Response && register.ok) {
             const body = await register.json();
             await this.initUser(body.data.csrf_token);
@@ -104,7 +104,7 @@ class auth {
 	 * Завершение сессии
 	 */
     async logout(): Promise<Response|Error> {
-        const response = await this.API.post('/api/v1/auth/logout');
+        const response = await this.API.post('/auth/logout');
 
         if (response instanceof Response && response.ok) {
             await this.clearUserData();
@@ -123,7 +123,7 @@ class auth {
      * Получение данных о пользователе
      */
     fetchUserData = async (): Promise<void> => {
-        const userData = await this.API.get('/api/v1/profile');
+        const userData = await this.API.get('/profile');
 
         if (userData instanceof Response && userData.ok) {
             const body = await userData.json();

@@ -155,7 +155,7 @@ $border-radius: 20px;
 @media (max-width: $mobile-width) {
     .navbar {
         height: $navbar-height-mobile;
-        padding: 12px;
+        padding: 12px 24px 12px 12px;
 
         &__profile-picture {
             width: 44px;

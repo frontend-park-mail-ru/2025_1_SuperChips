@@ -29,7 +29,7 @@ export const ProfilePage = async (username: string, tab: string): Promise<HTMLDi
     if (own) {
         userData = Auth.userData;
     } else if (!isLastVisited) {
-        const response = await API.get(`/api/v1/users/${username}`);
+        const response = await API.get(`/users/${username}`);
         if (!(response instanceof Response && response.ok)) return page;
 
         const body = await response.json();

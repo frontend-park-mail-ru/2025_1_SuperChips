@@ -25,7 +25,7 @@ export const editPin = async (pinID: string) => {
         payload.description = aboutInput.value;
     }
 
-    const response = await API.put('/api/v1/flows', payload);
+    const response = await API.put('/flows', payload);
 
     if (response instanceof Response && response.ok) {
         Toast('Flow был успешно обновлен', 'success', 5000);

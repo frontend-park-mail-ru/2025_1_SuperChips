@@ -28,7 +28,7 @@ export const BoardPage = async (boardID: string) => {
     boardFeedState.boardID = boardID;
     boardFeedState.page = 1;
 
-    const boardRequest = await API.get(`/api/v1/boards/${boardID}`);
+    const boardRequest = await API.get(`/boards/${boardID}`);
     if (boardRequest instanceof Error || !boardRequest.ok) {
         return null;
     }

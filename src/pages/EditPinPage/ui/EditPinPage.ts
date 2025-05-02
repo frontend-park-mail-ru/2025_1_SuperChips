@@ -11,7 +11,7 @@ import './EditPinPage.scss';
 export const EditPinPage = async (pinID: string) => {
     const page = document.createElement('div');
 
-    const response = await API.get(`/api/v1/flows?id=${pinID}`);
+    const response = await API.get(`/flows?id=${pinID}`);
     if (response instanceof Error || !response.ok) {
         return null;
     }

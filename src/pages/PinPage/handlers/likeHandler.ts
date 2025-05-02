@@ -8,7 +8,7 @@ export const likeHandler = async (pinID: string) => {
     if (!icon || !counter) return;
     const isLiked = icon.classList.contains('like_active');
 
-    const response = await API.post('/api/v1/like', { pin_id: Number(pinID) });
+    const response = await API.post('/like', { pin_id: Number(pinID) });
     if (!(response instanceof Response && response.ok)) {
         return;
     }

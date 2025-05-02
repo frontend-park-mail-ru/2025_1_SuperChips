@@ -13,7 +13,7 @@ export const savePinToBoard = async (pinID: string, boardName?: string) => {
         return;
     }
 
-    const response = await API.post(`/api/v1/boards/${id}/flows`, { flow_id: Number(pinID) });
+    const response = await API.post(`/boards/${id}/flows`, { flow_id: Number(pinID) });
     if (response instanceof Response && response.ok) {
         Toast('flow добавлен в вашу коллекцию', 'message');
         closeButton?.click();

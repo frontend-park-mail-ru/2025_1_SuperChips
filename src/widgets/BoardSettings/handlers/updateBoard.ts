@@ -23,7 +23,7 @@ export const updateBoard = async () => {
         return;
     }
 
-    const response = await API.put(`/api/v1/boards/${board.id}`, body);
+    const response = await API.put(`/boards/${board.id}`, body);
 
     if (response instanceof Response && response.ok) {
         BoardStorage.updateBoard(board.id, { is_private: privateCheckbox.checked });

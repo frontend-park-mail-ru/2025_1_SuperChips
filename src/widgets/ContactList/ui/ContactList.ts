@@ -1,3 +1,4 @@
+import type { IContact } from 'features/chat';
 import { closeContactList } from '../handlers/closeContactList';
 import template from './ContactList.hbs';
 import './ContactList.scss';
@@ -33,13 +34,6 @@ const body = {
         },
     ],
 };
-
-export interface IContact {
-    username: string;
-    public_name: string;
-    avatar: string;
-}
-
 
 export const ContactList = () => {
     const container = document.createElement('div');
