@@ -36,7 +36,7 @@ export const Navbar = async () => {
         navigate('login').finally();
     });
 
-    const anchorButton = navbar.querySelector('#scroll-to-top');
+    const anchorButton = navbar.querySelector('.navbar-logo');
     anchorButton?.addEventListener('click', goToFeed);
 
     const pfp = navbar.querySelector('.navbar__profile-picture');

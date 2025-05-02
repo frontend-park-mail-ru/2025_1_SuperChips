@@ -31,9 +31,6 @@ export const createPin = async () => {
         aboutInput.value = '';
         submitButton.disabled = false;
 
-        const btn = document.querySelector<HTMLImageElement>('#clear-button');
-        btn?.click();
-
         Toast('Flow был успешно создан', 'message', 5000);
 
         const body = await response.json();

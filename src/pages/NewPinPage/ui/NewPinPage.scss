@@ -92,17 +92,24 @@
             width: 100%;
             padding: 0 $mobile-horizontal-padding;
             justify-content: initial;
+            align-items: center;
         }
     }
 
-    .create-pin-button {
+    .description-wrapper, .create-pin-button, .create-pin-button {
         width: 100%;
+        max-width: 404px;
     }
     .description-box {
         margin-left: 0;
-        max-width: 100%
+        width: 100%;
+        max-width: 404px;
+
     }
     .about-textarea {
         height: 100px;
+    }
+    .delete-pin-button {
+        width: 100%;
     }
 }

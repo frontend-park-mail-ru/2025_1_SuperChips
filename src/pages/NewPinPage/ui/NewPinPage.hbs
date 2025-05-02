@@ -1,12 +1,12 @@
 <div class="new-pin-page" id="page">
     <div class="new-pin-form">
         {{#if edit}}
-            <div>
-                <img class="edit-pin__image" src="{{url}}" alt="{{description}}">
+            <div class="edit-pin__image">
+                <img src="{{url}}" alt="{{description}}">
             </div>
         {{/if}}
         <div class="description-box">
-            <div id="description-wrapper">
+            <div class="description-wrapper" id="description-wrapper">
                 {{#unless mobile}}<h1 class="header">{{header}}</h1>{{/unless}}
                 <form class="description-box_form" id="description-box_form">
                     <div class="input-placeholder"></div>
