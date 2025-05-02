@@ -78,6 +78,7 @@ class auth {
                 email: userData.email,
                 username: userData.username,
                 public_name: userData.username,
+                is_external: false,
             };
         }
 

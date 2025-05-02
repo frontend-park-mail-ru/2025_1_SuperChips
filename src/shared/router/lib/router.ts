@@ -119,7 +119,7 @@ const cleanup = (newHref: string) => {
     }
 
     const searchInput = document.querySelector<HTMLInputElement>('#search');
-    if (searchInput) {
+    if (searchInput && appState.lastPage === 'feed') {
         searchInput.value = '';
         searchFeedState.query = '';
         document.querySelector('.search-form__clear')?.classList.add('hidden');

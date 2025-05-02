@@ -2,6 +2,7 @@ import { Masonry } from 'shared/models/Masonry';
 import { fillFeed } from '../lib/fillFeed';
 import { registerScrollHandler } from 'features/scrollHandler';
 import { appState } from 'shared/router';
+import { fillSearchFeed, searchFeedState } from '../lib/fillSearchFeed';
 import feedTemplate from './FeedPage.hbs';
 import './feed.scss';
 
@@ -24,27 +25,27 @@ export const FeedPage = async () => {
     const scrollButton = page.querySelector('.scroll-to-top');
     scrollButton?.addEventListener('click', toTop);
 
-    registerScrollHandler(fillFeed);
 
-    const delayedFill = new MutationObserver(async () => {
+    setTimeout(async () => {
         const feed = document.querySelector<HTMLElement>('#feed');
         if (!feed) return;
+
         appState.masonryInstance = new Masonry(
             feed, {
                 itemSelector: '.pin',
                 gutter: appState.mobile ? 10 : 20,
             }
         );
-        await fillFeed();
-        await fillFeed();
-        delayedFill.disconnect();
-    });
 
-
-    const rootElement = document.getElementById('root');
-    if (rootElement) {
-        delayedFill.observe(rootElement, { childList: true });
-    }
+        if (searchFeedState.query === '') {
+            registerScrollHandler(fillFeed);
+            await fillFeed();
+            await fillFeed();
+        } else {
+            registerScrollHandler(fillSearchFeed);
+            await fillSearchFeed();
+        }
+    }, 0);
 
     return page;
 };
