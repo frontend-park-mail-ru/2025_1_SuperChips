@@ -1,3 +1,4 @@
+{{#if userData}}
 <div class="profile-page">
     <div class="profile">
         <div class="author-area">
@@ -24,27 +25,30 @@
             {{#unless own}}
             <div class="author-area__box-2">
                 <div class="author-area__box-2">
-                    <div class="author__profile-picture">
-                        {{#if author_pfp}}
-                            <img src="{{author_pfp}}" alt="profile picture" class="author__profile-picture">
+                    <div class="author">
+                        {{#if userData.avatar}}
+                            <img src="{{userData.avatar}}" alt="Profile Picture" class="author__profile-picture">
                         {{else}}
-                            <p class="bold header">{{shortUsername}}</p>
+                            <div class="author__profile-picture">
+                                <p>{{userData.public_name.[0]}}</p>
+                            </div>
                         {{/if}}
+                        <h1 class="author__name">{{userData.public_name}}</h1>
                     </div>
-                    <div class="author__name">
-                        <p class="bold label">@{{username}}</p>
-                    </div>
-                    <button class="author__subscribe-button" id="subscribe-{{username}}">
-                        <span>Подписаться</span>
+                    <button class="author__subscribe-button" id="subscribe-{{safeUsername}}">
+                        {{#if isSubscribed}}
+                            Отписаться
+                        {{else}}
+                            Подписаться
+                        {{/if}}
                     </button>
                 </div>
             </div>
             {{/unless}}
         </div>
         <div id="feed" class="profile__feed">
-            {{#if userBio}}
-            <div class="user-bio profile-bio-card">{{userBio}}</div>
-            {{/if}}
+            <!-- Контент будет загружен динамически -->
         </div>
     </div>
 </div>
+{{/if}}

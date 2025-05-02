@@ -1,23 +1,22 @@
 @use 'shared/styles/variables' as *;
 @use 'shared/styles/mixins' as *;
 
-
 .profile {
     grid-area: page;
     min-height: calc(100vh - $navbar-height);
+    padding: $spacing-lg $spacing-xl;
 
     &-page {
         @include main-page();
     }
 
     &__feed {
-        column-gap: $spacing-xl;
-        grid-area: page;
         display: flex;
-        justify-content: flex-start;
         flex-wrap: wrap;
+        gap: 20px;
         width: 100%;
         margin-top: $spacing-xl;
+        align-items: flex-start;
     }
 }
 
@@ -44,7 +43,7 @@
         color: #fff;
         display: flex;
         align-items: center;
-        gap: $spacing-lg; // Add gap for spacing between buttons
+        gap: $spacing-lg;
     }
 }
 
@@ -94,7 +93,6 @@
         }
     }
     
-    // Style for subscribe button (no icon)
     &__subscribe-button {
         background-color: $semi-transparent;
         border: none;
@@ -110,7 +108,6 @@
         }
     }
 
-    // Style for subscriptions button (with icon)
     &__subscriptions-button {
         display: flex;
         align-items: center;
@@ -134,47 +131,95 @@
     }
 }
 
-.profile-bio-card {
-    width: 210px; // Match pin width
+.pin, .description-pin {
+    width: 210px;
+    box-sizing: border-box;
+}
+
+.description-pin {
     border-radius: $border-radius;
-    background-color: $button-dark; // Match pin background
+    background-color: $button-dark;
     color: $text-light;
     font-size: $font-size-sm;
     padding: $spacing-md;
-    min-height: 150px; // Adjust min-height as needed
-    margin-bottom: 20px; // Match pin margin
-    transition: all 0.2s ease;
-    border: 1px solid transparent; // Start transparent
-    box-sizing: border-box; // Include padding and border in width
-    word-wrap: break-word; // Ensure text wraps
-    
-    &:hover {
-        border-color: rgba($white, 0.8);
-        background-color: $semi-transparent; // Slightly different hover from pin
+    margin-bottom: 0;
+    border: 1px solid transparent;
+    word-wrap: break-word;
+    cursor: default;
+    min-height: 40px;
+    max-width: 210px;
+    box-sizing: border-box;
+    transition: none;
+    .description-content p {
+        margin: 0;
+        line-height: 1.5;
+        display: block;
+        overflow: visible;
+        text-overflow: unset;
+        -webkit-line-clamp: unset;
+        -webkit-box-orient: unset;
     }
 }
 
-// Hide bio card when not on the 'flow' tab (requires JS to add/remove class)
-.profile__feed--boards .profile-bio-card {
-    display: none;
-}
-
 .user-bio {
+    position: sticky;
+    top: $spacing-xl;
+    width: 300px;
+    height: fit-content;
+    max-height: 300px;
+    overflow: hidden;
     border-radius: $border-radius;
     background-color: $transparent;
     color: $text-light;
     border: 1px solid rgba(70, 70, 70, 0.5);
     font-size: $font-size-sm;
     padding: $spacing-md;
-    min-height: 200px;
-    width: 100%;
-    max-width: 300px;
-    margin-bottom: $spacing-xl;
     transition: all 0.2s ease;
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: $spacing-xl;
+    
+    &.collapsed {
+        p {
+            display: -webkit-box;
+            -webkit-line-clamp: 6;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: $spacing-md;
+        }
+    }
+    
+    &.expanded {
+        max-height: none;
+        
+        p {
+            display: block;
+            margin-bottom: $spacing-md;
+        }
+    }
     
     &:hover {
         border-color: rgba($white, 0.8);
         background-color: $semi-transparent;
+        cursor: pointer;
+    }
+    
+    .expand-button {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: $spacing-sm;
+        margin-top: $spacing-sm;
+        background-color: transparent;
+        border: none;
+        color: $text-light;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        
+        &:hover {
+            color: $white;
+        }
     }
 }
 

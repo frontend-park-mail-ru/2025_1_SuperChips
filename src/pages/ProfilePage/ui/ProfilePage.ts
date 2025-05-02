@@ -13,79 +13,132 @@ import { appState, navigate } from 'shared/router';
 import ProfilePageTemplate from './ProfilePage.hbs';
 import './ProfilePage.scss';
 
-
-export const ProfilePage = async (username: string, tab: string): Promise<HTMLDivElement> => {
+export const ProfilePage = async (username: string, tab: string = 'pins'): Promise<HTMLDivElement> => {
     const page = document.createElement('div');
 
+    // Проверяем, просматриваем ли мы свой профиль или профиль другого пользователя
     const own = Auth.userData ? username === Auth.userData.username : false;
     const isPinTabActive = tab === 'pins';
     let userData;
 
+    // Проверяем, есть ли данные пользователя в кэше
     const isLastVisited = (
         ['profile', 'profilePins', 'profileBoards', null].includes(appState.lastPage)
-        && username === appState.lastVisited.username
+        && username === appState.lastVisited?.username
     );
 
-    if (own) {
-        userData = Auth.userData;
-    } else if (!isLastVisited) {
-        const response = await API.get(`/api/v1/users/${username}`);
-        if (!(response instanceof Response && response.ok)) return page;
-
-        const body = await response.json();
-        userData = body.data;
-        appState.lastVisited = body.data;
-    } else {
-        userData = appState.lastVisited;
-    }
-
-    const ok = await checkAvatar(userData.avatar);
-    const config = {
-        header: own ? 'Ваши flow' : userData.public_name,
-        username: username,
-        shortUsername: username[0]?.toUpperCase(),
-        author_pfp: ok ? userData.avatar : null,
-        own: own,
-        showCreateBoardButton: !isPinTabActive && own,
-        userBio: userData.about || null,
-    };
-
-    page.innerHTML = ProfilePageTemplate(config);
-
-    const tabs: ITabItem[] = [
-        { id: 'pins', title: 'Flow', active: isPinTabActive },
-        { id: 'boards', title: 'Доски', active: !isPinTabActive }
-    ];
-
-    const newTabBar = TabBar(tabs, 'horizontal', (tabId) => {
-        profileTabBarHandler(tabId, username);
-    });
-    const tabBar = page.querySelector('.tab-bar-placeholder');
-    tabBar?.replaceWith(newTabBar);
-
-    const newBoard = page.querySelector('.create-board');
-    newBoard?.addEventListener('click', () => BoardPopup('create'));
-    
-    // Add event listener for subscriptions button
-    const subscriptionsButton = page.querySelector('#subscriptions-button');
-    subscriptionsButton?.addEventListener('click', () => {
-        navigate(`${username}/subscriptions`);
-    });
-
-    const feed = page.querySelector<IFeed>('.profile__feed');
-    if (!feed) return page;
-
-
-    const delayedFill: MutationObserver = new MutationObserver(async () => {
-        if (isPinTabActive) {
-            await UserPins(username);
+    try {
+        if (own) {
+            userData = Auth.userData;
+        } else if (!isLastVisited) {
+            const response = await API.get(`/api/v1/users/${username}`);
+            if (!(response instanceof Response && response.ok)) {
+                console.error('Failed to fetch user data');
+                return page;
+            }
+            
+            const body = await response.json();
+            userData = body.data;
+            appState.lastVisited = body.data;
         } else {
-            await UserBoards(username);
+            userData = appState.lastVisited;
         }
-        delayedFill.disconnect();
-    });
 
-    delayedFill.observe(root, { childList: true });
+        if (!userData) {
+            console.error('No user data available');
+            return page;
+        }
 
-    return page.firstChild as HTMLDivElement;
+        const ok = await checkAvatar(userData.avatar);
+        const config = {
+            header: own ? 'Ваши flow' : userData.public_name,
+            username: username,
+            shortUsername: username[0]?.toUpperCase(),
+            author_pfp: ok ? userData.avatar : null,
+            own: own,
+            showCreateBoardButton: !isPinTabActive && own,
+            userBio: userData.about || null,
+            isSubscribed: userData.isSubscribed || false,
+            safeUsername: username.replace(/[^a-zA-Z0-9_-]/g, '-'),
+            userData: userData // Добавляем данные пользователя в шаблон
+        };
+
+        page.innerHTML = ProfilePageTemplate(config);
+
+        // Создаем табы
+        const tabs: ITabItem[] = [
+            { id: 'pins', title: 'Flow', active: isPinTabActive },
+            { id: 'boards', title: 'Доски', active: !isPinTabActive }
+        ];
+
+        const newTabBar = TabBar(tabs, 'horizontal', (tabId) => {
+            profileTabBarHandler(tabId, username);
+        });
+        const tabBar = page.querySelector('.tab-bar-placeholder');
+        tabBar?.replaceWith(newTabBar);
+
+        // Обработчик кнопки создания доски
+        const newBoard = page.querySelector('.create-board');
+        newBoard?.addEventListener('click', () => BoardPopup('create'));
+        
+        // Обработчик кнопки подписок
+        const subscriptionsButton = page.querySelector('#subscriptions-button');
+        subscriptionsButton?.addEventListener('click', () => {
+            navigate(`${username}/subscriptions`);
+        });
+
+        // Обработчик кнопки подписки
+        const subscribeButton = page.querySelector(`#subscribe-${config.safeUsername}`);
+        if (subscribeButton) {
+            subscribeButton.addEventListener('click', async () => {
+                try {
+                    const response = await API.post(`/api/v1/users/${username}/subscribe`);
+                    if (response instanceof Response && response.ok) {
+                        const isSubscribed = subscribeButton.textContent?.trim() === 'Подписаться';
+                        subscribeButton.textContent = isSubscribed ? 'Отписаться' : 'Подписаться';
+                        subscribeButton.classList.toggle('subscribed', isSubscribed);
+                    }
+                } catch (error) {
+                    console.error('Error toggling subscription:', error);
+                }
+            });
+        }
+
+        // Загружаем контент
+        const feed = page.querySelector<IFeed>('.profile__feed');
+        if (feed) {
+            const delayedFill: MutationObserver = new MutationObserver(async () => {
+                try {
+                    if (isPinTabActive) {
+                        // Создаем элемент описания
+                        if (userData.about) {
+                            const description = document.createElement('div');
+                            description.classList.add('pin', 'description-pin');
+                            description.innerHTML = `
+                                <div class="description-content">
+                                    <p>${userData.about}</p>
+                                </div>
+                            `;
+                            feed.appendChild(description);
+                        }
+                        await UserPins(username);
+                    } else {
+                        await UserBoards(username);
+                    }
+                } catch (error) {
+                    console.error('Error loading content:', error);
+                    feed.innerHTML = '<div class="error-message">Не удалось загрузить контент</div>';
+                }
+                delayedFill.disconnect();
+            });
+
+            delayedFill.observe(root, { childList: true });
+        }
+
+        return page.firstChild as HTMLDivElement;
+    } catch (error) {
+        console.error('Error in ProfilePage:', error);
+        page.innerHTML = '<div class="error-message">Произошла ошибка при загрузке профиля</div>';
+        return page;
+    }
 };
