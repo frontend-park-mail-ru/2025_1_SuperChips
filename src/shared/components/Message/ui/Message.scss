@@ -13,6 +13,7 @@
     min-height: 44px;
     border-radius: $border-radius;
     padding: $spacing-sm;
+    margin-bottom: 6px;
 
     &__time {
         display: inline-block;
@@ -36,8 +37,19 @@
 
 .message {
     background-color: #333;
-}
 
+    &__sent-icon {
+        content: url('/public/icons/chat-sent.svg');
+        width: 12px;
+        height: 12px;
+    }
+
+    &__read-icon {
+        content: url('/public/icons/chat-read.svg');
+        width: 12px;
+        height: 14px;
+    }
+}
 
 .message-own {
     background: $gradient-purple;

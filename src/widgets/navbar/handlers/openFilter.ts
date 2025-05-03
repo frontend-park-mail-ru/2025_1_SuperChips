@@ -9,9 +9,9 @@ export const openFilter = () => {
     if (appState.activePage !== 'feed' || appState.isFilterOpen) return;
     appState.isFilterOpen = true;
 
-    if (appState.isChatOpen) {
+    if (appState.chat.open) {
         closeChatList();
-        appState.isChatOpen = false;
+        appState.chat.open = false;
     }
 
     root.appendChild(FeedFilter());

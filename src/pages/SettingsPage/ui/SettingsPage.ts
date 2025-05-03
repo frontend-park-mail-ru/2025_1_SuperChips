@@ -46,7 +46,7 @@ export const SettingsPage = async () => {
 
     page.appendChild(mainContent);
 
-    document.querySelector('#settings')?.classList.add('settings-icon-active');
+    document.querySelector<HTMLButtonElement>('#settings')?.classList.add('active');
 
     return page;
 };

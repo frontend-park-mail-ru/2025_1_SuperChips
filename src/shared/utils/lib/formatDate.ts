@@ -1,6 +1,4 @@
-type dateString = string | null;
-
-export const formatDateToISO = (dateString: dateString) => {
+export const formatDateToISO = (dateString: string | null) => {
     if (!dateString) {
         return '';
     }
@@ -13,10 +11,10 @@ export const formatDateToISO = (dateString: dateString) => {
 };
 
 
-export const formatDateToReadable = (dateInput: dateString) => {
+export const formatDateToReadable = (dateInput: string | null | Date) => {
     if (!dateInput) return '';
 
-    const date = new Date(dateInput);
+    const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
     const now = new Date();
 
     if (isSameDay(date, now)) {

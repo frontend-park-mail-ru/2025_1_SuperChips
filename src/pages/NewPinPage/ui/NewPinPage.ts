@@ -48,7 +48,7 @@ export const NewPinPage = async () => {
     const toggle = page.querySelector('.toggle-placeholder');
     toggle?.replaceWith(Toggle('isPrivate'));
 
-    document.querySelector('#newPin')?.classList.add('new-pin-icon-active');
+    document.querySelector('#newPin')?.classList.add('active');
 
     return page;
 };

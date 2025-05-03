@@ -1,6 +1,7 @@
 import { Chat } from 'widgets/Chat';
+import { ChatStorage } from 'features/chat';
 
-export const openChat = (event: Event) => {
+export const openChat = async (event: Event) => {
     const target = event.target as HTMLElement;
 
     if (
@@ -12,7 +13,7 @@ export const openChat = (event: Event) => {
     }
 
     const preview = target.closest('.chat-list-item') ||
-        target.closest('.contact-preview');
+        target.closest('.contact-list__item');
 
     const container = document.querySelector('.chat-container');
     if (!container || !preview) return;
@@ -25,6 +26,20 @@ export const openChat = (event: Event) => {
         chatList.style.display = 'none';
     }
 
-    const chatID = preview.id.split('-')[1];
+    let chatID = '';
+    if (preview.classList.contains('chat-list-item')) {
+        chatID = preview.id.split('-')[1];
+    } else if (preview.classList.contains('contact-list__item')) {
+        const username = preview.id.split('-')[1];
+        const chat = ChatStorage.getChatByUsername(username);
+        if (!chat) {
+            const newChatID = await ChatStorage.newChat(username);
+            if (!newChatID) return;
+            chatID = newChatID.toString();
+        } else {
+            chatID = chat.id;
+        }
+    }
+
     Chat(chatID).finally();
 };

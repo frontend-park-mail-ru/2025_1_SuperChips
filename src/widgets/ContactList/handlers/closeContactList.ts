@@ -1,7 +1,8 @@
-import { appState } from 'shared/router';
+export const closeContactList = (event: Event) => {
+    if (event instanceof KeyboardEvent && event.key !== 'Escape') {
+        return;
+    }
 
-export const closeContactList = () => {
-    appState.isChatOpen = false;
     const chatList = document.querySelector<HTMLDivElement>('#chat-list');
     if (chatList) {
         chatList.style.display = 'flex';

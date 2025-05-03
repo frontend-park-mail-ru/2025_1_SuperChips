@@ -4,10 +4,12 @@ import { toggleScroll } from 'widgets/BoardPopup';
 import { closeFilter } from 'widgets/navbar';
 import { root } from 'app/app';
 import { appState } from 'shared/router';
+import { ChatStorage } from 'features/chat';
 
 
 export const openChatList = () => {
-    appState.isChatOpen = true;
+    appState.chat.open = true;
+    ChatStorage.sortChatList();
     const container = document.createElement('div');
     container.classList.add('chat-container');
     container.id = 'chat-container';
@@ -16,8 +18,8 @@ export const openChatList = () => {
 
     if (appState.mobile) {
         toggleScroll('disabled');
-        document.querySelector('#settings')?.classList.remove('settings-icon-active');
-        document.querySelector('#newPin')?.classList.remove('new-pin-icon-active');
+        document.querySelector('#settings')?.classList.remove('active');
+        document.querySelector('#newPin')?.classList.remove('active');
     }
 
     if (appState.isFilterOpen) {
@@ -26,12 +28,13 @@ export const openChatList = () => {
     }
 
     const chatList = ChatList();
+    if (!chatList) return;
     container.appendChild(chatList);
 
     const chatButton = document.querySelector('#chats');
     if (chatButton) {
+        chatButton.classList.add('active');
         chatButton.addEventListener('click', closeChatList);
         chatButton.removeEventListener('click', openChatList);
-        chatButton.classList.add('chat-icon-active');
     }
 };

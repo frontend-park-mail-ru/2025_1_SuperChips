@@ -17,20 +17,25 @@
                 <div class="chat-preview__box-1">
                     <span class="chat-preview__box-1__username">{{this.username}}</span>
                     <div class="chat-preview__box-1__date">
-                        {{#if this.sent}}
+                        {{#if this.lastMessage.sent}}
                             <img src="/public/icons/chat-sent.svg" alt="">
-                        {{else if this.read}}
+                        {{else if this.lastMessage.read}}
                             <img src="/public/icons/chat-read.svg" alt="">
                         {{/if}}
-                        {{this.time}}
+                        {{this.lastMessage.time}}
                     </div>
                 </div>
                 <div class="chat-preview__box-2">
             <span class="chat-preview__box-2__message">
-                {{#if own}}
-                    Вы: {{this.message}}
-                {{else}}
-                    {{this.message}}
+                {{#if this.draft}}
+                    <span class="chat__draft">Черновик: </span>
+                    <span>{{this.draft.message}}</span>
+                {{else if this.lastMessage}}
+                    {{#if own}}
+                        Вы: {{this.lastMessage.message}}
+                    {{else}}
+                        {{this.lastMessage.message}}
+                    {{/if}}
                 {{/if}}
             </span>
                     <div class="chat-preview__box-2__message">
@@ -43,5 +48,4 @@
             </div>
         </div>
     {{/each}}
-
 </div>
