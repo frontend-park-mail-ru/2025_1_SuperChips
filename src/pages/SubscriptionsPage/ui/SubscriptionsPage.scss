@@ -38,16 +38,6 @@
     margin-top: $spacing-lg;
 }
 
-.error-message {
-    color: $error-color;
-    font-size: $font-size-md;
-    text-align: center;
-    padding: $spacing-xl;
-    margin-top: $spacing-lg;
-    background-color: rgba($error-color, 0.1);
-    border-radius: $border-radius;
-}
-
 .author__subscribe-button {
     display: flex;
     align-items: center;

@@ -115,7 +115,8 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
 
             if (!(subResponse instanceof Response) || !subResponse.ok) {
                 console.error('Error in ProfilePage:', 'Subscription action failed');
-                page.innerHTML = '<div class="error-message">Произошла ошибка при загрузке профиля</div>';
+                Toast('Произошла ошибка при загрузке профиля', 'error');
+                page.innerHTML = '';
                 return page;
             }
 

@@ -97,7 +97,8 @@ async function loadUsers() {
     const response = await API.get(endpoint);
 
     if (!(response instanceof Response)) {
-        subPageState.container.innerHTML = '<div class="error-message">Не удалось загрузить пользователей</div>';
+        Toast('Не удалось загрузить пользователей', 'error');
+        subPageState.container.innerHTML = '';
         removeScrollHandler();
         return;
     }
@@ -112,7 +113,8 @@ async function loadUsers() {
             removeScrollHandler();
             return;
         }
-        subPageState.container.innerHTML = '<div class="error-message">Не удалось загрузить пользователей</div>';
+        Toast('Не удалось загрузить пользователей', 'error');
+        subPageState.container.innerHTML = '';
         removeScrollHandler();
         return;
     }
