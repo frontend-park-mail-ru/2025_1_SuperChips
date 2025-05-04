@@ -14,6 +14,11 @@ export const openFilter = () => {
         appState.chat.open = false;
     }
 
+    if (appState.mobile) {
+        const goBack = document.querySelector<HTMLButtonElement>('#go-back-button');
+        if (goBack) goBack.disabled = false;
+    }
+
     root.appendChild(FeedFilter());
 
     const filter = document.querySelector<HTMLElement>('#filter-button');

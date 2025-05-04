@@ -1,11 +1,12 @@
-import { appState, navigate } from 'shared/router';
 import { Navbar } from 'widgets/navbar';
 import { Sidebar } from 'widgets/sidebar';
 import { checkMobile } from 'shared/utils';
+import { appState, navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
+import { ChatStorage } from '../features/chat';
 import './styles/fonts.scss';
 import './styles/common.scss';
-import { ChatStorage } from '../features/chat';
+import { Toast } from '../shared/components/Toast';
 
 
 export const root = document.getElementById('root') as HTMLDivElement;
@@ -27,12 +28,12 @@ export const App = async () => {
     ChatStorage.fetchChatList().finally();
     ChatStorage.fetchContactList().finally();
 
-
+    Toast('писяпопа', 'success');
     //TODO remove
     {
         // setTimeout(() => {
         //     document.querySelector<HTMLElement>('#chats')?.click();
-        // document.querySelector<HTMLElement>('#chat-4')?.click();
+        //     document.querySelector<HTMLElement>('#chat-4')?.click();
         // }, 0);
 
         setInterval(() => {
@@ -52,7 +53,7 @@ export const App = async () => {
             if (!chat) return;
 
             ChatStorage.getMessage('5', {
-                message: 'zalupalupa',
+                message: 'Wello Horld!',
                 timestamp: new Date(),
                 sender: chat.username,
                 read: false,

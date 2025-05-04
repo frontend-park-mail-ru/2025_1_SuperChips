@@ -5,11 +5,11 @@
   bottom: 20px;
   left: 50%;
   transform: translate(-50%, -20px);
-  background-color: #fff;
+  background-color: #eee;
   padding: 12px 24px;
   border-radius: 20px;
   z-index: 1000;
-    animation: ToastFadeIn 0.3s ease-out;
+  animation: ToastFadeIn 0.3s ease-out;
   min-height: 48px;
   max-height: 200px;
   max-width: 500px;
@@ -39,11 +39,11 @@
 }
 
 .toast-error {
-  color: #ff4a4a;
+  color: #ff0000;
 }
 
 .toast-success {
-  color: #93c47d;
+  color: #32CD32;
 }
 
 .toast-message {

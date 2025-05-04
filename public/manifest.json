@@ -4,8 +4,8 @@
   "description": "Приложение для поиска вдохновения",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#666666",
-  "theme_color": "#ffffff",
+  "background_color": "#00000000",
+  "theme_color": "#00000000",
   "icons": [
     {
       "src": "/public/icons",

@@ -10,6 +10,11 @@ export const closeFilter = () => {
 
     if (!feed || !feedFilter) return;
 
+    if (appState.mobile) {
+        const goBack = document.querySelector<HTMLButtonElement>('#go-back-button');
+        if (goBack) goBack.disabled = false;
+    }
+
     feedFilter.style.position = '';
     feedFilter.style.animation = 'FadeOutHorizontalLeft 0.3s ease-out';
 

@@ -55,7 +55,7 @@ export const Chat = async (chatID: string) => {
     backButton?.addEventListener('click', closeChat);
     window.addEventListener('keydown', closeChat);
 
-    const messageBox = container.querySelector('.chat__messages');
+    const messageBox = container.querySelector<HTMLElement>('.chat__messages');
     if (!messageBox) return;
 
     const currentUser = Auth.userData.username;
@@ -78,9 +78,17 @@ export const Chat = async (chatID: string) => {
     const textarea = container.querySelector<HTMLTextAreaElement>('#chat-input');
     const charCounter = container.querySelector<HTMLDivElement>('#chat-char-counter');
 
+    const chatInput = container.querySelector('#chat-input');
+    if (chatInput) {
+        // 120 - навбар и сайдбар, 44 - хэдер, остальное отступ
+        messageBox.style.maxHeight = `${window.innerHeight - 220 - chatInput.clientHeight}px`;
+    }
+
     textarea?.addEventListener('keydown', chatSubmitHandler);
     textarea?.addEventListener('input', textareaResizeHandler);
-    textarea?.focus();
+    if (!appState.mobile) {
+        textarea?.focus();
+    }
 
     if (textarea && charCounter && chat.draft) {
         textarea.value = chat.draft.message;

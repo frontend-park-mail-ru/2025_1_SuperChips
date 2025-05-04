@@ -143,6 +143,7 @@
 @media (max-width: $mobile-width) {
     .chat {
         &-container {
+            max-height: calc(100vh - $navbar-height-mobile + $sidebar-height-mobile);
             left: 0;
             top: $navbar-height-mobile;
             width: 100%;

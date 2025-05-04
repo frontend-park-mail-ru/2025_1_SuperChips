@@ -17,6 +17,9 @@ export const openChatList = () => {
     root.append(container);
 
     if (appState.mobile) {
+        const goBack = document.querySelector<HTMLButtonElement>('#go-back-button');
+        if (goBack) goBack.disabled = false;
+
         toggleScroll('disabled');
         document.querySelector('#settings')?.classList.remove('active');
         document.querySelector('#newPin')?.classList.remove('active');

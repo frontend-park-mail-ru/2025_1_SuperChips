@@ -1,5 +1,6 @@
 import { logoutHandler } from '../handlers/logout';
 import { openChatList } from '../handlers/openChatList';
+import { handleBackButton } from '../handlers/handleBackButton';
 import { appState, navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import sidebarTemplate from './sidebar.hbs';
@@ -67,13 +68,7 @@ export const Sidebar = async () => {
     });
 
     const backButton = sidebar.querySelector('#go-back-button');
-    backButton?.addEventListener('click', () => {
-        if (appState.lastPage) {
-            history.back();
-        } else {
-            navigate('feed');
-        }
-    });
+    backButton?.addEventListener('click', handleBackButton);
 
     const chatButton = sidebar.querySelector('#chats');
     chatButton?.addEventListener('click', openChatList);

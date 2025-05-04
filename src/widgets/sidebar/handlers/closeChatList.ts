@@ -11,6 +11,9 @@ export const closeChatList = () => {
 
     appState.chat.open = false;
     if (appState.mobile) {
+        const goBack = document.querySelector<HTMLButtonElement>('#go-back-button');
+        if (goBack) goBack.disabled = true;
+
         toggleScroll('enabled');
         if (appState.activePage === 'newPin') {
             document.querySelector('#newPin')?.classList.add('active');
