@@ -1,6 +1,13 @@
 <div class="one-pin-page" id="page">
     <div class="one-pin__box-1">
         <img class="one-pin__box-1__pin" src="{{media_url}}" id="pin-{{flow_id}}" alt="{{description}}">
+        {{#if mobile}}
+            {{#if own}}
+                <div class="one-pin__edit-button" id="edit-pin">
+                    <img src="/public/icons/edit.svg" alt="edit pin">
+                </div>
+            {{/if}}
+        {{/if}}
     </div>
     <div class="one-pin__box-2">
         {{#if hasText}}
@@ -37,9 +44,11 @@
                 </div>
                 <div class="one-pin__buttons__box-2">
                     {{#if own}}
-                        <div class="one-pin__edit-button" id="edit-pin">
-                            <img src="/public/icons/edit.svg" alt="edit pin">
-                        </div>
+                        {{#unless mobile}}
+                            <div class="one-pin__edit-button" id="edit-pin">
+                                <img src="/public/icons/edit.svg" alt="edit pin">
+                            </div>
+                        {{/unless}}
                     {{/if}}
                     <div class="one-pin__save-block">
                         <div class="one-pin__dropdown-block" id="dropdown-button">

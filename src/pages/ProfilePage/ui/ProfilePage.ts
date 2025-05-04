@@ -1,18 +1,17 @@
 import type { ITabItem } from 'shared/components/tabBar';
 import { TabBar } from 'shared/components/tabBar';
-import type { IFeed } from 'pages/FeedPage';
 import { checkAvatar } from 'shared/utils';
 import { profileTabBarHandler } from '../handlers/tabBarHandler';
 import { BoardPopup } from 'widgets/BoardPopup';
 import { UserPins } from 'widgets/UserPins';
 import { UserBoards } from 'widgets/UserBoard';
+import { Toast } from 'shared/components/Toast';
 import { Auth } from 'features/authorization';
-import { root } from 'app/app';
 import { API } from 'shared/api';
 import { appState, navigate } from 'shared/router';
-import { Toast } from 'shared/components/Toast';
 import ProfilePageTemplate from './ProfilePage.hbs';
 import './ProfilePage.scss';
+
 
 interface IUserData {
     username: string;
@@ -23,6 +22,7 @@ interface IUserData {
     isSubscribed?: boolean;
 }
 
+
 export const ProfilePage = async (username: string, tab: string = 'pins'): Promise<HTMLDivElement> => {
     const page = document.createElement('div');
 
@@ -31,141 +31,127 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
     let userData: IUserData | undefined;
 
     const isLastVisited = (
-        ['profile', 'profilePins', 'profileBoards', null].includes(appState.lastPage)
-        && username === appState.lastVisited?.username
+        !!appState.lastPage &&
+        ['profile', 'profilePins', 'profileBoards'].includes(appState.lastPage)
+        && username === appState.lastVisited.username
     );
 
-    try {
-        if (own) {
-            userData = Auth.userData as IUserData;
-        } else if (!isLastVisited) {
-            const response = await API.get(`/api/v1/users/${username}`);
-            if (!(response instanceof Response && response.ok)) {
-                console.error('Failed to fetch user data');
-                return page;
-            }
-            
-            const body = await response.json();
-            userData = body.data as IUserData;
-            appState.lastVisited = body.data;
-        } else {
-            userData = appState.lastVisited as IUserData;
-        }
-
-        if (!userData) {
-            console.error('No user data available');
+    if (own) {
+        userData = Auth.userData as IUserData;
+    } else if (!isLastVisited) {
+        const response = await API.get(`/api/v1/users/${username}`);
+        if (!(response instanceof Response && response.ok)) {
+            console.error('Failed to fetch user data');
             return page;
         }
 
-        let isSubscribed = false;
-        if (Auth.userData && !own) {
-            const followingResponse = await API.get(`/api/v1/profile/following?page=1&size=20`);
-            if (followingResponse instanceof Response && followingResponse.ok) {
-                const followingData = await followingResponse.json();
-                isSubscribed = followingData.data.some((followingUser: IUserData) => followingUser.username === username);
-            }
+        const body = await response.json();
+        userData = body.data as IUserData;
+        appState.lastVisited = body.data;
+    } else {
+        userData = appState.lastVisited as IUserData;
+    }
+
+    if (!userData) {
+        console.error('No user data available');
+        return page;
+    }
+
+    let isSubscribed = false;
+    if (Auth.userData && !own) {
+        const followingResponse = await API.get('/api/v1/profile/following?page=1&size=20');
+        if (followingResponse instanceof Response && followingResponse.ok) {
+            const followingData = await followingResponse.json();
+            isSubscribed = followingData.data.some((followingUser: IUserData) => followingUser.username === username);
         }
+    }
 
-        const ok = await checkAvatar(userData.avatar || undefined);
-        const config = {
-            header: own ? 'Ваши flow' : userData.public_name,
-            username: username,
-            shortUsername: username[0]?.toUpperCase(),
-            author_pfp: ok ? userData.avatar : null,
-            own: own,
-            showCreateBoardButton: !isPinTabActive && own,
-            userBio: userData.about || null,
-            isSubscribed: isSubscribed,
-            safeUsername: username.replace(/[^a-zA-Z0-9_-]/g, '-'),
-            userData: {
-                ...userData,
-                followersCount: userData.followersCount || 0
-            }
-        };
-
-        page.innerHTML = ProfilePageTemplate(config);
-
-        const tabs: ITabItem[] = [
-            { id: 'pins', title: 'Flow', active: isPinTabActive },
-            { id: 'boards', title: 'Доски', active: !isPinTabActive }
-        ];
-
-        const newTabBar = TabBar(tabs, 'horizontal', (tabId) => {
-            profileTabBarHandler(tabId, username);
-        });
-        const tabBar = page.querySelector('.tab-bar-placeholder');
-        tabBar?.replaceWith(newTabBar);
-
-        const newBoard = page.querySelector('.create-board');
-        newBoard?.addEventListener('click', () => BoardPopup('create'));
-        
-        const subscriptionsButton = page.querySelector('#subscriptions-button');
-        subscriptionsButton?.addEventListener('click', () => {
-            navigate(`${username}/subscriptions`);
-        });
-
-        const subscribeButton = page.querySelector(`#subscribe-${config.safeUsername}`);
-        if (subscribeButton) {
-            subscribeButton.addEventListener('click', async () => {
-                try {
-                    const subResponse = isSubscribed 
-                        ? await API.delete('/api/v1/subscription', { target_user: username })
-                        : await API.post('/api/v1/subscription', { target_user: username });
-                    
-                    if (!(subResponse instanceof Response) || !subResponse.ok) {
-                        throw new Error('Subscription action failed');
-                    }
-
-                    isSubscribed = !isSubscribed;
-                    subscribeButton.textContent = isSubscribed ? 'Отписаться' : 'Подписаться';
-                    subscribeButton.classList.toggle('subscribed', isSubscribed);
-                    
-                    Toast(
-                        isSubscribed 
-                            ? `Вы подписались на ${userData.public_name || username}` 
-                            : `Вы отписались от ${userData.public_name || username}`,
-                        'success'
-                    );
-                } catch (error) {
-                    console.error('Error toggling subscription:', error);
-                    Toast('Не удалось выполнить действие', 'error');
-                }
-            });
+    const ok = await checkAvatar(userData.avatar || undefined);
+    const config = {
+        header: own ? 'Ваши flow' : userData.public_name,
+        username: username,
+        shortUsername: username[0]?.toUpperCase(),
+        author_pfp: ok ? userData.avatar : null,
+        own: own,
+        showCreateBoardButton: !isPinTabActive && own,
+        userBio: userData.about || null,
+        isSubscribed: isSubscribed,
+        safeUsername: username.replace(/[^a-zA-Z0-9_-]/g, '-'),
+        mobile: appState.mobile,
+        userData: {
+            ...userData,
+            followersCount: userData.followersCount || 0
         }
+    };
 
-        const feed = page.querySelector<IFeed>('.profile__feed');
-        if (feed) {
-            const delayedFill: MutationObserver = new MutationObserver(async () => {
-                try {
-                    if (isPinTabActive) {
-                        if (userData?.about) {
-                            const description = document.createElement('div');
-                            description.classList.add('pin', 'description-pin');
-                            description.innerHTML = `
+    page.innerHTML = ProfilePageTemplate(config);
+
+    const tabs: ITabItem[] = [
+        { id: 'pins', title: 'Flow', active: isPinTabActive },
+        { id: 'boards', title: 'Доски', active: !isPinTabActive }
+    ];
+
+    const newTabBar = TabBar(tabs, 'horizontal', (tabId) => {
+        profileTabBarHandler(tabId, username);
+    });
+    const tabBar = page.querySelector('.tab-bar-placeholder');
+    tabBar?.replaceWith(newTabBar);
+
+    const newBoard = page.querySelector('.create-board');
+    newBoard?.addEventListener('click', () => BoardPopup('create'));
+
+    const subscriptionsButton = page.querySelector('#subscriptions-button');
+    subscriptionsButton?.addEventListener('click', () => {
+        navigate(`${username}/subscriptions`);
+    });
+
+
+    const subscribeButton = page.querySelector(`#subscribe-${config.safeUsername}`);
+    if (subscribeButton) {
+        subscribeButton.addEventListener('click', async () => {
+            const subResponse = isSubscribed
+                ? await API.delete('/api/v1/subscription', { target_user: username })
+                : await API.post('/api/v1/subscription', { target_user: username });
+
+            if (!(subResponse instanceof Response) || !subResponse.ok) {
+                console.error('Error in ProfilePage:', 'Subscription action failed');
+                page.innerHTML = '<div class="error-message">Произошла ошибка при загрузке профиля</div>';
+                return page;
+            }
+
+            isSubscribed = !isSubscribed;
+            subscribeButton.textContent = isSubscribed ? 'Отписаться' : 'Подписаться';
+            subscribeButton.classList.toggle('subscribed', isSubscribed);
+
+            Toast(
+                isSubscribed
+                    ? `Вы подписались на ${userData.public_name || username}`
+                    : `Вы отписались от ${userData.public_name || username}`,
+                'success'
+            );
+        });
+    }
+
+    const feed = page.querySelector('.profile__feed');
+    if (feed) {
+        requestAnimationFrame(async () => {
+            if (isPinTabActive) {
+                if (userData?.about) {
+                    const description = document.createElement('div');
+                    description.classList.add('pin', 'description-pin');
+                    description.innerHTML = `
                                 <div class="description-content">
                                     <p>${userData.about}</p>
                                 </div>
                             `;
-                            feed.appendChild(description);
-                        }
-                        await UserPins(username);
-                    } else {
-                        await UserBoards(username);
-                    }
-                } catch (error) {
-                    console.error('Error loading content:', error);
-                    feed.innerHTML = '<div class="error-message">Не удалось загрузить контент</div>';
+                    feed.appendChild(description);
                 }
-                delayedFill.disconnect();
-            });
-
-            delayedFill.observe(root, { childList: true });
-        }
-
-        return page.firstChild as HTMLDivElement;
-    } catch (error) {
-        console.error('Error in ProfilePage:', error);
-        page.innerHTML = '<div class="error-message">Произошла ошибка при загрузке профиля</div>';
-        return page;
+                await UserPins(username);
+            } else {
+                await UserBoards(username);
+            }
+        });
     }
+
+    return page.firstChild as HTMLDivElement;
 };

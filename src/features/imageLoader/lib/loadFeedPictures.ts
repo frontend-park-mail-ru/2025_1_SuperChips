@@ -1,7 +1,7 @@
 import type { ILoadedPictures } from '../model/types';
-import { debouncedFeedScroll } from 'pages/FeedPage';
 import { API } from 'shared/api';
 import { feedState } from 'pages/FeedPage/ui/FeedPage';
+import { removeScrollHandler } from 'features/scrollHandler';
 
 
 /**
@@ -19,7 +19,7 @@ export const loadFeedPictures = async (pageNum: number): Promise<ILoadedPictures
     }
 
     if (response.status === 404) {
-        window.removeEventListener('scroll', debouncedFeedScroll);
+        removeScrollHandler();
         return { status: 404 };
     }
 

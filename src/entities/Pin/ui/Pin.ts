@@ -1,26 +1,37 @@
 import type { IPinProps } from '../model/types';
 import { PinDropdown } from 'widgets/PinDropdown';
-import { navigate } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 import { savePinToBoard } from '../handlers/savePinToBoard';
 import { removePinFromBoard } from '../handlers/removePinFromBoard';
 import { Auth } from 'features/authorization';
 import { BoardStorage } from 'features/boardLoader';
+import { USER_SAVED_PINS_BOARD } from 'shared/config/constants';
 import './Pin.scss';
 import template from './Pin.hbs';
-import { USER_SAVED_PINS_BOARD } from 'shared/config/constants';
+import { getWidthBySelector } from 'shared/utils';
 
 
 export const Pin = (params: IPinProps) => {
     const container = document.createElement('div');
-
     const config = {
         ...params,
         authorized: !!Auth.userData,
         mutable: params.canDelete || params.canRemove,
         boardToSave: BoardStorage.boardToSave === USER_SAVED_PINS_BOARD ? 'Мои flow' : BoardStorage.boardToSave,
+        mobile: appState.mobile,
     };
 
     container.innerHTML = template(config);
+
+    const pin = container.querySelector('.pin') as HTMLDivElement;
+    pin.addEventListener('click', () => navigate(`flow/${config.pinID}`));
+
+
+    const pinWidth = getWidthBySelector('.pin');
+    if (params.width && params.height) {
+        pin.style.width = pinWidth + 'px';
+        pin.style.height = (params.height * pinWidth) / params.width + 'px';
+    }
 
     const dropdownButton = container.querySelector('.dropdown-block');
     dropdownButton?.addEventListener('click', (event) => {
@@ -50,9 +61,5 @@ export const Pin = (params: IPinProps) => {
             navigate(`flow/edit/${params.pinID}`).finally();
         });
     }
-
-    const pin = container.querySelector('.pin') as HTMLDivElement;
-    pin.addEventListener('click', () => navigate(`flow/${config.pinID}`));
-
     return pin;
 };

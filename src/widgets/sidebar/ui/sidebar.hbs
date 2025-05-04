@@ -1,5 +1,6 @@
-<a
-        class="go-back-button"
+{{#unless mobile}}
+    <button
+            class="{{#if mobile}}sidebar-button{{else}}go-back-button{{/if}}"
         id="go-back-button"
         aria-label="go back"
 >
@@ -8,11 +9,11 @@
             alt="go back"
             class="sidebar-button__icon"
     >
-</a>
-
+    </button>
+{{/unless}}
 <div class="sidebar__button-container">
     {{#each buttons}}
-        <a
+        <button
             {{#if this.active}}
                 class="sidebar-button"
             {{else}}
@@ -26,6 +27,6 @@
                 alt="{{this.alt}}"
                 class="sidebar-button__icon"
             />
-        </a>
+        </button>
     {{/each}}
 </div>

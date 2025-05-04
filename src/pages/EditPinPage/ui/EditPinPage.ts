@@ -1,7 +1,7 @@
 import { editPin } from '../handlers/editPin';
 import { Toggle } from 'shared/components/toggle';
 import { Input } from 'shared/components/input';
-import { navigate } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api';
 import { newPinPageTemplate } from 'pages/NewPinPage';
@@ -28,6 +28,7 @@ export const EditPinPage = async (pinID: string) => {
         header: 'Изменение flow',
         url: pin.media_url,
         description: pin.description,
+        mobile: appState.mobile,
         input:
             {
                 type: 'text',

@@ -9,8 +9,9 @@ export const Toast = (
     duration: number = 3000,
     className: string | null = null,
 ): void => {
-    if (appState.isShowingToast) return;
-    appState.isShowingToast = true;
+    const oldToast = document.querySelector<HTMLElement>('.toast-message')
+        || document.querySelector<HTMLElement>('.toast-error')
+        || document.querySelector<HTMLElement>('.toast-success');
 
     const toast = document.createElement('div');
     if (className) {
@@ -21,6 +22,10 @@ export const Toast = (
 
     toast.textContent = message;
 
+    if (oldToast) {
+        oldToast.style.animation = '';
+        oldToast.remove();
+    }
     document.body.appendChild(toast);
 
     setTimeout(() => {

@@ -19,6 +19,7 @@
             visibility: visible;
         }
         .pin__picture {
+
             filter: brightness(0.65);
         }
     }
@@ -103,4 +104,21 @@
     justify-content: space-between;
     width: 100px;
     height: 32px;
+}
+
+
+@media (max-width: $mobile-width) {
+    .pin {
+        max-width: clamp($pin-min-width, 42%, 210px);
+
+        &:hover {
+            [class*=" pin__"] {
+                visibility: initial;
+            }
+
+            .pin__picture {
+                filter: initial;
+            }
+        }
+    }
 }

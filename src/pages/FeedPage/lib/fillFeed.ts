@@ -1,6 +1,6 @@
 import type { IPinProps } from 'entities/Pin';
 import { Pin } from 'entities/Pin';
-import { Footer } from '../components/footer/footer';
+import { Footer } from 'shared/components/Footer';
 import { loadFeedPictures } from 'features/imageLoader';
 import { feedState } from '../ui/FeedPage';
 
@@ -32,6 +32,8 @@ export const fillFeed = async () => {
         const config: IPinProps = {
             url: item.media_url,
             pinID: item.flow_id,
+            width: item.width,
+            height: item.height,
         };
         feed.appendChild(Pin(config));
     });

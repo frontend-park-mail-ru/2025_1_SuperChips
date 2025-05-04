@@ -1,14 +1,24 @@
 import type { ITabItem } from 'shared/components/tabBar';
 import { TabBar } from 'shared/components/tabBar';
+import { Masonry } from 'shared/models/Masonry';
 import { UserCard } from 'entities/UserCard';
+import { Toast } from 'shared/components/Toast';
+import { checkAvatar, pluralize } from 'shared/utils';
+import { registerScrollHandler, removeScrollHandler } from 'features/scrollHandler';
+import { appState, navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api';
-import { appState, navigate } from 'shared/router';
-import { root } from 'app/app';
-import { checkAvatar, pluralize } from 'shared/utils';
 import SubscriptionsPageTemplate from './SubscriptionsPage.hbs';
 import './SubscriptionsPage.scss';
-import { Toast } from 'shared/components/Toast';
+
+
+export const subPageState = {
+    page: 1,
+    username: '',
+    container: document.createElement('div'),
+    isSubscriptionsTab: false,
+};
+
 
 interface IUser {
     username: string;
@@ -19,126 +29,138 @@ interface IUser {
     subscribers_count?: number;
 }
 
+
 export const SubscriptionsPage = async (username: string, tab: string = 'subscriptions'): Promise<HTMLDivElement> => {
     const page = document.createElement('div');
-    const isSubscriptionsTab = tab === 'subscriptions';
     const own = Auth.userData?.username === username;
+    const isSubscriptionsTab = tab === 'subscriptions' && own;
 
-    try {
-        const config = {
-            header: isSubscriptionsTab ? 'Подписки' : 'Подписчики',
-            username: username,
-            own: own,
-            tab: tab
-        };
-        page.innerHTML = SubscriptionsPageTemplate(config);
+    const config = {
+        header: isSubscriptionsTab ? 'Подписки' : 'Подписчики',
+        username: username,
+        own: own,
+        tab: tab
+    };
+    page.innerHTML = SubscriptionsPageTemplate(config);
 
-        const tabs: ITabItem[] = [
-            { id: 'subscriptions', title: 'Подписки', active: isSubscriptionsTab },
-            { id: 'subscribers', title: 'Подписчики', active: !isSubscriptionsTab }
-        ];
-        
+    const tabs: ITabItem[] = [
+        { id: 'subscriptions', title: 'Подписки', active: isSubscriptionsTab },
+        { id: 'subscribers', title: 'Подписчики', active: !isSubscriptionsTab }
+    ];
+
+    if (own) {
         const newTabBar = TabBar(tabs, 'horizontal', (tabId) => {
             navigate(`${username}/${tabId}`, true);
         });
-        
         const tabBar = page.querySelector('.tab-bar-placeholder');
         tabBar?.replaceWith(newTabBar);
-
-        const usersContainer = page.querySelector('.subscriptions__users');
-        if (!usersContainer) return page;
-
-        await loadUsers(isSubscriptionsTab, username, usersContainer);
-
-        return page.firstChild as HTMLDivElement;
-    } catch (error) {
-        console.error('Error in SubscriptionsPage:', error);
-        Toast('Произошла ошибка при загрузке страницы', 'error');
-        page.innerHTML = '<div class="error-message">Не удалось загрузить данные</div>';
-        return page;
     }
+
+    const usersContainer = page.querySelector<HTMLDivElement>('.subscriptions__users');
+    if (!usersContainer) return page;
+
+    subPageState.page = 1;
+    subPageState.username = username;
+    subPageState.container = usersContainer;
+    subPageState.isSubscriptionsTab = isSubscriptionsTab;
+
+    requestAnimationFrame(async () => {
+        appState.masonryInstance = new Masonry(
+            usersContainer,
+            {
+                itemSelector: '.user-card',
+                gutter: appState.mobile ? 10 : 20,
+            }
+        );
+        await loadUsers();
+        registerScrollHandler(loadUsers);
+    });
+
+    return page.firstChild as HTMLDivElement;
 };
 
-async function loadUsers(isSubscriptionsTab: boolean, username: string, container: Element) {
-    try {
-        let endpoint;
-        const page = 1;
-        const size = 20;
-        
-        if (Auth.userData?.username === username) {
-            endpoint = isSubscriptionsTab 
-                ? `/api/v1/profile/following?page=${page}&size=${size}`
-                : `/api/v1/profile/followers?page=${page}&size=${size}`;
-        } else {
-            endpoint = isSubscriptionsTab 
-                ? `/api/v1/users/${username}/following?page=${page}&size=${size}`
-                : `/api/v1/users/${username}/followers?page=${page}&size=${size}`;  
-        }
-        
-        const response = await API.get(endpoint);
-        
-        if (!(response instanceof Response)) {
-            throw new Error('Failed to fetch users');
-        }
 
-        if (!response.ok) {
-            if (response.status === 404) {
-                showEmptyMessage(container, isSubscriptionsTab);
-                return;
-            } else if (response.status === 400) {
-                Toast('Неверные параметры запроса', 'error');
-                return;
-            }
-            throw new Error('Failed to fetch users');
-        }
+async function loadUsers() {
+    let endpoint;
+    const size = 20;
 
-        const body = await response.json();
-        const users: IUser[] = body.data || [];
+    if (Auth.userData?.username === subPageState.username) {
+        endpoint = subPageState.isSubscriptionsTab
+            ? `/api/v1/profile/following?page=${subPageState.page}&size=${size}`
+            : `/api/v1/profile/followers?page=${subPageState.page}&size=${size}`;
+    } else {
+        endpoint = subPageState.isSubscriptionsTab
+            ? `/api/v1/users/${subPageState.username}/following?page=${subPageState.page}&size=${size}`
+            : `/api/v1/users/${subPageState.username}/followers?page=${subPageState.page}&size=${size}`;
+    }
 
-        container.innerHTML = '';
+    const response = await API.get(endpoint);
 
-        if (users.length === 0) {
-            showEmptyMessage(container, isSubscriptionsTab);
+    if (!(response instanceof Response)) {
+        subPageState.container.innerHTML = '<div class="error-message">Не удалось загрузить пользователей</div>';
+        removeScrollHandler();
+        return;
+    }
+
+    if (!response.ok) {
+        if (response.status === 404 && subPageState.page === 1) {
+            showEmptyMessage(subPageState.container, subPageState.isSubscriptionsTab);
+            removeScrollHandler();
+            return;
+        } else if (response.status === 400) {
+            Toast('Неверные параметры запроса', 'error');
+            removeScrollHandler();
             return;
         }
-
-        for (const user of users) {
-            const userCard = await createUserCard(user, username);
-            container.appendChild(userCard);
-        }
-
-    } catch (error) {
-        console.error('Error loading users:', error);
-        container.innerHTML = '<div class="error-message">Не удалось загрузить пользователей</div>';
+        subPageState.container.innerHTML = '<div class="error-message">Не удалось загрузить пользователей</div>';
+        removeScrollHandler();
+        return;
     }
+
+    const body = await response.json();
+    const users: IUser[] = body.data || [];
+
+    if (users.length === 0 && subPageState.page === 1) {
+        showEmptyMessage(subPageState.container, subPageState.isSubscriptionsTab);
+        removeScrollHandler();
+        return;
+    }
+
+    for (const user of users) {
+        const userCard = await createUserCard(user);
+        subPageState.container.appendChild(userCard);
+    }
+    subPageState.page++;
 }
 
-function showEmptyMessage(container: Element, isSubscriptionsTab: boolean) {
+function showEmptyMessage(container: Element, isSubscriptionsTab: boolean, own: boolean = false) {
+    const message = !own ? 'У пользователя нет подписчиков'
+        : isSubscriptionsTab
+            ? 'У вас пока нет подписок'
+            : 'У вас пока нет подписчиков';
     container.innerHTML = `
         <div class="empty-message">
-            ${isSubscriptionsTab 
-                ? 'У вас пока нет подписок' 
-                : 'У вас пока нет подписчиков'}
+            ${message}
         </div>
     `;
 }
 
-async function createUserCard(user: IUser, currentUsername: string) {
+async function createUserCard(user: IUser) {
     const avatarOk = user.avatar ? await checkAvatar(user.avatar) : false;
     
     let isSubscribed = false;
     if (Auth.userData) {
-        const followingResponse = await API.get(`/api/v1/profile/following?page=1&size=20`);
+        const followingResponse = await API.get('/api/v1/profile/following?page=1&size=20');
         if (followingResponse instanceof Response && followingResponse.ok) {
             const followingData = await followingResponse.json();
             isSubscribed = followingData.data.some((followingUser: IUser) => followingUser.username === user.username);
         }
     }
-    
+
     const userCard = UserCard({
         username: user.username,
         public_name: user.public_name,
-        avatar: user.avatar,
+        avatar: avatarOk ? user.avatar : null,
         about: user.about || '',
         subscribers_count: user.subscribers_count || 0,
         isSubscribed: isSubscribed,
@@ -153,36 +175,32 @@ async function createUserCard(user: IUser, currentUsername: string) {
     const subscribeButton = userCard.querySelector('.user-card__subscribe-button');
     if (subscribeButton && Auth.userData?.username !== user.username) {
         subscribeButton.addEventListener('click', async () => {
-            try {
-                const subResponse = isSubscribed 
-                    ? await API.delete('/api/v1/subscription', { target_user: user.username })
-                    : await API.post('/api/v1/subscription', { target_user: user.username });
+            const subResponse = isSubscribed
+                ? await API.delete('/api/v1/subscription', { target_user: user.username })
+                : await API.post('/api/v1/subscription', { target_user: user.username });
 
-                if (!(subResponse instanceof Response) || !subResponse.ok) {
-                    throw new Error('Subscription action failed');
-                }
-
-                isSubscribed = !isSubscribed;
-                subscribeButton.textContent = isSubscribed ? 'Отписаться' : 'Подписаться';
-                subscribeButton.classList.toggle('subscribed', isSubscribed);
-
-                const subscribersElement = userCard.querySelector(`#${user.username}-subscribers`);
-                if (subscribersElement) {
-                    const newCount = (user.subscribers_count || 0) + (isSubscribed ? 1 : -1);
-                    user.subscribers_count = newCount;
-                    subscribersElement.textContent = pluralize('подписчик', newCount);
-                }
-
-                Toast(
-                    isSubscribed 
-                        ? `Вы подписались на ${user.public_name}` 
-                        : `Вы отписались от ${user.public_name}`,
-                    'success'
-                );
-            } catch (error) {
-                console.error('Subscription error:', error);
+            if (!(subResponse instanceof Response) || !subResponse.ok) {
                 Toast('Не удалось выполнить действие', 'error');
+                return;
             }
+
+            isSubscribed = !isSubscribed;
+            subscribeButton.textContent = isSubscribed ? 'Отписаться' : 'Подписаться';
+            subscribeButton.classList.toggle('subscribed', isSubscribed);
+
+            const subscribersElement = userCard.querySelector(`#${user.username}-subscribers`);
+            if (subscribersElement) {
+                const newCount = (user.subscribers_count || 0) + (isSubscribed ? 1 : -1);
+                user.subscribers_count = newCount;
+                subscribersElement.textContent = pluralize('подписчик', newCount);
+            }
+
+            Toast(
+                isSubscribed
+                    ? `Вы подписались на ${user.public_name}`
+                    : `Вы отписались от ${user.public_name}`,
+                'success'
+            );
         });
     }
 

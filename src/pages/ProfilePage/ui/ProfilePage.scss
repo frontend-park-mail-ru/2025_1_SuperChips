@@ -1,9 +1,10 @@
 @use 'shared/styles/variables' as *;
 @use 'shared/styles/mixins' as *;
 
+
 .profile {
     grid-area: page;
-    min-height: calc(100vh - $navbar-height);
+    min-height: 100vh;
 
     &-page {
         @include main-page();
@@ -55,6 +56,7 @@
     display: flex;
     align-items: center;
     gap: $spacing-sm;
+    color: white;
 
     img {
         @include icon;
@@ -106,6 +108,7 @@
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
+        margin-right: $spacing-lg;
 
         img {
             margin: 0;
@@ -121,22 +124,23 @@
             font-size: $font-size-xl;
         }
     }
-    
+
     &__chat-button {
-        background: none;
+        background-color: rgba(121, 121, 121, 0.358);
         border: none;
+        border-radius: 50%;
         padding: $spacing-sm;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
-        
+
         img {
             width: 24px;
             height: 24px;
         }
-        
+
         &:hover {
             opacity: 0.8;
         }
@@ -155,7 +159,7 @@
         transition: all 0.2s ease;
         white-space: nowrap;
         flex-shrink: 0;
-        
+
         &:hover {
             background-color: rgba($white, 0.3);
         }
@@ -173,12 +177,12 @@
         cursor: pointer;
         transition: all 0.2s ease;
         white-space: nowrap;
-        
+
         img {
             width: 18px;
             height: 18px;
         }
-        
+
         &:hover {
             background-color: rgba($white, 0.3);
         }
@@ -232,7 +236,7 @@
     grid-column: 2;
     grid-row: 2;
     margin-top: $spacing-xl;
-    
+
     &.collapsed {
         p {
             display: -webkit-box;
@@ -243,22 +247,22 @@
             margin-bottom: $spacing-md;
         }
     }
-    
+
     &.expanded {
         max-height: none;
-        
+
         p {
             display: block;
             margin-bottom: $spacing-md;
         }
     }
-    
+
     &:hover {
         border-color: rgba($white, 0.8);
         background-color: $semi-transparent;
         cursor: pointer;
     }
-    
+
     .expand-button {
         display: block;
         width: 100%;
@@ -270,9 +274,41 @@
         color: $text-light;
         cursor: pointer;
         transition: all 0.2s ease;
-        
+
         &:hover {
             color: $white;
         }
+    }
+}
+
+.user-profile__header {
+    font-size: 36px;
+}
+
+@media (max-width: $mobile-width) {
+    .profile__feed, .box-1__menu, .user-profile__header {
+        padding: 0 $mobile-horizontal-padding;
+    }
+    .author-area {
+        display: block;
+        padding: 0 $mobile-horizontal-padding;
+        margin: 0;
+
+        &__box-2, &__box-3 {
+            margin-top: $spacing-sm;
+        }
+
+        &__box-3 {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: $spacing-sm;
+        }
+    }
+    .author__subscribe-button {
+        margin: 0 !important;
+    }
+    .box-1__menu, .user-profile__header {
+        padding: 0;
     }
 }

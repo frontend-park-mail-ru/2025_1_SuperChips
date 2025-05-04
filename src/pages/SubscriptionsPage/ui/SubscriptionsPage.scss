@@ -7,7 +7,7 @@
 
 .subscriptions {
     grid-area: page;
-    min-height: calc(100vh - $navbar-height);
+    min-height: 100vh;
     
     &__header {
         display: flex;
@@ -23,8 +23,6 @@
     }
     
     &__users {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
         gap: 24px;
         width: 100%;
         min-height: 200px;
@@ -33,7 +31,6 @@
 }
 
 .empty-message {
-    grid-column: 1 / -1;
     color: $text-light;
     font-size: $font-size-md;
     text-align: center;
@@ -42,7 +39,6 @@
 }
 
 .error-message {
-    grid-column: 1 / -1;
     color: $error-color;
     font-size: $font-size-md;
     text-align: center;
@@ -64,8 +60,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
     align-self: flex-start;
-    margin-bottom: $spacing-md;
-    
+
     img {
         width: 18px;
         height: 18px;
@@ -87,5 +82,11 @@
                 background-color: $button-dark;
             }
         }
+    }
+}
+
+@media (max-width: $mobile-width) {
+    .subscriptions {
+        padding: 0 $mobile-horizontal-padding $spacing-sm;
     }
 }

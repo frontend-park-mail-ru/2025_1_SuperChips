@@ -1,20 +1,21 @@
-import type { IFeed } from 'pages/FeedPage';
 import { toTop } from 'pages/FeedPage';
 import { Masonry } from 'shared/models/Masonry';
 import { findBoardID } from '../lib/findBoardID';
+import { boardFeedState, fillBoardFeed } from 'pages/BoardPage';
 import { Auth } from 'features/authorization';
-import { boardFeedScroll, boardFeedState, fillBoardFeed } from 'pages/BoardPage';
+import { appState } from 'shared/router';
 import './UserPins.scss';
+import { registerScrollHandler } from 'features/scrollHandler';
 
 
 export const UserPins = async (username: string) => {
     boardFeedState.page = 1;
     boardFeedState.own = Auth.userData ? Auth.userData.username === username : false;
     boardFeedState.canEdit = boardFeedState.own;
-    boardFeedState.canRemove = !boardFeedState.own;
+    boardFeedState.canRemove = false;
     await findBoardID(username);
 
-    const feed = document.querySelector<IFeed>('.profile__feed');
+    const feed = document.querySelector('.profile__feed');
     if (!feed) return;
 
     feed.innerHTML += `
@@ -22,21 +23,22 @@ export const UserPins = async (username: string) => {
         <img src="/public/icons/arrow-up.svg" alt="scroll to top">
     </div>`;
 
-    if (!feed.masonry) {
-        feed.masonry = new Masonry(
+    setTimeout(async () => {
+        const feed = document.querySelector<HTMLElement>('#feed');
+        if (!feed) return;
+        appState.masonryInstance = new Masonry(
             feed, {
                 itemSelector: '.pin',
-                columnWidth: 205,
-                gutter: 20,
+                gutter: appState.mobile ? 10 : 20,
             }
         );
-    }
 
-    await fillBoardFeed();
+        await fillBoardFeed();
+    }, 100);
 
     const scrollButton = feed.querySelector('.scroll-to-top');
     scrollButton?.addEventListener('click', toTop);
 
-    window.addEventListener('scroll', boardFeedScroll);
+    registerScrollHandler(fillBoardFeed);
 };
 

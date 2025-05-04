@@ -32,4 +32,10 @@ body {
     img {
         @include icon;
     }
+
+    @media (max-width: $mobile-width) {
+        bottom: 8px + $sidebar-height-mobile;
+        width: 44px;
+        height: 44px;
+    }
 }

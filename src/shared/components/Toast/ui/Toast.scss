@@ -1,9 +1,11 @@
+@use 'shared/styles/variables' as *;
+
 .toast-error, .toast-success, .toast-message {
   position: fixed;
-  top: 20px;
+  bottom: 20px;
   left: 50%;
-  transform: translateX(-50%);
-  background-color: #2f2f2f;
+  transform: translate(-50%, -20px);
+  background-color: #fff;
   padding: 12px 24px;
   border-radius: 20px;
   z-index: 1000;
@@ -17,7 +19,7 @@
   overflow-wrap: break-word;
   overflow: hidden;
 
-    @keyframes ToastFadeIn {
+  @keyframes ToastFadeOut {
     from {
       transform: translate(-50%, -20px);
     }
@@ -26,7 +28,7 @@
     }
   }
 
-    @keyframes ToastFadeOut {
+  @keyframes ToastFadeIn {
     from {
       transform: translate(-50%, 0);
     }
@@ -45,5 +47,12 @@
 }
 
 .toast-message {
-  color: #fff;
+  color: #000;
+}
+
+@media (max-width: $mobile-width) {
+  .toast-error, .toast-success, .toast-message {
+    max-width: 90%;
+    bottom: $sidebar-height-mobile;
+  }
 }

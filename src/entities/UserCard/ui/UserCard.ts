@@ -1,4 +1,3 @@
-import type { IUser } from 'entities/User';
 import { pluralize } from 'shared/utils';
 import { navigate } from 'shared/router';
 import template from './UserCard.hbs';

@@ -13,9 +13,15 @@ export const updateBars = (route: Route) => {
     const showSidebar = !route.noSidebar && !!Auth.userData;
     sidebarButtons?.classList.toggle('display-none', !showSidebar);
 
-    const backButton = document.getElementById('go-back-button');
+    const backButton = document.querySelector<HTMLButtonElement>('#go-back-button');
     const showBackButton = !route.noBackButton;
-    backButton?.classList.toggle('hidden', !showBackButton);
+
+    if (appState.mobile && backButton) {
+        backButton.classList.toggle('sidebar-button_disabled', !showBackButton);
+        backButton.disabled = !showBackButton;
+    } else {
+        backButton?.classList.toggle('hidden', !showBackButton);
+    }
 
     const filter = document.querySelector<HTMLImageElement>('#filter-button');
     filter?.classList.toggle('filter-active', appState.activePage === 'feed');
