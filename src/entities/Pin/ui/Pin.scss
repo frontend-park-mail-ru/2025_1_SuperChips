@@ -3,6 +3,7 @@
 
 
 .pin {
+    @include button;
     width: 210px;
     border-radius: $border-radius;
     background-color: $button-dark;
@@ -38,6 +39,7 @@
     }
 
     &__edit-button, &__delete-button {
+        @include button;
         @include icon;
         bottom: 10px;
         right: 10px;
@@ -72,6 +74,7 @@
     }
 
     &__dropdown-button {
+        @include button;
         width: $icon-size;
         height: $icon-size;
 

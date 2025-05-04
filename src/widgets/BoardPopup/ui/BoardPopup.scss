@@ -41,6 +41,7 @@
     }
 
     &__create-button, &__delete-button, &__edit-button, &__confirm-button {
+        @include button;
         width: 440px;
         min-height: $button-height;
         border: none;

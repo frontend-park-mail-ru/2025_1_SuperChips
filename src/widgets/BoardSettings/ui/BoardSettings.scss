@@ -54,6 +54,7 @@
     }
 
     &__delete-button, &__confirm-button {
+        @include button;
         cursor: pointer;
         display: flex;
         gap: $spacing-md;
@@ -65,6 +66,7 @@
     }
 
     &__submit-button {
+        @include button;
         width: 100%;
         height: $input-height;
         color: $white;

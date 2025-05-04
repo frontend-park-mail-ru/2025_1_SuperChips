@@ -144,8 +144,15 @@
 
 @mixin icon {
     -webkit-user-drag: none;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
     width: $icon-size;
     height: $icon-size;
+}
+
+@mixin button {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
 }
 
 @mixin big-pin-container {

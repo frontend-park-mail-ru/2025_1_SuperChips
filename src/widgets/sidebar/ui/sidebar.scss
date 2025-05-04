@@ -25,6 +25,7 @@
 }
 
 .sidebar-button, .sidebar-button_confirm {
+    @include button;
     width: $button-height;
     height: $button-height;
     border-radius: 50%;

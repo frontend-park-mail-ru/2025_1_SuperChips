@@ -26,6 +26,7 @@ $border-radius: 20px;
 }
 
 .navbar-logo {
+    @include button;
     img {
         -webkit-user-drag: none;
     }
@@ -80,6 +81,7 @@ $border-radius: 20px;
 }
 
 .navbar__profile-picture {
+    @include button;
     @include profile-picture-small;
 
     &:hover {

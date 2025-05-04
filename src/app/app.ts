@@ -6,7 +6,6 @@ import { Auth } from 'features/authorization';
 import { ChatStorage } from '../features/chat';
 import './styles/fonts.scss';
 import './styles/common.scss';
-import { Toast } from '../shared/components/Toast';
 
 
 export const root = document.getElementById('root') as HTMLDivElement;
@@ -28,7 +27,6 @@ export const App = async () => {
     ChatStorage.fetchChatList().finally();
     ChatStorage.fetchContactList().finally();
 
-    Toast('писяпопа', 'success');
     //TODO remove
     {
         // setTimeout(() => {
