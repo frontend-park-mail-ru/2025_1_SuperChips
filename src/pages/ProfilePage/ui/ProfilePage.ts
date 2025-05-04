@@ -62,7 +62,9 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
             const followingResponse = await API.get(`/api/v1/profile/following?page=1&size=20`);
             if (followingResponse instanceof Response && followingResponse.ok) {
                 const followingData = await followingResponse.json();
-                isSubscribed = followingData.data.some((followingUser: IUserData) => followingUser.username === username);
+                if (followingData.data){
+                    isSubscribed = followingData.data.some((followingUser: IUserData) => followingUser.username === username);
+                }
             }
         }
 
@@ -86,12 +88,12 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
         page.innerHTML = ProfilePageTemplate(config);
 
         const tabs: ITabItem[] = [
-            { id: 'pins', title: 'Flow', active: isPinTabActive },
+            { id: 'flows', title: 'Flow', active: isPinTabActive },
             { id: 'boards', title: 'Доски', active: !isPinTabActive }
         ];
 
         const newTabBar = TabBar(tabs, 'horizontal', (tabId) => {
-            profileTabBarHandler(tabId, username);
+            navigate(`${username}/${tabId}`, true);
         });
         const tabBar = page.querySelector('.tab-bar-placeholder');
         tabBar?.replaceWith(newTabBar);

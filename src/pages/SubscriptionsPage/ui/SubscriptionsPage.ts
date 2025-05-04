@@ -102,8 +102,31 @@ async function loadUsers(isSubscriptionsTab: boolean, username: string, containe
             return;
         }
 
+        let followingUsers: IUser[] = [];
+        if (Auth.userData) {
+            const followingResponse = await API.get(`/api/v1/profile/following?page=1&size=20`);
+            if (followingResponse instanceof Response && followingResponse.ok) {
+                const followingData = await followingResponse.json();
+                followingUsers = followingData.data;
+            }
+        }
+
+        const URL = 'https://yourflow.ru/static/avatars/';
         for (const user of users) {
-            const userCard = await createUserCard(user, username);
+            if (user.avatar && !user.avatar.includes(URL)) {
+                user.avatar = URL + user.avatar;
+            }
+            user.isSubscribed = followingUsers.some(followingUser => followingUser.username === user.username);
+            
+            const userCard = UserCard({
+                username: user.username,
+                public_name: user.public_name,
+                avatar: user.avatar,
+                about: user.about || '',
+                subscribers_count: user.subscribers_count || 0,
+                isSubscribed: user.isSubscribed,
+                own: Auth.userData?.username === user.username
+            });
             container.appendChild(userCard);
         }
 
