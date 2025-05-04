@@ -1,7 +1,7 @@
 import { closeChatList } from './closeChatList';
 import { ChatList, openChat } from 'widgets/ChatList';
-import { toggleScroll } from 'widgets/BoardPopup';
 import { closeFilter } from 'widgets/navbar';
+import { toggleScroll } from 'widgets/BoardPopup';
 import { root } from 'app/app';
 import { appState } from 'shared/router';
 import { ChatStorage } from 'features/chat';
@@ -21,6 +21,7 @@ export const openChatList = () => {
         if (goBack) goBack.disabled = false;
 
         toggleScroll('disabled');
+
         document.querySelector('#settings')?.classList.remove('active');
         document.querySelector('#newPin')?.classList.remove('active');
     }

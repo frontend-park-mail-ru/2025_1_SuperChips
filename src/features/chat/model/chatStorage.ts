@@ -2,8 +2,8 @@ import { Toast } from 'shared/components/Toast';
 import { ChatList } from 'widgets/ChatList';
 import { Message } from 'shared/components/Message';
 import { appState } from 'shared/router';
-// import { Auth } from 'features/authorization';
 import { API } from 'shared/api';
+import { WEBSOCKET_URL } from 'shared/config/constants';
 
 
 export interface IMessage {
@@ -24,6 +24,7 @@ export interface IChat {
     messages: IMessage[];
     lastChanged?: boolean,
     draft?: IMessage | null;
+    chat_id?: number
 }
 
 export interface IContact {
@@ -36,131 +37,87 @@ export interface IContact {
 class chatStorage {
     chatList: IChat[] = [];
     contacts: IContact[] = [];
+    ws: WebSocket;
+
+    constructor() {
+        this.ws = new WebSocket(WEBSOCKET_URL);
+
+        this.ws.onopen = () => {
+            console.log('WebSocket соединение установлено');
+            this.ws.send(JSON.stringify({ type: 'hello' }));
+        };
+
+        this.ws.onerror = (error) => {
+            console.error('Ошибка WebSocket', error);
+        };
+
+        this.ws.onclose = (event) => {
+            console.warn('WebSocket закрыт.', event);
+        };
+
+        this.ws.onmessage = (event: MessageEvent) => {
+            try {
+                const body = JSON.parse(event.data);
+                const message: IMessage = {
+                    ...body.data,
+                    timestamp: new Date(body.data.timestamp),
+                };
+                this.getMessage(body.data.id, message).finally();
+            } catch { /**/
+            }
+        };
+    }
 
     async fetchChatList() {
-        // const response = await API.get('/chats');
-        // if (!(response instanceof Response && response.ok)) return;
-        // const body = await response.json();
-        // body.data.chats.forEach((chat: IChat) => this.chatList.push(chat));
-        // this.sortChatList();
+        const response = await API.get('/chats');
+        if (!(response instanceof Response && response.ok)) return;
+        const body = await response.json();
 
-        // TODO remove
-        const chatListMock = [
-            {
-                id: '2',
-                username: 'emreshaa',
-                public_name: 'emreshaa',
-                avatar: 'https://yourflow.ru/static/avatars/72962f60-7954-40c4-856c-4eac382c6a87.jpg',
-                count: 0,
-                last_message: null,
-                messages: [],
-            },
-            {
-                id: '3',
-                username: 'alx3.13vo',
-                public_name: 'alx3.13vo',
-                avatar: 'https://yourflow.ru/static/avatars/1f5d30d1-b6b2-4079-ab95-50e9009d93d8.jpg',
-                count: 0,
-                last_message: null,
-                messages: [],
-            },
-            {
-                id: '4',
-                username: 'rissenberg',
-                public_name: 'rissenberg',
-                avatar: 'https://yourflow.ru/static/avatars/f2ee9d54-f261-4e19-86fe-73ef14348c08.jpg',
-                count: 0,
-                last_message: null,
-                messages: [],
-            },
-            {
-                id: '5',
-                username: 'фывфыв',
-                public_name: 'фывфыв',
-                avatar: '',
-                count: 0,
-                last_message: null,
-                messages: [],
-            },
-        ];
-        chatListMock.forEach((chat: IChat) => this.chatList.push(chat));
+        if (!body.data) return;
+
+
+        body.data.forEach((chat: IChat) => this.chatList.push({
+            ...chat,
+            id: chat.chat_id ? chat.chat_id.toString() : '',
+            messages: chat.messages ? chat.messages : [],
+        }));
         this.sortChatList();
     }
 
     async newChat(username: string) {
-        // if (!username) return '';
-        // const response = await API.post('/chats', { username });
-        //
-        // if (response instanceof Error || !response.ok) {
-        //     Toast('Ошибка при создании чата');
-        //     return null;
-        // }
-        //
-        // const body = await response.json();
-        //
-        // this.chatList.push({
-        //     username,
-        //     public_name: body.data.public_name,
-        //     avatar: body.data.avatar,
-        //     last_message: null,
-        //     id: body.data.id,
-        //     count: 0,
-        //     messages: []
-        // });
-        //
-        // return body.data.id.toString();
+        if (!username) return '';
+        const response = await API.post('/chats', { username });
 
-        // TODO REMOVE
-        const newChatMock: IChat = {
-            id: '1',
-            username: 'valekirrr',
-            public_name: 'valekirrr',
-            avatar: 'https://yourflow.ru/static/avatars/5883b4d8-e794-4870-bca6-ee8927f5dc26.jpg',
-            count: 0,
+        if (response instanceof Error || !response.ok) {
+            Toast('Ошибка при создании чата');
+            return null;
+        }
+
+        const body = await response.json();
+
+        if (!body.data) return;
+
+        this.chatList.push({
+            username,
+            public_name: body.data.public_name,
+            avatar: body.data.avatar,
             last_message: null,
-            messages: [],
-        };
+            id: body.data.id,
+            count: 0,
+            messages: []
+        });
 
-        this.chatList.push(newChatMock);
-
-        return newChatMock.id;
+        return body.data.id.toString();
     }
 
     async fetchContactList() {
-        // const response = await API.get('/contacts');
-        // if (!(response instanceof Response && response.ok)) return;
-        // const body = await response.json();
-        // this.contacts = body.data.contacts;
+        const response = await API.get('/contacts');
+        if (!(response instanceof Response && response.ok)) return;
+        const body = await response.json();
 
-        // TODO REMOVE
-        const contactsMock = [
-            {
-                username: 'valekirrr',
-                public_name: 'valekirrr',
-                avatar: 'https://yourflow.ru/static/avatars/5883b4d8-e794-4870-bca6-ee8927f5dc26.jpg',
-            },
-            {
-                username: 'rissenberg',
-                public_name: 'Костя',
-                avatar: '',
-            },
-            {
-                username: 'alx3.14vo',
-                public_name: 'Саша',
-                avatar: '',
-            },
-            {
-                username: 'emreshaa',
-                public_name: 'Эмре',
-                avatar: 'https://yourflow.ru/static/avatars/72962f60-7954-40c4-856c-4eac382c6a87.jpg',
-            },
-            {
-                username: 'forgeUp',
-                public_name: 'Алексей',
-                avatar: 'https://yourflow.ru/static/avatars/72962f60-7954-40c4-856c-4eac382c6a87.jpg',
-            },
-        ];
-        contactsMock.forEach((contact: IContact) => this.contacts.push(contact));
+        if (body.data) {
+            this.contacts = body.data;
+        }
     }
 
     async newContact(username: string) {
@@ -209,20 +166,7 @@ class chatStorage {
         chat.last_message = message;
         chat.count = 0;
 
-        // TODO REMOVE
-        setTimeout(() => {
-            this.markAsRead(chatID);
-            setTimeout(() => {
-                const chat = this.getChatByID(chatID);
-                this.getMessage('1', {
-                    message: 'bibaboba',
-                    read: false,
-                    sender: 'valekirrr',
-                    timestamp: new Date,
-                    id: chat?.messages.length ?? 0,
-                }).finally();
-            }, 1000);
-        }, 1000);
+        this.ws.send(JSON.stringify(message));
     }
 
     async getMessage(chatID: string, message: IMessage) {

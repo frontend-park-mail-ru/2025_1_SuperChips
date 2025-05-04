@@ -12,6 +12,7 @@
     padding-bottom: 36px;
     background: $gradient-dark;
     z-index: 75;
+    overflow: hidden;
     @include side-menu-animation-left;
 }
 
@@ -19,6 +20,8 @@
 .chat-list {
     @include flex-column;
     gap: 24px;
+    height: 100%;
+    overflow-y: scroll;
 
     &-item {
         width: 100%;

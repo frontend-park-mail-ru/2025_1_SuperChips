@@ -21,6 +21,7 @@ export const Pin = (params: IPinProps) => {
         mobile: appState.mobile,
     };
 
+
     container.innerHTML = template(config);
 
     const pin = container.querySelector('.pin') as HTMLDivElement;
