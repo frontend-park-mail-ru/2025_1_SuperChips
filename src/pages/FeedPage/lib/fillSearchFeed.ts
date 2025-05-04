@@ -10,14 +10,17 @@ import { Toast } from 'shared/components/Toast';
 import { searchFeedScroll } from '../handlers/handleScroll';
 import { UserCard } from 'entities/UserCard';
 import { API } from 'shared/api';
+import { Auth } from 'features/authorization';
 
+interface ISearchUser extends IUser {
+    subscribers_count?: number;
+}
 
 export const searchFeedState = {
     page: 1,
     query: '',
     filter: 'flows',
 };
-
 
 export const fillSearchFeed = async () => {
     const feed = document.querySelector<IFeed>('#feed');
@@ -68,8 +71,26 @@ export const fillSearchFeed = async () => {
         });
         break;
     case 'users':
-        body.data.forEach((user: IUser) => {
-            feed.appendChild(UserCard(user));
+        const followingResponse = await API.get(`/api/v1/profile/following?page=1&size=20`);
+        let followingUsers: ISearchUser[] = [];
+        
+        if (followingResponse instanceof Response && followingResponse.ok) {
+            const followingData = await followingResponse.json();
+            followingUsers = followingData.data;
+        }
+
+        body.data.forEach((user: ISearchUser) => {
+            const isSubscribed = followingUsers.some(followingUser => followingUser.username === user.username);
+            const userWithSubscription = {
+                username: user.username,
+                public_name: user.public_name,
+                avatar: user.avatar || null,
+                about: user.about || '',
+                subscribers_count: user.subscribers_count || 0,
+                isSubscribed: isSubscribed,
+                own: Auth.userData?.username === user.username
+            };
+            feed.appendChild(UserCard(userWithSubscription));
         });
         break;
     }

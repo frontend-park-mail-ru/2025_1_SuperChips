@@ -18,4 +18,12 @@
     </button>
 </div>
 <div class="user-card__about">{{about}}</div>
-<button class="user-card__subscribe-button" id="subscribe-{{username}}">Подписаться</button>
+{{#unless own}}
+<button class="user-card__subscribe-button {{#if isSubscribed}}subscribed{{/if}}" id="subscribe-{{username}}">
+    {{#if isSubscribed}}
+        Отписаться
+    {{else}}
+        Подписаться
+    {{/if}}
+</button>
+{{/unless}}

@@ -10,15 +10,25 @@ import { Auth } from 'features/authorization';
 import { root } from 'app/app';
 import { API } from 'shared/api';
 import { appState, navigate } from 'shared/router';
+import { Toast } from 'shared/components/Toast';
 import ProfilePageTemplate from './ProfilePage.hbs';
 import './ProfilePage.scss';
+
+interface IUserData {
+    username: string;
+    public_name: string;
+    avatar: string | null;
+    about?: string;
+    followersCount?: number;
+    isSubscribed?: boolean;
+}
 
 export const ProfilePage = async (username: string, tab: string = 'pins'): Promise<HTMLDivElement> => {
     const page = document.createElement('div');
 
     const own = Auth.userData ? username === Auth.userData.username : false;
     const isPinTabActive = tab === 'pins';
-    let userData;
+    let userData: IUserData | undefined;
 
     const isLastVisited = (
         ['profile', 'profilePins', 'profileBoards', null].includes(appState.lastPage)
@@ -27,7 +37,7 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
 
     try {
         if (own) {
-            userData = Auth.userData;
+            userData = Auth.userData as IUserData;
         } else if (!isLastVisited) {
             const response = await API.get(`/api/v1/users/${username}`);
             if (!(response instanceof Response && response.ok)) {
@@ -36,10 +46,10 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
             }
             
             const body = await response.json();
-            userData = body.data;
+            userData = body.data as IUserData;
             appState.lastVisited = body.data;
         } else {
-            userData = appState.lastVisited;
+            userData = appState.lastVisited as IUserData;
         }
 
         if (!userData) {
@@ -47,7 +57,16 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
             return page;
         }
 
-        const ok = await checkAvatar(userData.avatar);
+        let isSubscribed = false;
+        if (Auth.userData && !own) {
+            const followingResponse = await API.get(`/api/v1/profile/following?page=1&size=20`);
+            if (followingResponse instanceof Response && followingResponse.ok) {
+                const followingData = await followingResponse.json();
+                isSubscribed = followingData.data.some((followingUser: IUserData) => followingUser.username === username);
+            }
+        }
+
+        const ok = await checkAvatar(userData.avatar || undefined);
         const config = {
             header: own ? 'Ваши flow' : userData.public_name,
             username: username,
@@ -56,7 +75,7 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
             own: own,
             showCreateBoardButton: !isPinTabActive && own,
             userBio: userData.about || null,
-            isSubscribed: userData.isSubscribed || false,
+            isSubscribed: isSubscribed,
             safeUsername: username.replace(/[^a-zA-Z0-9_-]/g, '-'),
             userData: {
                 ...userData,
@@ -89,14 +108,27 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
         if (subscribeButton) {
             subscribeButton.addEventListener('click', async () => {
                 try {
-                    const response = await API.post(`/api/v1/users/${username}/subscribe`);
-                    if (response instanceof Response && response.ok) {
-                        const isSubscribed = subscribeButton.textContent?.trim() === 'Подписаться';
-                        subscribeButton.textContent = isSubscribed ? 'Отписаться' : 'Подписаться';
-                        subscribeButton.classList.toggle('subscribed', isSubscribed);
+                    const subResponse = isSubscribed 
+                        ? await API.delete('/api/v1/subscription', { target_user: username })
+                        : await API.post('/api/v1/subscription', { target_user: username });
+                    
+                    if (!(subResponse instanceof Response) || !subResponse.ok) {
+                        throw new Error('Subscription action failed');
                     }
+
+                    isSubscribed = !isSubscribed;
+                    subscribeButton.textContent = isSubscribed ? 'Отписаться' : 'Подписаться';
+                    subscribeButton.classList.toggle('subscribed', isSubscribed);
+                    
+                    Toast(
+                        isSubscribed 
+                            ? `Вы подписались на ${userData.public_name || username}` 
+                            : `Вы отписались от ${userData.public_name || username}`,
+                        'success'
+                    );
                 } catch (error) {
                     console.error('Error toggling subscription:', error);
+                    Toast('Не удалось выполнить действие', 'error');
                 }
             });
         }
@@ -106,7 +138,7 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
             const delayedFill: MutationObserver = new MutationObserver(async () => {
                 try {
                     if (isPinTabActive) {
-                        if (userData.about) {
+                        if (userData?.about) {
                             const description = document.createElement('div');
                             description.classList.add('pin', 'description-pin');
                             description.innerHTML = `

@@ -113,13 +113,14 @@ class Api {
 	 * DELETE запрос
 	 */
     async delete(
-        url: string
+        url: string,
+        body: object | FormData | null = null
     ): Promise<Response|Error> {
         const headers = {
             'X-CSRF-Token': this.csrf,
         };
 
-        return this.request('DELETE', url, headers);
+        return this.request('DELETE', url, headers, body);
     }
 
     /**
