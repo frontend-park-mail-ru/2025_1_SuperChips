@@ -4,4 +4,4 @@ export const VALID_IMAGE_EXTENSIONS = ['jpg', 'png', 'jpeg', 'gif'];
 export const USER_SAVED_PINS_BOARD = 'Сохраненные';
 export const USER_OWN_PINS_BOARD = 'Созданные вами';
 export const VKID_APP_ID = 53455772;
-export const PIN_WIDTH = 210;
+export const WEBSOCKET_URL = 'ws://localhost:8000';

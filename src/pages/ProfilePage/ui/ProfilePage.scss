@@ -71,24 +71,7 @@
     }
 
     &__profile-picture {
-        height: $profile-picture-size;
-        width: $profile-picture-size;
-        border-radius: 100%;
-        background-color: $white;
-        color: $text-dark;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: $spacing-lg;
-
-        img {
-            margin: 0;
-            object-fit: cover;
-        }
-
-        p {
-            color: $black;
-        }
+        @include profile-picture-small;
     }
 }
 

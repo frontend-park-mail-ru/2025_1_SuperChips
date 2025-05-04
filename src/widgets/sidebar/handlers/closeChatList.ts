@@ -1,6 +1,6 @@
 import { openChatList } from './openChatList';
 import { appState } from 'shared/router';
-import { toggleScroll } from 'widgets/BoardPopup';
+import { toggleScroll } from '../../BoardPopup';
 
 export const closeChatList = () => {
     appState.chat.open = false;
@@ -15,6 +15,7 @@ export const closeChatList = () => {
         if (goBack) goBack.disabled = true;
 
         toggleScroll('enabled');
+
         if (appState.activePage === 'newPin') {
             document.querySelector('#newPin')?.classList.add('active');
         }

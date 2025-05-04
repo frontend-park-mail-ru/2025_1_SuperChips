@@ -4,6 +4,7 @@ import { Message } from 'shared/components/Message';
 import { appState } from 'shared/router';
 // import { Auth } from 'features/authorization';
 import { API } from 'shared/api';
+import { WEBSOCKET_URL } from 'shared/config/constants';
 
 
 export interface IMessage {
@@ -36,6 +37,23 @@ export interface IContact {
 class chatStorage {
     chatList: IChat[] = [];
     contacts: IContact[] = [];
+    ws: WebSocket;
+
+    constructor() {
+        this.ws = new WebSocket(WEBSOCKET_URL);
+
+        this.ws.onmessage = (event: MessageEvent) => {
+            try {
+                const body = JSON.parse(event.data);
+                const message: IMessage = {
+                    ...body.data,
+                    timestamp: new Date(body.data.timestamp),
+                };
+                this.getMessage(body.data.chat_id, message).finally();
+            } catch { /**/
+            }
+        };
+    }
 
     async fetchChatList() {
         // const response = await API.get('/chats');
@@ -69,6 +87,132 @@ class chatStorage {
                 username: 'rissenberg',
                 public_name: 'rissenberg',
                 avatar: 'https://yourflow.ru/static/avatars/f2ee9d54-f261-4e19-86fe-73ef14348c08.jpg',
+                count: 0,
+                last_message: null,
+                messages: [],
+            },
+            {
+                id: '5',
+                username: 'фывфыв',
+                public_name: 'фывфыв',
+                avatar: '',
+                count: 0,
+                last_message: null,
+                messages: [],
+            },
+            {
+                id: '5',
+                username: 'фывфыв',
+                public_name: 'фывфыв',
+                avatar: '',
+                count: 0,
+                last_message: null,
+                messages: [],
+            },
+            {
+                id: '5',
+                username: 'фывфыв',
+                public_name: 'фывфыв',
+                avatar: '',
+                count: 0,
+                last_message: null,
+                messages: [],
+            },
+            {
+                id: '5',
+                username: 'фывфыв',
+                public_name: 'фывфыв',
+                avatar: '',
+                count: 0,
+                last_message: null,
+                messages: [],
+            },
+            {
+                id: '5',
+                username: 'фывфыв',
+                public_name: 'фывфыв',
+                avatar: '',
+                count: 0,
+                last_message: null,
+                messages: [],
+            },
+            {
+                id: '5',
+                username: 'фывфыв',
+                public_name: 'фывфыв',
+                avatar: '',
+                count: 0,
+                last_message: null,
+                messages: [],
+            },
+            {
+                id: '5',
+                username: 'фывфыв',
+                public_name: 'фывфыв',
+                avatar: '',
+                count: 0,
+                last_message: null,
+                messages: [],
+            },
+            {
+                id: '5',
+                username: 'фывфыв',
+                public_name: 'фывфыв',
+                avatar: '',
+                count: 0,
+                last_message: null,
+                messages: [],
+            },
+            {
+                id: '5',
+                username: 'фывфыв',
+                public_name: 'фывфыв',
+                avatar: '',
+                count: 0,
+                last_message: null,
+                messages: [],
+            },
+            {
+                id: '5',
+                username: 'фывфыв',
+                public_name: 'фывфыв',
+                avatar: '',
+                count: 0,
+                last_message: null,
+                messages: [],
+            },
+            {
+                id: '5',
+                username: 'фывфыв',
+                public_name: 'фывфыв',
+                avatar: '',
+                count: 0,
+                last_message: null,
+                messages: [],
+            },
+            {
+                id: '5',
+                username: 'фывфыв',
+                public_name: 'фывфыв',
+                avatar: '',
+                count: 0,
+                last_message: null,
+                messages: [],
+            },
+            {
+                id: '5',
+                username: 'фывфыв',
+                public_name: 'фывфыв',
+                avatar: '',
+                count: 0,
+                last_message: null,
+                messages: [],
+            },
+            {
+                id: '5',
+                username: 'фывфыв',
+                public_name: 'фывфыв',
+                avatar: '',
                 count: 0,
                 last_message: null,
                 messages: [],
@@ -208,6 +352,8 @@ class chatStorage {
         chat.messages.push(message);
         chat.last_message = message;
         chat.count = 0;
+
+        // this.ws.send(JSON.stringify(message));
 
         // TODO REMOVE
         setTimeout(() => {
