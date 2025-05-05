@@ -23,7 +23,8 @@ export const App = async () => {
     });
 
     navigate(location.pathname.slice(1), true).finally();
-
-    ChatStorage.fetchChatList().finally();
-    ChatStorage.fetchContactList().finally();
+    if (Auth.userData) {
+        ChatStorage.fetchChatList().finally();
+        ChatStorage.fetchContactList().finally();
+    }
 };

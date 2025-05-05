@@ -25,17 +25,21 @@
     display: flex;
     justify-content: space-between;
     margin-right: $spacing-lg;
-    align-items: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
 
     &__box-1 {
         display: flex;
         flex-direction: column;
         gap: 18px;
+        flex: 1;
+        min-width: 0;
     }
 
     &__box-2 {
         display: flex;
         align-items: center;
+        margin-top: $spacing-lg;
     }
 }
 
@@ -44,7 +48,7 @@
         color: #fff;
         display: flex;
         align-items: center;
-        gap: $spacing-sm;
+        gap: $spacing-lg;
     }
 }
 
@@ -52,6 +56,7 @@
     display: flex;
     align-items: center;
     gap: $spacing-sm;
+    color: white;
 
     img {
         @include icon;
@@ -66,12 +71,179 @@
 }
 
 .author {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: $spacing-md;
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        flex: 1;
+    }
+
     &__name {
         color: white;
+        font-size: $font-size-lg;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 400px;
+    }
+
+    &__followers {
+        color: $text-light;
+        font-size: $font-size-sm;
+        margin-top: $spacing-xs;
     }
 
     &__profile-picture {
         @include profile-picture-small;
+
+        .short-username {
+            @include short-username;
+        }
+    }
+
+    &__chat-button {
+        background-color: rgba(121, 121, 121, 0.358);
+        border: none;
+        border-radius: 50%;
+        padding: $spacing-sm;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        img {
+            width: 24px;
+            height: 24px;
+        }
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    &__subscribe-button, &__subscriptions-button {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        background-color: $semi-transparent;
+        border: none;
+        border-radius: $border-radius;
+        color: $white;
+        padding: $spacing-sm $spacing-md;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        flex-shrink: 0;
+
+        &:hover {
+            background-color: rgba($white, 0.3);
+        }
+    }
+
+    &__subscriptions-button {
+        img {
+            width: 18px;
+            height: 18px;
+        }
+    }
+}
+
+.pin, .description-pin {
+    width: 210px;
+    box-sizing: border-box;
+}
+
+.description-pin {
+    border-radius: $border-radius;
+    background-color: $button-dark;
+    color: $text-light;
+    font-size: $font-size-sm;
+    padding: $spacing-md;
+    margin-bottom: 0;
+    border: 1px solid transparent;
+    word-wrap: break-word;
+    cursor: default;
+    min-height: 40px;
+    max-width: 210px;
+    box-sizing: border-box;
+    transition: none;
+    .description-content p {
+        margin: 0;
+        line-height: 1.5;
+        display: block;
+        overflow: visible;
+        text-overflow: unset;
+        -webkit-line-clamp: unset;
+        -webkit-box-orient: unset;
+    }
+}
+
+.user-bio {
+    position: sticky;
+    top: $spacing-xl;
+    width: 300px;
+    height: fit-content;
+    max-height: 300px;
+    overflow: hidden;
+    border-radius: $border-radius;
+    background-color: $transparent;
+    color: $text-light;
+    border: 1px solid rgba(70, 70, 70, 0.5);
+    font-size: $font-size-sm;
+    padding: $spacing-md;
+    transition: all 0.2s ease;
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: $spacing-xl;
+
+    &.collapsed {
+        p {
+            display: -webkit-box;
+            -webkit-line-clamp: 6;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: $spacing-md;
+        }
+    }
+
+    &.expanded {
+        max-height: none;
+
+        p {
+            display: block;
+            margin-bottom: $spacing-md;
+        }
+    }
+
+    &:hover {
+        border-color: rgba($white, 0.8);
+        background-color: $semi-transparent;
+        cursor: pointer;
+    }
+
+    .expand-button {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: $spacing-sm;
+        margin-top: $spacing-sm;
+        background-color: transparent;
+        border: none;
+        color: $text-light;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            color: $white;
+        }
     }
 }
 
@@ -88,11 +260,20 @@
         padding: 0 $mobile-horizontal-padding;
         margin: 0;
 
-        &__box-2 {
+        &__box-2, &__box-3 {
             margin-top: $spacing-sm;
         }
-    }
 
+        &__box-3 {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: $spacing-sm;
+        }
+    }
+    .author__subscribe-button {
+        margin: 0 !important;
+    }
     .box-1__menu, .user-profile__header {
         padding: 0;
     }

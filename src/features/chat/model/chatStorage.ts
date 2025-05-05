@@ -89,12 +89,12 @@ class chatStorage {
             public_name: body.data.public_name,
             avatar: body.data.avatar,
             last_message: null,
-            id: body.data.id,
+            id: body.data.chat_id.toString(),
             count: 0,
             messages: []
         });
 
-        return body.data.id.toString();
+        return body.data.chat_id.toString();
     }
 
     async fetchContactList() {

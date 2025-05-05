@@ -1,3 +1,4 @@
+{{#if userData}}
 <div class="profile-page">
     <div class="profile">
         <div class="author-area">
@@ -7,29 +8,75 @@
                 </div>
                 <div class="box-1__menu">
                     <div id="tabBar" class="tab-bar-placeholder"></div>
+                    {{#if own}}
+                        {{#unless mobile}}
+                            <button class="author__subscriptions-button" id="subscriptions-button">
+                                <img src="/public/icons/followers.svg" alt="subscriptions">
+                                <span>Подписки</span>
+                            </button>
+                        {{/unless}}
+                    {{/if}}
                     <div class="create-board{{#unless showCreateBoardButton}} hidden{{/unless}}">
                         <img src="/public/icons/plus-white.svg" alt="create new board">
-                            <div class="label">
-                                создать доску
-                            </div>
+                        <div class="label">
+                            создать доску
                         </div>
+                    </div>
                 </div>
             </div>
-            {{#unless own}}
             <div class="author-area__box-2">
-                <div class="author__profile-picture">
-                    {{#if author_pfp}}
-                        <img src="{{author_pfp}}" alt="profile picture" class="author__profile-picture">
+                <div class="author">
+                    {{#if userData.avatar}}
+                    <img src="{{userData.avatar}}" alt="Profile Picture" class="author__profile-picture">
                     {{else}}
-                        <p class="bold header">{{shortUsername}}</p>
+                    <div class="author__profile-picture">
+                        <p class="short-username">{{userData.public_name.[0]}}</p>
+                    </div>
+                    {{/if}}
+                    <div class="author__info">
+                        <h1 class="author__name">{{userData.public_name}}</h1>
+                        <div class="author__followers">{{userData.followersCount}} подписчиков</div>
+                    </div>
+                    {{#unless own}}
+                        {{#unless mobile}}
+                            <button class="author__chat-button">
+                                <img src="/public/icons/chat.svg" alt="Chat">
+                            </button>
+                            <button class="author__subscribe-button" id="subscribe-{{safeUsername}}">
+                                {{#if isSubscribed}}
+                                    <span>Отписаться</span>
+                                {{else}}
+                                    <span>Подписаться</span>
+                                {{/if}}
+                            </button>
+                        {{/unless}}
+                    {{/unless}}
+                </div>
+            </div>
+            {{#if mobile}}
+                <div class="author-area__box-3">
+                    {{#if own}}
+                        <button class="author__subscriptions-button" id="subscriptions-button">
+                            <img src="/public/icons/followers.svg" alt="subscriptions">
+                            <span>Подписки</span>
+                        </button>
+                    {{else}}
+                        <button class="author__chat-button">
+                            <img src="/public/icons/chat.svg" alt="Chat">
+                        </button>
+                        <button class="author__subscribe-button" id="subscribe-{{safeUsername}}">
+                            {{#if isSubscribed}}
+                                <span>Отписаться</span>
+                            {{else}}
+                                <span>Подписаться</span>
+                            {{/if}}
+                        </button>
                     {{/if}}
                 </div>
-                <div class="author__name">
-                    <p class="bold label">@{{username}}</p>
-                </div>
-            </div>
-            {{/unless}}
+            {{/if}}
         </div>
-        <div id="feed" class="profile__feed"></div>
+        <div id="feed" class="profile__feed">
+        </div>
     </div>
 </div>
+{{/if}}

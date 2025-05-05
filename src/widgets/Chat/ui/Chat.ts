@@ -12,6 +12,7 @@ import { appState } from 'shared/router';
 import chatTemplate from './Chat.hbs';
 import './Chat.scss';
 import { messageObserver } from '../handlers/readMessages';
+import { openChatList } from 'widgets/sidebar';
 
 
 interface IChatState {
@@ -28,11 +29,13 @@ export const chatState: IChatState = {
 
 
 export const Chat = async (chatID: string) => {
-    const container = document.querySelector('#chat-container');
-    if (!container || !Auth.userData) return;
+    if (!appState.chat.open) {
+        openChatList();
+    }
 
+    const container = document.querySelector('#chat-container');
     const chat = ChatStorage.getChatByID(chatID);
-    if (!chat) return;
+    if (!chat || !container || !Auth.userData) return;
 
     if (chat.messages.length <= 1) {
         const response = await API.get(`/chats?id=${chatID}`);

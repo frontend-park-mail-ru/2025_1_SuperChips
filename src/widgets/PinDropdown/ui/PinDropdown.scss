@@ -38,3 +38,33 @@
         }
     }
 }
+
+:global(.dropdown) {
+    :global(.tab-bar) {
+        :global(.tab-bar__item) {
+            color: $black;
+            
+            &:global(.active) {
+                color: $black;
+            }
+        }
+    }
+}
+
+.dropdown-tab-bar {
+    color: $black !important;
+
+    .tab-bar__tab {
+        color: $black !important;
+
+        &:hover {
+            color: $text-gray !important;
+        }
+
+        &_active {
+            &::after {
+                display: none !important;
+            }
+        }
+    }
+}

@@ -44,6 +44,7 @@ export const PinDropdown = (pinID: string) => {
         const newTabBar = TabBar(tabs, 'vertical', (tabId) => {
             pinDropdownTabBarHandler(tabId).finally();
         });
+        newTabBar.classList.add('dropdown-tab-bar');
         tabBar?.replaceWith(newTabBar);
         newTabBar.style.gap = '0';
     }

@@ -1,3 +1,4 @@
+<div>
 <div class="user-card__username-block">
     <div class="user-card__avatar">
         {{#if avatar}}
@@ -9,10 +10,22 @@
             <p class="short-username">{{shortUsername}}</p>
         {{/if}}
     </div>
-    <div class="">
+    <div class="user-card__info">
         <div class="user-card__username">{{username}}</div>
         <div class="user-card__subscribers" id="{{username}}-subscribers">{{subscribers}}</div>
     </div>
+    <button class="user-card__chat-button">
+        <img src="/public/icons/chat.svg" alt="Chat">
+    </button>
 </div>
 <div class="user-card__about">{{about}}</div>
-<button class="user-card__subscribe-button" id="subscribe-{{username}}">Подписаться</button>
+</div>
+{{#unless own}}
+<button class="user-card__subscribe-button {{#if isSubscribed}}subscribed{{/if}}" id="subscribe-{{username}}">
+    {{#if isSubscribed}}
+        Отписаться
+    {{else}}
+        Подписаться
+    {{/if}}
+</button>
+{{/unless}}

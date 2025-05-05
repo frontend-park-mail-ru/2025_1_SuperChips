@@ -5,20 +5,32 @@ import { profileTabBarHandler } from '../handlers/tabBarHandler';
 import { BoardPopup } from 'widgets/BoardPopup';
 import { UserPins } from 'widgets/UserPins';
 import { UserBoards } from 'widgets/UserBoard';
+import { Toast } from 'shared/components/Toast';
+import { Chat } from 'widgets/Chat';
 import { Auth } from 'features/authorization';
-import { root } from 'app/app';
 import { API } from 'shared/api';
-import { appState } from 'shared/router';
+import { appState, navigate } from 'shared/router';
+import { ChatStorage } from 'features/chat';
 import ProfilePageTemplate from './ProfilePage.hbs';
 import './ProfilePage.scss';
 
 
-export const ProfilePage = async (username: string, tab: string): Promise<HTMLDivElement> => {
+interface IUserData {
+    username: string;
+    public_name: string;
+    avatar: string | null;
+    about?: string;
+    followersCount?: number;
+    isSubscribed?: boolean;
+}
+
+
+export const ProfilePage = async (username: string, tab: string = 'pins'): Promise<HTMLDivElement> => {
     const page = document.createElement('div');
 
     const own = Auth.userData ? username === Auth.userData.username : false;
     const isPinTabActive = tab === 'pins';
-    let userData;
+    let userData: IUserData | undefined;
 
     const isLastVisited = (
         !!appState.lastPage &&
@@ -27,19 +39,36 @@ export const ProfilePage = async (username: string, tab: string): Promise<HTMLDi
     );
 
     if (own) {
-        userData = Auth.userData;
+        userData = Auth.userData as IUserData;
     } else if (!isLastVisited) {
         const response = await API.get(`/users/${username}`);
-        if (!(response instanceof Response && response.ok)) return page;
+        if (!(response instanceof Response && response.ok)) {
+            console.error('Failed to fetch user data');
+            return page;
+        }
 
         const body = await response.json();
-        userData = body.data;
+        userData = body.data as IUserData;
         appState.lastVisited = body.data;
     } else {
-        userData = appState.lastVisited;
+        userData = appState.lastVisited as IUserData;
     }
 
-    const ok = await checkAvatar(userData.avatar);
+    if (!userData) {
+        console.error('No user data available');
+        return page;
+    }
+
+    let isSubscribed = false;
+    if (Auth.userData && !own) {
+        const followingResponse = await API.get('/profile/following?page=1&size=20');
+        if (followingResponse instanceof Response && followingResponse.ok) {
+            const followingData = await followingResponse.json();
+            isSubscribed = followingData.data.some((followingUser: IUserData) => followingUser.username === username);
+        }
+    }
+
+    const ok = await checkAvatar(userData.avatar || undefined);
     const config = {
         header: own ? 'Ваши flow' : userData.public_name,
         username: username,
@@ -47,6 +76,14 @@ export const ProfilePage = async (username: string, tab: string): Promise<HTMLDi
         author_pfp: ok ? userData.avatar : null,
         own: own,
         showCreateBoardButton: !isPinTabActive && own,
+        userBio: userData.about || null,
+        isSubscribed: isSubscribed,
+        safeUsername: username.replace(/[^a-zA-Z0-9_-]/g, '-'),
+        mobile: appState.mobile,
+        userData: {
+            ...userData,
+            followersCount: userData.followersCount || 0
+        }
     };
 
     page.innerHTML = ProfilePageTemplate(config);
@@ -65,20 +102,77 @@ export const ProfilePage = async (username: string, tab: string): Promise<HTMLDi
     const newBoard = page.querySelector('.create-board');
     newBoard?.addEventListener('click', () => BoardPopup('create'));
 
-    const feed = page.querySelector('.profile__feed');
-    if (!feed) return page;
-
-
-    const delayedFill: MutationObserver = new MutationObserver(async () => {
-        if (isPinTabActive) {
-            await UserPins(username);
-        } else {
-            await UserBoards(username);
-        }
-        delayedFill.disconnect();
+    const subscriptionsButton = page.querySelector('#subscriptions-button');
+    subscriptionsButton?.addEventListener('click', () => {
+        navigate(`${username}/subscriptions`);
     });
 
-    delayedFill.observe(root, { childList: true });
+
+    const subscribeButton = page.querySelector(`#subscribe-${config.safeUsername}`);
+    if (subscribeButton) {
+        subscribeButton.addEventListener('click', async () => {
+            const subResponse = isSubscribed
+                ? await API.delete('/subscription', { target_user: username })
+                : await API.post('/subscription', { target_user: username });
+
+            if (!(subResponse instanceof Response) || !subResponse.ok) {
+                console.error('Error in ProfilePage:', 'Subscription action failed');
+                Toast('Произошла ошибка при загрузке профиля', 'error');
+                page.innerHTML = '';
+                return page;
+            }
+
+            isSubscribed = !isSubscribed;
+            subscribeButton.textContent = isSubscribed ? 'Отписаться' : 'Подписаться';
+            subscribeButton.classList.toggle('subscribed', isSubscribed);
+
+            Toast(
+                isSubscribed
+                    ? `Вы подписались на ${userData.public_name || username}`
+                    : `Вы отписались от ${userData.public_name || username}`,
+                'success'
+            );
+        });
+    }
+
+    const feed = page.querySelector('.profile__feed');
+    if (feed) {
+        requestAnimationFrame(async () => {
+            if (isPinTabActive) {
+                if (userData?.about) {
+                    const description = document.createElement('div');
+                    description.classList.add('pin', 'description-pin');
+                    description.innerHTML = `
+                                <div class="description-content">
+                                    <p>${userData.about}</p>
+                                </div>
+                            `;
+                    feed.appendChild(description);
+                }
+                await UserPins(username);
+            } else {
+                await UserBoards(username);
+            }
+        });
+    }
+
+    const messageButton = page.querySelector('.author__chat-button');
+    messageButton?.addEventListener('click', async () => {
+        const username = document.querySelector<HTMLElement>('.user-profile__header')?.textContent?.trim();
+        if (username) {
+            let chatID;
+            const chat = ChatStorage.getChatByUsername(username);
+            if (!chat) {
+                const newChatID = await ChatStorage.newChat(username);
+                if (!newChatID) return;
+                chatID = newChatID.toString();
+            } else {
+                chatID = chat.id.toString();
+            }
+
+            Chat(chatID).finally();
+        }
+    });
 
     return page.firstChild as HTMLDivElement;
 };

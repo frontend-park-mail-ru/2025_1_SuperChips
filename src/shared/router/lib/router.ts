@@ -80,6 +80,11 @@ export const navigate = async (
         renderProps = page.split('/')[2];
         newHref = `/${page}`;
         break;
+    case 'subscriptions':
+    case 'subscribers':
+        renderProps = page;
+        newHref = `/${page}`;
+        break;
     }
 
     if (match === appState.activePage && newHref === appState.href) {
