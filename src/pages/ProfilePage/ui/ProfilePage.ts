@@ -160,20 +160,17 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
 
     const messageButton = page.querySelector('.author__chat-button');
     messageButton?.addEventListener('click', async () => {
-        const username = document.querySelector<HTMLElement>('.user-profile__header')?.textContent?.trim();
-        if (username) {
-            let chatID;
-            const chat = ChatStorage.getChatByUsername(username);
-            if (!chat) {
-                const newChatID = await ChatStorage.newChat(username);
-                if (!newChatID) return;
-                chatID = newChatID.toString();
-            } else {
-                chatID = chat.id.toString();
-            }
-
-            Chat(chatID).finally();
+        let chatID;
+        const chat = ChatStorage.getChatByUsername(username);
+        if (!chat) {
+            const newChatID = await ChatStorage.newChat(username);
+            if (!newChatID) return;
+            chatID = newChatID.toString();
+        } else {
+            chatID = chat.id.toString();
         }
+
+        Chat(chatID).finally();
     });
 
     return page.firstChild as HTMLDivElement;

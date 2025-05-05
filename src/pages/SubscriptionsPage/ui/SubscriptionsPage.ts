@@ -207,11 +207,5 @@ async function createUserCard(user: IUser) {
             );
         });
     }
-
-    const chatButton = userCard.querySelector('.user-card__chat-button');
-    chatButton?.addEventListener('click', () => {
-        navigate(`/messages/${user.username}`);
-    });
-
     return userCard;
 }

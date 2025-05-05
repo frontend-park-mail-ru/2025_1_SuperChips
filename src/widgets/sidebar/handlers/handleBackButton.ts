@@ -3,7 +3,7 @@ import { closeChatList } from './closeChatList';
 import { appState, navigate } from 'shared/router';
 
 export const handleBackButton = () => {
-    if (appState.chat.open && appState.mobile) {
+    if (appState.chat.open) {
         closeChatList();
         return;
     }

@@ -37,7 +37,7 @@ export const Chat = async (chatID: string) => {
     const chat = ChatStorage.getChatByID(chatID);
     if (!chat || !container || !Auth.userData) return;
 
-    if (chat.messages.length <= 1) {
+    if (chat.messages.length < 1) {
         const response = await API.get(`/chats?id=${chatID}`);
         if (!(response instanceof Response && response.ok)) return;
         const body = await response.json();
@@ -76,6 +76,7 @@ export const Chat = async (chatID: string) => {
 
     const currentUser = Auth.userData.username;
     const firstUnread = chat.messages.length - chat.count;
+
     if (chat.messages) {
         const messages = chat.messages.map((item: IMessage, index) => {
             const own = currentUser === item.sender;

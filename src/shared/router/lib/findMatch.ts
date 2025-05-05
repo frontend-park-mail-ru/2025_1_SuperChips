@@ -32,7 +32,7 @@ export const findMatch = async (page: string) => {
         const username = page.split('/')[0];
         if (username === appState.lastVisited.username) return match;
 
-        const userExists = await API.head(`/users/${username}`);
+        const userExists = await API.head(`/api/v1/users/${username}`);
         if (userExists instanceof Error || !userExists.ok) {
             match = 'feed';
         }

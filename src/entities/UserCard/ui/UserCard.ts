@@ -6,6 +6,7 @@ import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
 import { Toast } from 'shared/components/Toast';
 
+
 interface IUserCardProps {
     username: string;
     public_name: string;
@@ -67,17 +68,11 @@ export const UserCard = (user: IUserCardProps) => {
                         : `Вы отписались от ${user.public_name || user.username}`,
                     'success'
                 );
-            } catch (error) {
-                console.error('Subscription error:', error);
+            } catch {
                 Toast('Не удалось выполнить действие', 'error');
             }
         });
     }
-
-    const chatButton = container.querySelector('.user-card__chat-button');
-    chatButton?.addEventListener('click', () => {
-        navigate(`/messages/${user.username}`);
-    });
 
     return container;
 };

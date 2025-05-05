@@ -34,7 +34,6 @@ class Api {
     ): Promise<Response|Error> {
         try {
             const url = this.#apiBaseUrl + path;
-
             let bodyPayload;
 
             if (body instanceof FormData) {
