@@ -42,6 +42,10 @@ class chatStorage {
     constructor() {
         this.ws = new WebSocket(WEBSOCKET_URL);
 
+        this.ws.onopen = () => {
+            this.ws.send(JSON.stringify({ description: 'connect' }));
+        };
+
         this.ws.onmessage = (event: MessageEvent) => {
             try {
                 const body = JSON.parse(event.data);
@@ -132,8 +136,6 @@ class chatStorage {
             count: 0,
             messages: []
         });
-
-        return body.data.id.toString();
     }
 
     getChatByID(chatID: string | null) {

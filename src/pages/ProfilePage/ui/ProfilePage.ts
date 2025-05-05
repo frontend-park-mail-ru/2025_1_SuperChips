@@ -74,9 +74,9 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
 
     const ok = await checkAvatar(userData.avatar || undefined);
     // Use subscriber_count if available, otherwise use subscribers_count or fallback to followersCount or 0
-    const subscriberCount = userData.subscriber_count !== undefined ? userData.subscriber_count : 
-                           (userData.subscribers_count !== undefined ? userData.subscribers_count : 
-                           (userData.followersCount || 0));
+    const subscriberCount = userData.subscriber_count !== undefined ? userData.subscriber_count :
+        (userData.subscribers_count !== undefined ? userData.subscribers_count :
+            (userData.followersCount || 0));
     
     const config = {
         header: own ? 'Ваши flow' : userData.public_name,
@@ -168,7 +168,10 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
     messageButton?.addEventListener('click', async () => {
         let chatID;
         const chat = ChatStorage.getChatByUsername(username);
+
+        if (appState.chat.id === chat?.id) return;
         if (!chat) {
+            await ChatStorage.newContact(username);
             const newChatID = await ChatStorage.newChat(username);
             if (!newChatID) return;
             chatID = newChatID.toString();

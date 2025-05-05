@@ -71,6 +71,11 @@ export const Chat = async (chatID: string) => {
     backButton?.addEventListener('click', closeChat);
     window.addEventListener('keydown', closeChat);
 
+    const chatList = document.querySelector<HTMLDivElement>('.chat-list');
+    if (chatList) {
+        chatList.style.display = 'none';
+    }
+
     const messageBox = container.querySelector<HTMLElement>('.chat__messages');
     if (!messageBox) return;
 
@@ -100,11 +105,7 @@ export const Chat = async (chatID: string) => {
                 chatState?.observerInstance?.observe(item);
             });
         }
-        if (firstUnread === messages.length) {
-            messageBox.scrollTop = messageBox.scrollHeight;
-        }
     }
-
     const textarea = container.querySelector<HTMLTextAreaElement>('#chat-input');
     const charCounter = container.querySelector<HTMLDivElement>('#chat-char-counter');
 
@@ -134,9 +135,12 @@ export const Chat = async (chatID: string) => {
 
     container.querySelector('.send-button')?.addEventListener('click', sendMessage);
 
-    const messageElements = messageBox?.children;
-    if (messageElements && firstUnread > 0) {
-        const target = messageElements[firstUnread] as HTMLElement;
-        target?.scrollIntoView({ behavior: 'auto', block: 'start' });
-    }
+    // todo fix
+    // const messageElements = messageBox?.children;
+    // if (messageElements && firstUnread > 0) {
+    //     const target = messageElements[firstUnread] as HTMLElement;
+    //     target?.scrollIntoView({ behavior: 'auto', block: 'start' });
+    // }
+
+    messageBox.scrollTop = messageBox.scrollHeight;
 };

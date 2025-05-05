@@ -46,9 +46,8 @@ export const UserCard = (props: IUserCardProps): HTMLDivElement => {
                 
                 // Обновляем состояние в родительском компоненте
                 props.isSubscribed = isSubscribed;
-            } catch (error) {
-                console.error('Error toggling subscription:', error);
-                Toast('Произошла ошибка при изменении подписки', 'error');
+            } catch {
+                Toast('Произошла ошибка', 'error');
             }
         });
     }

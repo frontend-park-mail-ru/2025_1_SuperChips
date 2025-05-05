@@ -31,7 +31,7 @@
                     <span class="chat__draft">Черновик: </span>
                     <span>{{this.draft.message}}</span>
                 {{else if this.lastMessage}}
-                    {{#if own}}
+                    {{#if this.lastMessage.own}}
                         Вы: {{this.lastMessage.message}}
                     {{else}}
                         {{this.lastMessage.message}}
