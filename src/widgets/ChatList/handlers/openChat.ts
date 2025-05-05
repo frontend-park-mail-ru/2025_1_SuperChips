@@ -30,7 +30,6 @@ export const openChat = async (event: Event) => {
     let chatID = '';
     if (preview.classList.contains('chat-list-item')) {
         chatID = preview.id.split('-')[1];
-        console.log(chatID, ChatStorage.chatList);
     } else if (preview.classList.contains('contact-list__item')) {
         const username = preview.id.split('-')[1];
         const chat = ChatStorage.getChatByUsername(username);

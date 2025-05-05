@@ -42,26 +42,15 @@ class chatStorage {
     constructor() {
         this.ws = new WebSocket(WEBSOCKET_URL);
 
-        this.ws.onopen = () => {
-            console.log('WebSocket соединение установлено');
-            this.ws.send(JSON.stringify({ type: 'hello' }));
-        };
-
-        this.ws.onerror = (error) => {
-            console.error('Ошибка WebSocket', error);
-        };
-
-        this.ws.onclose = (event) => {
-            console.warn('WebSocket закрыт.', event);
-        };
-
         this.ws.onmessage = (event: MessageEvent) => {
             try {
                 const body = JSON.parse(event.data);
+                // if (body.description === 'message')
                 const message: IMessage = {
-                    ...body.data,
+                    ...body,
                     timestamp: new Date(body.data.timestamp),
                 };
+                console.log(body);
                 this.getMessage(body.data.id, message).finally();
             } catch { /**/
             }
@@ -166,7 +155,13 @@ class chatStorage {
         chat.last_message = message;
         chat.count = 0;
 
-        this.ws.send(JSON.stringify(message));
+        const payload = {
+            description: 'message',
+            chat_id: +chatID,
+            username: chat.username,
+            message: message.message,
+        };
+        this.ws.send(JSON.stringify(payload));
     }
 
     async getMessage(chatID: string, message: IMessage) {
