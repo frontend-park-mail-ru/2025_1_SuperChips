@@ -43,7 +43,7 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
     } else if (!isLastVisited) {
         const response = await API.get(`/users/${username}`);
         if (!(response instanceof Response && response.ok)) {
-            console.error('Failed to fetch user data');
+            Toast('Ошибка при получении данных');
             return page;
         }
 
@@ -55,7 +55,7 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
     }
 
     if (!userData) {
-        console.error('No user data available');
+        Toast('Ошибка при получении данных');
         return page;
     }
 
@@ -118,8 +118,7 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
                 : await API.post('/subscription', { target_user: username });
 
             if (!(subResponse instanceof Response) || !subResponse.ok) {
-                console.error('Error in ProfilePage:', 'Subscription action failed');
-                Toast('Произошла ошибка при загрузке профиля', 'error');
+                Toast('Ошибка при получении данных');
                 page.innerHTML = '';
                 return page;
             }

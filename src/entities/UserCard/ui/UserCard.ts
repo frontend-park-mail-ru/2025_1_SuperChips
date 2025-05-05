@@ -42,35 +42,31 @@ export const UserCard = (user: IUserCardProps) => {
     const subscribeButton = container.querySelector('.user-card__subscribe-button');
     if (subscribeButton && Auth.userData?.username !== user.username) {
         subscribeButton.addEventListener('click', async () => {
-            try {
-                const subResponse = user.isSubscribed
-                    ? await API.delete('/subscription', { target_user: user.username })
-                    : await API.post('/subscription', { target_user: user.username });
+            const subResponse = user.isSubscribed
+                ? await API.delete('/subscription', { target_user: user.username })
+                : await API.post('/subscription', { target_user: user.username });
 
-                if (!(subResponse instanceof Response) || !subResponse.ok) {
-                    throw new Error('Subscription action failed');
-                }
-
-                user.isSubscribed = !user.isSubscribed;
-                subscribeButton.textContent = user.isSubscribed ? 'Отписаться' : 'Подписаться';
-                subscribeButton.classList.toggle('subscribed', user.isSubscribed);
-
-                const subscribersElement = container.querySelector(`#${user.username}-subscribers`);
-                if (subscribersElement) {
-                    const newCount = (user.subscribers_count || 0) + (user.isSubscribed ? 1 : -1);
-                    user.subscribers_count = newCount;
-                    subscribersElement.textContent = pluralize('подписчик', newCount);
-                }
-
-                Toast(
-                    user.isSubscribed 
-                        ? `Вы подписались на ${user.public_name || user.username}` 
-                        : `Вы отписались от ${user.public_name || user.username}`,
-                    'success'
-                );
-            } catch {
+            if (!(subResponse instanceof Response) || !subResponse.ok) {
                 Toast('Не удалось выполнить действие', 'error');
             }
+
+            user.isSubscribed = !user.isSubscribed;
+            subscribeButton.textContent = user.isSubscribed ? 'Отписаться' : 'Подписаться';
+            subscribeButton.classList.toggle('subscribed', user.isSubscribed);
+
+            const subscribersElement = container.querySelector(`#${user.username}-subscribers`);
+            if (subscribersElement) {
+                const newCount = (user.subscribers_count || 0) + (user.isSubscribed ? 1 : -1);
+                user.subscribers_count = newCount;
+                subscribersElement.textContent = pluralize('подписчик', newCount);
+            }
+
+            Toast(
+                user.isSubscribed
+                    ? `Вы подписались на ${user.public_name || user.username}`
+                    : `Вы отписались от ${user.public_name || user.username}`,
+                'success'
+            );
         });
     }
 
