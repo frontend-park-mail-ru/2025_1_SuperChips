@@ -23,7 +23,7 @@ export const search = async (event: Event) => {
     }
 
     const URI = `/search/${filter}?query=${query}&page=1&size=1`;
-    const response = await API.head(URI);
+    const response = await API.get(URI);
 
     if (response instanceof Error) {
         return;

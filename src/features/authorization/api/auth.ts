@@ -8,7 +8,6 @@ import { closeChatList } from 'widgets/sidebar';
 import { API } from 'shared/api';
 import { BoardStorage } from 'features/boardLoader';
 import { USER_SAVED_PINS_BOARD } from 'shared/config/constants';
-import { ChatStorage } from 'features/chat';
 
 
 type TLoginData = {
@@ -141,8 +140,6 @@ class auth {
 
             await Navbar();
             await BoardStorage.fetchUserBoards();
-            await ChatStorage.fetchChatList();
-            await ChatStorage.fetchContactList();
         }
     };
 

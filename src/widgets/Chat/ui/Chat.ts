@@ -41,9 +41,12 @@ export const Chat = async (chatID: string) => {
         const response = await API.get(`/chats?id=${chatID}`);
         if (!(response instanceof Response && response.ok)) return;
         const body = await response.json();
-        body.data.messages.forEach((message: IMessage) => {
-            chat.messages.push(message);
-        });
+
+        if (body.data.messages) {
+            body.data.messages.forEach((message: IMessage) => {
+                chat.messages.push(message);
+            });
+        }
     }
 
     if (chat.count > 0) {
@@ -73,21 +76,33 @@ export const Chat = async (chatID: string) => {
 
     const currentUser = Auth.userData.username;
     const firstUnread = chat.messages.length - chat.count;
-    const messages = chat.messages.map((item: IMessage, index) => {
-        const own = currentUser === item.sender;
-        return {
-            ...item,
-            time: formatDateToReadable(item.timestamp),
-            own: own,
-            sent: own && !item.read,
-            read: own && item.read,
-            unread: index >= firstUnread,
-        };
-    });
+    if (chat.messages) {
+        const messages = chat.messages.map((item: IMessage, index) => {
+            const own = currentUser === item.sender;
+            return {
+                ...item,
+                time: formatDateToReadable(item.timestamp),
+                own: own,
+                sent: own && !item.read,
+                read: own && item.read,
+                unread: index >= firstUnread,
+            };
+        });
 
-    messages.forEach((item) => {
-        messageBox.insertAdjacentElement('afterbegin', Message(item));
-    });
+        messages.forEach((item) => {
+            messageBox.insertAdjacentElement('afterbegin', Message(item));
+        });
+
+        const unread = messageBox.querySelectorAll('.unread');
+        if (unread.length > 0) {
+            unread.forEach((item) => {
+                chatState?.observerInstance?.observe(item);
+            });
+        }
+        if (firstUnread === messages.length) {
+            messageBox.scrollTop = messageBox.scrollHeight;
+        }
+    }
 
     const textarea = container.querySelector<HTMLTextAreaElement>('#chat-input');
     const charCounter = container.querySelector<HTMLDivElement>('#chat-char-counter');
@@ -122,16 +137,5 @@ export const Chat = async (chatID: string) => {
     if (messageElements && firstUnread > 0) {
         const target = messageElements[firstUnread] as HTMLElement;
         target?.scrollIntoView({ behavior: 'auto', block: 'start' });
-    }
-
-
-    const unread = messageBox.querySelectorAll('.unread');
-    if (unread.length > 0) {
-        unread.forEach((item) => {
-            chatState?.observerInstance?.observe(item);
-        });
-    }
-    if (firstUnread === messages.length) {
-        messageBox.scrollTop = messageBox.scrollHeight;
     }
 };

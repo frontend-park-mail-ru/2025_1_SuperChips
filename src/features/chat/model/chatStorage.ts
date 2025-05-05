@@ -237,11 +237,11 @@ class chatStorage {
     sortChatList() {
         if (!this.chatList[0]) return;
         this.chatList.sort((a, b) => {
-            if (a.last_message && b.last_message) {
-                return b.last_message.timestamp.getTime() - a.last_message.timestamp.getTime();
-            } else if (a.last_message) {
+            if (a.last_message?.timestamp && b.last_message?.timestamp) {
+                return new Date(b.last_message.timestamp).getTime() - new Date(a.last_message.timestamp).getTime();
+            } else if (a.last_message?.timestamp) {
                 return -1;
-            } else if (b.last_message) {
+            } else if (b.last_message?.timestamp) {
                 return 1;
             } else {
                 return 0;
