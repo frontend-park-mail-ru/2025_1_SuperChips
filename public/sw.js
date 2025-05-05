@@ -92,7 +92,10 @@ self.addEventListener('fetch', (event) => {
                 });
             })
         );
-    } else if (request.method === 'GET' && request.url.includes('/api/')) {
+    } else if (request.method === 'GET'
+        && request.url.includes('/api/')
+        && !request.url.includes('/api/v1/ws')
+    ) {
         // Стратегия NetworkFirst для запросов к API
         event.respondWith(
             fetch(request)

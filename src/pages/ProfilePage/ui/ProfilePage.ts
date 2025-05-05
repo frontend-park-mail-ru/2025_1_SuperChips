@@ -1,6 +1,6 @@
 import type { ITabItem } from 'shared/components/tabBar';
 import { TabBar } from 'shared/components/tabBar';
-import { checkAvatar } from 'shared/utils';
+import { checkAvatar, pluralize } from 'shared/utils';
 import { profileTabBarHandler } from '../handlers/tabBarHandler';
 import { BoardPopup } from 'widgets/BoardPopup';
 import { UserPins } from 'widgets/UserPins';
@@ -133,6 +133,11 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
             isSubscribed = !isSubscribed;
             subscribeButton.textContent = isSubscribed ? 'Отписаться' : 'Подписаться';
             subscribeButton.classList.toggle('subscribed', isSubscribed);
+            const counter = document.querySelector('.author__followers');
+            if (counter && counter.textContent) {
+                const prev = parseInt(counter.textContent.split(' ')[0]);
+                counter.textContent = pluralize('подписчик', prev + 1 * (isSubscribed ? 1 : -1));
+            }
 
             Toast(
                 isSubscribed

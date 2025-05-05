@@ -110,6 +110,7 @@
     }
 
     &__chat-button {
+        @include button;
         background-color: rgba(121, 121, 121, 0.358);
         border: none;
         border-radius: 50%;
@@ -131,6 +132,7 @@
     }
 
     &__subscribe-button, &__subscriptions-button {
+        @include button;
         display: flex;
         align-items: center;
         gap: $spacing-sm;
