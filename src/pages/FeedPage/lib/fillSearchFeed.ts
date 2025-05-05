@@ -99,7 +99,10 @@ export const fillSearchFeed = async () => {
             }
 
             body.data.forEach((user: ISearchUser) => {
-                const isSubscribed = followingUsers.some(followingUser => followingUser.username === user.username);
+                let isSubscribed = false;
+                if (followingUsers) {
+                    isSubscribed = followingUsers.some(followingUser => followingUser.username === user.username);
+                }
                 const userWithSubscription = {
                     username: user.username,
                     public_name: user.public_name,

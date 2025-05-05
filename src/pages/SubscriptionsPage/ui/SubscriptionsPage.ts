@@ -155,7 +155,9 @@ async function createUserCard(user: IUser) {
         const followingResponse = await API.get('/profile/following?page=1&size=20');
         if (followingResponse instanceof Response && followingResponse.ok) {
             const followingData = await followingResponse.json();
-            isSubscribed = followingData.data.some((followingUser: IUser) => followingUser.username === user.username);
+            if (followingData.data) {
+                isSubscribed = followingData.data.some((followingUser: IUser) => followingUser.username === user.username);
+            }
         }
     }
 

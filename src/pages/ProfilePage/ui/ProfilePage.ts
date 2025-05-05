@@ -64,7 +64,9 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
         const followingResponse = await API.get('/profile/following?page=1&size=20');
         if (followingResponse instanceof Response && followingResponse.ok) {
             const followingData = await followingResponse.json();
-            isSubscribed = followingData.data.some((followingUser: IUserData) => followingUser.username === username);
+            if (followingData.data) {
+                isSubscribed = followingData.data.some((followingUser: IUserData) => followingUser.username === username);
+            }
         }
     }
 
