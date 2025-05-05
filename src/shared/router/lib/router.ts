@@ -138,7 +138,6 @@ const cleanup = (newHref: string) => {
     filter?.remove();
     appState.isFilterOpen = false;
 
-    document.querySelector('#chats')?.classList.remove('chat-icon_active');
     if (newHref !== '/flow/new') {
         document.querySelector('#newPin')?.classList.remove('active');
     }

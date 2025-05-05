@@ -34,6 +34,7 @@
 
     &__profile-picture {
         @include profile-picture-small;
+        @include button;
         grid-area: pfp;
 
         &:hover {

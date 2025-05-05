@@ -2,19 +2,22 @@ import { closeChatList } from './closeChatList';
 import { ChatList, openChat } from 'widgets/ChatList';
 import { closeFilter } from 'widgets/navbar';
 import { toggleScroll } from 'widgets/BoardPopup';
-import { root } from 'app/app';
 import { appState } from 'shared/router';
 import { ChatStorage } from 'features/chat';
 
 
 export const openChatList = () => {
+    if (appState.chat.open) return;
+
     appState.chat.open = true;
     ChatStorage.sortChatList();
+
     const container = document.createElement('div');
     container.classList.add('chat-container');
     container.id = 'chat-container';
     container.addEventListener('click', openChat);
-    root.append(container);
+
+    document.body.append(container);
 
     if (appState.mobile) {
         const goBack = document.querySelector<HTMLButtonElement>('#go-back-button');

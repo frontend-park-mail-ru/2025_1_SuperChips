@@ -1,9 +1,8 @@
 import { openChatList } from './openChatList';
 import { appState } from 'shared/router';
-import { toggleScroll } from '../../BoardPopup';
+import { toggleScroll } from 'widgets/BoardPopup';
 
 export const closeChatList = () => {
-    appState.chat.open = false;
     const chatButton = document.querySelector('#chats');
     const chatList = document.querySelector<HTMLDivElement>('#chat-container');
 

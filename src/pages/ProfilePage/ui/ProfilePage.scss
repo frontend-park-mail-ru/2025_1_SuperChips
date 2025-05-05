@@ -53,6 +53,7 @@
 }
 
 .create-board {
+    @include button;
     display: flex;
     align-items: center;
     gap: $spacing-sm;
@@ -100,6 +101,7 @@
     }
 
     &__profile-picture {
+        @include button;
         @include profile-picture-small;
 
         .short-username {
