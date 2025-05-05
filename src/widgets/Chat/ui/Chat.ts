@@ -6,6 +6,7 @@ import { formatDateToReadable } from 'shared/utils';
 import { textareaResizeHandler } from '../handlers/textareaResizeHandler';
 import { chatSubmitHandler } from '../handlers/chatSubmitHandler';
 import { closeChat } from '../handler/closeChat';
+import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
 import { appState } from 'shared/router';
 import chatTemplate from './Chat.hbs';
@@ -32,6 +33,15 @@ export const Chat = async (chatID: string) => {
 
     const chat = ChatStorage.getChatByID(chatID);
     if (!chat) return;
+
+    if (chat.messages.length <= 1) {
+        const response = await API.get(`/chats?id=${chatID}`);
+        if (!(response instanceof Response && response.ok)) return;
+        const body = await response.json();
+        body.data.messages.forEach((message: IMessage) => {
+            chat.messages.push(message);
+        });
+    }
 
     if (chat.count > 0) {
         chatState?.observerInstance?.disconnect();
@@ -71,8 +81,10 @@ export const Chat = async (chatID: string) => {
             unread: index >= firstUnread,
         };
     });
+
     messages.forEach((item) => {
-        messageBox.appendChild(Message(item));
+        // messageBox.appendChild(Message(item));
+        messageBox.insertAdjacentElement('afterbegin', Message(item));
     });
 
     const textarea = container.querySelector<HTMLTextAreaElement>('#chat-input');

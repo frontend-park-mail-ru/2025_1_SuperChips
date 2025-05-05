@@ -43,15 +43,22 @@ class chatStorage {
         this.ws = new WebSocket(WEBSOCKET_URL);
 
         this.ws.onmessage = (event: MessageEvent) => {
+            console.log('На твой телефон пришло новое сообщение, посмотри, вдруг там что-то важное');
             try {
                 const body = JSON.parse(event.data);
-                // if (body.description === 'message')
-                const message: IMessage = {
-                    ...body,
-                    timestamp: new Date(body.data.timestamp),
-                };
                 console.log(body);
-                this.getMessage(body.data.id, message).finally();
+                console.log(body.sender, {
+                    ...body,
+                    id: body.message_id.toString(),
+                    timestamp: new Date(body.data.timestamp),
+                    message: body.content,
+                });
+                this.getMessage(body.sender, {
+                    ...body,
+                    id: body.message_id.toString(),
+                    timestamp: new Date(body.data.timestamp),
+                    message: body.content,
+                }).finally();
             } catch { /**/
             }
         };
@@ -151,7 +158,7 @@ class chatStorage {
     postMessage(chatID: string, message: IMessage) {
         const chat = this.getChatByID(chatID);
         if (!chat) return;
-        chat.messages.push(message);
+        chat.messages.unshift(message);
         chat.last_message = message;
         chat.count = 0;
 
@@ -164,24 +171,25 @@ class chatStorage {
         this.ws.send(JSON.stringify(payload));
     }
 
-    async getMessage(chatID: string, message: IMessage) {
-        let chat = this.getChatByID(chatID);
+    async getMessage(username: string, message: IMessage) {
+        let chat = this.getChatByUsername(username);
 
         if (!chat) {
             const newChatID = await this.newChat(message.sender);
             chat = this.getChatByID(newChatID);
             if (!chat) return;
         }
-        chat.messages.push(message);
+
+        chat.messages.unshift(message);
         chat.last_message = message;
         appState.chat.hasUnread = true;
 
         if (!chat.lastChanged) {
-            this.setLastChanged(chatID);
+            this.setLastChanged(chat.id);
         }
 
         const openChat = this.getChatByID(appState.chat.id);
-        if (!appState.chat.open || (appState.chat.open && appState.chat.id !== chatID)) {
+        if (!appState.chat.open || (appState.chat.open && appState.chat.id !== chat.id)) {
             chat.count += 1;
             dispatchEvent(new Event('newMessage'));
         }
