@@ -124,10 +124,13 @@ export const Chat = async (chatID: string) => {
         target?.scrollIntoView({ behavior: 'auto', block: 'start' });
     }
 
-    messageBox.querySelectorAll('.unread').forEach((item) => {
-        chatState?.observerInstance?.observe(item);
-    });
 
+    const unread = messageBox.querySelectorAll('.unread');
+    if (unread.length > 0) {
+        unread.forEach((item) => {
+            chatState?.observerInstance?.observe(item);
+        });
+    }
     if (firstUnread === messages.length) {
         messageBox.scrollTop = messageBox.scrollHeight;
     }
