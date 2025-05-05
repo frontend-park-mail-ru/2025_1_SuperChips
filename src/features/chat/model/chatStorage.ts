@@ -249,6 +249,12 @@ class chatStorage {
         });
         this.chatList[0].lastChanged = true;
     }
+
+    clear() {
+        this.ws.close();
+        this.chatList = [];
+        this.contacts = [];
+    }
 }
 
 export const ChatStorage = new chatStorage();

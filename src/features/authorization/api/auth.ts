@@ -8,6 +8,7 @@ import { closeChatList } from 'widgets/sidebar';
 import { API } from 'shared/api';
 import { BoardStorage } from 'features/boardLoader';
 import { USER_SAVED_PINS_BOARD } from 'shared/config/constants';
+import { ChatStorage } from '../../chat';
 
 
 type TLoginData = {
@@ -110,6 +111,7 @@ class auth {
             await this.clearUserData();
 
             BoardStorage.clear();
+            ChatStorage.clear();
             const sidebarButtons = document.querySelector<HTMLDivElement>('.sidebar__button-container');
             sidebarButtons?.classList.toggle('display-none');
             document.querySelector('.logout-toast')?.remove();
@@ -169,6 +171,8 @@ class auth {
         await Navbar();
         BoardStorage.boardToSave = USER_SAVED_PINS_BOARD;
         document.querySelector('.sidebar')?.classList.remove('hidden');
+        ChatStorage.fetchContactList().finally();
+        ChatStorage.fetchChatList().finally();
     }
 }
 
