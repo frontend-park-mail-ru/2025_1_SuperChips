@@ -12,7 +12,8 @@ interface IUserCardProps {
     public_name: string;
     avatar: string | null;
     about: string;
-    subscribers_count: number;
+    subscribers_count?: number;
+    subscriber_count?: number;
     isSubscribed?: boolean;
     own?: boolean;
 }
@@ -23,13 +24,17 @@ export const UserCard = (user: IUserCardProps) => {
 
     const displayName = user.public_name || user.username;
     const profileUrl = user.username; 
+    
+    // Use subscriber_count if available, otherwise use subscribers_count or default to 0
+    const subscriberCount = user.subscriber_count !== undefined ? user.subscriber_count : 
+                           (user.subscribers_count || 0);
 
     const config = {
         username: displayName,
         avatar: user.avatar,
         about: user.about,
         shortUsername: displayName[0].toUpperCase(),
-        subscribers: pluralize('подписчик', user.subscribers_count || 0),
+        subscribers: pluralize('подписчик', subscriberCount),
         isSubscribed: user.isSubscribed,
         own: user.own
     };
@@ -56,9 +61,15 @@ export const UserCard = (user: IUserCardProps) => {
 
             const subscribersElement = container.querySelector(`#${user.username}-subscribers`);
             if (subscribersElement) {
-                const newCount = (user.subscribers_count || 0) + (user.isSubscribed ? 1 : -1);
-                user.subscribers_count = newCount;
-                subscribersElement.textContent = pluralize('подписчик', newCount);
+                // Update the subscriber count based on which property is available
+                if (user.subscriber_count !== undefined) {
+                    user.subscriber_count = (user.subscriber_count || 0) + (user.isSubscribed ? 1 : -1);
+                    subscribersElement.textContent = pluralize('подписчик', user.subscriber_count);
+                } else {
+                    const newCount = (user.subscribers_count || 0) + (user.isSubscribed ? 1 : -1);
+                    user.subscribers_count = newCount;
+                    subscribersElement.textContent = pluralize('подписчик', newCount);
+                }
             }
 
             Toast(

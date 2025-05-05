@@ -21,6 +21,8 @@ interface IUserData {
     avatar: string | null;
     about?: string;
     followersCount?: number;
+    subscriber_count?: number;
+    subscribers_count?: number;
     isSubscribed?: boolean;
 }
 
@@ -71,6 +73,11 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
     }
 
     const ok = await checkAvatar(userData.avatar || undefined);
+    // Use subscriber_count if available, otherwise use subscribers_count or fallback to followersCount or 0
+    const subscriberCount = userData.subscriber_count !== undefined ? userData.subscriber_count : 
+                           (userData.subscribers_count !== undefined ? userData.subscribers_count : 
+                           (userData.followersCount || 0));
+    
     const config = {
         header: own ? 'Ваши flow' : userData.public_name,
         username: username,
@@ -84,7 +91,7 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
         mobile: appState.mobile,
         userData: {
             ...userData,
-            followersCount: userData.followersCount || 0
+            followersCount: subscriberCount
         }
     };
 

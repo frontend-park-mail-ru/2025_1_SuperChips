@@ -167,6 +167,7 @@ async function createUserCard(user: IUser) {
         avatar: avatarOk ? user.avatar : null,
         about: user.about || '',
         subscribers_count: user.subscribers_count || 0,
+        subscriber_count: user.subscriber_count || 0,
         isSubscribed: isSubscribed,
         own: Auth.userData?.username === user.username
     });
@@ -194,9 +195,15 @@ async function createUserCard(user: IUser) {
 
             const subscribersElement = userCard.querySelector(`#${user.username}-subscribers`);
             if (subscribersElement) {
-                const newCount = (user.subscribers_count || 0) + (isSubscribed ? 1 : -1);
-                user.subscribers_count = newCount;
-                subscribersElement.textContent = pluralize('подписчик', newCount);
+                // Update the appropriate subscriber count property
+                if (user.subscriber_count !== undefined) {
+                    user.subscriber_count = (user.subscriber_count || 0) + (isSubscribed ? 1 : -1);
+                    subscribersElement.textContent = pluralize('подписчик', user.subscriber_count);
+                } else {
+                    const newCount = (user.subscribers_count || 0) + (isSubscribed ? 1 : -1);
+                    user.subscribers_count = newCount;
+                    subscribersElement.textContent = pluralize('подписчик', newCount);
+                }
             }
 
             Toast(

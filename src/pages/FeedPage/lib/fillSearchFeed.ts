@@ -17,6 +17,7 @@ type FilterType = 'boards' | 'flows' | 'users';
 
 interface ISearchUser extends IUser {
     subscribers_count?: number;
+    subscriber_count?: number;
 }
 
 export const searchFeedState = {
@@ -108,7 +109,8 @@ export const fillSearchFeed = async () => {
                     public_name: user.public_name,
                     avatar: user.avatar || null,
                     about: user.about || '',
-                    subscribers_count: user.subscribers_count || 0,
+                    // subscribers_count: user.subscribers_count || 0,
+                    // subscriber_count: user.subscriber_count || 0,
                     isSubscribed: isSubscribed,
                     own: Auth.userData?.username === user.username
                 };
