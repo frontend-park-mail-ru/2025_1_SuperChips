@@ -19,6 +19,7 @@
 
 .chat-list {
     @include flex-column;
+    @include popup-scroll($gradient-dark, #888);
     gap: 24px;
     height: 100%;
     overflow-y: scroll;

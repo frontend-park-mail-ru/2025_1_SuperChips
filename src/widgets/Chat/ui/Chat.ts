@@ -83,7 +83,6 @@ export const Chat = async (chatID: string) => {
     });
 
     messages.forEach((item) => {
-        // messageBox.appendChild(Message(item));
         messageBox.insertAdjacentElement('afterbegin', Message(item));
     });
 
@@ -92,7 +91,6 @@ export const Chat = async (chatID: string) => {
 
     const chatInput = container.querySelector('#chat-input');
     if (chatInput) {
-        // 120 - навбар и сайдбар, 44 - хэдер, остальное отступ
         messageBox.style.maxHeight = `${window.innerHeight - 220 - chatInput.clientHeight}px`;
     }
 

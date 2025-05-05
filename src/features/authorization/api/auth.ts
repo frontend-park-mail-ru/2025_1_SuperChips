@@ -171,7 +171,7 @@ class auth {
         await this.fetchUserData();
         await Navbar();
         BoardStorage.boardToSave = USER_SAVED_PINS_BOARD;
-        document.querySelector('.sidebar__button-container')?.classList.remove('hidden');
+        document.querySelector('.sidebar')?.classList.remove('hidden');
     }
 }
 

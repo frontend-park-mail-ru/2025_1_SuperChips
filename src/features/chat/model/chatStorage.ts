@@ -43,21 +43,12 @@ class chatStorage {
         this.ws = new WebSocket(WEBSOCKET_URL);
 
         this.ws.onmessage = (event: MessageEvent) => {
-            console.log('На твой телефон пришло новое сообщение, посмотри, вдруг там что-то важное');
             try {
                 const body = JSON.parse(event.data);
-                console.log(body);
-                console.log(body.sender, {
-                    ...body,
-                    id: body.message_id.toString(),
-                    timestamp: new Date(body.data.timestamp),
-                    message: body.content,
-                });
                 this.getMessage(body.sender, {
                     ...body,
                     id: body.message_id.toString(),
-                    timestamp: new Date(body.data.timestamp),
-                    message: body.content,
+                    timestamp: new Date(body.timestamp),
                 }).finally();
             } catch { /**/
             }
@@ -173,13 +164,13 @@ class chatStorage {
 
     async getMessage(username: string, message: IMessage) {
         let chat = this.getChatByUsername(username);
-
         if (!chat) {
             const newChatID = await this.newChat(message.sender);
             chat = this.getChatByID(newChatID);
             if (!chat) return;
         }
 
+        this.markAsRead(chat.id);
         chat.messages.unshift(message);
         chat.last_message = message;
         appState.chat.hasUnread = true;
@@ -208,8 +199,10 @@ class chatStorage {
 
     markAsRead(chatID: string) {
         const chat = this.getChatByID(chatID);
-        if (!chat || !chat.last_message) return;
-        chat.last_message.read = true;
+        if (!chat) return;
+        if (chat.last_message) {
+            chat.last_message.read = true;
+        }
         chat.count = 0;
         chat.messages.map(message => {
             return { ...message, read: true, };
