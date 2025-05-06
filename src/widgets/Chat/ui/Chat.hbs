@@ -1,4 +1,4 @@
-<div id="chat" class="chat">
+<div id="chat-{{id}}" class="chat">
     <div class="chat-header">
         <div class="chat-user">
             <div class="chat-avatar">
@@ -17,24 +17,22 @@
                 class="chat__close-button"
         >
     </div>
-    <div>
-        <div class="chat__messages"></div>
+    <div class="chat__messages"></div>
 
-        <div class="chat__input-container">
-            <label for="chat-input"></label>
-            <textarea
-                    id="chat-input"
-                    class="chat__input-field"
-                    maxlength="500"
-                    placeholder="Новое сообщение"
-                    rows="1"
-            ></textarea>
-            <div id="chat-char-counter" class="chat__char-counter"></div>
-            <img
-                    src="/public/icons/send-button.svg"
-                    alt=""
-                    class="send-button"
-            >
-        </div>
+    <div class="chat__input-container">
+        <label for="chat-input"></label>
+        <textarea
+                id="chat-input"
+                class="chat__input-field"
+                maxlength="500"
+                placeholder="Новое сообщение"
+                rows="1"
+        ></textarea>
+        <div id="chat-char-counter" class="chat__char-counter"></div>
+        <img
+                src="/public/icons/send-button.svg"
+                alt=""
+                class="send-button"
+        >
     </div>
 </div>

@@ -12,7 +12,7 @@ export const loadFeedPictures = async (pageNum: number): Promise<ILoadedPictures
 
     feedState.isLoading = true;
 
-    const response = await API.get(`/api/v1/feed?page=${pageNum}`);
+    const response = await API.get(`/feed?page=${pageNum}`);
     if (response instanceof Error) {
         feedState.isLoading = false;
         return { status: 503 };

@@ -14,7 +14,7 @@ export const editBoard = async (boardID: number) => {
         is_private: privateCheckbox.checked,
     };
 
-    const response = await API.put(`/api/v1/boards/${boardID}`, body);
+    const response = await API.put(`/boards/${boardID}`, body);
 
     if (response instanceof Response && response.ok) {
         BoardStorage.updateBoard(boardID, { is_private: privateCheckbox.checked });

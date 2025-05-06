@@ -33,6 +33,10 @@
     &__avatar {
         grid-area: avatar;
         @include profile-picture-small;
+
+        &:hover {
+            opacity: 1;
+        }
     }
 
     &__public-name {

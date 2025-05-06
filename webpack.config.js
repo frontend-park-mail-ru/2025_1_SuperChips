@@ -134,6 +134,7 @@ module.exports = {
             target: 'http://yourflow.ru:8080',
             secure: false,
             changeOrigin: true,
+            ws: true,
             headers: {
                 'Origin': 'https://localhost:8000',
                 'X-Forwarded-Host': 'localhost:8000',

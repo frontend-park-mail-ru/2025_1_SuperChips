@@ -24,7 +24,7 @@ export const createPin = async () => {
     formData.append('is_private', privateInput.checked.toString());
 
     submitButton.disabled = true;
-    const response = await API.post('/api/v1/flows', formData);
+    const response = await API.post('/flows', formData);
     if (response instanceof Response && response.ok) {
         imageInput.value = '';
         titleInput.value = '';

@@ -22,7 +22,7 @@ export const handlePasswordUpdate = async (event: SubmitEvent): Promise<void> =>
         new_password: newPasswordField.value.trim(),
     };
 
-    const response = await API.post('/api/v1/profile/password', payload);
+    const response = await API.post('/profile/password', payload);
     if (response instanceof Response) {
         if (response.ok) {
             Toast('Пароль успешно изменен', 'message');

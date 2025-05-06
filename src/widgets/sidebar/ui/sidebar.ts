@@ -1,5 +1,6 @@
 import { logoutHandler } from '../handlers/logout';
 import { openChatList } from '../handlers/openChatList';
+import { handleBackButton } from '../handlers/handleBackButton';
 import { appState, navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import sidebarTemplate from './sidebar.hbs';
@@ -22,25 +23,24 @@ export const Sidebar = async () => {
             id: 'chats',
             source: '/public/icons/chat.svg',
             alt: 'chats',
-            active: true
+            class: 'chat-icon'
         },
         {
             id: 'newPin',
             source: '/public/icons/plus-white.svg',
             alt: 'add new pin',
-            active: true
+            class: 'new-pin-icon'
         },
         {
             id: 'settings',
             source: '/public/icons/settings-icon.svg',
             alt: 'settings',
-            active: true,
+            class: 'settings-icon',
         },
         {
             id: 'logout',
             source: '/public/icons/log-out.svg',
             alt: 'logout',
-            active: true,
         }
     ];
 
@@ -49,10 +49,8 @@ export const Sidebar = async () => {
             id: 'go-back-button',
             source: '/public/icons/arrow-left.svg',
             alt: 'go back',
-            active: true,
         });
     }
-
 
     sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({ buttons, mobile: appState.mobile }));
 
@@ -70,16 +68,19 @@ export const Sidebar = async () => {
     });
 
     const backButton = sidebar.querySelector('#go-back-button');
-    backButton?.addEventListener('click', () => {
-        if (appState.lastPage) {
-            history.back();
-        } else {
-            navigate('feed');
-        }
-    });
+    backButton?.addEventListener('click', handleBackButton);
 
     const chatButton = sidebar.querySelector('#chats');
     chatButton?.addEventListener('click', openChatList);
+
+    window.addEventListener('newMessage', () => {
+        const chatButton = document.querySelector('#chats');
+        chatButton?.classList.add('notify');
+    });
+    window.addEventListener('allMessagesRead', () => {
+        const chatButton = document.querySelector('#chats');
+        chatButton?.classList.remove('notify');
+    });
 
     return sidebar;
 };

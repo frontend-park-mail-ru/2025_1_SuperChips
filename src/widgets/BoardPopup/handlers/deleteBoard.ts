@@ -11,7 +11,7 @@ export const deleteBoard = async (boardID: number) => {
         button.classList.add('popup__confirm-button');
         button.classList.remove('popup__delete-button');
     } else if (button.classList.contains('popup__confirm-button')) {
-        const response = await API.delete(`/api/v1/boards/${boardID}`);
+        const response = await API.delete(`/boards/${boardID}`);
 
         if (response instanceof Response && response.ok) {
             const name = document.querySelector<HTMLDivElement>(`#board-${boardID}-name`);

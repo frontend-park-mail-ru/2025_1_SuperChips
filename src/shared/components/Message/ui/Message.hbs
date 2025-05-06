@@ -1,0 +1,16 @@
+<div
+        class="message{{#if own}}-own{{/if}} {{#if unread}}unread{{/if}}"
+        id="{{id}}"
+>
+    <div class="message__text">
+        {{this.message}}
+        <div class="message__time">
+            {{#if this.sent}}
+                <span class="message__sent-icon"></span>
+            {{else if this.read}}
+                <span class="message__read-icon"></span>
+            {{/if}}
+            {{time}}
+        </div>
+    </div>
+</div>

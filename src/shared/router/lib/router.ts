@@ -16,12 +16,16 @@ interface AppState {
     isShowingToast: boolean,
     isShowingPopup: boolean,
     isFilterOpen: boolean,
-    isChatOpen: boolean,
     mobile: boolean,
     lastVisited: Partial<IUser>,
     loggedWithVKID: boolean,
     masonryInstance: Masonry | null,
     scrollHandler: (() => void) | null,
+    chat: {
+        open: boolean;
+        id: string | null
+        hasUnread: boolean,
+    },
 }
 
 export const appState: AppState = {
@@ -31,12 +35,16 @@ export const appState: AppState = {
     isShowingToast: false,
     isShowingPopup: false,
     isFilterOpen: false,
-    isChatOpen: false,
     lastVisited: {},
     mobile: false,
     loggedWithVKID: false,
     masonryInstance: null,
     scrollHandler: null,
+    chat: {
+        open: false,
+        id: null,
+        hasUnread: false,
+    },
 };
 
 
@@ -70,6 +78,11 @@ export const navigate = async (
         break;
     case 'editPin':
         renderProps = page.split('/')[2];
+        newHref = `/${page}`;
+        break;
+    case 'subscriptions':
+    case 'subscribers':
+        renderProps = page;
         newHref = `/${page}`;
         break;
     }
@@ -125,11 +138,10 @@ const cleanup = (newHref: string) => {
     filter?.remove();
     appState.isFilterOpen = false;
 
-    document.querySelector('#chats')?.classList.remove('chat-icon-active');
     if (newHref !== '/flow/new') {
-        document.querySelector('#newPin')?.classList.remove('new-pin-icon-active');
+        document.querySelector('#newPin')?.classList.remove('active');
     }
     if (newHref !== '/settings') {
-        document.querySelector('#settings')?.classList.remove('settings-icon-active');
+        document.querySelector('#settings')?.classList.remove('active');
     }
 };

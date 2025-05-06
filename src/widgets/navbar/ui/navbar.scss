@@ -26,6 +26,7 @@ $border-radius: 20px;
 }
 
 .navbar-logo {
+    @include button;
     img {
         -webkit-user-drag: none;
     }
@@ -80,7 +81,9 @@ $border-radius: 20px;
 }
 
 .navbar__profile-picture {
+    @include button;
     @include profile-picture-small;
+    @include button;
 
     &:hover {
         opacity: $opacity-80;
@@ -155,7 +158,7 @@ $border-radius: 20px;
 @media (max-width: $mobile-width) {
     .navbar {
         height: $navbar-height-mobile;
-        padding: 12px;
+        padding: 12px 24px 12px 12px;
 
         &__profile-picture {
             width: 44px;

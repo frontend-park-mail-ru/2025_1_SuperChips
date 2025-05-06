@@ -14,18 +14,13 @@
 <div class="sidebar__button-container">
     {{#each buttons}}
         <button
-            {{#if this.active}}
-                class="sidebar-button"
-            {{else}}
-                class="sidebar-button_disabled"
-            {{/if}}
+                class="sidebar-button {{this.class}}"
             id="{{this.id}}"
             aria-label="{{this.alt}}"
         >
             <img
                 src="{{this.source}}"
                 alt="{{this.alt}}"
-                class="sidebar-button__icon"
             />
         </button>
     {{/each}}

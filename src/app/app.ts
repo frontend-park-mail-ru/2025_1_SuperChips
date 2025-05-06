@@ -1,8 +1,9 @@
-import { appState, navigate } from 'shared/router';
 import { Navbar } from 'widgets/navbar';
 import { Sidebar } from 'widgets/sidebar';
 import { checkMobile } from 'shared/utils';
+import { appState, navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
+import { ChatStorage } from 'features/chat';
 import './styles/fonts.scss';
 import './styles/common.scss';
 
@@ -22,4 +23,8 @@ export const App = async () => {
     });
 
     navigate(location.pathname.slice(1), true).finally();
+    if (Auth.userData) {
+        ChatStorage.fetchChatList().finally();
+        ChatStorage.fetchContactList().finally();
+    }
 };

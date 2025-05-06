@@ -24,18 +24,8 @@
     margin-bottom: 36px;
 }
 
-.sidebar-button {
-    cursor: pointer;
-
-    &_disabled {
-        cursor: not-allowed;
-        background: transparent;
-        border: none;
-        opacity: 0.5;
-    }
-}
-
 .sidebar-button, .sidebar-button_confirm {
+    @include button;
     width: $button-height;
     height: $button-height;
     border-radius: 50%;
@@ -44,37 +34,43 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all ease 0.2s;
+
+    img {
+        @include icon;
+    }
 }
 
 .sidebar-button {
     background-color: $button-dark;
-    transition: all ease 0.2s;
+
     &:hover {
         background-color: $button-hover;
     }
 
-    &.active {
-        background-color: $white;
-
-        img {
-            filter: brightness(0%);
-        }
+    &_confirm {
+        background-color: $error-color;
     }
-}
 
-.sidebar-button_confirm {
-    background-color: $error-color;
-    opacity: 1;
-}
+    &#newPin:hover img, &#newPin.active img {
+        content: url('/public/icons/plus-white-filled.svg');
+    }
 
-.sidebar-button__icon {
-    @include icon;
-    cursor: inherit;
-    opacity: 0.8;
-}
+    &#settings:hover img, &#settings.active img {
+        content: url('/public/icons/settings-filled.svg');
+    }
 
-.display-none {
-    display: none;
+    &#chats:hover img, &#chats.active img {
+        content: url('/public/icons/chat-active.svg');
+    }
+
+    &#chats.notify img {
+        content: url('/public/icons/chat-unread.svg');
+    }
+
+    &#chats.active.notify img {
+        content: url('/public/icons/chat-active-unread.svg');
+    }
 }
 
 .go-back-button {
@@ -96,32 +92,6 @@
     left: 210px;
     bottom: 36px;
     color: black;
-}
-
-.sidebar-button {
-    &#chats:hover img {
-        content: url('/public/icons/chat-active.svg');
-    }
-
-    &#newPin:hover img {
-        content: url('/public/icons/plus-white-filled.svg');
-    }
-
-    &#settings:hover img {
-        content: url('/public/icons/settings-filled.svg');
-    }
-}
-
-.chat-icon-active img {
-    content: url('/public/icons/chat-active.svg');
-}
-
-.new-pin-icon-active img {
-    content: url('/public/icons/plus-white-filled.svg');
-}
-
-.settings-icon-active img {
-    content: url('/public/icons/settings-filled.svg');
 }
 
 @media (max-width: $mobile-width) {

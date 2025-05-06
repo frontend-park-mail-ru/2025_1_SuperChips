@@ -3,8 +3,8 @@
 
 .chat {
     @include flex-column;
-    justify-content: space-between;
-    height: 100%;
+    //justify-content: space-between;
+    height: calc(100vh - $navbar-height);
 
     &-header {
         display: flex;
@@ -36,10 +36,11 @@
     &__input-container {
         position: relative;
         width: 100%;
-        min-height: $input-height; // Keep min-height
-        padding-right: $spacing-lg;
+        min-height: $input-height;
+        padding-right: $spacing-lg + 2px;
         display: flex;
-        align-items: flex-end; // Align items to the bottom
+        align-items: flex-end;
+        margin-bottom: $spacing-md;
     }
 
     &__input-field {
@@ -52,19 +53,20 @@
         padding: 10px 60px $spacing-sm 20px;
         width: 100%;
         height: auto;
-        min-height: 44px; // Ensure minimum height matches original container height
-        max-height: 120px; // Limit growth to ~5 lines
+        min-height: 44px;
+        max-height: 120px;
         overflow-y: auto;
         resize: none;
         white-space: pre-wrap;
         word-wrap: break-word;
-        line-height: 1.4; // Add line-height for better height calculation
+        line-height: 1.4;
 
         &::-webkit-scrollbar {
             display: none;
         }
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+
+        -ms-overflow-style: none;
+        scrollbar-width: none;
 
         &:focus {
             border-color: rgba($white, 0.8);
@@ -75,21 +77,30 @@
     }
 
     &__messages {
-        @include flex-column;
-        gap: $spacing-xs;
         margin: $spacing-sm 0;
+        height: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
+
+        &:hover, &:focus, &:active {
+            overflow-y: auto;
+        }
+
+        @include popup-scroll($gradient-dark, #888);
+        overflow-y: hidden;
+        scrollbar-gutter: stable;
     }
 
     &__char-counter {
         position: absolute;
-        bottom: 13px; // Align bottom with send button
-        right: 65px; // Adjust position to be left of the send button
-        font-size: 12px; // Make font smaller
+        top: 8px;
+        right: 30px;
+        font-size: 12px;
         color: $text-gray;
-        display: none; // Initially hidden
-        background-color: $secondary-dark; // Use a visible dark background
+        display: none;
+        background-color: $secondary-dark;
         padding: 0 4px;
-        border-radius: $spacing-xs; // Use a smaller radius
+        border-radius: $spacing-xs;
     }
 }
 
@@ -100,16 +111,17 @@
     height: 18px;
     position: absolute;
     right: $spacing-xl + 8px;
-    bottom: 13px; // Align with the bottom of the input field's first line
+    bottom: 13px;
     cursor: pointer;
 }
 
 @media (max-width: $mobile-width) {
     .chat {
-        height: calc(100vh - 2 * $navbar-height-mobile);
+        height: calc(100vh - $navbar-height-mobile + $sidebar-height-mobile);
 
         &__input-container {
             padding-right: 0;
+            margin-bottom: 0;
         }
 
         &-header {
@@ -117,8 +129,11 @@
         }
 
         &__input-field {
-            margin-bottom: $spacing-md;
             padding-right: $spacing-lg + 18px;
+        }
+
+        &__messages {
+            overflow-y: auto;
         }
     }
     .message-own {
@@ -126,6 +141,5 @@
     }
     .send-button {
         right: $spacing-lg;
-        bottom: $spacing-md + 13px;
     }
 }

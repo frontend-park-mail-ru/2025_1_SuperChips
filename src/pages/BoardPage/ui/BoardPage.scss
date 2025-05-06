@@ -55,7 +55,7 @@
 
 @media (max-width: $mobile-width) {
     .board {
-        min-height: calc(100vh - 2 * $navbar-height-mobile);
+        min-height: calc(100vh - $navbar-height-mobile + $sidebar-height-mobile);
 
         &__box-1 {
             padding: 0 $mobile-horizontal-padding;

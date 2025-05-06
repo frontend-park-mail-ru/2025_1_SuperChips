@@ -4,7 +4,7 @@ import { boardFeedState } from 'pages/BoardPage';
 import { API } from 'shared/api';
 
 export const findBoardID = async (username: string) => {
-    const boardListRequest = await API.get(`/api/v1/users/${username}/boards`);
+    const boardListRequest = await API.get(`/users/${username}/boards`);
     if (boardListRequest instanceof Error || !boardListRequest.ok) return { status: 404 };
 
     const boardListBody = await boardListRequest.json();

@@ -16,7 +16,7 @@ export const createBoard = async (newBoardToSave: boolean = false) => {
         is_private: privateCheckbox.checked,
     };
 
-    const response = await API.post(`/api/v1/users/${Auth.userData.username}/boards`, reqBody);
+    const response = await API.post(`/users/${Auth.userData.username}/boards`, reqBody);
     if (response instanceof Error || !response.ok) return;
 
     const body = await response.json();

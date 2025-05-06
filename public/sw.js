@@ -12,8 +12,10 @@ const PRECACHE_URLS = [
     '/public/icons/arrow-up.svg',
     '/public/icons/chat.svg',
     '/public/icons/chat-active.svg',
+    '/public/icons/chat-active-unread.svg',
     '/public/icons/chat-read.svg',
     '/public/icons/chat-sent.svg',
+    '/public/icons/chat-unread.svg',
     '/public/icons/cross-grey.svg',
     '/public/icons/cross.svg',
     '/public/icons/delete.svg',
@@ -90,7 +92,10 @@ self.addEventListener('fetch', (event) => {
                 });
             })
         );
-    } else if (request.method === 'GET' && request.url.includes('/api/')) {
+    } else if (request.method === 'GET'
+        && request.url.includes('/api/')
+        && !request.url.includes('/api/v1/ws')
+    ) {
         // Стратегия NetworkFirst для запросов к API
         event.respondWith(
             fetch(request)

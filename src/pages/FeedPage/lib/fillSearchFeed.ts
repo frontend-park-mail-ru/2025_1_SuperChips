@@ -10,9 +10,15 @@ import { UserCard } from 'entities/UserCard';
 import { registerScrollHandler, removeScrollHandler } from 'features/scrollHandler';
 import { API } from 'shared/api';
 import { appState } from 'shared/router';
+import { Auth } from 'features/authorization';
+
 
 type FilterType = 'boards' | 'flows' | 'users';
 
+interface ISearchUser extends IUser {
+    subscribers_count?: number;
+    subscriber_count?: number;
+}
 
 export const searchFeedState = {
     page: 1,
@@ -32,7 +38,7 @@ export const fillSearchFeed = async () => {
         registerScrollHandler(fillSearchFeed);
     }
 
-    const URI = `/api/v1/search/${searchFeedState.filter}?query=${searchFeedState.query}&page=${searchFeedState.page}&size=20`;
+    const URI = `/search/${searchFeedState.filter}?query=${searchFeedState.query}&page=${searchFeedState.page}&size=20`;
     const response = await API.get(URI);
 
 
@@ -66,7 +72,7 @@ export const fillSearchFeed = async () => {
     }
 
     const body = await response.json();
-    requestAnimationFrame(() => {
+    requestAnimationFrame(async () => {
         switch (searchFeedState.filter) {
         case 'flows':
             body.data.forEach((item: IPicture) => {
@@ -85,8 +91,30 @@ export const fillSearchFeed = async () => {
             });
             break;
         case 'users':
-            body.data.forEach((user: IUser) => {
-                feed.appendChild(UserCard(user));
+            const followingResponse = await API.get('/profile/following?page=1&size=20');
+            let followingUsers: ISearchUser[] = [];
+
+            if (followingResponse instanceof Response && followingResponse.ok) {
+                const followingData = await followingResponse.json();
+                followingUsers = followingData.data;
+            }
+
+            body.data.forEach((user: ISearchUser) => {
+                let isSubscribed = false;
+                if (followingUsers) {
+                    isSubscribed = followingUsers.some(followingUser => followingUser.username === user.username);
+                }
+                const userWithSubscription = {
+                    username: user.username,
+                    public_name: user.public_name,
+                    avatar: user.avatar || null,
+                    about: user.about || '',
+                    // subscribers_count: user.subscribers_count || 0,
+                    // subscriber_count: user.subscriber_count || 0,
+                    isSubscribed: isSubscribed,
+                    own: Auth.userData?.username === user.username
+                };
+                feed.appendChild(UserCard(userWithSubscription));
             });
             break;
         }

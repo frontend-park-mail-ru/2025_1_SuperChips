@@ -1,5 +1,8 @@
 @use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
 .toggle {
+    @include button;
     position: relative;
     display: inline-block;
     width: 40px;

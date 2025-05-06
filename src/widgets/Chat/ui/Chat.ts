@@ -1,136 +1,134 @@
-import type { IMessage } from 'widgets/ChatList';
+import type { IChat, IMessage } from 'features/chat';
+import { ChatStorage } from 'features/chat';
+import { Message } from 'shared/components/Message';
+import { sendMessage } from '../handlers/sendMessage';
 import { formatDateToReadable } from 'shared/utils';
+import { textareaResizeHandler } from '../handlers/textareaResizeHandler';
+import { chatSubmitHandler } from '../handlers/chatSubmitHandler';
 import { closeChat } from '../handler/closeChat';
 import { Auth } from 'features/authorization';
+import { appState } from 'shared/router';
 import chatTemplate from './Chat.hbs';
-import messageTemplate from './Message.hbs';
 import './Chat.scss';
-import './Message.scss';
+import { messageObserver } from '../handlers/readMessages';
+import { openChatList } from 'widgets/sidebar';
 
 
-// TODO Написать логику для получения списка сообщений с сервера
-const body = {
-    data: {
-        avatar: 'https://yourflow.ru/static/avatars/8651b82f-a1e6-404d-a07a-43f7cded9793.jpg',
-        username: 'asdasdasd',
-        messages: [
-            {
-                sender: 'valekir',
-                message: 'Привет! Не откажусь, собираемся завтра, на пляже. Не забудь свою доску и хорошее настроение hadskjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjasdasdasdsdasadasdsadasdasdsa',
-                timestamp: '2025-04-21T22:13:00Z',
-                read: true,
-            },
-            {
-                sender: 'asdasdasd',
-                message: 'Летом?',
-                timestamp: '2025-04-22T22:13:00Z',
-                read: true,
-            },
-            {
-                sender: 'asdasdasd',
-                message: 'Через час?',
-                timestamp: '2025-04-23T22:13:00Z',
-                read: true,
-            },
-            {
-                sender: 'asdasdasd',
-                message: 'Завтра?',
-                timestamp: '2025-04-24T22:13:00Z',
-                read: true,
-            },
-            {
-                sender: 'asdasdasd',
-                message: 'Сегодня?',
-                timestamp: '2025-04-25T22:13:00Z',
-                read: true,
-            },
-            {
-                sender: 'asdasdasd',
-                message: 'Привет! Как тебе моя новая доска? Когда пойдем ловить волны?',
-                timestamp: '2020-04-26T22:13:00Z',
-                read: false,
-            },
-        ],
-    }
+interface IChatState {
+    observerInstance: IntersectionObserver | null;
+    readMessages: Set<string>;
+    chatInstance: IChat | null,
+}
+
+export const chatState: IChatState = {
+    observerInstance: null,
+    readMessages: new Set<string>(),
+    chatInstance: null,
 };
 
 
 export const Chat = async (chatID: string) => {
+    if (!Auth.userData) return;
+    if (!appState.chat.open) {
+        openChatList();
+    }
+
     const container = document.querySelector('#chat-container');
-    if (!container || !Auth.userData) return;
+    const chat = ChatStorage.getChatByID(chatID);
+    if (!chat || !container) return;
+
+    if (chat.count > 0) {
+        chatState?.observerInstance?.disconnect();
+        chatState.observerInstance = messageObserver();
+        chatState.readMessages.clear();
+        chatState.chatInstance = chat;
+    }
+
+    appState.chat.id = chatID;
 
     const config = {
-        shortUsername: body.data.username[0].toUpperCase(),
-        username: body.data.username,
-        avatar: body.data.avatar,
+        ...chat,
+        shortUsername: chat.username[0].toUpperCase(),
     };
 
-    const chat = document.createElement('div');
-    chat.innerHTML = chatTemplate(config);
-    container.appendChild(chat.firstChild as HTMLDivElement);
+    const chatWidget = document.createElement('div');
+    chatWidget.innerHTML = chatTemplate(config);
+    container.appendChild(chatWidget.firstChild as HTMLDivElement);
 
     const backButton = container.querySelector('#chat__close-button');
     backButton?.addEventListener('click', closeChat);
+    window.addEventListener('keydown', closeChat);
 
-    const currentUser = Auth.userData.username;
+    const chatList = document.querySelector<HTMLDivElement>('.chat-list');
+    if (chatList) {
+        chatList.style.display = 'none';
+    }
 
-    const messages = body.data.messages.map((item: IMessage) => {
-        const own = currentUser === item.sender;
-        return {
-            ...item,
-            time: formatDateToReadable(item.timestamp),
-            own: own,
-            sent: own && !item.read,
-            read: own && item.read,
-        };
-    });
-
-    const messageBox = container.querySelector('.chat__messages');
+    const messageBox = container.querySelector<HTMLElement>('.chat__messages');
     if (!messageBox) return;
 
-    messages.forEach((message) => {
-        const newMessage = document.createElement('div');
-        newMessage.classList.add('message-container');
-        newMessage.innerHTML = messageTemplate({
-            ...message,
-            own: Auth.userData?.username === message.sender,
-        });
-        messageBox.insertAdjacentElement('afterbegin', newMessage);
-    });
+    const currentUser = Auth.userData.username;
+    const firstUnread = chat.messages.length - chat.count;
 
-    // Add logic for auto-resizing textarea and character counter
+    if (chat.messages.length > 0) {
+        const messages = chat.messages.map((item: IMessage, index) => {
+            const own = currentUser === item.sender;
+            return {
+                ...item,
+                time: formatDateToReadable(item.timestamp),
+                own: own,
+                sent: own && !item.read,
+                read: own && item.read,
+                unread: index >= firstUnread,
+            };
+        });
+
+        messages.forEach((item) => {
+            messageBox.insertAdjacentElement('afterbegin', Message(item));
+        });
+
+        const unread = messageBox.querySelectorAll('.unread');
+        if (unread.length > 0) {
+            unread.forEach((item) => {
+                chatState?.observerInstance?.observe(item);
+            });
+        }
+    }
     const textarea = container.querySelector<HTMLTextAreaElement>('#chat-input');
     const charCounter = container.querySelector<HTMLDivElement>('#chat-char-counter');
 
-    if (textarea && charCounter) {
-        const maxHeight = 120; // Corresponds to max-height in SCSS
-        const showCounterThreshold = 450;
-        const maxLength = 500;
+    const chatInput = container.querySelector('#chat-input');
+    if (chatInput) {
+        messageBox.style.maxHeight = `${window.innerHeight - 220 - chatInput.clientHeight}px`;
+    }
 
-        textarea.addEventListener('input', () => {
-            // Auto-resize logic
-            textarea.style.height = 'auto'; // Reset height to recalculate
-            const scrollHeight = textarea.scrollHeight;
-            textarea.style.height = `${Math.min(scrollHeight, maxHeight)}px`;
+    textarea?.addEventListener('keydown', chatSubmitHandler);
+    textarea?.addEventListener('input', textareaResizeHandler);
+    if (!appState.mobile) {
+        textarea?.focus();
+    }
 
-            // Character counter logic
-            const currentLength = textarea.value.length;
-            if (currentLength >= showCounterThreshold) {
-                charCounter.textContent = `${currentLength}/${maxLength}`;
-                charCounter.style.display = 'block';
-            } else {
-                charCounter.style.display = 'none';
-            }
-        });
+    if (textarea && charCounter && chat.draft) {
+        textarea.value = chat.draft.message;
 
-        // Initial check in case the textarea is pre-filled
         const initialLength = textarea.value.length;
-        if (initialLength >= showCounterThreshold) {
-            charCounter.textContent = `${initialLength}/${maxLength}`;
+
+        if (initialLength >= 450) {
+            charCounter.textContent = `${initialLength}/${500}`;
             charCounter.style.display = 'block';
         }
-        // Initial height adjustment
         textarea.style.height = 'auto';
-        textarea.style.height = `${Math.min(textarea.scrollHeight, maxHeight)}px`;
+        textarea.style.height = `${Math.min(textarea.scrollHeight, 120)}px`;
     }
+
+    container.querySelector('.send-button')?.addEventListener('click', sendMessage);
+
+    // todo fix
+    // const messageElements = messageBox?.children;
+    // if (messageElements && firstUnread > 0) {
+    //     const target = messageElements[firstUnread] as HTMLElement;
+    //     target?.scrollIntoView({ behavior: 'auto', block: 'start' });
+    // }
+
+    messageBox.scrollTop = messageBox.scrollHeight;
 };

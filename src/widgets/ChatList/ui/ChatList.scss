@@ -8,17 +8,21 @@
     left: $sidebar-width;
     top: $navbar-height;
     width: 440px;
-    height: calc(100vh - $navbar-height);
+    height: 100%;
     padding-bottom: 36px;
     background: $gradient-dark;
     z-index: 75;
+    overflow: hidden;
     @include side-menu-animation-left;
 }
 
 
 .chat-list {
     @include flex-column;
+    @include popup-scroll($gradient-dark, #888);
     gap: 24px;
+    height: 100%;
+    overflow-y: scroll;
 
     &-item {
         width: 100%;
@@ -30,7 +34,12 @@
 
     &__profile-picture {
         @include profile-picture-small;
+        @include button;
         grid-area: pfp;
+
+        &:hover {
+            opacity: 1;
+        }
 
         .short-username {
             @include short-username;
@@ -113,6 +122,10 @@
     }
 }
 
+.chat__draft {
+    color: #999;
+}
+
 .create-chat-button {
     display: flex;
     align-items: center;
@@ -135,6 +148,7 @@
 @media (max-width: $mobile-width) {
     .chat {
         &-container {
+            max-height: calc(100vh - $navbar-height-mobile + $sidebar-height-mobile);
             left: 0;
             top: $navbar-height-mobile;
             width: 100%;

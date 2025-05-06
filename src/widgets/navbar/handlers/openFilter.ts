@@ -9,9 +9,14 @@ export const openFilter = () => {
     if (appState.activePage !== 'feed' || appState.isFilterOpen) return;
     appState.isFilterOpen = true;
 
-    if (appState.isChatOpen) {
+    if (appState.chat.open) {
         closeChatList();
-        appState.isChatOpen = false;
+        appState.chat.open = false;
+    }
+
+    if (appState.mobile) {
+        const goBack = document.querySelector<HTMLButtonElement>('#go-back-button');
+        if (goBack) goBack.disabled = false;
     }
 
     root.appendChild(FeedFilter());

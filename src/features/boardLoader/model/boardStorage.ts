@@ -20,7 +20,7 @@ class boardStorage {
     async fetchUserBoards(username: string | null = null) {
         const own = !username;
 
-        const URL = own ? '/api/v1/profile/boards' : `/api/v1/users/${username}/boards`;
+        const URL = own ? '/profile/boards' : `/users/${username}/boards`;
         const response = await API.get(URL);
 
         if (response instanceof Response && response.ok) {

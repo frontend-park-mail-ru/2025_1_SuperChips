@@ -21,7 +21,7 @@ export const confirmBoardDelete = async (boardID: number) => {
         }, 0);
         throw new Error('not confirmed');
     } else if (button.classList.contains('board-settings__confirm-button')) {
-        const response = await API.delete(`/api/v1/boards/${boardID}`);
+        const response = await API.delete(`/boards/${boardID}`);
 
         if (response instanceof Response && response.ok) {
             const board = BoardStorage.getBoardByID(boardID);
