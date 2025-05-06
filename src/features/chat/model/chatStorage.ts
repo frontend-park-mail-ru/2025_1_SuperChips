@@ -73,9 +73,10 @@ class chatStorage {
             messages: chat.messages ? chat.messages : [],
         }));
         this.sortChatList();
+        this.fetchAllChats().finally();
     }
 
-    async newChat(username: string) {
+    async newChat(username: string, forcedAvatar: string | null = null) {
         if (!username) return '';
         const response = await API.post('/chats', { username });
 
@@ -91,7 +92,7 @@ class chatStorage {
         this.chatList.push({
             username,
             public_name: body.data.public_name,
-            avatar: body.data.avatar,
+            avatar: forcedAvatar ? forcedAvatar : body.data.avatar,
             last_message: null,
             id: body.data.chat_id.toString(),
             count: 0,
@@ -99,6 +100,24 @@ class chatStorage {
         });
 
         return body.data.chat_id.toString();
+    }
+
+    async fetchAllChats() {
+        if (this.chatList.length === 0) return;
+
+        for (const chat of this.chatList) {
+            const response = await API.get(`/chats?id=${chat.id}`);
+            if (!(response instanceof Response && response.ok)) continue;
+            const body = await response.json();
+
+            if (chat.messages.length > 0) chat.messages = [];
+
+            if (body.data.messages) {
+                body.data.messages.forEach((message: IMessage) => {
+                    chat.messages.push(message);
+                });
+            }
+        }
     }
 
     async fetchContactList() {
@@ -172,8 +191,8 @@ class chatStorage {
             if (!chat) return;
         }
 
-        this.markAsRead(chat.id);
         chat.messages.unshift(message);
+        chat.count++;
         chat.last_message = message;
         appState.chat.hasUnread = true;
 

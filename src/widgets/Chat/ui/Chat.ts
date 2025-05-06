@@ -6,7 +6,6 @@ import { formatDateToReadable } from 'shared/utils';
 import { textareaResizeHandler } from '../handlers/textareaResizeHandler';
 import { chatSubmitHandler } from '../handlers/chatSubmitHandler';
 import { closeChat } from '../handler/closeChat';
-import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
 import { appState } from 'shared/router';
 import chatTemplate from './Chat.hbs';
@@ -29,25 +28,14 @@ export const chatState: IChatState = {
 
 
 export const Chat = async (chatID: string) => {
+    if (!Auth.userData) return;
     if (!appState.chat.open) {
         openChatList();
     }
 
     const container = document.querySelector('#chat-container');
     const chat = ChatStorage.getChatByID(chatID);
-    if (!chat || !container || !Auth.userData) return;
-
-    if (chat.messages.length < 1) {
-        const response = await API.get(`/chats?id=${chatID}`);
-        if (!(response instanceof Response && response.ok)) return;
-        const body = await response.json();
-
-        if (body.data.messages) {
-            body.data.messages.forEach((message: IMessage) => {
-                chat.messages.push(message);
-            });
-        }
-    }
+    if (!chat || !container) return;
 
     if (chat.count > 0) {
         chatState?.observerInstance?.disconnect();

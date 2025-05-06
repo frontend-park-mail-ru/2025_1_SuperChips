@@ -172,12 +172,11 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
     const messageButton = page.querySelector('.author__chat-button');
     messageButton?.addEventListener('click', async () => {
         let chatID;
-        const chat = ChatStorage.getChatByUsername(username);
+        const chat = ChatStorage.getChatByUsername(userData?.username);
 
         if (appState.chat.id === chat?.id) return;
         if (!chat) {
-            await ChatStorage.newContact(username);
-            const newChatID = await ChatStorage.newChat(username);
+            const newChatID = await ChatStorage.newChat(userData?.username, userData?.avatar);
             if (!newChatID) return;
             chatID = newChatID.toString();
         } else {
