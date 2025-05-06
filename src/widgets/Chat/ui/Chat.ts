@@ -70,7 +70,7 @@ export const Chat = async (chatID: string) => {
     const currentUser = Auth.userData.username;
     const firstUnread = chat.messages.length - chat.count;
 
-    if (chat.messages) {
+    if (chat.messages.length > 0) {
         const messages = chat.messages.map((item: IMessage, index) => {
             const own = currentUser === item.sender;
             return {

@@ -86,7 +86,6 @@ class chatStorage {
         }
 
         const body = await response.json();
-
         if (!body.data) return;
 
         this.chatList.push({
@@ -96,7 +95,7 @@ class chatStorage {
             last_message: null,
             id: body.data.chat_id.toString(),
             count: 0,
-            messages: []
+            messages: [],
         });
 
         return body.data.chat_id.toString();
@@ -128,33 +127,6 @@ class chatStorage {
         if (body.data) {
             this.contacts = body.data;
         }
-    }
-
-    async newContact(username: string) {
-        if (!username) return;
-        const response = await API.post('/contacts', { username });
-        if (response instanceof Error || !response.ok) {
-            Toast('Ошибка при создании нового контакта');
-            return;
-        }
-
-        const body = await response.json();
-
-        this.contacts.push({
-            username: username,
-            public_name: body.data.public_name,
-            avatar: body.data.avatar,
-        });
-
-        this.chatList.push({
-            username: username,
-            public_name: body.data.public_name,
-            avatar: body.data.avatar,
-            last_message: null,
-            id: body.data.id,
-            count: 0,
-            messages: []
-        });
     }
 
     getChatByID(chatID: string | null) {
