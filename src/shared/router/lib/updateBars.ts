@@ -1,4 +1,5 @@
 import type { Route } from 'shared/config/router';
+import { closeChatList, openChatList } from 'widgets/sidebar';
 import { Auth } from 'features/authorization';
 import { appState } from 'shared/router';
 import { closeFilter, openFilter } from 'widgets/navbar';
@@ -27,4 +28,8 @@ export const updateBars = (route: Route) => {
     filter?.classList.toggle('filter-active', appState.activePage === 'feed');
     filter?.addEventListener('click', openFilter);
     filter?.removeEventListener('click', closeFilter);
+
+    const chatButton = document.querySelector('#chats');
+    chatButton?.addEventListener('click', openChatList);
+    chatButton?.removeEventListener('click', closeChatList);
 };

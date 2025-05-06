@@ -1,0 +1,47 @@
+<div id="chat-list" class="chat-list">
+    <div class="create-chat-button">
+        <img src="/public/icons/plus-white.svg" alt="create new chat">
+        Новое сообщение
+    </div>
+
+    {{#each chats}}
+        <div class="chat-list-item" id="chat-{{this.id}}">
+            <div class="chat-list__profile-picture">
+                {{#if this.avatar}}
+                    <img src="{{this.avatar}}" alt="">
+                {{else}}
+                    <p class="short-username">{{this.shortUsername}}</p>
+                {{/if}}
+            </div>
+            <div class="chat-preview">
+                <div class="chat-preview__box-1">
+                    <span class="chat-preview__box-1__username">{{this.username}}</span>
+                    <div class="chat-preview__box-1__date">
+                        {{#if this.sent}}
+                            <img src="/public/icons/chat-sent.svg" alt="">
+                        {{else if this.read}}
+                            <img src="/public/icons/chat-read.svg" alt="">
+                        {{/if}}
+                        {{this.time}}
+                    </div>
+                </div>
+                <div class="chat-preview__box-2">
+            <span class="chat-preview__box-2__message">
+                {{#if own}}
+                    Вы: {{this.message}}
+                {{else}}
+                    {{this.message}}
+                {{/if}}
+            </span>
+                    <div class="chat-preview__box-2__message">
+
+                    </div>
+                    {{#if count}}
+                        <span class="chat-preview__box-2__count">{{count}}</span>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    {{/each}}
+
+</div>

@@ -3,12 +3,12 @@ import { PinDropdown } from 'widgets/PinDropdown';
 import { appState, navigate } from 'shared/router';
 import { savePinToBoard } from '../handlers/savePinToBoard';
 import { removePinFromBoard } from '../handlers/removePinFromBoard';
+import { getWidthBySelector } from 'shared/utils';
 import { Auth } from 'features/authorization';
 import { BoardStorage } from 'features/boardLoader';
 import { USER_SAVED_PINS_BOARD } from 'shared/config/constants';
 import './Pin.scss';
 import template from './Pin.hbs';
-import { getWidthBySelector } from 'shared/utils';
 
 
 export const Pin = (params: IPinProps) => {
@@ -61,5 +61,6 @@ export const Pin = (params: IPinProps) => {
             navigate(`flow/edit/${params.pinID}`).finally();
         });
     }
+
     return pin;
 };

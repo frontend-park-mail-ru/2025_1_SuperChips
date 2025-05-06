@@ -13,11 +13,13 @@ export const closeFilter = () => {
     feedFilter.style.position = '';
     feedFilter.style.animation = 'FadeOutHorizontalLeft 0.3s ease-out';
 
-    const filter = document.querySelector('#filter-button') ||
-        document.querySelector<HTMLElement>('.navbar__search-icon');
+    const filter = document.querySelector<HTMLElement>('#filter-button');
 
-    filter?.addEventListener('click', openFilter);
-    filter?.removeEventListener('click', closeFilter);
+    if (filter) {
+        filter.removeEventListener('click', closeFilter);
+        filter.addEventListener('click', openFilter);
+        filter.style.content = '';
+    }
 
     setTimeout(() => {
         filterPlaceholder?.remove();

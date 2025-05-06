@@ -1,3 +1,4 @@
+@use 'shared/styles/variables' as *;
 .toggle {
     position: relative;
     display: inline-block;
@@ -36,7 +37,7 @@
 }
 
 input:checked + .slider {
-    background: linear-gradient(to left, #130f40, #3c096c, #7b2cbf);
+    background: $gradient-purple;
 }
 
 input:checked + .slider:before {

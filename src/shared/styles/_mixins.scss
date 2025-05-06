@@ -28,6 +28,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    word-break: break-all;
+    overflow-wrap: anywhere;
 }
 
 @mixin no-select {
@@ -57,12 +59,21 @@
     }
 }
 
+@mixin content-area {
+    grid-area: page;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: calc(100vh - $navbar-height + 10px);
+    padding-right: $feed-padding;
+}
+
 @mixin transparent-active {
     background-color: #fff;
     opacity: 0.1;
 }
 
-@mixin popup-scroll() {
+@mixin popup-scroll($color, $bg-color) {
     overflow-y: auto;
 
     &::-webkit-scrollbar {
@@ -70,13 +81,13 @@
     }
 
     &::-webkit-scrollbar-track {
-        background: #f1f1f1;
+        background: $color;
         border-radius: 5px;
         margin: 20px 0;
     }
 
     &::-webkit-scrollbar-thumb {
-        background: #888;
+        background: $bg-color;
         border-radius: 5px;
         border: 2px solid transparent;
         background-clip: content-box;
@@ -186,4 +197,15 @@
             transform: translateX(-100%);
         }
     }
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin small-icon {
+    width: 12px;
+    height: 12px;
+    -webkit-user-drag: none;
 }

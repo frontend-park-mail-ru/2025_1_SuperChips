@@ -1,0 +1,48 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+.contact-list {
+    @include flex-column;
+    gap: $spacing-lg;
+
+    &__header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-self: center;
+        padding-right: $spacing-lg;
+    }
+
+    &__back-button {
+        @include flex-center;
+        cursor: pointer;
+    }
+}
+
+
+.contact-preview {
+    width: 100%;
+    display: grid;
+    grid-template-areas: 'avatar username'
+                         'avatar publicname';
+    grid-template-columns: $profile-picture-size + $spacing-lg auto;
+    grid-template-rows: repeat(2, auto);
+    cursor: pointer;
+    color: $white;
+
+    &__avatar {
+        grid-area: avatar;
+        @include profile-picture-small;
+    }
+
+    &__public-name {
+        font-weight: bold;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: $mobile-width) {
+    .contact-list__header {
+        padding-right: 0;
+    }
+}

@@ -1,4 +1,5 @@
 import { logoutHandler } from '../handlers/logout';
+import { openChatList } from '../handlers/openChatList';
 import { appState, navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import sidebarTemplate from './sidebar.hbs';
@@ -21,11 +22,11 @@ export const Sidebar = async () => {
             id: 'chats',
             source: '/public/icons/chat.svg',
             alt: 'chats',
-            active: false
+            active: true
         },
         {
             id: 'newPin',
-            source: '/public/icons/new-pin.svg',
+            source: '/public/icons/plus-white.svg',
             alt: 'add new pin',
             active: true
         },
@@ -76,6 +77,9 @@ export const Sidebar = async () => {
             navigate('feed');
         }
     });
+
+    const chatButton = sidebar.querySelector('#chats');
+    chatButton?.addEventListener('click', openChatList);
 
     return sidebar;
 };

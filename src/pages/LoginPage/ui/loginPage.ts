@@ -53,8 +53,9 @@ export const LoginPage = async () => {
         const placeholders = form.querySelectorAll('.input-placeholder');
         placeholders.forEach((item, index) => {
             const newInput = Input(config.inputs[index]);
-            if (newInput)
+            if (newInput) {
                 item.replaceWith(newInput);
+            }
         });
 
         form.addEventListener('submit', handleLogin);

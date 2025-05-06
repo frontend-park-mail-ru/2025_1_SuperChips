@@ -4,6 +4,7 @@ import type { ISignupFormData } from 'pages/SignupPage';
 import type { IVKIDLogin, IVKIDRegister } from 'widgets/VKID';
 import { Navbar } from 'widgets/navbar';
 import { navigate } from 'shared/router';
+import { closeChatList } from 'widgets/sidebar';
 import { API } from 'shared/api';
 import { BoardStorage } from 'features/boardLoader';
 import { USER_SAVED_PINS_BOARD } from 'shared/config/constants';
@@ -112,6 +113,7 @@ class auth {
             const sidebarButtons = document.querySelector<HTMLDivElement>('.sidebar__button-container');
             sidebarButtons?.classList.toggle('display-none');
             document.querySelector('.logout-toast')?.remove();
+            closeChatList();
         }
 
         return response;

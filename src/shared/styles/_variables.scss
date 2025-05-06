@@ -15,6 +15,7 @@ $stroke-color: #474747;
 $white: #fff;
 $black: #000;
 $transparent: transparent;
+$background-dark: transparent;
 $semi-transparent: #E8E8E81a;
 
 // Размеры
@@ -39,11 +40,12 @@ $spacing-xxl: 60px;
 
 // Z-индексы
 $z-navbar: 100;
-$z-sidebar: 50;
+$z-sidebar: 100;
 $z-modal: 1000;
 
 // Градиенты
 $gradient-dark: linear-gradient(to bottom, $primary-dark, $secondary-dark) fixed;
+$gradient-purple: linear-gradient(to right, #7b2cbf, #3c096c, #130f40);
 
 // Типографика
 $font-family-base: 'FuturaPT', sans-serif;
@@ -84,6 +86,8 @@ $search-filter-width: 240px;
 
 $user-card-width: 460px;
 $user-card-min-height: 260px;
+
+$textarea-max-height: 200px;
 
 $auth-page-form-width: 572px;
 

@@ -1,0 +1,28 @@
+<div id="contact-list" class="contact-list">
+    <div class="contact-list__header">
+        <div class="header white bold">Новое сообщение</div>
+        <div class="contact-list__back-button">
+            <img
+                    src="/public/icons/arrow-left.svg"
+                    alt=""
+                    id="contact-list__back-button"
+                    class="back-button"
+            >
+        </div>
+    </div>
+    {{#each contacts}}
+        <div class="contact-list__item">
+            <div class="contact-preview">
+                <div class="contact-preview__avatar">
+                    {{#if this.avatar}}
+                        <img src="{{this.avatar}}" alt="">
+                    {{else}}
+                        <p class="short-username">{{this.shortUsername}}</p>
+                    {{/if}}
+                </div>
+                <div class="contact-preview__public-name">{{this.publicName}}</div>
+                <div class="contact-preview__username">@{{this.username}}</div>
+            </div>
+        </div>
+    {{/each}}
+</div>

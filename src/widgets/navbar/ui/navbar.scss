@@ -17,7 +17,7 @@ $border-radius: 20px;
     position: fixed;
     background-color: $primary-dark;
     display: flex;
-    width: 100%;
+    width: 100vw;
     height: $navbar-height;
     padding: $spacing-lg 0;
     align-items: center;
@@ -61,8 +61,11 @@ $border-radius: 20px;
     &__filter {
         @include icon;
         position: absolute;
-        top: 25%;
-        left: $spacing-sm;
+        top: 28%;
+        left: 20px;
+        -webkit-user-drag: none;
+        height: 22px;
+        width: 24px;
         opacity: 0.5;
     }
 
@@ -78,6 +81,11 @@ $border-radius: 20px;
 
 .navbar__profile-picture {
     @include profile-picture-small;
+
+    &:hover {
+        opacity: $opacity-80;
+        cursor: pointer;
+    }
 }
 
 .shortUsername {
@@ -186,6 +194,10 @@ $border-radius: 20px;
 
         &__clear {
             right: $spacing-sm;
+        }
+
+        &__filter {
+            left: 10px
         }
     }
 }

@@ -2,7 +2,7 @@
 @use 'shared/styles/mixins' as *;
 
 .dropdown {
-    @include popup-scroll;
+    @include popup-scroll(#f1f1f1, #888);
     overflow-x: hidden;
     position: fixed;
     width: 360px;

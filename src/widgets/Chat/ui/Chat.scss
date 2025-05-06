@@ -1,0 +1,131 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+.chat {
+    @include flex-column;
+    justify-content: space-between;
+    height: 100%;
+
+    &-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: $spacing-lg;
+    }
+
+    &-user {
+        display: flex;
+        align-items: center;
+    }
+
+    &-avatar {
+        @include profile-picture-small;
+    }
+
+    &-username {
+        font-size: $font-size-lg;
+        color: $white;
+    }
+
+    &__close-button {
+        @include flex-center;
+        @include icon;
+        cursor: pointer;
+    }
+
+    &__input-container {
+        position: relative;
+        width: 100%;
+        min-height: $input-height; // Keep min-height
+        padding-right: $spacing-lg;
+        display: flex;
+        align-items: flex-end; // Align items to the bottom
+    }
+
+    &__input-field {
+        border-radius: $border-radius;
+        border: 1px solid rgba(70, 70, 70, 0.5);
+        background-color: transparent;
+        color: $text-light;
+        font-size: $font-size-sm;
+        transition: all 0.2s ease;
+        padding: 10px 60px $spacing-sm 20px;
+        width: 100%;
+        height: auto;
+        min-height: 44px; // Ensure minimum height matches original container height
+        max-height: 120px; // Limit growth to ~5 lines
+        overflow-y: auto;
+        resize: none;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        line-height: 1.4; // Add line-height for better height calculation
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+
+        &:focus {
+            border-color: rgba($white, 0.8);
+            background-color: $semi-transparent;
+            color: $white;
+            outline: none;
+        }
+    }
+
+    &__messages {
+        @include flex-column;
+        gap: $spacing-xs;
+        margin: $spacing-sm 0;
+    }
+
+    &__char-counter {
+        position: absolute;
+        bottom: 13px; // Align bottom with send button
+        right: 65px; // Adjust position to be left of the send button
+        font-size: 12px; // Make font smaller
+        color: $text-gray;
+        display: none; // Initially hidden
+        background-color: $secondary-dark; // Use a visible dark background
+        padding: 0 4px;
+        border-radius: $spacing-xs; // Use a smaller radius
+    }
+}
+
+
+.send-button {
+    @include icon;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    right: $spacing-xl + 8px;
+    bottom: 13px; // Align with the bottom of the input field's first line
+    cursor: pointer;
+}
+
+@media (max-width: $mobile-width) {
+    .chat {
+        height: calc(100vh - 2 * $navbar-height-mobile);
+
+        &__input-container {
+            padding-right: 0;
+        }
+
+        &-header {
+            padding: 0;
+        }
+
+        &__input-field {
+            margin-bottom: $spacing-md;
+            padding-right: $spacing-lg + 18px;
+        }
+    }
+    .message-own {
+        margin-right: 0 !important;
+    }
+    .send-button {
+        right: $spacing-lg;
+        bottom: $spacing-md + 13px;
+    }
+}

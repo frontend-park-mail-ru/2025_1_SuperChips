@@ -14,7 +14,7 @@
 }
 
 .popup {
-    @include popup-scroll;
+    @include popup-scroll(#f1f1f1, #888);
     overflow-x: hidden;
     position: fixed;
     top: 50%;

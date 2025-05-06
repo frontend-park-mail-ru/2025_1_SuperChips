@@ -1,0 +1,46 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+.message-container {
+    width: 100%;
+    display: flex;
+}
+
+.message, .message-own {
+    position: relative;
+    min-width: 150px;
+    max-width: 300px;
+    min-height: 44px;
+    border-radius: $border-radius;
+    padding: $spacing-sm;
+
+    &__time {
+        display: inline-block;
+        margin-left: $spacing-xl;
+        float: right;
+        clear: left;
+        color: $disabled-color;
+        font-size: 14px;
+        transform: translateY(40%);
+    }
+
+    &__text {
+        display: inline-block;
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-break: keep-all;
+        white-space: normal;
+        color: $white;
+    }
+}
+
+.message {
+    background-color: #333;
+}
+
+
+.message-own {
+    background: $gradient-purple;
+    margin-right: $spacing-lg;
+    margin-left: auto;
+}

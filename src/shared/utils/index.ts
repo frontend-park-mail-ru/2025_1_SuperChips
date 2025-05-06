@@ -1,5 +1,5 @@
 export { debounce } from './lib/debounce';
-export { formatDateToISO } from './lib/formateDate';
+export { formatDateToISO, formatDateToReadable } from './lib/formatDate';
 export { pluralize } from './lib/pluralize';
 export { checkAvatar } from './lib/checkAvatar';
 export { checkMobile } from './lib/checkMobile';

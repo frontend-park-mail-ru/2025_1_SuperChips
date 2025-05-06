@@ -18,6 +18,7 @@ export const searchFeedState = {
     page: 1,
     query: '',
     filter: 'flows',
+    notFound: false,
 };
 
 

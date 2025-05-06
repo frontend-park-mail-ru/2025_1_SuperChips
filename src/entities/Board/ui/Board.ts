@@ -24,6 +24,10 @@ export const Board = (params: IBoardProps) => {
     const min = params?.preview ? params.preview.length : 0;
     for (let i = 0; i < min; i++) {
         if (params.preview[i]) {
+            const URL = 'https://yourflow.ru/static/img/';
+            if (!params.preview[i].media_url.includes(URL)) {
+                params.preview[i].media_url = URL + params.preview[i].media_url;
+            }
             config.preview[i] = (params.preview[i].media_url);
         }
     }
