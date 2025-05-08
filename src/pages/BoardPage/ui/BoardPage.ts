@@ -76,5 +76,23 @@ export const BoardPage = async (boardID: string) => {
     const settingsButton = page.querySelector('.board__settings-button');
     settingsButton?.addEventListener('click', openBoardSettings);
 
+    const divider = page.querySelector<HTMLElement>(".divider");
+    if (divider) {
+        const colors = body.data.gradient 
+            ? [
+                body.data.gradient.first_color, 
+                body.data.gradient.second_color,
+                body.data.gradient.third_color,
+                body.data.gradient.fourth_color
+            ]
+            : ['#FFA500', '#32CD32', '#1E90FF', '#FF69B4'];
+
+        colors.forEach((color, i) => {
+            divider.style.setProperty(`--color-${i+1}`, color);
+        });
+
+        divider.classList.add('visible');
+    }
+
     return page;
 };

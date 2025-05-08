@@ -131,7 +131,7 @@ module.exports = {
         },
         proxy: [{
             context: ['/api'],
-            target: 'http://yourflow.ru:8080',
+            target: 'http://localhost:8080',
             secure: false,
             changeOrigin: true,
             ws: true,

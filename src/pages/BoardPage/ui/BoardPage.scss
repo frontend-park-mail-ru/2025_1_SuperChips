@@ -35,11 +35,22 @@
     margin-top: $spacing-lg;
     height: $divider-height;
     border-radius: $border-radius;
-
-    background: linear-gradient(45deg, #FFA500, #32CD32, #1E90FF, #FF69B4);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    
+    background: linear-gradient(45deg, 
+        var(--color-1), 
+        var(--color-2), 
+        var(--color-3), 
+        var(--color-4));
     background-size: 300% 300%;
     animation: gradientBG 8s ease infinite;
 }
+
+.divider.visible {
+    opacity: 1;
+}
+
 
 @keyframes gradientBG {
     0% {
