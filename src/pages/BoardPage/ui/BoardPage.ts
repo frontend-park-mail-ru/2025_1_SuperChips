@@ -21,6 +21,7 @@ export const boardFeedState = {
     canEdit: false,
 };
 
+const DEFAULT_GRADIENT = ['#FFA500', '#32CD32', '#1E90FF', '#FF69B4'];
 
 export const BoardPage = async (boardID: string) => {
     const page = document.createElement('div');
@@ -57,9 +58,9 @@ export const BoardPage = async (boardID: string) => {
         if (!feed) return;
         appState.masonryInstance = new Masonry(
             feed, {
-                itemSelector: '.pin',
-                gutter: appState.mobile ? 10 : 20,
-            }
+            itemSelector: '.pin',
+            gutter: appState.mobile ? 10 : 20,
+        }
         );
 
         await fillBoardFeed();
@@ -75,6 +76,19 @@ export const BoardPage = async (boardID: string) => {
 
     const settingsButton = page.querySelector('.board__settings-button');
     settingsButton?.addEventListener('click', openBoardSettings);
+
+    const divider = page.querySelector<HTMLElement>(".divider");
+    if (divider) {
+        const colors = body.data.gradient
+            ? body.data.gradient
+            : DEFAULT_GRADIENT;
+
+        colors.forEach((color: string | null, i: number) => {
+            divider.style.setProperty(`--color-${i + 1}`, color);
+        });
+
+        divider.classList.add('visible');
+    }
 
     return page;
 };
