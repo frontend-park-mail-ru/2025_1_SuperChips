@@ -16,12 +16,14 @@
                             </button>
                         {{/unless}}
                     {{/if}}
+                    {{#if ../userData}}
                     <div class="create-board{{#unless showCreateBoardButton}} hidden{{/unless}}">
                         <img src="/public/icons/plus-white.svg" alt="create new board">
                         <div class="label">
                             создать доску
                         </div>
                     </div>
+                    {{/if}}
                 </div>
             </div>
             <div class="author-area__box-2">
@@ -39,6 +41,7 @@
                     </div>
                     {{#unless own}}
                         {{#unless mobile}}
+                            {{#if ../userData}}
                             <button class="author__chat-button">
                                 <img src="/public/icons/chat.svg" alt="Chat">
                             </button>
@@ -49,6 +52,7 @@
                                     <span>Подписаться</span>
                                 {{/if}}
                             </button>
+                            {{/if}}
                         {{/unless}}
                     {{/unless}}
                 </div>
@@ -61,6 +65,7 @@
                             <span>Подписки</span>
                         </button>
                     {{else}}
+                        {{#if ../userData}}
                         <button class="author__chat-button">
                             <img src="/public/icons/chat.svg" alt="Chat">
                         </button>
@@ -71,6 +76,7 @@
                                 <span>Подписаться</span>
                             {{/if}}
                         </button>
+                        {{/if}}
                     {{/if}}
                 </div>
             {{/if}}

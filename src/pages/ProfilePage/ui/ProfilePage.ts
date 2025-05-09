@@ -116,6 +116,14 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
         navigate(`${username}/subscriptions`);
     });
 
+    const followersCount = page.querySelector('.author__followers');
+    followersCount?.addEventListener('click', () => {
+        navigate(`${username}/subscribers`);
+    });
+    if (followersCount) {
+        followersCount.style.cursor = 'pointer';
+    }
+
 
     const subscribeButton = page.querySelector(`#subscribe-${config.safeUsername}`);
     if (subscribeButton) {
