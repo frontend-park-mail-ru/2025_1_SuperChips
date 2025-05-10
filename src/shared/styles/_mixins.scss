@@ -121,11 +121,6 @@
         color: black;
         font-weight: bold;
     }
-
-    &:hover {
-        opacity: $opacity-80;
-        cursor: pointer;
-    }
 }
 
 @mixin short-username {

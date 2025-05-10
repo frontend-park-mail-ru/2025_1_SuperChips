@@ -7,11 +7,9 @@ export const textareaResizeHandler = () => {
     const charCounter = document.querySelector<HTMLElement>('#chat-char-counter');
     const messageBox = document.querySelector<HTMLElement>('.chat__messages');
     const container = document.querySelector<HTMLElement>('.chat__input-container');
-    // const chatInput = container.querySelector('#chat-input');
 
     if (!textarea || !messageBox || !container) return;
 
-    // TODO пофиксить наезжающий на сообщения инпут
     textarea.style.height = 'auto';
     textarea.style.height = `${Math.min(textarea.scrollHeight, maxHeight)}px`;
     messageBox.scrollTop = messageBox.scrollHeight;

@@ -33,7 +33,7 @@ export const search = async (event: Event) => {
         return;
     } else if (response.ok) {
         if (appState.activePage !== 'feed') {
-            navigate('feed').finally();
+            await navigate('feed');
         }
 
         Object.assign(searchFeedState, { filter, query, page: 1 });
