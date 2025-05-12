@@ -1,5 +1,7 @@
 import { ChatStorage, IContact } from 'features/chat';
 import { closeContactList } from '../handlers/closeContactList';
+import { navigate } from 'shared/router';
+import { createNewChat } from 'widgets/ChatList/handlers/createNewChat';
 import template from './ContactList.hbs';
 import './ContactList.scss';
 
@@ -21,6 +23,33 @@ export const ContactList = () => {
     const backButton = container.querySelector('.contact-list__back-button');
     backButton?.addEventListener('click', closeContactList);
     window.addEventListener('keydown', closeContactList);
+
+    container.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+        const contactItem = target.closest('.contact-list__item');
+        const publicName = target.closest('.contact-preview__public-name');
+        
+        if (contactItem) {
+            const username = contactItem.id.split('-')[1];
+            if (username) {
+                navigate(username);
+                return;
+            }
+        }
+        
+        if (publicName) {
+            const contactItem = publicName.closest('.contact-list__item');
+            if (contactItem) {
+                const username = contactItem.id.split('-')[1];
+                if (username) {
+                    navigate(username);
+                    return;
+                }
+            }
+        }
+        
+        createNewChat(event);
+    });
 
     return container.firstChild as HTMLDivElement;
 };

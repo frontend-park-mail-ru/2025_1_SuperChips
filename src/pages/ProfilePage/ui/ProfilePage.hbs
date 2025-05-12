@@ -3,83 +3,46 @@
     <div class="profile">
         <div class="author-area">
             <div class="author-area__box-1">
-                <div class="user-profile__header white bold">
+                <div class="header white bold">
                     {{header}}
                 </div>
                 <div class="box-1__menu">
                     <div id="tabBar" class="tab-bar-placeholder"></div>
-                    {{#if own}}
-                        {{#unless mobile}}
-                            <button class="author__subscriptions-button" id="subscriptions-button">
-                                <img src="/public/icons/followers.svg" alt="subscriptions">
-                                <span>Подписки</span>
-                            </button>
-                        {{/unless}}
-                    {{/if}}
-                    {{#if ../userData}}
                     <div class="create-board{{#unless showCreateBoardButton}} hidden{{/unless}}">
-                        <img src="/public/icons/plus-white.svg" alt="create new board">
+                        <img src="/public/icons/new-pin.svg" alt="create new board">
                         <div class="label">
                             создать доску
                         </div>
                     </div>
-                    {{/if}}
+                    <button class="author__subscriptions-button" id="subscriptions-button">
+                        <img src="/public/icons/followers.svg" alt="subscriptions">
+                        <span>Подписки</span>
+                    </button>
                 </div>
             </div>
+            {{#unless own}}
             <div class="author-area__box-2">
-                <div class="author">
-                    {{#if userData.avatar}}
-                    <img src="{{userData.avatar}}" alt="Profile Picture" class="author__profile-picture">
-                    {{else}}
-                    <div class="author__profile-picture">
-                        <p class="short-username">{{userData.public_name.[0]}}</p>
-                    </div>
-                    {{/if}}
-                    <div class="author__info">
+                <div class="author-area__box-2">
+                    <div class="author">
+                        {{#if userData.avatar}}
+                        <img src="{{userData.avatar}}" alt="Profile Picture" class="author__profile-picture">
+                        {{else}}
+                        <div class="author__profile-picture">
+                            <p>{{userData.public_name.[0]}}</p>
+                        </div>
+                        {{/if}}
                         <h1 class="author__name">{{userData.public_name}}</h1>
-                        <div class="author__followers">{{userData.followersCount}} подписчиков</div>
                     </div>
-                    {{#unless own}}
-                        {{#unless mobile}}
-                            {{#if ../userData}}
-                            <button class="author__chat-button">
-                                <img src="/public/icons/chat.svg" alt="Chat">
-                            </button>
-                            <button class="author__subscribe-button" id="subscribe-{{safeUsername}}">
-                                {{#if isSubscribed}}
-                                    <span>Отписаться</span>
-                                {{else}}
-                                    <span>Подписаться</span>
-                                {{/if}}
-                            </button>
-                            {{/if}}
-                        {{/unless}}
-                    {{/unless}}
+                    <button class="author__subscribe-button" id="subscribe-{{safeUsername}}">
+                        {{#if isSubscribed}}
+                        Отписаться
+                        {{else}}
+                        Подписаться
+                        {{/if}}
+                    </button>
                 </div>
             </div>
-            {{#if mobile}}
-                <div class="author-area__box-3">
-                    {{#if own}}
-                        <button class="author__subscriptions-button" id="subscriptions-button">
-                            <img src="/public/icons/followers.svg" alt="subscriptions">
-                            <span>Подписки</span>
-                        </button>
-                    {{else}}
-                        {{#if ../userData}}
-                        <button class="author__chat-button">
-                            <img src="/public/icons/chat.svg" alt="Chat">
-                        </button>
-                        <button class="author__subscribe-button" id="subscribe-{{safeUsername}}">
-                            {{#if isSubscribed}}
-                                <span>Отписаться</span>
-                            {{else}}
-                                <span>Подписаться</span>
-                            {{/if}}
-                        </button>
-                        {{/if}}
-                    {{/if}}
-                </div>
-            {{/if}}
+            {{/unless}}
         </div>
         <div id="feed" class="profile__feed">
         </div>

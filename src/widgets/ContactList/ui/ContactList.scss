@@ -17,6 +17,17 @@
         @include flex-center;
         cursor: pointer;
     }
+
+    &__item {
+        cursor: pointer;
+        padding: $spacing-md;
+        border-radius: $border-radius;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: $semi-transparent;
+        }
+    }
 }
 
 
@@ -42,6 +53,11 @@
     &__public-name {
         font-weight: bold;
         font-size: 18px;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.8;
+        }
     }
 }
 
