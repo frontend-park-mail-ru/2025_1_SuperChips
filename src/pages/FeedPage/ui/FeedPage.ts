@@ -3,6 +3,7 @@ import { fillFeed } from '../lib/fillFeed';
 import { registerScrollHandler } from 'features/scrollHandler';
 import { appState } from 'shared/router';
 import { fillSearchFeed, searchFeedState } from '../lib/fillSearchFeed';
+import { restoreScrollPosition } from 'shared/utils/saveScrollPosition';
 import feedTemplate from './FeedPage.hbs';
 import './feed.scss';
 
@@ -41,6 +42,7 @@ export const FeedPage = async () => {
             registerScrollHandler(fillFeed);
             await fillFeed();
             await fillFeed();
+            restoreScrollPosition();
         } else {
             registerScrollHandler(fillSearchFeed);
             await fillSearchFeed();

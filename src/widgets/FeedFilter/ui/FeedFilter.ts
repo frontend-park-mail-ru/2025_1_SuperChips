@@ -1,5 +1,6 @@
 import { clearSearch, search } from 'widgets/navbar';
 import { handleFeedRadioButtons } from '../handlers/handleFeedRadioButtons';
+import { handleResetFilters } from '../handlers/handleResetFilters';
 import { searchFeedState } from 'pages/FeedPage';
 import { appState } from 'shared/router';
 import './FeedFilter.scss';
@@ -9,6 +10,7 @@ import template from './FeedFilter.hbs';
 export const FeedFilter = () => {
     const container = document.createElement('div');
     container.classList.add('feed-filter-placeholder');
+    container.classList.add('active');
     container.id = 'feed-filter';
 
     const filter = searchFeedState.filter;
@@ -37,6 +39,9 @@ export const FeedFilter = () => {
     container.innerHTML = template(config);
 
     container.addEventListener('click', (event) => handleFeedRadioButtons(event));
+
+    const resetButton = container.querySelector('#reset-filters');
+    resetButton?.addEventListener('click', handleResetFilters);
 
     if (appState.mobile) {
         const searchForm = container.querySelector<HTMLFormElement>('.mobile-search-form-container');
