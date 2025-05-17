@@ -1,0 +1,49 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+.notification {
+    &-container {
+        position: fixed;
+        // todo remove
+        top: 100px;
+        right: 100px;
+        //
+        z-index: 100;
+        width: 400px;
+        min-height: 200px;
+        max-height: 440px;
+        border-radius: $border-radius;
+        background-color: #fff;
+        padding: 12px 20px;
+        overflow-y: auto;
+        @include popup-scroll(#f1f1f1, #888);
+    }
+
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        span {
+            font-size: 20px;
+            font-weight: bold;
+            color: $text-dark-gray;
+        }
+
+        img {
+            cursor: pointer;
+        }
+    }
+
+    &-subheader {
+        margin: 6px 0;
+        font-size: 16px;
+        color: $text-dark-gray;
+    }
+
+    &__new, &__old {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+}

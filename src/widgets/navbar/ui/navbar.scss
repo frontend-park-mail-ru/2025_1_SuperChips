@@ -81,7 +81,6 @@ $border-radius: 20px;
 }
 
 .navbar__profile-picture {
-    @include button;
     @include profile-picture-small;
     @include button;
 
