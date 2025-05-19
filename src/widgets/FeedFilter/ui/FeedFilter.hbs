@@ -1,18 +1,15 @@
 <div class="feed-filter">
-    <div class="feed-filter__header">Фильтры</div>
+    <div class="feed-filter__header">
+        Фильтры
+        <button class="feed-filter__reset" id="reset-filters">Сбросить</button>
+    </div>
     <form class="filter-block">
         {{#each filterItem}}
             <div class="filter-item">
-                <label
-                        for="{{this.id}}"
-                        class="subheader white"
-                >{{this.title}}</label>
-                <input
-                        type="radio"
-                        id="{{this.id}}"
-                        {{#if this.checked}}checked="checked"{{/if}}
-                        name="filter-radio-buttons"
-                >
+                <div class="filter-item__content">
+                    <label for="{{this.id}}" class="subheader white">{{this.title}}</label>
+                </div>
+                <input type="radio" id="{{this.id}}" {{#if this.checked}}checked="checked"{{/if}} name="filter-radio-buttons">
             </div>
         {{/each}}
     </form>

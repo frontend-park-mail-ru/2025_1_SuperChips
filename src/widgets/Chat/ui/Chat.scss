@@ -22,9 +22,14 @@
         @include profile-picture-small;
     }
 
-    &-username {
+    &-username, &-public-name {
         font-size: $font-size-lg;
         color: $white;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 0.8;
+        }
     }
 
     &__close-button {

@@ -16,10 +16,11 @@ export const findMatch = async (page: string) => {
         }
     }
 
-    if (
-        !match ||
-        config.menu[match].nonAuthOnly && !!Auth.userData ||
-        config.menu[match].authOnly && !Auth.userData
+    if (!match) {
+        match = 'notFound';
+    } else if (
+        (config.menu[match].nonAuthOnly && !!Auth.userData) ||
+        (config.menu[match].authOnly && !Auth.userData)
     ) {
         match = 'feed';
     }

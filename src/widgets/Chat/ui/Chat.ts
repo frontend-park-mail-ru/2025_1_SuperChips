@@ -12,6 +12,7 @@ import chatTemplate from './Chat.hbs';
 import './Chat.scss';
 import { messageObserver } from '../handlers/readMessages';
 import { openChatList } from 'widgets/sidebar';
+import { navigate } from 'shared/router';
 
 
 interface IChatState {
@@ -58,6 +59,14 @@ export const Chat = async (chatID: string) => {
     const backButton = container.querySelector('#chat__close-button');
     backButton?.addEventListener('click', closeChat);
     window.addEventListener('keydown', closeChat);
+
+    const username = container.querySelector('.chat-username');
+    username?.addEventListener('click', () => navigate(chat.username));
+
+    const publicName = container.querySelector('.chat-public-name');
+    if (publicName) {
+        publicName.addEventListener('click', () => navigate(chat.username));
+    }
 
     const chatList = document.querySelector<HTMLDivElement>('.chat-list');
     if (chatList) {
