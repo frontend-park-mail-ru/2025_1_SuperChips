@@ -8,7 +8,7 @@ import { closeChatList } from 'widgets/sidebar';
 import { API } from 'shared/api';
 import { BoardStorage } from 'features/boardLoader';
 import { USER_SAVED_PINS_BOARD } from 'shared/config/constants';
-import { ChatStorage } from '../../chat';
+import { ChatStorage } from 'features/chat';
 
 
 type TLoginData = {
@@ -170,9 +170,10 @@ class auth {
         await this.fetchUserData();
         await Navbar();
         BoardStorage.boardToSave = USER_SAVED_PINS_BOARD;
-        document.querySelector('.sidebar')?.classList.remove('hidden');
+        document.querySelector('.sidebar__button-container')?.classList.remove('hidden');
         ChatStorage.fetchContactList().finally();
         ChatStorage.fetchChatList().finally();
+        ChatStorage.reconnect();
     }
 }
 

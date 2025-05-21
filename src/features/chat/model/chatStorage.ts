@@ -50,11 +50,12 @@ class chatStorage {
             try {
                 const body = JSON.parse(event.data);
                 this.getMessage(body.sender, {
-                    ...body,
-                    id: body.message_id.toString(),
-                    timestamp: new Date(body.timestamp),
+                    ...body.content,
+                    id: body.content.message_id.toString(),
+                    timestamp: new Date(body.content.timestamp),
                 }).finally();
-            } catch { /**/
+            } catch {
+                /**/
             }
         };
     }
@@ -147,10 +148,13 @@ class chatStorage {
         chat.count = 0;
 
         const payload = {
-            description: 'message',
-            chat_id: +chatID,
-            username: chat.username,
-            message: message.message,
+            type: 'message',
+            content: {
+                chat_id: +chatID,
+                username: chat.username,
+                message: message.message,
+                description: 'chat_message',
+            },
         };
         this.ws.send(JSON.stringify(payload));
     }
@@ -247,6 +251,11 @@ class chatStorage {
         this.ws.close();
         this.chatList = [];
         this.contacts = [];
+    }
+
+    reconnect() {
+        this.ws.close();
+        this.ws = new WebSocket(WEBSOCKET_URL);
     }
 }
 
