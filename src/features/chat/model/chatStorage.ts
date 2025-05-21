@@ -51,6 +51,7 @@ class chatStorage {
                 const body = JSON.parse(event.data);
                 this.getMessage(body.sender, {
                     ...body.content,
+                    username: body.content.recipient,
                     id: body.content.message_id.toString(),
                     timestamp: new Date(body.content.timestamp),
                 }).finally();
@@ -151,7 +152,7 @@ class chatStorage {
             type: 'message',
             content: {
                 chat_id: +chatID,
-                username: chat.username,
+                recipient: chat.username,
                 message: message.message,
                 description: 'chat_message',
             },
