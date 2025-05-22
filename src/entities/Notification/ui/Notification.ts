@@ -56,7 +56,7 @@ export const Notification = async (item: INotification) => {
     deleteButton?.addEventListener('click', (event) => {
         event.stopPropagation();
         notification.remove();
-        NotificationStorage.removeNotification(item.id, item.is_read);
+        NotificationStorage.removeNotification(item.id);
     });
 
     return notification;

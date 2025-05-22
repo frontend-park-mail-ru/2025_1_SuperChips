@@ -1,5 +1,6 @@
-import { appState } from 'shared/router';
 import { openNotifications } from './openNotifications';
+import { appState } from 'shared/router';
+import { NotificationStorage } from 'features/notification';
 
 export const closeNotifications = () => {
     if (!appState.notification.open) return;
@@ -9,8 +10,13 @@ export const closeNotifications = () => {
 
     const notificationButton = document?.querySelector('.navbar__notification');
 
-    notificationButton?.removeEventListener('click', closeNotifications);
-    notificationButton?.addEventListener('click', openNotifications);
+    if (notificationButton) {
+        notificationButton.removeEventListener('click', closeNotifications);
+        notificationButton.addEventListener('click', openNotifications);
+        notificationButton.classList.remove('active');
+    }
+
+    NotificationStorage.updateSaved();
 
     appState.notification.open = false;
 };

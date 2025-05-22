@@ -9,7 +9,11 @@ export const openNotifications = () => {
     root.appendChild(NotificationList());
     appState.notification.open = true;
 
-    const notificationButton = document?.querySelector('.navbar__notification');
-    notificationButton?.removeEventListener('click', openNotifications);
-    notificationButton?.addEventListener('click', closeNotifications);
+    const notificationButton = document.querySelector('.navbar__notification');
+
+    if (notificationButton) {
+        notificationButton.removeEventListener('click', openNotifications);
+        notificationButton.addEventListener('click', closeNotifications);
+        notificationButton.classList.add('active');
+    }
 };

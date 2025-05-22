@@ -208,4 +208,20 @@ $border-radius: 20px;
     @include icon;
     margin-right: $spacing-md;
     cursor: pointer;
+
+    &:hover {
+        content: url('/public/icons/notification-active.svg');
+    }
+
+    &.active {
+        content: url('/public/icons/notification-active.svg');
+    }
+
+    &.unread {
+        content: url('/public/icons/notification-unread.svg');
+    }
+
+    &.active.unread {
+        content: url('/public/icons/notification-active-unread.svg');
+    }
 }

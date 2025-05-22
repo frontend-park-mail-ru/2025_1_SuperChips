@@ -1,5 +1,6 @@
 import { Notification } from 'entities/Notification';
 import { closeNotifications } from 'widgets/navbar/handlers/closeNotifications';
+import { notificationObserver } from '../handlers/notificationObserver';
 import { NotificationStorage } from 'features/notification';
 import template from './NotificationList.hbs';
 import './NotificationList.scss';
@@ -29,8 +30,11 @@ export const NotificationList = () => {
     if (config.hasNew) {
         const newContainer = container.querySelector('#new-notifications');
         if (newContainer) {
+            const observer = notificationObserver();
             NotificationStorage.newNotifications.forEach(async (item) => {
-                newContainer.appendChild(await Notification(item));
+                const notification = await Notification(item);
+                newContainer?.appendChild(notification);
+                observer.observe(notification);
             });
         }
     }
