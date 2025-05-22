@@ -4,6 +4,7 @@ import { checkMobile } from 'shared/utils';
 import { appState, navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { ChatStorage } from 'features/chat';
+import { NotificationStorage } from '../features/notification';
 import './styles/fonts.scss';
 import './styles/common.scss';
 
@@ -26,5 +27,6 @@ export const App = async () => {
     if (Auth.userData) {
         ChatStorage.fetchChatList().finally();
         ChatStorage.fetchContactList().finally();
+        NotificationStorage.fetchNotifications().finally();
     }
 };

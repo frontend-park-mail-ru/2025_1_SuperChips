@@ -4,10 +4,8 @@
 .notification {
     &-container {
         position: fixed;
-        // todo remove
         top: 100px;
         right: 100px;
-        //
         z-index: 100;
         width: 400px;
         min-height: 200px;
@@ -33,6 +31,14 @@
         img {
             cursor: pointer;
         }
+
+        .notification__read-all {
+            font-size: 14px;
+            font-weight: normal;
+            color: #666;
+            cursor: pointer;
+            margin-right: 24px;
+        }
     }
 
     &-subheader {
@@ -45,5 +51,15 @@
         display: flex;
         flex-direction: column;
         gap: 6px;
+    }
+}
+
+@media (max-width: $mobile-width) {
+    .notification {
+        &-container {
+            width: clamp(280px, 100% - 2 * $mobile-horizontal-padding, 400px);
+            top: $navbar-height-mobile + $mobile-horizontal-padding;
+            right: $mobile-horizontal-padding;
+        }
     }
 }

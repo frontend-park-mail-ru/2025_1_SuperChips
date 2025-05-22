@@ -203,3 +203,9 @@ $border-radius: 20px;
         }
     }
 }
+
+.navbar__notification {
+    @include icon;
+    margin-right: $spacing-md;
+    cursor: pointer;
+}

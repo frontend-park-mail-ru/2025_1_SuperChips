@@ -3,7 +3,7 @@ import { ChatList } from 'widgets/ChatList';
 import { Message } from 'shared/components/Message';
 import { appState } from 'shared/router';
 import { API } from 'shared/api';
-import { WEBSOCKET_URL } from 'shared/config/constants';
+import { WS } from 'features/webSocket';
 
 
 export interface IMessage {
@@ -37,29 +37,6 @@ export interface IContact {
 class chatStorage {
     chatList: IChat[] = [];
     contacts: IContact[] = [];
-    ws: WebSocket;
-
-    constructor() {
-        this.ws = new WebSocket(WEBSOCKET_URL);
-
-        this.ws.onopen = () => {
-            this.ws.send(JSON.stringify({ description: 'connect' }));
-        };
-
-        this.ws.onmessage = (event: MessageEvent) => {
-            try {
-                const body = JSON.parse(event.data);
-                this.getMessage(body.sender, {
-                    ...body.content,
-                    username: body.content.recipient,
-                    id: body.content.message_id.toString(),
-                    timestamp: new Date(body.content.timestamp),
-                }).finally();
-            } catch {
-                /**/
-            }
-        };
-    }
 
     async fetchChatList() {
         const response = await API.get('/chats');
@@ -157,7 +134,7 @@ class chatStorage {
                 description: 'chat_message',
             },
         };
-        this.ws.send(JSON.stringify(payload));
+        WS.send(JSON.stringify(payload));
     }
 
     async getMessage(username: string, message: IMessage) {
@@ -249,14 +226,9 @@ class chatStorage {
     }
 
     clear() {
-        this.ws.close();
+        WS.close();
         this.chatList = [];
         this.contacts = [];
-    }
-
-    reconnect() {
-        this.ws.close();
-        this.ws = new WebSocket(WEBSOCKET_URL);
     }
 }
 

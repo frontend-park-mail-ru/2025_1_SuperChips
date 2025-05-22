@@ -1,14 +1,17 @@
 <div class="notification-container">
     <div class="notification-header">
         <span>Уведомления</span>
+        {{#if hasNew}}
+            <span class="notification__read-all">Прочитать все</span>
+        {{/if}}
         <img src="/public/icons/cross-grey.svg" alt="" class="popup__close">
     </div>
     {{#if hasNew}}
-        <div class="notification-subheader">Новые</div>
+        <div class="notification-subheader" id="new-notifications-subheader">Новые</div>
         <div class="notification__new" id="new-notifications"></div>
     {{/if}}
     {{#if hasOld}}
-        <div class="notification-subheader">Прочитанные</div>
+        <div class="notification-subheader" id="old-notifications-subheader">Прочитанные</div>
         <div class="notification__old" id="old-notifications"></div>
     {{/if}}
     {{#if empty}}

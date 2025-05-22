@@ -31,25 +31,25 @@
                 alt="clear search"
         >
     </form>
-<div class="navbar__pfp-box">
+
 {{#if authorized}}
-    <div class="navbar__profile-picture">
-        {{#if avatar}}
-            <img
-                    src={{avatar}}
-                    alt="profile picture"
-                    aria-label="User profile"
-            >
-        {{else}}
-            <p class="shortUsername">{{shortUsername}}</p>
-        {{/if}}
+    <div class="navbar__notification">
+        <img src="/public/icons/notification.svg" alt="">
+    </div>
+
+    <div class="navbar__pfp-box">
+        <div class="navbar__profile-picture">
+            {{#if avatar}}
+                <img
+                        src={{avatar}}
+                        alt="profile picture"
+                        aria-label="User profile"
+                >
+            {{else}}
+                <p class="shortUsername">{{shortUsername}}</p>
+            {{/if}}
+        </div>
     </div>
 {{else}}
-    <button
-            class="feed-redirect"
-            id="goToLogin"
-    >
-        Войти
-    </button>
+    <button class="feed-redirect" id="goToLogin">Войти</button>
 {{/if}}
-</div>

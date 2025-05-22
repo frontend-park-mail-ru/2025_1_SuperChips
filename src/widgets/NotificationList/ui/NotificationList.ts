@@ -1,5 +1,5 @@
 import { Notification } from 'entities/Notification';
-import { closePopup } from 'widgets/BoardPopup';
+import { closeNotifications } from 'widgets/navbar/handlers/closeNotifications';
 import { NotificationStorage } from 'features/notification';
 import template from './NotificationList.hbs';
 import './NotificationList.scss';
@@ -14,11 +14,18 @@ export const NotificationList = () => {
         hasOld: NotificationStorage.oldNotifications.length > 0,
     };
 
+    container.innerHTML = template({ ...config, empty: !config.hasNew && !config.hasOld });
+
+    const closeButton = container.querySelector<HTMLButtonElement>('.popup__close');
+    closeButton?.addEventListener('click', closeNotifications);
+
+    const readAll = container.querySelector('.notification__read-all');
+    readAll?.addEventListener('click', () => NotificationStorage.markAllRead());
+
     if (!config.hasNew && !config.hasOld) {
-        container.innerHTML = template({ empty: true });
         return container;
     }
-    container.innerHTML = template(config);
+
     if (config.hasNew) {
         const newContainer = container.querySelector('#new-notifications');
         if (newContainer) {
@@ -27,6 +34,7 @@ export const NotificationList = () => {
             });
         }
     }
+
     if (config.hasOld) {
         const newContainer = container.querySelector('#old-notifications');
         if (newContainer) {
@@ -35,8 +43,6 @@ export const NotificationList = () => {
             });
         }
     }
-
-    container.addEventListener('click', closePopup);
 
     return container;
 };
