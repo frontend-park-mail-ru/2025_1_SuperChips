@@ -3,6 +3,7 @@ import type { IUser } from 'entities/User';
 import { omit } from 'shared/utils';
 import { findMatch } from './findMatch';
 import { updateBars } from './updateBars';
+import { closeFilter, closeNotifications } from 'widgets/navbar';
 import { searchFeedState } from 'pages/FeedPage';
 import { root } from 'app/app';
 import { config } from 'shared/config/router';
@@ -26,6 +27,10 @@ interface AppState {
         id: string | null
         hasUnread: boolean,
     },
+    notification: {
+        open: boolean,
+        hasUnread: boolean,
+    },
 }
 
 export const appState: AppState = {
@@ -45,6 +50,10 @@ export const appState: AppState = {
         id: null,
         hasUnread: false,
     },
+    notification: {
+        open: false,
+        hasUnread: false,
+    }
 };
 
 
@@ -127,6 +136,11 @@ const cleanup = (newHref: string) => {
         removeScrollHandler();
     }
 
+    if (appState.notification.open) {
+        closeNotifications();
+        appState.notification.open = false;
+    }
+
     const searchInput = document.querySelector<HTMLInputElement>('#search');
     if (searchInput && appState.lastPage === 'feed') {
         searchInput.value = '';
@@ -134,9 +148,7 @@ const cleanup = (newHref: string) => {
         document.querySelector('.search-form__clear')?.classList.add('hidden');
     }
 
-    const filter = document.querySelector('.feed-filter-placeholder');
-    filter?.remove();
-    appState.isFilterOpen = false;
+    closeFilter();
 
     if (newHref !== '/flow/new') {
         document.querySelector('#newPin')?.classList.remove('active');

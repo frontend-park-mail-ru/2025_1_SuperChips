@@ -7,6 +7,7 @@ import { openFilter } from '../handlers/openFilter';
 import { search } from '../handlers/search';
 import { Auth } from 'features/authorization';
 import { clearSearch } from '../handlers/clearSearch';
+import { openNotifications } from '../handlers/openNotifications';
 
 
 /**
@@ -50,6 +51,9 @@ export const Navbar = async () => {
 
     const clearButton = navbar.querySelector('.search-form__clear');
     clearButton?.addEventListener('click', clearSearch);
+
+    const notificationButton = navbar.querySelector('.navbar__notification');
+    notificationButton?.addEventListener('click', openNotifications);
 
     return navbar;
 };

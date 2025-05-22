@@ -26,8 +26,8 @@ export const UserCard = (user: IUserCardProps) => {
     const profileUrl = user.username; 
     
     // Use subscriber_count if available, otherwise use subscribers_count or default to 0
-    const subscriberCount = user.subscriber_count !== undefined ? user.subscriber_count : 
-                           (user.subscribers_count || 0);
+    const subscriberCount = user.subscriber_count !== undefined ? user.subscriber_count :
+        (user.subscribers_count || 0);
 
     const config = {
         username: displayName,
