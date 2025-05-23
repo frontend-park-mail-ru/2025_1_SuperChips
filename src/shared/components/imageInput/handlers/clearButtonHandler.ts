@@ -1,4 +1,6 @@
-export const clearButtonHandler = () => {
+export const clearButtonHandler = (event: Event) => {
+    event.stopPropagation();
+
     const input = document.querySelector<HTMLInputElement>('.image-input__field');
     const preview = document.querySelector<HTMLImageElement>('#preview');
     const selectButton = document.querySelector<HTMLButtonElement>('#image-input-button');

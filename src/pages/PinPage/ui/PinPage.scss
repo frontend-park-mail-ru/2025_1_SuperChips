@@ -77,6 +77,11 @@
             cursor: pointer;
         }
 
+        &__box-1 {
+            display: flex;
+            gap: 16px;
+        }
+
         &__box-2 {
             display: flex;
             gap: 16px;

@@ -29,6 +29,7 @@ const PRECACHE_URLS = [
     '/public/icons/heart.svg',
     '/public/icons/like-filled.svg',
     '/public/icons/like.svg',
+    '/public/icons/link.svg',
     '/public/icons/lock.svg',
     '/public/icons/log-out.svg',
     '/public/icons/logo-small.svg',

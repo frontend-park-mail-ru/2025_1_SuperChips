@@ -31,7 +31,7 @@
         </div>
         {{#if authorized}}
             <div class="one-pin__buttons">
-                <div>
+                <div class="one-pin__buttons__box-1">
                     <div class="one-pin__buttons__button">
                         <img
                                 id="like"
@@ -41,6 +41,15 @@
                         >
                         <p id="like-count">{{like_count}}</p>
                     </div>
+                    {{#if mobile}}
+                    <div class="one-pin__buttons__button">
+                        <img
+                                id="share"
+                                src="/public/icons/link.svg"
+                                alt="share button"
+                        >
+                    </div>
+                    {{/if}}
                 </div>
                 <div class="one-pin__buttons__box-2">
                     {{#if own}}
