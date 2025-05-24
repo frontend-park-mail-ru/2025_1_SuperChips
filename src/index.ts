@@ -12,6 +12,7 @@ if (isProd) {
             await navigator.serviceWorker.register('/sw.js', { scope: '/' });
         }
     } catch {
+        /**/
     }
 }
 

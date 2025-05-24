@@ -38,6 +38,10 @@
             @include profile-picture-small;
             @include button;
             cursor: pointer;
+
+            &:hover {
+                opacity: $opacity-80;
+            }
         }
 
         &__username {

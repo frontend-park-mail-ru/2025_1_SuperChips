@@ -26,13 +26,13 @@
             </div>
             <div class="author-area__box-2">
                 <div class="author">
-                    {{#if userData.avatar}}
-                    <img src="{{userData.avatar}}" alt="Profile Picture" class="author__profile-picture">
-                    {{else}}
                     <div class="author__profile-picture">
-                        <p class="short-username">{{userData.public_name.[0]}}</p>
+                        {{#if userData.avatar}}
+                            <img src="{{userData.avatar}}" alt="Profile Picture" class="author__profile-picture">
+                        {{else}}
+                            <p class="short-username">{{userData.public_name.[0]}}</p>
+                        {{/if}}
                     </div>
-                    {{/if}}
                     <div class="author__info">
                         <h1 class="author__name">{{userData.public_name}}</h1>
                         <div class="author__followers">{{userData.followersCount}} подписчиков</div>

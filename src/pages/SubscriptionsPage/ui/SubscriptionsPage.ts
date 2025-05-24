@@ -1,9 +1,10 @@
 import type { ITabItem } from 'shared/components/tabBar';
 import { TabBar } from 'shared/components/tabBar';
+import type { IUser } from 'entities/User';
 import { Masonry } from 'shared/models/Masonry';
 import { UserCard } from 'entities/UserCard';
 import { Toast } from 'shared/components/Toast';
-import { checkAvatar, pluralize } from 'shared/utils';
+import { checkAvatar } from 'shared/utils';
 import { registerScrollHandler, removeScrollHandler } from 'features/scrollHandler';
 import { appState, navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
@@ -18,16 +19,6 @@ export const subPageState = {
     container: document.createElement('div'),
     isSubscriptionsTab: false,
 };
-
-
-interface IUser {
-    username: string;
-    public_name: string;
-    avatar: string | null;
-    isSubscribed: boolean;
-    about?: string;
-    subscribers_count?: number;
-}
 
 
 export const SubscriptionsPage = async (username: string, tab: string = 'subscriptions'): Promise<HTMLDivElement> => {
@@ -106,15 +97,11 @@ async function loadUsers() {
     if (!response.ok) {
         if (response.status === 404 && subPageState.page === 1) {
             showEmptyMessage(subPageState.container, subPageState.isSubscriptionsTab);
-            removeScrollHandler();
-            return;
         } else if (response.status === 400) {
             Toast('Неверные параметры запроса', 'error');
-            removeScrollHandler();
-            return;
+        } else {
+            Toast('Не удалось загрузить пользователей', 'error');
         }
-        Toast('Не удалось загрузить пользователей', 'error');
-        subPageState.container.innerHTML = '';
         removeScrollHandler();
         return;
     }
@@ -161,58 +148,13 @@ async function createUserCard(user: IUser) {
         }
     }
 
-    const userCard = UserCard({
+    return UserCard({
         username: user.username,
         public_name: user.public_name,
-        avatar: avatarOk ? user.avatar : null,
+        avatar: user.avatar && avatarOk ? user.avatar : null,
         about: user.about || '',
-        subscribers_count: user.subscribers_count || 0,
         subscriber_count: user.subscriber_count || 0,
         isSubscribed: isSubscribed,
         own: Auth.userData?.username === user.username
     });
-    
-    const avatar = userCard.querySelector('.user-card__avatar');
-    avatar?.addEventListener('click', () => {
-        navigate(`${user.username}`);
-    });
-    
-    const subscribeButton = userCard.querySelector('.user-card__subscribe-button');
-    if (subscribeButton && Auth.userData?.username !== user.username) {
-        subscribeButton.addEventListener('click', async () => {
-            const subResponse = isSubscribed
-                ? await API.delete('/subscription', { target_user: user.username })
-                : await API.post('/subscription', { target_user: user.username });
-
-            if (!(subResponse instanceof Response) || !subResponse.ok) {
-                Toast('Не удалось выполнить действие', 'error');
-                return;
-            }
-
-            isSubscribed = !isSubscribed;
-            subscribeButton.textContent = isSubscribed ? 'Отписаться' : 'Подписаться';
-            subscribeButton.classList.toggle('subscribed', isSubscribed);
-
-            const subscribersElement = userCard.querySelector(`#${user.username}-subscribers`);
-            if (subscribersElement) {
-                // Update the appropriate subscriber count property
-                if (user.subscriber_count !== undefined) {
-                    user.subscriber_count = (user.subscriber_count || 0) + (isSubscribed ? 1 : -1);
-                    subscribersElement.textContent = pluralize('подписчик', user.subscriber_count);
-                } else {
-                    const newCount = (user.subscribers_count || 0) + (isSubscribed ? 1 : -1);
-                    user.subscribers_count = newCount;
-                    subscribersElement.textContent = pluralize('подписчик', newCount);
-                }
-            }
-
-            Toast(
-                isSubscribed
-                    ? `Вы подписались на ${user.public_name}`
-                    : `Вы отписались от ${user.public_name}`,
-                'success'
-            );
-        });
-    }
-    return userCard;
 }
