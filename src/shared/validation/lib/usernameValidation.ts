@@ -8,12 +8,12 @@ import { ValidationResult } from './types';
 export const validateUsername = (
     username: string
 ): ValidationResult => {
-    const regex = /^[a-zA-Z0-9._\-@#$%&*!]+$/;
+    const regex = /^[a-zA-Z0-9_]+$/;
 
     if (username === '') {
         return { isValid: false, error: 'Введите имя пользователя' };
     } else if (!regex.test(username)) {
-        return { isValid: false, error: 'Имя должно быть из латинских букв, цифр или символов (._-@#$%&*!)' };
+        return { isValid: false, error: 'Имя должно быть из латинских букв, цифр или нижнего подчеркивания' };
     } else if (username.length < 2) {
         return { isValid: false, error: 'Имя должно быть не менее 2 символов' };
     } else if (username.length > 63) {

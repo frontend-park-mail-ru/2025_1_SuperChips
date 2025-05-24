@@ -37,6 +37,7 @@
     border-radius: $border-radius;
     opacity: 0;
     transition: opacity 0.3s ease;
+    position: relative;
     
     background: linear-gradient(45deg, 
         var(--color-1), 
@@ -45,6 +46,19 @@
         var(--color-4));
     background-size: 300% 300%;
     animation: gradientBG 8s ease infinite;
+
+    &:hover::after {
+        content: "Попробуйте добавить flow на доску - цвет изменится";
+        position: absolute;
+        top: 150%;
+        padding: 5px 10px;
+        background: #333;
+        color: white;
+        border-radius: 4px;
+        font-size: 14px;
+        white-space: nowrap;
+        z-index: 100;
+    }
 }
 
 .divider.visible {

@@ -69,9 +69,18 @@ export const UserCard = (user: IUserCardProps) => {
                     : `Вы отписались от ${user.public_name || user.username}`,
                 'success'
             );
+
+            const counter = container.querySelector('.user-card__subscribers');
+            if (counter) {
+                const text = counter.textContent;
+                if (text && text.split(' ').length > 1) {
+                    const count = +text.split(' ')[0];
+                    counter.textContent = pluralize('подписчик', count + 1 * (user.isSubscribed ? 1 : -1));
+                }
+            }
         });
     }
-    
+
     // Add event listener for chat button
     const chatButton = container.querySelector('.user-card__chat-button');
     if (chatButton && Auth.userData?.username !== user.username) {
@@ -80,14 +89,14 @@ export const UserCard = (user: IUserCardProps) => {
             const { ChatStorage } = await import('features/chat');
             const { openChatList } = await import('widgets/sidebar');
             const { Chat } = await import('widgets/Chat');
-            
+
             // Open chat list first
             openChatList();
-            
+
             // Check if chat already exists
-            let chat = ChatStorage.getChatByUsername(user.username);
+            const chat = ChatStorage.getChatByUsername(user.username);
             let chatID;
-            
+
             if (!chat) {
                 // Create new chat if it doesn't exist
                 chatID = await ChatStorage.newChat(user.username, user.avatar);
@@ -98,7 +107,7 @@ export const UserCard = (user: IUserCardProps) => {
             } else {
                 chatID = chat.id;
             }
-            
+
             // Open the chat
             Chat(chatID.toString());
         });

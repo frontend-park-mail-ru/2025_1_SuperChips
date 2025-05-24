@@ -28,7 +28,7 @@ export const ContactList = () => {
         const target = event.target as HTMLElement;
         const contactItem = target.closest('.contact-list__item');
         const publicName = target.closest('.contact-preview__public-name');
-        
+
         if (contactItem) {
             const username = contactItem.id.split('-')[1];
             if (username) {
@@ -36,7 +36,7 @@ export const ContactList = () => {
                 return;
             }
         }
-        
+
         if (publicName) {
             const contactItem = publicName.closest('.contact-list__item');
             if (contactItem) {
@@ -47,7 +47,7 @@ export const ContactList = () => {
                 }
             }
         }
-        
+
         createNewChat(event);
     });
 

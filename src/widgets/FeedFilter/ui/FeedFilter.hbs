@@ -9,7 +9,8 @@
                 <div class="filter-item__content">
                     <label for="{{this.id}}" class="subheader white">{{this.title}}</label>
                 </div>
-                <input type="radio" id="{{this.id}}" {{#if this.checked}}checked="checked"{{/if}} name="filter-radio-buttons">
+                <input type="radio" id="{{this.id}}"
+                       {{#if this.checked}}checked="checked"{{/if}} name="filter-radio-buttons">
             </div>
         {{/each}}
     </form>

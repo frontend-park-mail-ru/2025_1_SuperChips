@@ -7,6 +7,6 @@ import './not-found.scss';
 export const NotFoundPage = async (): Promise<HTMLDivElement> => {
     const page = document.createElement('div');
     page.insertAdjacentHTML('beforeend', notFoundTemplate({}));
-    
+
     return page;
 };

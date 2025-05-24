@@ -7,12 +7,11 @@ import { textareaResizeHandler } from '../handlers/textareaResizeHandler';
 import { chatSubmitHandler } from '../handlers/chatSubmitHandler';
 import { closeChat } from '../handler/closeChat';
 import { Auth } from 'features/authorization';
-import { appState } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 import chatTemplate from './Chat.hbs';
 import './Chat.scss';
 import { messageObserver } from '../handlers/readMessages';
 import { openChatList } from 'widgets/sidebar';
-import { navigate } from 'shared/router';
 
 
 interface IChatState {

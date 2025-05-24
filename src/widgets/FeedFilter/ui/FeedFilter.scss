@@ -110,13 +110,11 @@
         padding: 0 $mobile-horizontal-padding;
         max-width: 50%;
         width: 100%;
-        background: rgba(0, 0, 0, 0.95);
-        backdrop-filter: blur(10px);
     }
 
     .filter-item {
         padding: $spacing-sm;
-        
+
         label {
             font-size: 14px;
         }

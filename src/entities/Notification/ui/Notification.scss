@@ -6,7 +6,7 @@
     height: $profile-picture-size;
     display: grid;
     grid-template-columns: 48px auto 80px;
-  grid-template-areas: 'pfp content timestamp'
+    grid-template-areas: 'pfp content timestamp'
                          'pfp content delete';
     cursor: pointer;
 
@@ -41,21 +41,21 @@
         padding-left: 6px;
         display: flex;
         flex-direction: row-reverse;
-      color: #666;
+        color: #666;
     }
 
-  &__delete {
-    grid-area: delete;
-    display: flex;
-    flex-direction: row-reverse;
-    opacity: 0;
-    color: $error-color;
-    transition: opacity 0.3s ease;
-  }
-
-  &:hover {
-    .notification__delete {
-      opacity: 1;
+    &__delete {
+        grid-area: delete;
+        display: flex;
+        flex-direction: row-reverse;
+        opacity: 0;
+        color: $error-color;
+        transition: opacity 0.3s ease;
     }
+
+    &:hover {
+        .notification__delete {
+            opacity: 1;
+        }
     }
 }

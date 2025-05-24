@@ -57,11 +57,11 @@ export const appState: AppState = {
     sharing: {
         open: false,
         id: null,
-    }
+    },
     notification: {
         open: false,
         hasUnread: false,
-    }
+    },
 };
 
 

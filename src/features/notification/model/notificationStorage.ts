@@ -137,8 +137,16 @@ class notificationStorage {
                     save.push(notification);
                 }
             });
+            this.sortNotifications();
             localStorage.setItem('oldNotifications', JSON.stringify(save));
         }
+    }
+
+    sortNotifications() {
+        if (!this.oldNotifications[0]) return;
+        this.oldNotifications.sort((a, b) => {
+            return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+        });
     }
 }
 

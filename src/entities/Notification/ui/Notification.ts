@@ -36,7 +36,7 @@ export const Notification = async (item: INotification) => {
         break;
     }
 
-    container.innerHTML = template({ ...config, content:content });
+    container.innerHTML = template({ ...config, content: content });
     const notification = container.firstElementChild!;
     switch (item.type) {
     case 'comment':

@@ -83,7 +83,7 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
         mobile: appState.mobile,
         userData: {
             ...userData,
-            followersCount: subscriberCount
+            followersCount: pluralize('подписчик', subscriberCount)
         }
     };
 
@@ -108,14 +108,13 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
         navigate(`${username}/subscriptions`);
     });
 
-    const followersCount = page.querySelector('.author__followers');
-    followersCount?.addEventListener('click', () => {
-        navigate(`${username}/subscribers`);
-    });
-    if (followersCount) {
+    const followersCount = page.querySelector<HTMLElement>('.author__followers');
+    if (own && followersCount) {
+        followersCount.addEventListener('click', () => {
+            navigate(`${username}/subscribers`);
+        });
         followersCount.style.cursor = 'pointer';
     }
-
 
     const subscribeButton = page.querySelector(`#subscribe-${config.safeUsername}`);
     if (subscribeButton) {

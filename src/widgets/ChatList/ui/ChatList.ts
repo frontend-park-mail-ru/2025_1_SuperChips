@@ -79,7 +79,7 @@ export const ChatList = (rerender: boolean = false) => {
             const target = event.target as HTMLElement;
             const username = target.closest('.chat-preview__box-1__username');
             const publicName = target.closest('.chat-preview__box-1__public-name');
-            
+
             if (username || publicName) {
                 const chatItem = (username || publicName)?.closest('.chat-list-item');
                 if (chatItem) {

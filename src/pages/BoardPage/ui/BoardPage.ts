@@ -44,6 +44,10 @@ export const BoardPage = async (boardID: string) => {
         mutable: boardFeedState.own && body.data.name !== USER_OWN_PINS_BOARD && body.data.name !== USER_SAVED_PINS_BOARD,
     };
 
+    if (!own && config.name === USER_SAVED_PINS_BOARD) {
+        config.name = config.name + ` @${body.data.author_username}`;
+    }
+
     boardFeedState.canEdit = body.data.name === USER_OWN_PINS_BOARD && own;
     boardFeedState.canRemove = body.data.name !== USER_OWN_PINS_BOARD && own;
 

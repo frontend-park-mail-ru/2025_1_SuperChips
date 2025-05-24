@@ -127,11 +127,9 @@ export const config: RouterConfig = {
             },
         },
         notFound: {
-            href: '/404',
+            href: '/page/404',
             title: 'Страница не найдена',
             render: NotFoundPage,
-            noNavbar: true,
-            noSidebar: true
         }
     }
 };
