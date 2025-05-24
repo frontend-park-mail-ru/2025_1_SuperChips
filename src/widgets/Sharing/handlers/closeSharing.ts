@@ -9,7 +9,10 @@ export const closeSharing = (e: Event) => {
         const clickedElement = e.target as HTMLElement;
         const popup = document.querySelector('.sharing-container');
 
-        if (popup?.contains(clickedElement) && (!clickedElement.closest('.popup__close'))) {
+        if (popup?.contains(clickedElement)
+            && (!clickedElement.closest('.sharing__close-button'))
+            && (!clickedElement.closest('.sharing__button'))
+        ) {
             return;
         }
     }
