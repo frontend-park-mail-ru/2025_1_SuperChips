@@ -1,9 +1,10 @@
-import type { ICommentData, ICommentsProps } from '../model/types';
+import type { ICommentsProps, ICommentData } from '../model/types';
 import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
+import { Comment } from '../../../entities/Comment/ui/Comment';
+import { commentHandler } from '../handlers/commentHandler';
 import './Comments.scss';
 import template from './Comments.hbs';
-import { CommentItem } from './CommentItem';
 
 const placeholderTexts = [
     "Поймай волну мыслей...",
@@ -67,35 +68,24 @@ export const Comments = async (props: ICommentsProps) => {
         if (!commentInput || !commentInput.value.trim() || !Auth.userData) return;
         
         const commentText = commentInput.value.trim();
-        try {
-            console.log(`Sending new comment for pin ${props.pinID}`);
-            const response = await API.post(`/flows/${props.pinID}/comments`, {
-                content: commentText
-            });
-            
-            if (response instanceof Error || !response.ok) {
-                console.error('Error submitting comment:', response);
-                return;
+        const response = await API.post(`/flows/${props.pinID}/comments`, {
+            content: commentText
+        });
+        
+        if (response instanceof Error || !response.ok) return;
+        
+        // Очищаем поле ввода
+        commentInput.value = '';
+        textareaResizeHandler(commentInput, charCounter);
+        
+        // Перерисовываем весь блок комментариев
+        const commentsContainer = document.querySelector('#comments-container');
+        if (commentsContainer) {
+            const newComments = await commentHandler(props.pinID);
+            if (newComments) {
+                commentsContainer.innerHTML = '';
+                commentsContainer.appendChild(newComments);
             }
-            
-            const commentData = await response.json();
-            
-            addCommentToDOM(container, {
-                id: commentData.id,
-                author_username: Auth.userData.username,
-                author_name: Auth.userData.public_name || Auth.userData.username,
-                author_avatar: Auth.userData.avatar,
-                text: commentText,
-                like_count: 0,
-                is_liked: false,
-                created_at: new Date().toISOString(),
-                can_delete: true
-            });
-            
-            commentInput.value = '';
-            textareaResizeHandler(commentInput, charCounter);
-        } catch (error) {
-            console.error('Error submitting comment:', error);
         }
     };
     
@@ -108,20 +98,19 @@ export const Comments = async (props: ICommentsProps) => {
     
     const submitButton = container.querySelector('#submit-comment');
     submitButton?.addEventListener('click', submitComment);
+
+    // Инициализируем существующие комментарии
+    const commentsList = container.querySelector('.comments-list');
+    if (commentsList) {
+        commentsList.innerHTML = '';
+        props.comments.forEach(comment => {
+            const commentInstance = new Comment({
+                ...comment,
+                created_at: comment.created_at.toString()
+            }, props.pinID);
+            commentsList.appendChild(commentInstance.getElement());
+        });
+    }
     
     return container;
 };
-
-function addCommentToDOM(container: HTMLElement, comment: ICommentData) {
-    const commentsList = container.querySelector('.comments-list');
-    if (!commentsList) return;
-    
-    const emptyMessage = commentsList.querySelector('.comments-empty');
-    if (emptyMessage) {
-        emptyMessage.remove();
-    }
-    
-    const pinID = container.getAttribute('data-pin-id') || '';
-    const commentElement = CommentItem(comment, pinID, container);
-    commentsList.prepend(commentElement);
-}
