@@ -26,6 +26,10 @@ interface AppState {
         id: string | null
         hasUnread: boolean,
     },
+    sharing: {
+        open: boolean,
+        id: string | null,
+    }
 }
 
 export const appState: AppState = {
@@ -45,6 +49,10 @@ export const appState: AppState = {
         id: null,
         hasUnread: false,
     },
+    sharing: {
+        open: false,
+        id: null,
+    }
 };
 
 
