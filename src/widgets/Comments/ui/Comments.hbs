@@ -1,0 +1,87 @@
+<div class="comments-section">
+    <h3 class="comments-title">Комментарии</h3>
+    
+    {{#if authorized}}
+    <div class="comment-form">
+        <div class="comment-form__avatar">
+            {{#if user_avatar}}
+                <img src="{{user_avatar}}" alt="user avatar">
+            {{else}}
+                <p class="comment-form__short-username">{{shortUsername}}</p>
+            {{/if}}
+        </div>
+        <div class="comment-form__input-container">
+            <textarea 
+                id="comment-input" 
+                class="comment-form__input-field"
+                maxlength="500"
+                placeholder="Оставить комментарий..."
+                rows="1"
+            ></textarea>
+            <div id="comment-char-counter" class="comment-form__char-counter"></div>
+            <img
+                src="/public/icons/send-button.svg"
+                alt=""
+                id="submit-comment"
+                class="comment-form__send-button"
+            >
+        </div>
+    </div>
+    {{else}}
+    <div class="comment-form-login-message">
+        <p>Войдите в аккаунт, чтобы оставить комментарий к этому flow</p>
+    </div>
+    {{/if}}
+    
+    {{#if authorized}}
+    <div class="comments-list">
+        {{#if comments.length}}
+            {{#each comments}}
+            <div class="comment" id="comment-{{id}}">
+                <div class="comment__avatar">
+                    {{#if author_avatar}}
+                        <img src="{{author_avatar}}" alt="author avatar">
+                    {{else}}
+                        <p class="comment__short-username">{{author_username.[0]}}</p>
+                    {{/if}}
+                </div>
+                <div class="comment__content">
+                    <div class="comment__header">
+                        <div class="comment__author-info">
+                            <div class="comment__author">{{author_name}}</div>
+                            <div class="comment__username">@{{author_username}}</div>
+                        </div>
+                        <div class="comment__actions">
+                            <img src="/public/icons/three-dots.svg" alt="actions" class="comment__actions-icon">
+                            <div class="comment__actions-menu">
+                                {{#if can_delete}}
+                                <div class="comment__action-item comment__action-delete">Удалить</div>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment__text">{{text}}</div>
+                    <div class="comment__footer">
+                        <div class="comment__like-button">
+                            <img 
+                                src="/public/icons/like{{#if is_liked}}-filled{{/if}}.svg" 
+                                class="comment-like{{#if is_liked}}_active{{/if}}" 
+                                alt="like button"
+                            >
+                            <span class="comment__like-count">{{like_count}}</span>
+                        </div>
+                        <div class="comment__date">{{created_at}}</div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        {{else}}
+            <div class="comments-empty">Нет комментариев</div>
+        {{/if}}
+    </div>
+    {{else}}
+    <div class="comments-unauthorized-message">
+        <p>Войдите в аккаунт чтобы посмотреть комментарии</p>
+    </div>
+    {{/if}}
+</div>

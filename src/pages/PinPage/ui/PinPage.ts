@@ -6,6 +6,7 @@ import { checkAvatar } from 'shared/utils';
 import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
 import { BoardStorage } from 'features/boardLoader';
+import { commentHandler } from 'widgets/Comments';
 import './PinPage.scss';
 import template from './PinPage.hbs';
 
@@ -61,6 +62,16 @@ export const PinPage = async (pinID: string) => {
 
     const editButton = container.querySelector('#edit-pin');
     editButton?.addEventListener('click', () => navigate(`flow/edit/${pinID}`, true).finally());
+
+    // Add comments section
+    const commentsContainer = container.querySelector('#comments-container');
+    if (commentsContainer) {
+        const comments = await commentHandler(pinID);
+        if (comments) {
+            commentsContainer.innerHTML = '';
+            commentsContainer.appendChild(comments);
+        }
+    }
 
     return container;
 };
