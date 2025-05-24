@@ -81,7 +81,6 @@ $border-radius: 20px;
 }
 
 .navbar__profile-picture {
-    @include button;
     @include profile-picture-small;
     @include button;
 
@@ -202,5 +201,27 @@ $border-radius: 20px;
         &__filter {
             left: 10px
         }
+    }
+}
+
+.navbar__notification {
+    @include icon;
+    margin-right: $spacing-md;
+    cursor: pointer;
+
+    &:hover {
+        content: url('/public/icons/notification-active.svg');
+    }
+
+    &.active {
+        content: url('/public/icons/notification-active.svg');
+    }
+
+    &.unread {
+        content: url('/public/icons/notification-unread.svg');
+    }
+
+    &.active.unread {
+        content: url('/public/icons/notification-active-unread.svg');
     }
 }

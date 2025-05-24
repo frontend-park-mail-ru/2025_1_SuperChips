@@ -58,9 +58,9 @@ export const BoardPage = async (boardID: string) => {
         if (!feed) return;
         appState.masonryInstance = new Masonry(
             feed, {
-            itemSelector: '.pin',
-            gutter: appState.mobile ? 10 : 20,
-        }
+                itemSelector: '.pin',
+                gutter: appState.mobile ? 10 : 20,
+            }
         );
 
         await fillBoardFeed();
@@ -77,7 +77,7 @@ export const BoardPage = async (boardID: string) => {
     const settingsButton = page.querySelector('.board__settings-button');
     settingsButton?.addEventListener('click', openBoardSettings);
 
-    const divider = page.querySelector<HTMLElement>(".divider");
+    const divider = page.querySelector<HTMLElement>('.divider');
     if (divider) {
         const colors = body.data.gradient
             ? body.data.gradient

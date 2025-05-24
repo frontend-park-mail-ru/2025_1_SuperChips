@@ -1,0 +1,12 @@
+<div class="notification" id="notification-{{id}}">
+    <div class="notification__avatar">
+        {{#if avatar}}
+            <img src="{{avatar}}" alt="">
+        {{else}}
+            <p>{{shortUsername}}</p>
+        {{/if}}
+    </div>
+    <div class="notification__content">{{content}}</div>
+    <div class="notification__timestamp">{{time}}</div>
+    <div class="notification__delete">удалить</div>
+</div>

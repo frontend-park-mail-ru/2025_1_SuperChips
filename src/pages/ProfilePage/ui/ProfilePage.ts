@@ -176,7 +176,7 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
 
         if (appState.chat.id === chat?.id) return;
         if (!chat) {
-            const newChatID = await ChatStorage.newChat(userData?.username, userData?.avatar);
+            const newChatID = await ChatStorage.newChat(userData?.username);
             if (!newChatID) return;
             chatID = newChatID.toString();
         } else {

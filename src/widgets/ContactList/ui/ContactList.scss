@@ -3,6 +3,9 @@
 
 .contact-list {
     @include flex-column;
+    @include popup-scroll($gradient-dark, #888);
+    height: 100%;
+    overflow-y: scroll;
     gap: $spacing-lg;
 
     &__header {
