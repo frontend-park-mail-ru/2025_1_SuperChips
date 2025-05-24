@@ -5,13 +5,18 @@
     </div>
     <form class="filter-block">
         {{#each filterItem}}
-            <div class="filter-item">
-                <div class="filter-item__content">
-                    <label for="{{this.id}}" class="subheader white">{{this.title}}</label>
+            <label for="{{this.id}}">
+                <div class="filter-item">
+                    <div class="filter-item__content">
+                        <span class="subheader white">{{this.title}}</span>
+                    </div>
+                    <input type="radio"
+                           id="{{this.id}}"
+                           {{#if this.checked}}checked="checked"{{/if}}
+                           name="filter-radio-buttons"
+                    >
                 </div>
-                <input type="radio" id="{{this.id}}"
-                       {{#if this.checked}}checked="checked"{{/if}} name="filter-radio-buttons">
-            </div>
+            </label>
         {{/each}}
     </form>
 </div>

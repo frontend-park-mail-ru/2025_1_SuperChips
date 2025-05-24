@@ -21,6 +21,7 @@ export const searchFeedState = {
     query: '',
     filter: 'flows',
     notFound: false,
+    isFiltered: false,
 };
 
 
@@ -28,6 +29,7 @@ export const fillSearchFeed = async () => {
     const feed = document.querySelector<HTMLElement>('#feed');
     if (!feed) return;
 
+    searchFeedState.isFiltered = true;
     if (searchFeedState.page === 1) {
         window.scrollTo({ top: 0 });
         document.querySelector('.scroll-to-top')?.classList.add('hidden');

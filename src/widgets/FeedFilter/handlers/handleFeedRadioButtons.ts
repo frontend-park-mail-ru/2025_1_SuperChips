@@ -33,7 +33,7 @@ export const handleFeedRadioButtons = async (event: Event) => {
             try {
                 await fillSearchFeed();
                 Toast(`Показаны результаты в категории "${getFilterName(searchFeedState.filter)}"`, 'message', 2000);
-            } catch (error) {
+            } catch {
                 searchFeedState.filter = previousFilter;
                 Toast('Произошла ошибка при смене фильтра', 'error');
             }
