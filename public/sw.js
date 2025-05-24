@@ -16,6 +16,7 @@ const PRECACHE_URLS = [
     '/public/icons/chat-read.svg',
     '/public/icons/chat-sent.svg',
     '/public/icons/chat-unread.svg',
+    '/public/icons/copy.svg',
     '/public/icons/cross-grey.svg',
     '/public/icons/cross.svg',
     '/public/icons/delete.svg',

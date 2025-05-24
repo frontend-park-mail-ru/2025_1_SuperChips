@@ -5,3 +5,4 @@ export const USER_SAVED_PINS_BOARD = 'Сохраненные';
 export const USER_OWN_PINS_BOARD = 'Созданные вами';
 export const VKID_APP_ID = 53455772;
 export const WEBSOCKET_URL = 'wss://yourflow.ru' + API_BASE_URL + '/ws';
+export const DOMAIN = 'https://yourflow.ru';

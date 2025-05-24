@@ -2,6 +2,7 @@ import { PinDropdown } from 'widgets/PinDropdown';
 import { likeHandler } from '../handlers/likeHandler';
 import { savePinToBoard } from 'entities/Pin';
 import { sharePin } from '../handlers/sharePin';
+import { openSharing } from 'widgets/Sharing';
 import { appState, navigate } from 'shared/router';
 import { checkAvatar } from 'shared/utils';
 import { API } from 'shared/api';
@@ -64,7 +65,13 @@ export const PinPage = async (pinID: string) => {
     editButton?.addEventListener('click', () => navigate(`flow/edit/${pinID}`, true).finally());
 
     const shareButton = container.querySelector('#share');
-    shareButton?.addEventListener('click', () => sharePin(pinID));
+
+    appState.sharing.id = pinID;
+    if (appState.mobile) {
+        shareButton?.addEventListener('click', () => sharePin(pinID));
+    } else {
+        shareButton?.addEventListener('click', () => openSharing());
+    }
 
     return container;
 };

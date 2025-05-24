@@ -75,6 +75,10 @@
             display: flex;
             gap: 16px;
             cursor: pointer;
+
+            img {
+                @include icon;
+            }
         }
 
         &__box-1 {
