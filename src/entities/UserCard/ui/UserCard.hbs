@@ -18,11 +18,18 @@
 <div class="user-card__about">{{about}}</div>
 </div>
 {{#unless own}}
-<button class="user-card__subscribe-button {{#if isSubscribed}}subscribed{{/if}}" id="subscribe-{{username}}">
-    {{#if isSubscribed}}
-        Отписаться
-    {{else}}
-        Подписаться
+<div class="user-card__buttons">
+    <button class="user-card__subscribe-button {{#if isSubscribed}}subscribed{{/if}}" id="subscribe-{{username}}">
+        {{#if isSubscribed}}
+            Отписаться
+        {{else}}
+            Подписаться
+        {{/if}}
+    </button>
+    {{#if isAuthenticated}}
+    <button class="user-card__chat-button" id="chat-{{username}}">
+        <img src="/public/icons/chat.svg" alt="Чат">
+    </button>
     {{/if}}
-</button>
+</div>
 {{/unless}}

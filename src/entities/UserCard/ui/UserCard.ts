@@ -33,7 +33,8 @@ export const UserCard = (user: IUserCardProps) => {
         shortUsername: displayName[0].toUpperCase(),
         subscribers: pluralize('подписчик', subscriberCount),
         isSubscribed: user.isSubscribed,
-        own: user.own
+        own: user.own,
+        isAuthenticated: !!Auth.userData // Add authentication status
     };
 
     container.innerHTML = template(config);
@@ -68,6 +69,38 @@ export const UserCard = (user: IUserCardProps) => {
                     : `Вы отписались от ${user.public_name || user.username}`,
                 'success'
             );
+        });
+    }
+    
+    // Add event listener for chat button
+    const chatButton = container.querySelector('.user-card__chat-button');
+    if (chatButton && Auth.userData?.username !== user.username) {
+        chatButton.addEventListener('click', async () => {
+            // Import required functions from ChatStorage
+            const { ChatStorage } = await import('features/chat');
+            const { openChatList } = await import('widgets/sidebar');
+            const { Chat } = await import('widgets/Chat');
+            
+            // Open chat list first
+            openChatList();
+            
+            // Check if chat already exists
+            let chat = ChatStorage.getChatByUsername(user.username);
+            let chatID;
+            
+            if (!chat) {
+                // Create new chat if it doesn't exist
+                chatID = await ChatStorage.newChat(user.username, user.avatar);
+                if (!chatID) {
+                    Toast('Не удалось создать чат', 'error');
+                    return;
+                }
+            } else {
+                chatID = chat.id;
+            }
+            
+            // Open the chat
+            Chat(chatID.toString());
         });
     }
 

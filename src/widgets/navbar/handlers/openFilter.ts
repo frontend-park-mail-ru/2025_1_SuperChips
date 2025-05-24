@@ -19,7 +19,8 @@ export const openFilter = () => {
         if (goBack) goBack.disabled = false;
     }
 
-    root.appendChild(FeedFilter());
+    const filterContainer = FeedFilter();
+    root.appendChild(filterContainer);
 
     const filter = document.querySelector<HTMLElement>('#filter-button');
     if (filter) {
