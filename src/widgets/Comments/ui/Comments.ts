@@ -3,7 +3,7 @@ import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
 import { Comment } from '../../../entities/Comment/ui/Comment';
 import { commentHandler } from '../handlers/commentHandler';
-import './Comments.scss';
+import '../../../entities/Comment/ui/Comment.scss';
 import template from './Comments.hbs';
 
 const placeholderTexts = [
