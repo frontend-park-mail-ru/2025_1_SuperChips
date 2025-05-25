@@ -13,7 +13,7 @@ export const Notification = async (item: INotification) => {
 
     const config = {
         ...item,
-        time: formatDateToReadable(item.timestamp),
+        time: formatDateToReadable(item.timestamp, true),
         shortUsername: item.username[0].toUpperCase(),
         avatar: ok ? item.avatar : null,
     };

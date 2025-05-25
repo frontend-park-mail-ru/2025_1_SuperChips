@@ -152,7 +152,6 @@
 
 @mixin big-pin-container {
     border-radius: $border-radius;
-    max-height: calc(100vh - $navbar-height - 30px);
     max-width: 404px;
     background-color: $button-dark;
     overflow: hidden;

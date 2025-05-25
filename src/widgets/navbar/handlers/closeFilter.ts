@@ -5,7 +5,7 @@ import { appState } from 'shared/router';
 export const closeFilter = () => {
     if (appState.activePage !== 'feed') return;
     const feed = document.querySelector('#feed');
-    const feedFilter = document.querySelector<HTMLDivElement>('#feed-filter');
+    const feedFilter = document.querySelector<HTMLDivElement>('.feed-filter');
 
     if (!feed || !feedFilter) return;
 

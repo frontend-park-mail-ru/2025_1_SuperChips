@@ -10,7 +10,9 @@ export const commentHandler = async (pinID: string, page = 1, size = 10) => {
 
     const response = await API.get(`/flows/${pinID}/comments?page=${page}&size=${size}`);
     if (response instanceof Error || !response.ok) {
-        Toast('Произошла ошибка при получении комментариев');
+        if (!(response instanceof Response && response.status === 404)) {
+            Toast('Произошла ошибка при получении комментариев');
+        }
         return Comments({
             pinID,
             comments: [],
@@ -20,7 +22,6 @@ export const commentHandler = async (pinID: string, page = 1, size = 10) => {
 
     const data = await response.json();
     if (!data || !data.data || !Array.isArray(data.data)) {
-        Toast('Неправильный формат данных');
         return Comments({
             pinID,
             comments: [],

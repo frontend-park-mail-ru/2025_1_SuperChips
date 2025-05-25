@@ -4,8 +4,8 @@
 .notification {
     &-container {
         position: fixed;
-        top: 100px;
-        right: 100px;
+        top: $navbar-height;
+        right: $spacing-lg;
         z-index: 100;
         width: 400px;
         min-height: 200px;
@@ -50,7 +50,7 @@
     &__new, &__old {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: $spacing-sm;
     }
 }
 

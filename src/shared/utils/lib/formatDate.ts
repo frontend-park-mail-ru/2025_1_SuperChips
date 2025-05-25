@@ -11,7 +11,7 @@ export const formatDateToISO = (dateString: string | null) => {
 };
 
 
-export const formatDateToReadable = (dateInput: string | null | Date) => {
+export const formatDateToReadable = (dateInput: string | null | Date, short: boolean = false) => {
     if (!dateInput) return '';
 
     // Create a valid date object, ensuring it's not an invalid date
@@ -27,20 +27,20 @@ export const formatDateToReadable = (dateInput: string | null | Date) => {
     const time = formatTime(date);
     
     if (isSameDay(date, now)) {
-        return `сегодня в ${time}`;
+        return short ? time : `сегодня в ${time}`;
     }
 
     const yesterday = new Date(now);
     yesterday.setDate(now.getDate() - 1);
     if (isSameDay(date, yesterday)) {
-        return `вчера в ${time}`;
+        return short ? 'вчера' : `вчера в ${time}`;
     }
 
     if (date.getFullYear() === now.getFullYear()) {
-        return `${formatDayShortMonth(date)} в ${time}`;
+        return short ? formatDayShortMonth(date) : `${formatDayShortMonth(date)} в ${time}`;
     }
 
-    return `${formatFullDate(date)} в ${time}`;
+    return short ? formatFullDate(date) : `${formatFullDate(date)} в ${time}`;
 };
 
 

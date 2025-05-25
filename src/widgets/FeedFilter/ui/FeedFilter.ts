@@ -51,5 +51,5 @@ export const FeedFilter = () => {
         clearButton?.addEventListener('click', clearSearch);
     }
 
-    return container;
+    return container.firstElementChild as HTMLElement;
 };
