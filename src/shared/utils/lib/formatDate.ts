@@ -14,24 +14,33 @@ export const formatDateToISO = (dateString: string | null) => {
 export const formatDateToReadable = (dateInput: string | null | Date) => {
     if (!dateInput) return '';
 
+    // Create a valid date object, ensuring it's not an invalid date
     const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
+
+    // Check if date is valid
+    if (isNaN(date.getTime())) {
+        return 'Invalid date';
+    }
+    
     const now = new Date();
 
+    const time = formatTime(date);
+    
     if (isSameDay(date, now)) {
-        return formatTime(date);
+        return `сегодня в ${time}`;
     }
 
     const yesterday = new Date(now);
     yesterday.setDate(now.getDate() - 1);
     if (isSameDay(date, yesterday)) {
-        return 'вчера';
+        return `вчера в ${time}`;
     }
 
     if (date.getFullYear() === now.getFullYear()) {
-        return formatDayShortMonth(date);
+        return `${formatDayShortMonth(date)} в ${time}`;
     }
 
-    return formatFullDate(date);
+    return `${formatFullDate(date)} в ${time}`;
 };
 
 

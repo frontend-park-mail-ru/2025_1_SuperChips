@@ -1,0 +1,37 @@
+<div class="comment" id="comment-{{id}}">
+    <div class="comment__avatar">
+        {{#if author_avatar}}
+            <img src="{{author_avatar}}" alt="author avatar">
+        {{else}}
+            <p class="comment__short-username">{{shortUsername}}</p>
+        {{/if}}
+    </div>
+    <div class="comment__content">
+        <div class="comment__header">
+            <div class="comment__author-info">
+                <div class="comment__author">{{author_name}}</div>
+                <div class="comment__username">@{{author_username}}</div>
+            </div>
+            <div class="comment__actions">
+                {{#if showActions}}
+                    <img src="/public/icons/three-dots.svg" alt="actions" class="comment__actions-icon">
+                    <div class="comment__actions-menu">
+                        <div class="comment__action-item comment__action-delete">Удалить</div>
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+        <div class="comment__text">{{text}}</div>
+        <div class="comment__footer">
+            <div class="comment__date">{{created_at}}</div>
+            <div class="comment__like-button">
+                <img
+                        src="/public/icons/like{{#if is_liked}}-filled{{/if}}.svg"
+                        class="comment-like{{#if is_liked}}_active{{/if}}"
+                        alt="like button"
+                >
+                <span class="comment__like-count">{{like_count}}</span>
+            </div>
+        </div>
+    </div>
+</div> 
