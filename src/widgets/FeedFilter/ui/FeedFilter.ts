@@ -37,8 +37,9 @@ export const FeedFilter = () => {
     };
 
     container.innerHTML = template(config);
+    const filterContainer = container.firstElementChild as HTMLElement;
 
-    container.addEventListener('click', (event) => handleFeedRadioButtons(event));
+    filterContainer.addEventListener('click', (event) => handleFeedRadioButtons(event));
 
     const resetButton = container.querySelector('#reset-filters');
     resetButton?.addEventListener('click', handleResetFilters);
@@ -51,5 +52,5 @@ export const FeedFilter = () => {
         clearButton?.addEventListener('click', clearSearch);
     }
 
-    return container.firstElementChild as HTMLElement;
+    return filterContainer;
 };
