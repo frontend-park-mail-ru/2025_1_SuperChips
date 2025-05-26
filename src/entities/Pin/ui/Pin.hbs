@@ -1,5 +1,8 @@
 <div class="pin" id="pin-{{pinID}}">
-    <img src="{{url}}" class="pin__picture" alt="">
+    <img src="{{url}}" class="pin__picture {{#if is_nsfw}}nsfw{{/if}}" alt="">
+    {{#if is_nsfw}}
+        <img src="/public/icons/eye-off.svg" class="pin__nsfw-icon" alt="NSFW content">
+    {{/if}}
     {{#unless mobile}}
         {{#if authorized}}
             <div class="dropdown-block" id="dropdown-button">

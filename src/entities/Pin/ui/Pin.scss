@@ -20,8 +20,10 @@
             visibility: visible;
         }
         .pin__picture {
-
             filter: brightness(0.65);
+        }
+        .pin__picture.nsfw {
+            filter: blur(10px) brightness(0.65);
         }
     }
 
@@ -30,6 +32,37 @@
         height: auto;
         display: block;
         object-fit: cover;
+        
+        &.nsfw {
+            filter: blur(10px);
+        }
+    }
+    
+    &__nsfw-icon {
+        @include icon;
+        position: absolute;
+        top: $spacing-sm;
+        right: $spacing-sm;
+        z-index: 50;
+        background-color: $white;
+        border-radius: 50%;
+        padding: 4px;
+        width: 28px;
+        height: 28px;
+    }
+    
+    &__nsfw-warning {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+        color: $error-color;
+        margin-top: $spacing-sm;
+        
+        img {
+            @include icon;
+            width: 18px;
+            height: 18px;
+        }
     }
 
     &__save-button, &__delete-button,

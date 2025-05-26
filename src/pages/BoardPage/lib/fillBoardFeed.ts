@@ -38,7 +38,14 @@ export const fillBoardFeed = async () => {
             saved: own,
             width: item.width,
             height: item.height,
+            title: item.header, // Add title for NSFW check
         };
+        
+        // ВРЕМЕННАЯ ЗАГЛУШКА: Проверка на наличие слова "утка" в названии для отображения как NSFW
+        if (item.header && item.header.toLowerCase().includes('утка')) {
+            config.is_nsfw = true;
+        }
+        
         feed.insertBefore(Pin(config), feed.firstChild);
     });
     boardFeedState.page++;
