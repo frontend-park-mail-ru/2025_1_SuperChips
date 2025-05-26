@@ -52,6 +52,8 @@
 
     &__close-button {
         @include icon;
+        width: 18px;
+        height: 18px;
         position: absolute;
         top: $spacing-sm;
         right: $spacing-sm;

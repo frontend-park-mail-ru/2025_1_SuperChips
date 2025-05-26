@@ -1,6 +1,12 @@
 <div class="one-pin-page" id="page">
     <div class="one-pin__box-1">
-        <img class="one-pin__box-1__pin" src="{{media_url}}" id="pin-{{flow_id}}" alt="{{description}}">
+        <img class="one-pin__box-1__pin {{#if is_nsfw}}nsfw{{/if}}" src="{{media_url}}" id="pin-{{flow_id}}" alt="{{description}}">
+        {{#if is_nsfw}}
+        <div class="one-pin__nsfw-overlay" id="nsfw-overlay">
+            <img src="/public/icons/eye-off.svg" class="one-pin__nsfw-overlay__icon" alt="NSFW content">
+            <div class="one-pin__nsfw-overlay__text">Нажмите, чтобы показать нецензурный контент</div>
+        </div>
+        {{/if}}
         {{#if mobile}}
             {{#if own}}
                 <div class="one-pin__edit-button" id="edit-pin">
@@ -13,6 +19,12 @@
         {{#if hasText}}
             <div class="one-pin__box-2__text-area">
                 <div class="one-pin-header">{{header}}</div>
+                {{#if is_nsfw}}
+                <div class="pin__nsfw-warning">
+                    <img src="/public/icons/error.svg" alt="Warning">
+                    <span>Осторожно, нецензурный контент</span>
+                </div>
+                {{/if}}
                 <div class="one-pin-description">{{description}}</div>
             </div>
         {{/if}}

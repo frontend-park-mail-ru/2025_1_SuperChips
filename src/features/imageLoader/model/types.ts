@@ -7,6 +7,7 @@ export interface IPicture {
     like_count: number,
     width: number,
     height: number,
+    is_nsfw?: boolean,
 }
 
 export interface ILoadedPictures {

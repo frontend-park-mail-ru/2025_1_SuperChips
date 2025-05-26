@@ -21,6 +21,10 @@ export const Pin = (params: IPinProps) => {
         mobile: appState.mobile,
     };
 
+    // ВРЕМЕННАЯ ЗАГЛУШКА: Проверка на наличие слова "утка" в названии для отображения как NSFW
+    if (params.title && params.title.toLowerCase().includes('утка')) {
+        config.is_nsfw = true;
+    }
 
     container.innerHTML = template(config);
 

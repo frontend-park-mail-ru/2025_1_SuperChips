@@ -9,4 +9,5 @@ export interface IPinProps {
     canRemove?: boolean,
     authorized?: boolean,
     canEdit?: boolean,
+    is_nsfw?: boolean,
 }
