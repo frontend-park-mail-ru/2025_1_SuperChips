@@ -32,7 +32,11 @@ export const NewPinPage = async () => {
     placeholder?.replaceWith(Input(config.input));
 
     const newPinForm = page.querySelector<HTMLFormElement>('.new-pin-form');
-    newPinForm?.addEventListener('submit', createPin);
+    newPinForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        createPin();
+    });
 
     const imageInput = ImageInput();
     if (appState.mobile) {
