@@ -33,6 +33,7 @@ export class Comment {
         const deleteButton = this.element.querySelector('.comment__action-delete');
         const actionsMenu = this.element.querySelector('.comment__actions-menu');
         const actionsIcon = this.element.querySelector('.comment__actions-icon');
+        const avatar = this.element.querySelector('.comment__avatar');
 
         likeButton?.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -43,6 +44,11 @@ export class Comment {
                         this.isLiking = false;
                     });
             }
+        });
+
+        // Add click event to avatar for profile navigation
+        avatar?.addEventListener('click', () => {
+            window.location.href = `/${this.data.author_username}`;
         });
 
         if (this.data.author_username === Auth.userData?.username) {
@@ -56,8 +62,21 @@ export class Comment {
                 actionsMenu?.classList.toggle('active');
             });
 
+            // Close menu when clicking outside
             document.addEventListener('click', (e) => {
                 if (!this.element.contains(e.target as Node)) {
+                    actionsMenu?.classList.remove('active');
+                }
+            });
+
+            // Close menu when scrolling
+            document.addEventListener('scroll', () => {
+                actionsMenu?.classList.remove('active');
+            });
+
+            // Close menu when pressing ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
                     actionsMenu?.classList.remove('active');
                 }
             });
@@ -79,4 +98,4 @@ export class Comment {
     public getElement(): HTMLElement {
         return this.element;
     }
-} 
+}

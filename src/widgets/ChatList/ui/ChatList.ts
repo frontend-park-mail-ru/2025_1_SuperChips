@@ -44,7 +44,7 @@ export const ChatList = (rerender: boolean = false) => {
         };
         if (item.last_message) {
             config.lastMessage = {
-                time: formatDateToReadable(item.last_message.timestamp),
+                time: formatDateToReadable(item.last_message.timestamp, true),
                 read: isLastOwn && item.last_message.read,
                 sent: isLastOwn && !item.last_message.read,
                 own: isLastOwn,

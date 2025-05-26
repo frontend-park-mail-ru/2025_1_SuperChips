@@ -13,7 +13,7 @@ export const Message = (props: IMessage, unread: boolean = false) => {
     const own = Auth.userData?.username === props.sender;
     newMessage.innerHTML = messageTemplate({
         ...props,
-        time: formatDateToReadable(props.timestamp),
+        time: formatDateToReadable(props.timestamp, true),
         own: own,
         sent: own && !props.read,
         read: own && props.read,
