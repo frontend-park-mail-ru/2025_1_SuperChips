@@ -53,7 +53,7 @@
         margin-top: $spacing-sm;
     }
 
-    &__delete-button, &__confirm-button {
+    &__delete-button, &__confirm-button, &__invite-button {
         @include button;
         cursor: pointer;
         display: flex;
@@ -91,6 +91,56 @@
         color: $error-color;
     }
 }
+
+.invite-popup {
+    width: 560px;
+    height: 350px;
+    background-color: $white;
+    border-radius: $border-radius;
+    padding: 32px 52px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+
+    &__link-box {
+        display: flex;
+        gap: 24px;
+        margin-top: 32px;
+    }
+
+    &__link-input {
+        width: 100%;
+        height: $input-height;
+        border-radius: $border-radius;
+        background-color: #e2e2e2;
+    }
+
+    &__copy-button {
+        @include flex-center;
+        @include button;
+        width: 44px;
+        height: 44px;
+        border-radius: $border-radius;
+        cursor: pointer;
+        -webkit-user-drag: none;
+    }
+
+    &__close-button {
+        position: absolute;
+        right: 30px;
+        top: 30px;
+        cursor: pointer;
+    }
+
+    &__image {
+        display: flex;
+        justify-content: center;
+        margin-top: 24px;
+    }
+}
+
 
 @media (max-width: $mobile-width) {
     .board-settings {

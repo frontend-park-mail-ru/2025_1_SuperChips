@@ -3,6 +3,7 @@ import { Input } from 'shared/components/input';
 import { Toggle } from 'shared/components/toggle';
 import { closeBoardSettings } from '../handlers/closeBoardSettings';
 import { confirmBoardDelete } from '../handlers/confirmBoardDelete';
+import { openInvitePopup } from '../handlers/openInvitePopup';
 import { BoardStorage } from 'features/boardLoader';
 import { Auth } from 'features/authorization';
 import template from './BoardSettings.hbs';
@@ -51,7 +52,7 @@ export const BoardSettings = () => {
         checkbox.checked = board.is_private;
     }
 
-    const deleteButton = settings.querySelector('.board-settings__delete-button');
+    const deleteButton = settings.querySelector('#board-settings__delete-button');
     deleteButton?.addEventListener('click', () => {
         confirmBoardDelete(board.id)
             .then(() => navigate(`${Auth?.userData?.username}/boards`, true).finally())
@@ -61,6 +62,8 @@ export const BoardSettings = () => {
 
     const submitButton = settings.querySelector('.board-settings__submit-button');
     submitButton?.addEventListener('click', updateBoard);
+
+    settings.querySelector('#invite')?.addEventListener('click', () => openInvitePopup(board.id));
 
     return settings;
 };
