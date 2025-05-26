@@ -1,5 +1,7 @@
 import { formatDateToISO } from 'shared/utils';
 import { updateProfileData } from 'features/UpdateProfile';
+import { Toast } from 'shared/components/Toast';
+import { Auth } from 'features/authorization';
 
 
 export interface IProfileSettings {
@@ -28,6 +30,15 @@ export const handleProfileUpdate = async (event: SubmitEvent): Promise<void> => 
 
     if (aboutInput && aboutInput.value !== '') {
         payload.about = aboutInput.value.trim();
+    }
+
+    const birthday = new Date(payload.birthday as string);
+    if (birthday.getTime() === Auth.userData?.birthday?.getTime()
+        && payload.about === Auth.userData?.about
+        && payload.public_name === Auth.userData?.public_name
+    ) {
+        Toast('Нет изменений', 'message');
+        return;
     }
 
     await updateProfileData(payload);

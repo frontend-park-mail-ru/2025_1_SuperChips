@@ -6,7 +6,6 @@ export const closeFilter = () => {
     if (appState.activePage !== 'feed') return;
     const feed = document.querySelector('#feed');
     const feedFilter = document.querySelector<HTMLDivElement>('.feed-filter');
-    const filterPlaceholder = document.querySelector('.feed-filter-placeholder');
 
     if (!feed || !feedFilter) return;
 
@@ -15,7 +14,7 @@ export const closeFilter = () => {
         if (goBack) goBack.disabled = false;
     }
 
-    feedFilter.style.position = '';
+    feedFilter.classList.remove('active');
     feedFilter.style.animation = 'FadeOutHorizontalLeft 0.3s ease-out';
 
     const filter = document.querySelector<HTMLElement>('#filter-button');
@@ -27,7 +26,7 @@ export const closeFilter = () => {
     }
 
     setTimeout(() => {
-        filterPlaceholder?.remove();
+        feedFilter.remove();
         appState.isFilterOpen = false;
     }, 300);
 };

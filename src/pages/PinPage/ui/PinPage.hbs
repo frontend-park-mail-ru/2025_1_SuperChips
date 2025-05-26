@@ -31,7 +31,7 @@
         </div>
         {{#if authorized}}
             <div class="one-pin__buttons">
-                <div>
+                <div class="one-pin__buttons__box-1">
                     <div class="one-pin__buttons__button">
                         <img
                                 id="like"
@@ -40,6 +40,13 @@
                                 alt="like button"
                         >
                         <p id="like-count">{{like_count}}</p>
+                    </div>
+                    <div class="one-pin__buttons__button">
+                        <img
+                                id="share"
+                                src="/public/icons/link.svg"
+                                alt="share button"
+                        >
                     </div>
                 </div>
                 <div class="one-pin__buttons__box-2">
@@ -59,6 +66,11 @@
                     </div>
                 </div>
             </div>
+
+            <div id="comments-container">
+            </div>
+        {{else}}
+            <p class="unauth-message">Авторизуйтесь, чтобы посмотреть комментарии к этому flow</p>
         {{/if}}
     </div>
 </div>

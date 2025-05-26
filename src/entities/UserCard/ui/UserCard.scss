@@ -27,9 +27,10 @@
 
     &__avatar {
         @include profile-picture-small;
+        cursor: pointer;
 
-        &:not(:has(img)) {
-            background-color: white;
+        &:hover {
+            opacity: 0.8;
         }
 
         .short-username {
@@ -79,14 +80,20 @@
         }
     }
 
+    &__buttons {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        margin-top: $spacing-lg;
+    }
+
     &__subscribe-button {
         background-color: $white;
         color: $black;
         border: none;
         border-radius: $border-radius;
         padding: 10px;
-        width: 100%;
-        margin-top: $spacing-lg;
+        flex: 1;
         transition: all 0.2s ease;
 
         &:hover {

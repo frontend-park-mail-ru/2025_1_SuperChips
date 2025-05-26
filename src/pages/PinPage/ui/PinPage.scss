@@ -38,6 +38,10 @@
             @include profile-picture-small;
             @include button;
             cursor: pointer;
+
+            &:hover {
+                opacity: $opacity-80;
+            }
         }
 
         &__username {
@@ -75,6 +79,15 @@
             display: flex;
             gap: 16px;
             cursor: pointer;
+
+            img {
+                @include icon;
+            }
+        }
+
+        &__box-1 {
+            display: flex;
+            gap: 16px;
         }
 
         &__box-2 {
@@ -187,4 +200,10 @@
     .pin__dropdown-board {
         display: none;
     }
+}
+
+.unauth-message {
+    padding: 36px;
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
 }

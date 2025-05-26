@@ -8,6 +8,7 @@ import { appState } from 'shared/router';
 export const clearSearch = async () => {
     document.querySelector('.search-form__clear')?.classList.add('hidden');
     const input = document.querySelector<HTMLInputElement>('#search');
+    searchFeedState.isFiltered = false;
 
     if (input) {
         input.value = '';

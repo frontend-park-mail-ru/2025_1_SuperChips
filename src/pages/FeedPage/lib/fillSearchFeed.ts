@@ -15,16 +15,13 @@ import { Auth } from 'features/authorization';
 
 type FilterType = 'boards' | 'flows' | 'users';
 
-interface ISearchUser extends IUser {
-    subscribers_count?: number;
-    subscriber_count?: number;
-}
 
 export const searchFeedState = {
     page: 1,
     query: '',
     filter: 'flows',
     notFound: false,
+    isFiltered: false,
 };
 
 
@@ -32,6 +29,7 @@ export const fillSearchFeed = async () => {
     const feed = document.querySelector<HTMLElement>('#feed');
     if (!feed) return;
 
+    searchFeedState.isFiltered = true;
     if (searchFeedState.page === 1) {
         window.scrollTo({ top: 0 });
         document.querySelector('.scroll-to-top')?.classList.add('hidden');
@@ -72,6 +70,18 @@ export const fillSearchFeed = async () => {
     }
 
     const body = await response.json();
+
+    let followingResponse;
+    let followingUsers: IUser[] = [];
+
+    if (searchFeedState.filter === 'users') {
+        followingResponse = await API.get('/profile/following?page=1&size=20');
+        if (followingResponse instanceof Response && followingResponse.ok) {
+            const followingData = await followingResponse.json();
+            followingUsers = followingData.data;
+        }
+    }
+
     requestAnimationFrame(async () => {
         switch (searchFeedState.filter) {
         case 'flows':
@@ -91,15 +101,7 @@ export const fillSearchFeed = async () => {
             });
             break;
         case 'users':
-            const followingResponse = await API.get('/profile/following?page=1&size=20');
-            let followingUsers: ISearchUser[] = [];
-
-            if (followingResponse instanceof Response && followingResponse.ok) {
-                const followingData = await followingResponse.json();
-                followingUsers = followingData.data;
-            }
-
-            body.data.forEach((user: ISearchUser) => {
+            body.data.forEach((user: IUser) => {
                 let isSubscribed = false;
                 if (followingUsers) {
                     isSubscribed = followingUsers.some(followingUser => followingUser.username === user.username);
@@ -109,8 +111,7 @@ export const fillSearchFeed = async () => {
                     public_name: user.public_name,
                     avatar: user.avatar || null,
                     about: user.about || '',
-                    // subscribers_count: user.subscribers_count || 0,
-                    // subscriber_count: user.subscriber_count || 0,
+                    subscriber_count: user.subscriber_count || 0,
                     isSubscribed: isSubscribed,
                     own: Auth.userData?.username === user.username
                 };

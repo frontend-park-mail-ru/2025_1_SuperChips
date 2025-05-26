@@ -7,7 +7,7 @@ import { textareaResizeHandler } from '../handlers/textareaResizeHandler';
 import { chatSubmitHandler } from '../handlers/chatSubmitHandler';
 import { closeChat } from '../handler/closeChat';
 import { Auth } from 'features/authorization';
-import { appState } from 'shared/router';
+import { appState, navigate } from 'shared/router';
 import chatTemplate from './Chat.hbs';
 import './Chat.scss';
 import { messageObserver } from '../handlers/readMessages';
@@ -58,6 +58,14 @@ export const Chat = async (chatID: string) => {
     const backButton = container.querySelector('#chat__close-button');
     backButton?.addEventListener('click', closeChat);
     window.addEventListener('keydown', closeChat);
+
+    const username = container.querySelector('.chat-username');
+    username?.addEventListener('click', () => navigate(chat.username));
+
+    const publicName = container.querySelector('.chat-public-name');
+    if (publicName) {
+        publicName.addEventListener('click', () => navigate(chat.username));
+    }
 
     const chatList = document.querySelector<HTMLDivElement>('.chat-list');
     if (chatList) {

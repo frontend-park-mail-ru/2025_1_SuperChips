@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cross-env NODE_ENV=production webpack --mode production",
     "start": "cross-env NODE_ENV=development webpack serve --mode development",
-    "linter": "eslint ./ --fix",
+    "linter": "eslint ./src --fix",
     "check-types": "tsc --noEmit"
   },
   "repository": {

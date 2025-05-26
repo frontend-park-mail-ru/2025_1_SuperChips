@@ -16,7 +16,29 @@
     &__header {
         font-size: 32px;
         font-weight: bold;
-        color: white
+        color: white;
+        margin-bottom: $spacing-lg;
+        padding-bottom: $spacing-sm;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__reset {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: $spacing-xs $spacing-sm;
+        border-radius: $border-radius;
+        transition: all 0.2s ease;
+
+        &:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
     }
 
     &-placeholder {
@@ -29,7 +51,7 @@
         display: flex;
         flex-direction: column;
         margin-top: $spacing-sm;
-        gap: $spacing-sm;
+        gap: $spacing-md;
     }
 
     &-item {
@@ -38,9 +60,45 @@
         justify-content: space-between;
         align-items: center;
         width: 100%;
+        padding: $spacing-md;
+        border-radius: $border-radius;
+        background: rgba(255, 255, 255, 0.05);
+        transition: background 0.2s ease;
 
-        label, input {
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        &__content {
+            display: flex;
+            align-items: center;
+        }
+
+        label {
             cursor: pointer;
+            font-size: 16px;
+            color: white;
+        }
+
+        input[type="radio"] {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+
+            &:checked {
+                border-color: white;
+                background: white;
+                box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+            }
+
+            &:hover {
+                border-color: white;
+            }
         }
     }
 }
@@ -52,5 +110,13 @@
         padding: 0 $mobile-horizontal-padding;
         max-width: 50%;
         width: 100%;
+    }
+
+    .filter-item {
+        padding: $spacing-sm;
+
+        label {
+            font-size: 14px;
+        }
     }
 }

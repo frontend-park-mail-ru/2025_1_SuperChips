@@ -1,0 +1,65 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+.notification {
+    &-container {
+        position: fixed;
+        top: $navbar-height;
+        right: $spacing-lg;
+        z-index: 100;
+        width: 400px;
+        min-height: 200px;
+        max-height: 440px;
+        border-radius: $border-radius;
+        background-color: #fff;
+        padding: 12px 20px;
+        overflow-y: auto;
+        @include popup-scroll(#f1f1f1, #888);
+    }
+
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        span {
+            font-size: 20px;
+            font-weight: bold;
+            color: $text-dark-gray;
+        }
+
+        img {
+            cursor: pointer;
+        }
+
+        .notification__read-all {
+            font-size: 14px;
+            font-weight: normal;
+            color: #666;
+            cursor: pointer;
+            margin-right: 24px;
+        }
+    }
+
+    &-subheader {
+        margin: 6px 0;
+        font-size: 16px;
+        color: $text-dark-gray;
+    }
+
+    &__new, &__old {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-sm;
+    }
+}
+
+@media (max-width: $mobile-width) {
+    .notification {
+        &-container {
+            width: clamp(280px, 100% - 2 * $mobile-horizontal-padding, 400px);
+            top: $navbar-height-mobile + $mobile-horizontal-padding;
+            right: $mobile-horizontal-padding;
+        }
+    }
+}

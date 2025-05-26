@@ -14,9 +14,6 @@ export const Sidebar = async () => {
     if (!sidebar) return ;
 
     sidebar.classList.add('sidebar');
-    if (!Auth.userData) {
-        sidebar.classList.add('hidden');
-    }
 
     const buttons = [
         {
@@ -53,6 +50,11 @@ export const Sidebar = async () => {
     }
 
     sidebar.insertAdjacentHTML('beforeend', sidebarTemplate({ buttons, mobile: appState.mobile }));
+
+    if (!Auth.userData) {
+        const buttons = sidebar.querySelector('.sidebar__button-container');
+        buttons?.classList.add('hidden');
+    }
 
     const logout = sidebar.querySelector('#logout');
     logout?.addEventListener('click', logoutHandler);

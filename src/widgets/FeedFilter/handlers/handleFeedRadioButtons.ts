@@ -1,4 +1,5 @@
 import { fillSearchFeed, searchFeedState } from 'pages/FeedPage';
+import { Toast } from 'shared/components/Toast';
 
 export const handleFeedRadioButtons = async (event: Event) => {
     const target = event.target as HTMLElement;
@@ -7,6 +8,7 @@ export const handleFeedRadioButtons = async (event: Event) => {
     if (target.tagName !== 'INPUT' || !input) return;
 
     let changed = false;
+    const previousFilter = searchFeedState.filter;
 
     switch (target.id) {
     case 'filter-flows':
@@ -22,10 +24,32 @@ export const handleFeedRadioButtons = async (event: Event) => {
         searchFeedState.filter = 'users';
         break;
     }
-    searchFeedState.page = 1;
-    searchFeedState.query = input.value;
 
-    if (input.value !== '' && changed) {
-        await fillSearchFeed();
+    if (changed) {
+        searchFeedState.page = 1;
+        searchFeedState.query = input.value;
+
+        if (input.value !== '') {
+            try {
+                await fillSearchFeed();
+                Toast(`Показаны результаты в категории "${getFilterName(searchFeedState.filter)}"`, 'message', 2000);
+            } catch {
+                searchFeedState.filter = previousFilter;
+                Toast('Произошла ошибка при смене фильтра', 'error');
+            }
+        }
+    }
+};
+
+const getFilterName = (filter: string): string => {
+    switch (filter) {
+    case 'flows':
+        return 'Flow';
+    case 'boards':
+        return 'Доски';
+    case 'users':
+        return 'Люди';
+    default:
+        return '';
     }
 };

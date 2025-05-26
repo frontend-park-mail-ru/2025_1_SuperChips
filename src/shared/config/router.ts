@@ -8,6 +8,7 @@ import { ProfilePage } from 'pages/ProfilePage';
 import { SettingsPage } from 'pages/SettingsPage';
 import { EditPinPage } from 'pages/EditPinPage';
 import { SubscriptionsPage } from 'pages/SubscriptionsPage';
+import { NotFoundPage } from 'pages/NotFoundPage';
 
 
 export interface Route {
@@ -124,6 +125,11 @@ export const config: RouterConfig = {
             render: (boardID: string) => {
                 return BoardPage(boardID);
             },
+        },
+        notFound: {
+            href: '/page/404',
+            title: 'Страница не найдена',
+            render: NotFoundPage,
         }
     }
 };

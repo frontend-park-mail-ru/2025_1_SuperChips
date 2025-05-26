@@ -1,3 +1,4 @@
+import type { IUser } from 'entities/User';
 import type { ITabItem } from 'shared/components/tabBar';
 import { TabBar } from 'shared/components/tabBar';
 import { checkAvatar, pluralize } from 'shared/utils';
@@ -15,14 +16,8 @@ import ProfilePageTemplate from './ProfilePage.hbs';
 import './ProfilePage.scss';
 
 
-interface IUserData {
-    username: string;
-    public_name: string;
-    avatar: string | null;
-    about?: string;
+interface IUserData extends IUser {
     followersCount?: number;
-    subscriber_count?: number;
-    subscribers_count?: number;
     isSubscribed?: boolean;
 }
 
@@ -73,11 +68,8 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
     }
 
     const ok = await checkAvatar(userData.avatar || undefined);
-    // Use subscriber_count if available, otherwise use subscribers_count or fallback to followersCount or 0
-    const subscriberCount = userData.subscriber_count !== undefined ? userData.subscriber_count :
-        (userData.subscribers_count !== undefined ? userData.subscribers_count :
-            (userData.followersCount || 0));
-    
+    const subscriberCount = userData?.subscriber_count ?? 0;
+
     const config = {
         header: own ? 'Ваши flow' : userData.public_name,
         username: username,
@@ -91,7 +83,7 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
         mobile: appState.mobile,
         userData: {
             ...userData,
-            followersCount: subscriberCount
+            followersCount: pluralize('подписчик', subscriberCount)
         }
     };
 
@@ -116,6 +108,13 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
         navigate(`${username}/subscriptions`);
     });
 
+    const followersCount = page.querySelector<HTMLElement>('.author__followers');
+    if (own && followersCount) {
+        followersCount.addEventListener('click', () => {
+            navigate(`${username}/subscribers`);
+        });
+        followersCount.style.cursor = 'pointer';
+    }
 
     const subscribeButton = page.querySelector(`#subscribe-${config.safeUsername}`);
     if (subscribeButton) {
@@ -176,7 +175,7 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
 
         if (appState.chat.id === chat?.id) return;
         if (!chat) {
-            const newChatID = await ChatStorage.newChat(userData?.username, userData?.avatar);
+            const newChatID = await ChatStorage.newChat(userData?.username);
             if (!newChatID) return;
             chatID = newChatID.toString();
         } else {

@@ -12,7 +12,6 @@ interface IUserCardProps {
     public_name: string;
     avatar: string | null;
     about: string;
-    subscribers_count?: number;
     subscriber_count?: number;
     isSubscribed?: boolean;
     own?: boolean;
@@ -23,11 +22,9 @@ export const UserCard = (user: IUserCardProps) => {
     container.classList.add('user-card');
 
     const displayName = user.public_name || user.username;
-    const profileUrl = user.username; 
-    
-    // Use subscriber_count if available, otherwise use subscribers_count or default to 0
-    const subscriberCount = user.subscriber_count !== undefined ? user.subscriber_count : 
-                           (user.subscribers_count || 0);
+    const profileUrl = user.username;
+
+    const subscriberCount = user?.subscriber_count ?? 0;
 
     const config = {
         username: displayName,
@@ -36,7 +33,8 @@ export const UserCard = (user: IUserCardProps) => {
         shortUsername: displayName[0].toUpperCase(),
         subscribers: pluralize('подписчик', subscriberCount),
         isSubscribed: user.isSubscribed,
-        own: user.own
+        own: user.own,
+        isAuthenticated: !!Auth.userData // Add authentication status
     };
 
     container.innerHTML = template(config);
@@ -60,16 +58,9 @@ export const UserCard = (user: IUserCardProps) => {
             subscribeButton.classList.toggle('subscribed', user.isSubscribed);
 
             const subscribersElement = container.querySelector(`#${user.username}-subscribers`);
-            if (subscribersElement) {
-                // Update the subscriber count based on which property is available
-                if (user.subscriber_count !== undefined) {
-                    user.subscriber_count = (user.subscriber_count || 0) + (user.isSubscribed ? 1 : -1);
-                    subscribersElement.textContent = pluralize('подписчик', user.subscriber_count);
-                } else {
-                    const newCount = (user.subscribers_count || 0) + (user.isSubscribed ? 1 : -1);
-                    user.subscribers_count = newCount;
-                    subscribersElement.textContent = pluralize('подписчик', newCount);
-                }
+            if (subscribersElement && user.subscriber_count) {
+                user.subscriber_count = (user.subscriber_count || 0) + (user.isSubscribed ? 1 : -1);
+                subscribersElement.textContent = pluralize('подписчик', user.subscriber_count);
             }
 
             Toast(
@@ -78,6 +69,47 @@ export const UserCard = (user: IUserCardProps) => {
                     : `Вы отписались от ${user.public_name || user.username}`,
                 'success'
             );
+
+            const counter = container.querySelector('.user-card__subscribers');
+            if (counter) {
+                const text = counter.textContent;
+                if (text && text.split(' ').length > 1) {
+                    const count = +text.split(' ')[0];
+                    counter.textContent = pluralize('подписчик', count + 1 * (user.isSubscribed ? 1 : -1));
+                }
+            }
+        });
+    }
+
+    // Add event listener for chat button
+    const chatButton = container.querySelector('.user-card__chat-button');
+    if (chatButton && Auth.userData?.username !== user.username) {
+        chatButton.addEventListener('click', async () => {
+            // Import required functions from ChatStorage
+            const { ChatStorage } = await import('features/chat');
+            const { openChatList } = await import('widgets/sidebar');
+            const { Chat } = await import('widgets/Chat');
+
+            // Open chat list first
+            openChatList();
+
+            // Check if chat already exists
+            const chat = ChatStorage.getChatByUsername(user.username);
+            let chatID;
+
+            if (!chat) {
+                // Create new chat if it doesn't exist
+                chatID = await ChatStorage.newChat(user.username, user.avatar);
+                if (!chatID) {
+                    Toast('Не удалось создать чат', 'error');
+                    return;
+                }
+            } else {
+                chatID = chat.id;
+            }
+
+            // Open the chat
+            Chat(chatID.toString());
         });
     }
 

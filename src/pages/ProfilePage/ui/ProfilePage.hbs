@@ -3,7 +3,7 @@
     <div class="profile">
         <div class="author-area">
             <div class="author-area__box-1">
-                <div class="user-profile__header white bold">
+                <div class="header white bold">
                     {{header}}
                 </div>
                 <div class="box-1__menu">
@@ -24,35 +24,37 @@
                     </div>
                 </div>
             </div>
-            <div class="author-area__box-2">
-                <div class="author">
-                    {{#if userData.avatar}}
-                    <img src="{{userData.avatar}}" alt="Profile Picture" class="author__profile-picture">
-                    {{else}}
-                    <div class="author__profile-picture">
-                        <p class="short-username">{{userData.public_name.[0]}}</p>
-                    </div>
-                    {{/if}}
-                    <div class="author__info">
+            {{#unless own}}
+                <div class="author-area__box-2">
+                    <div class="author-area__box-2">
+                        <div class="author">
+                        {{#if userData.avatar}}
+                            <img src="{{userData.avatar}}" alt="Profile Picture" class="author__profile-picture">
+                        {{else}}
+                            <div class="author__profile-picture">
+                                <p>{{userData.public_name.[0]}}</p>
+                            </div>
+                        {{/if}}
                         <h1 class="author__name">{{userData.public_name}}</h1>
-                        <div class="author__followers">{{userData.followersCount}} подписчиков</div>
+                            <div class="author__followers">{{userData.followersCount}}</div>
                     </div>
-                    {{#unless own}}
-                        {{#unless mobile}}
-                            <button class="author__chat-button">
-                                <img src="/public/icons/chat.svg" alt="Chat">
-                            </button>
-                            <button class="author__subscribe-button" id="subscribe-{{safeUsername}}">
-                                {{#if isSubscribed}}
-                                    <span>Отписаться</span>
-                                {{else}}
-                                    <span>Подписаться</span>
-                                {{/if}}
-                            </button>
+                        {{#unless own}}
+                            {{#unless mobile}}
+                                <button class="author__chat-button">
+                                    <img src="/public/icons/chat.svg" alt="Chat">
+                                </button>
+                                <button class="author__subscribe-button" id="subscribe-{{safeUsername}}">
+                                    {{#if isSubscribed}}
+                                        Отписаться
+                                    {{else}}
+                                        Подписаться
+                                    {{/if}}
+                                </button>
+                            {{/unless}}
                         {{/unless}}
-                    {{/unless}}
                 </div>
             </div>
+            {{/unless}}
             {{#if mobile}}
                 <div class="author-area__box-3">
                     {{#if own}}

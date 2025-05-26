@@ -1,23 +1,22 @@
 <div class="settings-content">
     <h2 class="settings-header">Настройки профиля</h2>
-    <form class="settings-form">
-        <div class="avatar-container">
-            <div class="settings-profile-picture">
-                {{#if avatar}}
-                    <img src="{{avatar}}" alt="Profile picture" id="pfp">
-                {{else}}
-                    <p class="shortUsername">{{#if username}}{{firstLetter}}{{/if}}</p>
-                {{/if}}
-            </div>
-            <button class="change-photo-button">Изменить фото</button>
-            <input
-                    class="display-none"
-                    type="file"
-                    id="avatar"
-                    accept=".png, .jpg, .jpeg"
-            >
+    <div class="avatar-container">
+        <div class="settings-profile-picture">
+            {{#if avatar}}
+                <img src="{{avatar}}" alt="Profile picture" id="pfp">
+            {{else}}
+                <p class="shortUsername">{{#if username}}{{firstLetter}}{{/if}}</p>
+            {{/if}}
         </div>
-        
+        <button class="change-photo-button">Изменить фото</button>
+        <input
+                class="display-none"
+                type="file"
+                id="avatar"
+                accept=".png, .jpg, .jpeg"
+        >
+    </div>
+    <form class="settings-form">
         {{#each fields}}
         {{/each}}
         

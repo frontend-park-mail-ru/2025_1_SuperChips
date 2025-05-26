@@ -40,6 +40,7 @@
         display: flex;
         align-items: center;
         margin-top: $spacing-lg;
+        gap: $spacing-md;
     }
 }
 
@@ -98,6 +99,7 @@
         color: $text-light;
         font-size: $font-size-sm;
         margin-top: $spacing-xs;
+        min-width: 104px;
     }
 
     &__profile-picture {
@@ -135,6 +137,7 @@
         @include button;
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: $spacing-sm;
         background-color: $semi-transparent;
         border: none;
@@ -145,6 +148,7 @@
         transition: all 0.2s ease;
         white-space: nowrap;
         flex-shrink: 0;
+        width: 116px;
 
         &:hover {
             background-color: rgba($white, 0.3);

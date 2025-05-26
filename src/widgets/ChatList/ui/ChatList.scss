@@ -62,7 +62,7 @@
         grid-template-areas: 'username date';
         grid-template-columns: auto 80px;
 
-        &__username {
+        &__username, &__public-name {
             @include text-ellipsis;
             grid-area: username;
             overflow: hidden;
@@ -70,6 +70,11 @@
             font-weight: bold;
             min-width: 10px;
             color: $white;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.8;
+            }
         }
 
         &__date {

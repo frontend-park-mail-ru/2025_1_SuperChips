@@ -4,6 +4,7 @@ import { formatDateToReadable } from 'shared/utils';
 import { createNewChat } from '../handlers/createNewChat';
 import { openChat } from '../handlers/openChat';
 import { Auth } from 'features/authorization';
+import { navigate } from 'shared/router';
 import template from './ChatList.hbs';
 import './ChatList.scss';
 
@@ -43,7 +44,7 @@ export const ChatList = (rerender: boolean = false) => {
         };
         if (item.last_message) {
             config.lastMessage = {
-                time: formatDateToReadable(item.last_message.timestamp),
+                time: formatDateToReadable(item.last_message.timestamp, true),
                 read: isLastOwn && item.last_message.read,
                 sent: isLastOwn && !item.last_message.read,
                 own: isLastOwn,
@@ -74,7 +75,24 @@ export const ChatList = (rerender: boolean = false) => {
         const newChat = container.querySelector('.create-chat-button');
         newChat?.addEventListener('click', createNewChat);
 
-        container.addEventListener('click', openChat);
+        container.addEventListener('click', (event) => {
+            const target = event.target as HTMLElement;
+            const username = target.closest('.chat-preview__box-1__username');
+            const publicName = target.closest('.chat-preview__box-1__public-name');
+
+            if (username || publicName) {
+                const chatItem = (username || publicName)?.closest('.chat-list-item');
+                if (chatItem) {
+                    const chatId = chatItem.id.split('-')[1];
+                    const chat = ChatStorage.getChatByID(chatId);
+                    if (chat) {
+                        navigate(chat.username);
+                        return;
+                    }
+                }
+            }
+            openChat(event);
+        });
 
         return container.firstChild as HTMLDivElement;
     }
