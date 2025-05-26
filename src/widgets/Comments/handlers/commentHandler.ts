@@ -5,7 +5,7 @@ import { Auth } from 'features/authorization';
 import { Toast } from 'shared/components/Toast';
 import { ICommentData } from '../model/types';
 
-export const commentHandler = async (pinID: string, page = 1, size = 10) => {
+export const commentHandler = async (pinID: string, page = 1, size = 30) => {
     if (!pinID) return null;
 
     const response = await API.get(`/flows/${pinID}/comments?page=${page}&size=${size}`);

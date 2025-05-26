@@ -53,12 +53,18 @@ export const Comments = async (props: ICommentsProps) => {
     container.innerHTML = template(config);
 
     const commentInput = container.querySelector<HTMLTextAreaElement>('#comment-input');
-    if (commentInput) {
-        const randomIndex = Math.floor(Math.random() * placeholderTexts.length);
-        commentInput.placeholder = placeholderTexts[randomIndex];
-    }
-
     const charCounter = container.querySelector<HTMLElement>('#comment-char-counter');
+
+    if (commentInput) {
+        setTimeout(() => {
+            const randomIndex = Math.floor(Math.random() * placeholderTexts.length);
+            commentInput.placeholder = placeholderTexts[randomIndex];
+            commentInput.value = placeholderTexts[randomIndex];
+            textareaResizeHandler(commentInput, charCounter);
+            commentInput.value = '';
+        }, 0);
+
+    }
 
     commentInput?.addEventListener('input', () => {
         textareaResizeHandler(commentInput, charCounter);
