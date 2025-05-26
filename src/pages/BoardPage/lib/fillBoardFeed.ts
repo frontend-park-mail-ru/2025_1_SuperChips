@@ -37,8 +37,7 @@ export const fillBoardFeed = async () => {
             pinID: item.flow_id,
             saved: own,
             width: item.width,
-            height: item.height,
-            title: item.header, // Add title for NSFW check
+            height: item.height
         };
         
         // ВРЕМЕННАЯ ЗАГЛУШКА: Проверка на наличие слова "утка" в названии для отображения как NSFW

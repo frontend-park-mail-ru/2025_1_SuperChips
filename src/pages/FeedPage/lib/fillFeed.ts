@@ -35,7 +35,6 @@ export const fillFeed = async () => {
             width: item.width,
             height: item.height,
             is_nsfw: item.is_nsfw,
-            title: item.header, // Add title for NSFW check
         };
         
         // ВРЕМЕННАЯ ЗАГЛУШКА: Проверка на наличие слова "утка" в названии для отображения как NSFW
