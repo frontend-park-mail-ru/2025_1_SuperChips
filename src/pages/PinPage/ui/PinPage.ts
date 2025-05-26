@@ -50,21 +50,7 @@ export const PinPage = async (pinID: string) => {
 
     container.innerHTML = template(config);
 
-    // Handle NSFW content reveal
-    if (config.is_nsfw) {
-        const nsfwImage = container.querySelector('.one-pin__box-1__pin.nsfw');
-        const nsfwOverlay = container.querySelector('#nsfw-overlay');
-        
-        if (nsfwImage && nsfwOverlay) {
-            const handleRevealNsfw = () => {
-                nsfwImage.classList.add('nsfw-revealed');
-                nsfwOverlay.style.display = 'none';
-            };
-            
-            nsfwOverlay.addEventListener('click', handleRevealNsfw);
-            nsfwImage.addEventListener('click', handleRevealNsfw);
-        }
-    }
+
 
     const dropdownButton = container.querySelector('#dropdown-button');
     dropdownButton?.addEventListener('click', (event) => {
