@@ -41,9 +41,14 @@ export const fillFeed = async () => {
         if (item.header && item.header.toLowerCase().includes('утка')) {
             config.is_nsfw = true;
         }
-        
+
+        feedState.loadedPins.push(config);
         feed.appendChild(Pin(config));
     });
+
+    // if (feedState.loadedPins.length > 200) {
+    //     feedState.loadedPins = feedState.loadedPins.slice(feedState.loadedPins.length - 200);
+    // }
 
     feedState.isLoading = false;
     feedState.pageNum++;

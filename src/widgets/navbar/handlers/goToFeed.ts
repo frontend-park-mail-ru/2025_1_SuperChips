@@ -1,23 +1,16 @@
 import { appState, navigate } from 'shared/router';
-import { clearSearch } from './clearSearch';
 import { closeChatList } from 'widgets/sidebar';
-import { closeFilter } from './closeFilter';
+import { feedState } from 'pages/FeedPage';
 
 export const goToFeed = async (event: Event) => {
     event.preventDefault();
     if (appState.chat.open) {
         closeChatList();
     }
-    if (appState.isFilterOpen) {
-        closeFilter();
+    if (appState.activePage === 'feed' && feedState.pageNum !== 3) { // изначально в ленте загружается 3 страницы пинов
+        Object.assign(feedState, { pageNum: 1, filter: 'flows', loadedPins: [], lastScroll: 0 });
+        appState.forceNavigate = true;
     }
-    if (appState.activePage === 'feed') {
-        clearSearch().finally();
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    } else {
-        navigate('feed').finally();
-    }
+
+    navigate('feed').finally();
 };

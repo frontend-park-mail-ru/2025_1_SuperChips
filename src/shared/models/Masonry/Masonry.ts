@@ -118,6 +118,7 @@ export class Masonry {
     private setupMutationObserver() {
         this.observer = new MutationObserver(mutations => {
             const added: HTMLElement[] = [];
+            let removed = false;
             mutations.forEach(mutation => {
                 if (mutation.type === 'childList') {
                     mutation.addedNodes.forEach(node => {
@@ -128,6 +129,7 @@ export class Masonry {
                     mutation.removedNodes.forEach(node => {
                         if (node instanceof HTMLElement && node.matches(this.options.itemSelector)) {
                             this.items = this.items.filter(item => item !== node);
+                            removed = true;
                         }
                     });
                 }
@@ -135,6 +137,9 @@ export class Masonry {
             if (added.length > 0) {
                 this.items.push(...added);
                 this.layoutNew(added);
+            }
+            if (removed) {
+                this.layoutAll();
             }
         });
         this.observer.observe(this.container, { childList: true, subtree: false });
