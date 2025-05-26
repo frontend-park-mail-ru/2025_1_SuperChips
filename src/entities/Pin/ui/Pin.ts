@@ -29,7 +29,10 @@ export const Pin = (params: IPinProps) => {
     container.innerHTML = template(config);
 
     const pin = container.querySelector('.pin') as HTMLDivElement;
-    pin.addEventListener('click', () => navigate(`flow/${config.pinID}`));
+    pin.addEventListener('click', () => {
+        appState.lastPin = config.pinID;
+        navigate(`flow/${config.pinID}`).finally();
+    });
 
 
     const pinWidth = getWidthBySelector('.pin');
