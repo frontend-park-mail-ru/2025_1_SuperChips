@@ -151,6 +151,7 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
     if (feed) {
         requestAnimationFrame(async () => {
             if (isPinTabActive) {
+                await UserPins(username);
                 if (userData?.about) {
                     const description = document.createElement('div');
                     description.classList.add('pin', 'description-pin');
@@ -161,7 +162,6 @@ export const ProfilePage = async (username: string, tab: string = 'pins'): Promi
                             `;
                     feed.appendChild(description);
                 }
-                await UserPins(username);
             } else {
                 await UserBoards(username);
             }
