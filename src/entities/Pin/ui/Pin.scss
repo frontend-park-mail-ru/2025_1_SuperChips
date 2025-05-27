@@ -35,6 +35,7 @@
         
         &.nsfw {
             filter: blur(10px);
+            transition: filter 0.3s ease;
         }
     }
     

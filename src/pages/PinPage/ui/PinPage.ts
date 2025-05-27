@@ -43,10 +43,7 @@ export const PinPage = async (pinID: string) => {
         mobile: appState.mobile,
     };
     
-    // ВРЕМЕННАЯ ЗАГЛУШКА: Проверка на наличие слова "утка" в названии для отображения как NSFW
-    if (pinData.header && pinData.header.toLowerCase().includes('утка')) {
-        config.is_nsfw = true;
-    }
+
 
     container.innerHTML = template(config);
 

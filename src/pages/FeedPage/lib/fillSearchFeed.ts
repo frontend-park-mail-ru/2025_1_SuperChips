@@ -94,10 +94,7 @@ export const fillSearchFeed = async () => {
                     is_nsfw: item.is_nsfw,
                 };
                 
-                // ВРЕМЕННАЯ ЗАГЛУШКА: Проверка на наличие слова "утка" в названии для отображения как NSFW
-                if (item.header && item.header.toLowerCase().includes('утка')) {
-                    config.is_nsfw = true;
-                }
+
                 feed.appendChild(Pin(config));
             });
             break;

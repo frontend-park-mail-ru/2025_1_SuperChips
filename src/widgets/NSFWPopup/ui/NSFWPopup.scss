@@ -1,0 +1,49 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+@use 'sass:color';
+
+.nsfw-popup {
+    width: 450px;
+    min-height: 200px;
+    padding: $spacing-xl;
+    
+    .popup__text {
+        margin-bottom: $spacing-md;
+    }
+    
+    .popup__buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: $spacing-xl;
+        gap: $spacing-md;
+    }
+    
+    .popup__cancel-button,
+    .popup__confirmation-button {
+        flex: 1;
+        min-height: $button-height;
+        border: none;
+        border-radius: $border-radius;
+        font-weight: 500;
+        cursor: pointer;
+    }
+    
+    .popup__cancel-button {
+        background-color: $background-light;
+        color: $text-dark;
+        
+        &:hover {
+            background-color: color.adjust($background-light, $lightness: -5%);
+        }
+    }
+    
+    .popup__confirmation-button {
+        background-color: $primary-dark;
+        color: $white;
+        
+        &:hover {
+            background-color: color.adjust($primary-dark, $lightness: -5%);
+        }
+    }
+}
+

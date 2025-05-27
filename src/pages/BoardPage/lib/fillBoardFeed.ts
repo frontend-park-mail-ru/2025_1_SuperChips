@@ -37,13 +37,11 @@ export const fillBoardFeed = async () => {
             pinID: item.flow_id,
             saved: own,
             width: item.width,
-            height: item.height
+            height: item.height,
+            is_nsfw: item.is_nsfw
         };
         
-        // ВРЕМЕННАЯ ЗАГЛУШКА: Проверка на наличие слова "утка" в названии для отображения как NSFW
-        if (item.header && item.header.toLowerCase().includes('утка')) {
-            config.is_nsfw = true;
-        }
+
         
         feed.insertBefore(Pin(config), feed.firstChild);
     });
