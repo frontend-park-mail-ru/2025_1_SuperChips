@@ -36,7 +36,7 @@ export const Pin = (params: IPinProps) => {
             NSFWPopup(config.pinID);
             return;
         }
-        navigate(`flow/${config.pinID}`);
+        navigate(`flow/${config.pinID}`).finally();
     });
 
 

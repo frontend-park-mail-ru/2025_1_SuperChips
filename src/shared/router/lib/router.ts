@@ -3,7 +3,7 @@ import type { IUser } from 'entities/User';
 import { omit } from 'shared/utils';
 import { findMatch } from './findMatch';
 import { updateBars } from './updateBars';
-import { closeFilter, closeNotifications } from 'widgets/navbar';
+import { closeFilter, closeNotifications, openFilter } from 'widgets/navbar';
 import { searchFeedState } from 'pages/FeedPage';
 import { root } from 'app/app';
 import { config } from 'shared/config/router';
@@ -18,7 +18,10 @@ interface AppState {
     isShowingPopup: boolean,
     isFilterOpen: boolean,
     mobile: boolean,
+    forceNavigate: boolean,
     lastVisited: Partial<IUser>,
+    lastPin: string,
+    lastScroll: number,
     loggedWithVKID: boolean,
     masonryInstance: Masonry | null,
     scrollHandler: (() => void) | null,
@@ -44,7 +47,10 @@ export const appState: AppState = {
     isShowingToast: false,
     isShowingPopup: false,
     isFilterOpen: false,
+    forceNavigate: false,
     lastVisited: {},
+    lastPin: '',
+    lastScroll: 0,
     mobile: false,
     loggedWithVKID: false,
     masonryInstance: null,
@@ -104,10 +110,11 @@ export const navigate = async (
         break;
     }
 
-    if (match === appState.activePage && newHref === appState.href) {
+    if (match === appState.activePage && newHref === appState.href && !appState.forceNavigate) {
         return;
     }
 
+    appState.forceNavigate = false;
     appState.href = newHref;
     document.title = route.title;
 
@@ -136,12 +143,30 @@ export const navigate = async (
 const cleanup = (newHref: string) => {
     const boardRegex = /^\/board\/\S+$/;
 
+    if (appState.lastPage === 'feed') {
+        appState.lastScroll = window.scrollY;
+    }
+
     if (appState.masonryInstance) {
         appState.masonryInstance.destroy();
     }
 
     if (appState.scrollHandler && newHref !== '/feed' && !boardRegex.test(newHref)) {
         removeScrollHandler();
+    }
+
+    if (appState.isFilterOpen) {
+        const feedFilter = document.querySelector<HTMLDivElement>('.feed-filter');
+        const filter = document.querySelector<HTMLElement>('#filter-button');
+
+        if (!feedFilter || !filter) return;
+
+        filter.removeEventListener('click', closeFilter);
+        filter.addEventListener('click', openFilter);
+        filter.style.content = '';
+
+        feedFilter.remove();
+        appState.isFilterOpen = false;
     }
 
     if (appState.notification.open) {

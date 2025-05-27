@@ -1,3 +1,4 @@
+import { IPinProps, Pin } from 'entities/Pin';
 import { Masonry } from 'shared/models/Masonry';
 import { fillFeed } from '../lib/fillFeed';
 import { registerScrollHandler } from 'features/scrollHandler';
@@ -6,10 +7,21 @@ import { fillSearchFeed, searchFeedState } from '../lib/fillSearchFeed';
 import feedTemplate from './FeedPage.hbs';
 import './feed.scss';
 
-export const feedState = {
+
+interface IFeedState {
+    isLoading: boolean,
+    pageNum: number,
+    filter: string,
+    loadedPins: IPinProps[],
+    lastScroll: number,
+}
+
+export const feedState: IFeedState = {
     isLoading: false,
     pageNum: 1,
     filter: 'flows',
+    loadedPins: [],
+    lastScroll: 0,
 };
 
 
@@ -17,14 +29,11 @@ export const feedState = {
  * Генерирует страницу ленты и создает обработчики событий
  */
 export const FeedPage = async () => {
-    feedState.pageNum = 1;
-
     const page = document.createElement('div');
     page.insertAdjacentHTML('beforeend', feedTemplate({}));
 
     const scrollButton = page.querySelector('.scroll-to-top');
     scrollButton?.addEventListener('click', toTop);
-
 
     setTimeout(async () => {
         const feed = document.querySelector<HTMLElement>('#feed');
@@ -36,6 +45,28 @@ export const FeedPage = async () => {
                 gutter: appState.mobile ? 10 : 20,
             }
         );
+
+        if (feedState.loadedPins.length > 0) {
+            feedState.loadedPins.forEach((item) => {
+                feed.appendChild(Pin(item));
+            });
+
+            registerScrollHandler(fillFeed);
+
+            // const lastClickedPin = document.querySelector(`#pin-${appState.lastPin}`);
+            // if (lastClickedPin) {
+            //     setTimeout(() => {
+            //         const rect = lastClickedPin.getBoundingClientRect();
+            //         window.scrollTo({ top: rect.top });
+            //     }, 0);
+            // }
+
+            setTimeout(() => {
+                window.scrollTo({ top: appState.lastScroll });
+            }, 0);
+
+            return;
+        }
 
         if (searchFeedState.query === '') {
             registerScrollHandler(fillFeed);

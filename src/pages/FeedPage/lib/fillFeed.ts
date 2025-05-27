@@ -37,10 +37,14 @@ export const fillFeed = async () => {
             is_nsfw: item.is_nsfw,
         };
         
-
-        
+    
+        feedState.loadedPins.push(config);
         feed.appendChild(Pin(config));
     });
+
+    // if (feedState.loadedPins.length > 200) {
+    //     feedState.loadedPins = feedState.loadedPins.slice(feedState.loadedPins.length - 200);
+    // }
 
     feedState.isLoading = false;
     feedState.pageNum++;

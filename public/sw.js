@@ -4,7 +4,6 @@ const PRECACHE_URLS = [
     '/fonts/futura-pt-demi.woff2',
     '/index.html',
     '/js/main.bundle.js',
-    '/css/main.3bfc2c1627a3daa6fb80.min.css',
     '/public/fonts/futura-pt-book.woff2',
     '/public/fonts/futura-pt-demi.woff2',
     '/public/icons/arrow-down.svg',

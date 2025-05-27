@@ -75,14 +75,15 @@ export const Sidebar = async () => {
     const chatButton = sidebar.querySelector('#chats');
     chatButton?.addEventListener('click', openChatList);
 
-    window.addEventListener('newMessage', () => {
-        const chatButton = document.querySelector('#chats');
-        chatButton?.classList.add('notify');
-    });
-    window.addEventListener('allMessagesRead', () => {
-        const chatButton = document.querySelector('#chats');
-        chatButton?.classList.remove('notify');
-    });
+    // todo fix
+    // window.addEventListener('newMessage', () => {
+    //     const chatButton = document.querySelector('#chats');
+    //     chatButton?.classList.add('notify');
+    // });
+    // window.addEventListener('allMessagesRead', () => {
+    //     const chatButton = document.querySelector('#chats');
+    //     chatButton?.classList.remove('notify');
+    // });
 
     return sidebar;
 };
