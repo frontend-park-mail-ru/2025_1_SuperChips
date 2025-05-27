@@ -77,7 +77,7 @@ class notificationStorage {
     removeNotification(notificationID: string) {
         this.newNotifications = this.newNotifications.filter((notification) => notification.id !== notificationID);
         this.oldNotifications = this.oldNotifications.filter((notification) => notification.id !== notificationID);
-        this.deleteFromDB(notificationID);
+        this.updateSaved();
     }
 
     markAllRead() {
@@ -139,6 +139,8 @@ class notificationStorage {
             });
             this.sortNotifications();
             localStorage.setItem('oldNotifications', JSON.stringify(save));
+        } else {
+            localStorage.setItem('oldNotifications', '');
         }
     }
 
