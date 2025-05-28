@@ -7,7 +7,10 @@ class WSInstance {
 
     constructor() {
         this.ws = new WebSocket(WEBSOCKET_URL);
+        this.initWS();
+    }
 
+    initWS() {
         this.ws.onmessage = (event: MessageEvent) => {
             try {
                 const body = JSON.parse(event.data);
@@ -38,6 +41,7 @@ class WSInstance {
     reconnect() {
         this.ws.close();
         this.ws = new WebSocket(WEBSOCKET_URL);
+        this.initWS();
     }
 
     close() {
