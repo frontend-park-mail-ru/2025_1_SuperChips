@@ -1,11 +1,58 @@
+<div class="black-background"></div>
 <div class="invite-popup" id="popup">
     <img src="/public/icons/cross-grey.svg" alt="" class="invite-popup__close-button popup__close">
     <div class="header bold">Приглашение соавторов</div>
     <div class="subheader">Командный серфинг веселее</div>
-    <div class="invite-popup__link-box">
-        <div class="invite-popup__link-input"></div>
-        <img src="/public/icons/copy.svg" alt="" class="invite-popup__copy-button">
+    
+    <div class="invite-popup__main">
+        <div class="invite-popup__link-container">
+            <div class="invite-popup__link-label">Ссылка для приглашения:</div>
+            <div class="invite-popup__link-box">
+                <div class="invite-popup__link-input" id="invite-link"></div>
+                <img src="/public/icons/copy.svg" alt="" class="invite-popup__copy-button" id="copy-button">
+            </div>
+        </div>
+
+        <button class="invite-popup__create-button" id="create-link-button">
+            Создать новую ссылку
+        </button>
+
+        <div class="invite-popup__advanced-toggle">
+            <span>Расширенные настройки</span>
+            <img src="/public/icons/arrow-down.svg" alt="Показать настройки" class="invite-popup__toggle-icon">
+        </div>
     </div>
+
+    <div class="invite-popup__settings" style="display: none;">
+        <div class="invite-popup__setting">
+            <label for="time-limit">Срок действия ссылки:</label>
+            <select id="time-limit" class="invite-popup__select">
+                <option value="never" selected>Бессрочно</option>
+                <option value="1d">1 день</option>
+                <option value="7d">7 дней</option>
+                <option value="30d">30 дней</option>
+            </select>
+            <div class="invite-popup__setting-hint">Ссылка перестанет работать после истечения срока</div>
+        </div>
+        
+        <div class="invite-popup__setting">
+            <label for="usage-limit">Лимит использований:</label>
+            <select id="usage-limit" class="invite-popup__select">
+                <option value="0" selected>Без ограничений</option>
+                <option value="1">1 раз</option>
+                <option value="5">5 раз</option>
+                <option value="10">10 раз</option>
+            </select>
+            <div class="invite-popup__setting-hint">Сколько раз можно использовать ссылку</div>
+        </div>
+        
+        <div class="invite-popup__setting">
+            <label for="usernames">Персональное приглашение:</label>
+            <input type="text" id="usernames" class="invite-popup__input" placeholder="Введите имена пользователей через запятую">
+            <div class="invite-popup__setting-hint">Оставьте пустым для публичной ссылки</div>
+        </div>
+    </div>
+    
     <div class="invite-popup__image">
         <img src="/public/img/two-surfs.svg" alt="">
     </div>

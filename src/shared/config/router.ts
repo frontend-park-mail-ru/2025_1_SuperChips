@@ -9,6 +9,7 @@ import { SettingsPage } from 'pages/SettingsPage';
 import { EditPinPage } from 'pages/EditPinPage';
 import { SubscriptionsPage } from 'pages/SubscriptionsPage';
 import { NotFoundPage } from 'pages/NotFoundPage';
+import { InvitePage } from 'pages/InvitePage';
 
 
 export interface Route {
@@ -125,6 +126,14 @@ export const config: RouterConfig = {
             render: (boardID: string) => {
                 return BoardPage(boardID);
             },
+        },
+        invite: {
+            href: /^\/invite\/[a-zA-Z0-9\-]+$/,
+            title: 'Приглашение',
+            render: InvitePage,
+            noNavbar: true,
+            noSidebar: true,
+            noBackButton: true,
         },
         notFound: {
             href: '/page/404',

@@ -6,6 +6,9 @@ import { confirmBoardDelete } from '../handlers/confirmBoardDelete';
 import { openInvitePopup } from '../handlers/openInvitePopup';
 import { BoardStorage } from 'features/boardLoader';
 import { Auth } from 'features/authorization';
+import { API } from 'shared/api';
+import { Toast } from 'shared/components/Toast';
+import { CoauthorCard } from './CoauthorCard';
 import template from './BoardSettings.hbs';
 import './BoardSettings.scss';
 import { updateBoard } from '../handlers/updateBoard';
@@ -65,5 +68,57 @@ export const BoardSettings = () => {
 
     settings.querySelector('#invite')?.addEventListener('click', () => openInvitePopup(board.id));
 
+    // Load and display coauthors
+    loadCoauthors(board.id, settings);
+
     return settings;
+};
+
+const loadCoauthors = async (boardId: number, container: HTMLElement) => {
+    try {
+        const response = await API.get(`/boards/${boardId}/coauthors`);
+        
+        if (!(response instanceof Response && response.ok)) {
+            Toast('Ошибка при загрузке соавторов', 'error');
+            return;
+        }
+        
+        const data = await response.json();
+        const coauthorsList = container.querySelector('#coauthors-list');
+        
+        if (!coauthorsList) return;
+        
+        // Clear existing coauthors
+        coauthorsList.innerHTML = '';
+        
+        if (!data.data || data.data.length === 0) {
+            const emptyMessage = document.createElement('div');
+            emptyMessage.textContent = 'У этой доски пока нет соавторов';
+            emptyMessage.style.color = '#999';
+            emptyMessage.style.padding = '10px 0';
+            coauthorsList.appendChild(emptyMessage);
+            return;
+        }
+        
+        // Get current user ID
+        const currentUserId = Auth?.userData?.id;
+        const isCreator = board.creator_id === currentUserId;
+        
+        // Render all coauthors
+        data.data.forEach((coauthor: string) => {
+            const coauthorCard = CoauthorCard({
+                username: coauthor,
+                avatar: '', // API doesn't provide avatar information
+                isCreator: false,
+                boardId: boardId,
+                userId: coauthor,
+                onRemove: () => loadCoauthors(boardId, container) // Reload coauthors after removal
+            });
+            
+            coauthorsList.appendChild(coauthorCard);
+        });
+        
+    } catch (error) {
+        Toast('Ошибка при загрузке соавторов', 'error');
+    }
 };
