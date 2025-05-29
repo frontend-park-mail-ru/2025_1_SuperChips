@@ -3,9 +3,10 @@ import { Masonry } from 'shared/models/Masonry';
 import { fillFeed } from '../lib/fillFeed';
 import { registerScrollHandler } from 'features/scrollHandler';
 import { appState } from 'shared/router';
-import { fillSearchFeed, searchFeedState } from '../lib/fillSearchFeed';
+import { fillSearchFeed } from '../lib/fillSearchFeed';
 import feedTemplate from './FeedPage.hbs';
 import './feed.scss';
+import { restoreSearchFeed } from '../lib/restoreSearchFeed';
 
 
 interface IFeedState {
@@ -46,20 +47,17 @@ export const FeedPage = async () => {
             }
         );
 
-        if (feedState.loadedPins.length > 0) {
+        if (appState.search.isFiltered) {
+            restoreSearchFeed();
+            return;
+        }
+
+        if (feedState.loadedPins.length > 0 && !appState.search.query) {
             feedState.loadedPins.forEach((item) => {
                 feed.appendChild(Pin(item));
             });
 
             registerScrollHandler(fillFeed);
-
-            // const lastClickedPin = document.querySelector(`#pin-${appState.lastPin}`);
-            // if (lastClickedPin) {
-            //     setTimeout(() => {
-            //         const rect = lastClickedPin.getBoundingClientRect();
-            //         window.scrollTo({ top: rect.top });
-            //     }, 0);
-            // }
 
             setTimeout(() => {
                 window.scrollTo({ top: appState.lastScroll });
@@ -68,7 +66,7 @@ export const FeedPage = async () => {
             return;
         }
 
-        if (searchFeedState.query === '') {
+        if (appState.search.query === '') {
             registerScrollHandler(fillFeed);
             await fillFeed();
             await fillFeed();

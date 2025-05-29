@@ -7,7 +7,7 @@ import { Auth } from 'features/authorization';
 import { Toast } from 'shared/components/Toast';
 
 
-interface IUserCardProps {
+export interface IUserCardProps {
     username: string;
     public_name: string;
     avatar: string | null;
