@@ -1,0 +1,14 @@
+{{#if avatar}}
+    <div class="coauthor-card__avatar">
+        <img src="{{avatar}}" alt="">
+    </div>
+{{else}}
+    <div class="coauthor-card__avatar--default">
+        <span>{{shortUsername}}</span>
+    </div>
+{{/if}}
+<div class="coauthor-card__username">{{username}}</div>
+{{#if isCreator}}
+    <div class="coauthor-card__badge">Создатель</div>
+{{/if}}
+

@@ -128,7 +128,7 @@ export const config: RouterConfig = {
             },
         },
         invite: {
-            href: /^\/invite\/[a-zA-Z0-9\-]+$/,
+            href: /^invite\/[a-zA-Z0-9-]+$/,
             title: 'Приглашение',
             render: InvitePage,
             noNavbar: true,

@@ -171,6 +171,13 @@ class auth {
         this.API.setCSRFToken(csrf_token);
         await this.fetchUserData();
         await Navbar();
+
+        const redirect = sessionStorage.getItem('redirectAfterAuth');
+        if (redirect) {
+            navigate(redirect).finally();
+            sessionStorage.setItem('redirectAfterAuth', '');
+        }
+
         BoardStorage.boardToSave = USER_SAVED_PINS_BOARD;
         document.querySelector('.sidebar__button-container')?.classList.remove('hidden');
         ChatStorage.fetchContactList().finally();

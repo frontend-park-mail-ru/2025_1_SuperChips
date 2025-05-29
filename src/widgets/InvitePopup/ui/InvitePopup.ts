@@ -1,0 +1,69 @@
+import { createNewLink } from '../handlers/createNewLink';
+import { Toast } from 'shared/components/Toast';
+import { API } from 'shared/api';
+import { root } from 'app/app';
+import popupTemplate from './InvitePopup.hbs';
+import './InvitePopup.scss';
+
+
+export const InvitePopup = async (boardID: number) => {
+    const popup = document.createElement('div');
+    popup.innerHTML = popupTemplate({});
+
+    const closeButton = popup.querySelector('.invite-popup__close-button');
+    const advancedToggle = popup.querySelector('.invite-popup__advanced-toggle');
+    const settingsSection = popup.querySelector<HTMLElement>('.invite-popup__settings');
+    const createButton = popup.querySelector('#create-link-button');
+
+    advancedToggle?.addEventListener('click', () => {
+        advancedToggle.classList.toggle('active');
+        if (settingsSection) {
+            settingsSection.style.display = settingsSection.style.display === 'none' ? 'block' : 'none';
+        }
+    });
+
+    closeButton?.addEventListener('click', () => {
+        popup.remove();
+    });
+
+    const response = await API.get(`/boards/${boardID}/invites`);
+    let inviteId = '';
+
+    if ((response instanceof Response && response.ok)) {
+        const body = await response.json();
+        if (body.data?.links?.length > 0) {
+            inviteId = body.data.links[0]?.link;
+        }
+    }
+
+    const link = `${window.location.origin}/invite/${inviteId}`;
+    const linkField = popup.querySelector('#invite-link');
+    if (linkField && inviteId) {
+        linkField.textContent = link;
+    }
+
+    const copyButton = popup.querySelector<HTMLButtonElement>('#copy-button');
+
+    copyButton?.addEventListener('click', () => {
+        if (copyButton.disabled) return;
+
+        navigator.clipboard.writeText(link)
+            .then(() => {
+                Toast('Ссылка скопирована', 'success');
+            })
+            .catch(() => {
+                Toast('Не удалось скопировать ссылку', 'error');
+            });
+    });
+
+    if (!inviteId && copyButton) {
+        copyButton.disabled = true;
+    }
+
+
+    createButton?.addEventListener('click', () => {
+        createNewLink(boardID);
+    });
+
+    root.appendChild(popup);
+};

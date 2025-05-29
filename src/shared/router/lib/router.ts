@@ -102,6 +102,9 @@ export const navigate = async (
         renderProps = page;
         newHref = `/${page}`;
         break;
+    case 'invite':
+        newHref = `/${page}`;
+        break;
     }
 
     if (match === appState.activePage && newHref === appState.href) {
