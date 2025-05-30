@@ -25,8 +25,8 @@ export const Pin = (params: IPinProps) => {
     container.innerHTML = template(config);
 
     const pin = container.querySelector('.pin') as HTMLDivElement;
-    pin.addEventListener('click', () => navigate(`flow/${config.pinID}`));
-
+    const URI = params.boardID ? `flow/${config.pinID}?boardID=${params.boardID}` : `flow/${config.pinID}`;
+    pin.addEventListener('click', () => navigate(URI));
 
     const pinWidth = getWidthBySelector('.pin');
     if (params.width && params.height) {

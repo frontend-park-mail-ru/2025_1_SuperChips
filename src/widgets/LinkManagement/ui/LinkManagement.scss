@@ -1,0 +1,53 @@
+@use 'shared/styles/variables' as *;
+@use 'shared/styles/mixins' as *;
+
+.link-management {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 560px;
+    height: auto;
+    max-height: 70vh;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    background-color: $white;
+    border-radius: $border-radius;
+    overflow-y: scroll;
+    padding: $spacing-md $spacing-lg;
+    @include popup-scroll(#fff, #ccc);
+    z-index: 1500;
+}
+
+.invitation-link {
+    background-color: #eee;
+    border-radius: $border-radius;
+    padding: $spacing-md $spacing-sm;
+
+    &__link-field {
+        background-color: #fff;
+        border-radius: $border-radius;
+        padding: $spacing-sm;
+    }
+
+    &__text {
+        margin-top: $spacing-sm;
+
+        &_exceeded {
+            color: $error-color;
+        }
+    }
+
+    &__delete-button {
+        color: $error-color;
+        cursor: pointer;
+    }
+}
+
+@media (max-width: $mobile-width) {
+    .link-management {
+        width: clamp(200px, 90%, 440px);
+    }
+}

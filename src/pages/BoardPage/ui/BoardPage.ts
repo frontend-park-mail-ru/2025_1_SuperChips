@@ -8,6 +8,7 @@ import { root } from 'app/app';
 import { Auth } from 'features/authorization';
 import { appState } from 'shared/router';
 import { USER_OWN_PINS_BOARD, USER_SAVED_PINS_BOARD } from 'shared/config/constants';
+import { BoardStorage } from 'features/boardLoader';
 import './BoardPage.scss';
 import template from './BoardPage.hbs';
 
@@ -36,7 +37,9 @@ export const BoardPage = async (boardID: string) => {
     const body = await boardRequest.json();
     if (!body.data) return page;
 
-    const own = Auth.userData ? Auth.userData.id === body.data.author_id : false;
+    const isCoauthor = !!BoardStorage.getBoardByID(+boardID);
+    const isOwner = Auth.userData ? Auth.userData.id === body.data.author_id : false;
+    const own = isCoauthor || isOwner;
     boardFeedState.own = own;
 
     const config = {

@@ -1,9 +1,9 @@
 {{#if avatar}}
-    <div class="coauthor-card__avatar">
+    <div class="coauthor-card__avatar--default">
         <img src="{{avatar}}" alt="">
     </div>
 {{else}}
-    <div class="coauthor-card__avatar--default">
+    <div class="coauthor-card__avatar">
         <span>{{shortUsername}}</span>
     </div>
 {{/if}}
@@ -11,4 +11,9 @@
 {{#if isCreator}}
     <div class="coauthor-card__badge">Создатель</div>
 {{/if}}
-
+{{#if canRemove}}
+    <img src="/public/icons/delete.svg" alt="remove coauthor" class="coauthor-card__action">
+{{/if}}
+{{#if canLeave}}
+    <img src="/public/icons/log-out.svg" alt="leave board" class="coauthor-card__action">
+{{/if}}

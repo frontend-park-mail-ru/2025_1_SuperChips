@@ -4,14 +4,15 @@ import { Toggle } from 'shared/components/toggle';
 import { closeBoardSettings } from '../handlers/closeBoardSettings';
 import { confirmBoardDelete } from '../handlers/confirmBoardDelete';
 import { InvitePopup } from 'widgets/InvitePopup';
+import { LinkManagement } from 'widgets/LinkManagement';
+import { updateBoard } from '../handlers/updateBoard';
+import { Toast } from 'shared/components/Toast';
+import { CoauthorCard } from 'entities/CoauthorCard';
 import { BoardStorage } from 'features/boardLoader';
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api';
-import { Toast } from 'shared/components/Toast';
-import { CoauthorCard } from 'entities/CoauthorCard';
 import template from './BoardSettings.hbs';
 import './BoardSettings.scss';
-import { updateBoard } from '../handlers/updateBoard';
 
 
 export const BoardSettings = () => {
@@ -70,8 +71,17 @@ export const BoardSettings = () => {
 
     loadCoauthors(board.id, settings).finally();
 
+    const linkManageButton = settings.querySelector('#links');
+    linkManageButton?.addEventListener('click', async () => {
+        const linkManageWidget = await LinkManagement(board.id);
+        if (linkManageWidget) {
+            document.querySelector('#root')?.appendChild(linkManageWidget);
+        }
+    });
+
     return settings;
 };
+
 
 const loadCoauthors = async (boardId: number, container: HTMLElement) => {
     const response = await API.get(`/boards/${boardId}/coauthors`);
@@ -110,6 +120,8 @@ const loadCoauthors = async (boardId: number, container: HTMLElement) => {
             onRemove: () => loadCoauthors(boardId, container) // Reload coauthors after removal
         });
 
-        coauthorsList.appendChild(coauthorCard);
+        if (coauthorCard) {
+            coauthorsList.appendChild(coauthorCard);
+        }
     });
 };

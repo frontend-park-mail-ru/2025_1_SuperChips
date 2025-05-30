@@ -40,7 +40,7 @@
         margin-top: $spacing-sm;
     }
 
-    &__delete-button, &__confirm-button, &__invite-button {
+    &__delete-button, &__confirm-button, &__invite-button, &__link-management {
         @include button;
         cursor: pointer;
         display: flex;
@@ -79,12 +79,38 @@
     }
 }
 
+.coauthors-section {
+    margin-top: $spacing-lg;
+    margin-bottom: $spacing-lg;
+
+    &__title {
+        font-size: 18px;
+        margin-bottom: $spacing-md;
+    }
+
+    &__list {
+        @include popup-scroll(#252525, #888);
+        max-height: 250px;
+        overflow-y: auto;
+        padding-right: $spacing-xs;
+    }
+}
 
 @media (max-width: $mobile-width) {
     .board-settings {
         &-container {
             width: 100vw;
             padding: 32px $mobile-horizontal-padding;
+            display: flex;
+            justify-content: center;
+        }
+
+        &-wrapper {
+            width: clamp(200px, 90%, 440px);
+        }
+
+        &__submit-button {
+            margin-top: $spacing-xxl;
         }
     }
 }

@@ -79,27 +79,39 @@ export const navigate = async (
     appState.lastPage = appState.activePage;
     appState.activePage = match;
 
-    let renderProps = '';
+    const renderProps: string[] = [];
     let newHref = route.href.toString();
+    let pinID = '';
 
     switch (match) {
+    case 'pin':
+        pinID = page.split('/')[1].split('?')[0];
+        renderProps.push(pinID);
+        newHref = `/flow/${pinID}`;
+        if (page.includes('boardID=')) {
+            const query = page.match(/\?boardID=(\d+)/);
+            if (query) {
+                const boardID = query[1];
+                renderProps.push(boardID);
+            }
+        }
+        break;
     case 'profileBoards':
     case 'profilePins':
-        renderProps = page.split('/')[0];
+        renderProps.push(page.split('/')[0]);
         newHref = `/${page}`;
         break;
-    case 'pin':
     case 'board':
-        renderProps = page.split('/')[1];
+        renderProps.push(page.split('/')[1]);
         newHref = `/${page}`;
         break;
     case 'editPin':
-        renderProps = page.split('/')[2];
+        renderProps.push(page.split('/')[2]);
         newHref = `/${page}`;
         break;
     case 'subscriptions':
     case 'subscribers':
-        renderProps = page;
+        renderProps.push(page);
         newHref = `/${page}`;
         break;
     case 'invite':
@@ -119,13 +131,14 @@ export const navigate = async (
         'masonryInstance',
         'scrollHandler'
     );
+
     if (replace) {
         history.replaceState({ ...history.state, ...clearAppState }, '', newHref);
     } else {
         history.pushState({ ...history.state, ...clearAppState }, '', newHref);
     }
 
-    const newPage = await route.render(renderProps);
+    const newPage = await route.render(...renderProps);
     if (newPage) {
         cleanup(newHref);
         updateBars(route);

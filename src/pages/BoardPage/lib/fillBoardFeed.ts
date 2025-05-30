@@ -38,6 +38,7 @@ export const fillBoardFeed = async () => {
             saved: own,
             width: item.width,
             height: item.height,
+            boardID: boardFeedState.boardID
         };
         feed.insertBefore(Pin(config), feed.firstChild);
     });

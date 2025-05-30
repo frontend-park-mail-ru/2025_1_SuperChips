@@ -46,24 +46,35 @@ export const InvitePopup = async (boardID: number) => {
 
     copyButton?.addEventListener('click', () => {
         if (copyButton.disabled) return;
+        const linkField = popup.querySelector<HTMLDivElement>('#invite-link');
+        const link = linkField ? linkField.textContent : null;
 
-        navigator.clipboard.writeText(link)
-            .then(() => {
-                Toast('Ссылка скопирована', 'success');
-            })
-            .catch(() => {
-                Toast('Не удалось скопировать ссылку', 'error');
-            });
+        if (link) {
+            navigator.clipboard.writeText(link)
+                .then(() => {
+                    Toast('Ссылка скопирована', 'success');
+                })
+                .catch(() => {
+                    Toast('Не удалось скопировать ссылку', 'error');
+                });
+        }
     });
 
     if (!inviteId && copyButton) {
         copyButton.disabled = true;
     }
 
-
     createButton?.addEventListener('click', () => {
         createNewLink(boardID);
     });
+
+    const close = (e: Event) => {
+        if (!popup.contains(e.target as Node)) {
+            popup.remove();
+            document.removeEventListener('click', close);
+        }
+    };
+    document.addEventListener('click', close);
 
     root.appendChild(popup);
 };

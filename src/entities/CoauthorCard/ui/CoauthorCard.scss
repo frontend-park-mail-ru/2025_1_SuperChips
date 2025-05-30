@@ -50,7 +50,7 @@
         cursor: pointer;
         width: 20px;
         height: 20px;
-        margin-left: $spacing-md;
+        margin-right: $spacing-xs;
 
         &:hover {
             opacity: 0.8;
@@ -103,21 +103,6 @@
             background-color: $error-color;
             color: $white;
         }
-    }
-}
-
-.coauthors-section {
-    margin-top: $spacing-lg;
-    margin-bottom: $spacing-lg;
-
-    &__title {
-        font-size: 18px;
-        margin-bottom: $spacing-md;
-    }
-
-    &__list {
-        max-height: 200px;
-        overflow-y: auto;
     }
 }
 

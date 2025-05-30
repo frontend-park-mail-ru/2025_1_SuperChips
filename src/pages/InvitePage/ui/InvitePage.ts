@@ -1,3 +1,4 @@
+import { BoardStorage } from 'features/boardLoader';
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api';
 import { Toast } from 'shared/components/Toast';
@@ -25,7 +26,7 @@ export const InvitePage = async () => {
 
     // todo -- добавляется только после выполнения всех запросов, из-за чего не имеет смысла
     // Создаем интерфейс загрузки
-    // const container = document.createElement('div');
+    const container = document.createElement('div');
     // container.innerHTML = `
     //     <div class="invite-page__content">
     //         <h1>Присоединение к доске</h1>
@@ -41,26 +42,30 @@ export const InvitePage = async () => {
         return null;
     }
 
-    const body = await response.json();
+    let redirect = false;
 
     if (response.ok) {
         Toast('Вы успешно присоединились к доске', 'success');
-        // Перенаправляем на страницу доски
-        if (body?.data?.board_id) {
-            navigate(`/board/${body.data.board_id}`, true).finally();
-        } else {
-            navigate('/boards').finally();
-        }
+        redirect = true;
     } else if (response.status === 409) {
         Toast('Вы уже являетесь соавтором этой доски', 'message');
-        navigate(`${Auth.userData.username}/boards`).finally();
+        redirect = true;
     } else if (response.status === 410) {
         Toast('Срок действия ссылки истек', 'error');
-        navigate(`${Auth.userData.username}/boards`).finally();
+        navigate('feed').finally();
     } else {
         Toast('Ошибка при присоединении к доске. Попробуйте позже');
         navigate('feed').finally();
     }
 
-    // return container;
+    if (redirect) {
+        BoardStorage.fetchUserBoards().finally();
+        const body = await response.json();
+        if (body?.data?.board_id) {
+            navigate(`/board/${body.data.board_id}`, true).finally();
+        }
+        navigate(`${Auth.userData.username}/boards`).finally();
+    }
+
+    return container;
 }; 
