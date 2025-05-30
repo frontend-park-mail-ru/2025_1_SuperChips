@@ -140,11 +140,12 @@
     .comment-form {
         flex-direction: column;
 
-    .comment {
-        flex-direction: column;
+        .comment {
+            flex-direction: column;
 
-        &__avatar {
-            align-self: flex-start;
+            &__avatar {
+                align-self: flex-start;
+            }
         }
     }
 }
