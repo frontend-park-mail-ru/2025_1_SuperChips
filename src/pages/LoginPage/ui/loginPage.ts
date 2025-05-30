@@ -72,7 +72,7 @@ export const LoginPage = async () => {
     }
 
     const observer = new MutationObserver(() => {
-        fillPictureBox(1);
+        fillPictureBox(10);
         observer.disconnect();
     });
 

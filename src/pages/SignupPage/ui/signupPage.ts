@@ -100,7 +100,7 @@ export const SignupPage = async (): Promise<HTMLDivElement> => {
     form.addEventListener('input', debouncedPasswordConfirm);
 
     const observer = new MutationObserver(() => {
-        fillPictureBox(2);
+        fillPictureBox(11);
         observer.disconnect();
     });
 
