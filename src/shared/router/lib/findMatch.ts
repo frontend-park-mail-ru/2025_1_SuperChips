@@ -2,7 +2,6 @@ import { config } from 'shared/config/router';
 import { Auth } from 'features/authorization';
 import { API } from 'shared/api';
 
-
 export const findMatch = async (page: string) => {
     let match = null;
 
@@ -19,7 +18,6 @@ export const findMatch = async (page: string) => {
             break;
         }
     }
-
 
     if (!match) {
         match = 'notFound';

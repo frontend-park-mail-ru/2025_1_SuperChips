@@ -9,12 +9,13 @@ import { SettingsPage } from 'pages/SettingsPage';
 import { EditPinPage } from 'pages/EditPinPage';
 import { SubscriptionsPage } from 'pages/SubscriptionsPage';
 import { NotFoundPage } from 'pages/NotFoundPage';
+import { InvitePage } from 'pages/InvitePage';
 
 
 export interface Route {
     href: string | RegExp,
     title: string,
-    render: (params: string) => Promise<HTMLDivElement | null>,
+    render: (...props: string[]) => Promise<HTMLDivElement | null>,
     nonAuthOnly?: boolean,
     authOnly?: boolean,
     noNavbar?: boolean,
@@ -113,10 +114,10 @@ export const config: RouterConfig = {
             },
         },
         pin: {
-            href: /^flow\/[a-zA-Z0-9]+$/,
+            href: /^flow\/[a-zA-Z0-9]+(\?boardID=[0-9]+)?$/,
             title: 'Flow',
-            render: (flowID: string) => {
-                return PinPage(flowID);
+            render: (flowID: string, boardID?: string) => {
+                return PinPage(flowID, boardID);
             },
         },
         board: {
@@ -125,6 +126,11 @@ export const config: RouterConfig = {
             render: (boardID: string) => {
                 return BoardPage(boardID);
             },
+        },
+        invite: {
+            href: /^invite\/[a-zA-Z0-9-]+$/,
+            title: 'Приглашение',
+            render: InvitePage,
         },
         notFound: {
             href: '/page/404',

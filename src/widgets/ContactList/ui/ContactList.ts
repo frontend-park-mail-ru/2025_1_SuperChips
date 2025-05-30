@@ -20,6 +20,11 @@ export const ContactList = () => {
 
     container.innerHTML = template({ contacts: contacts });
 
+    if (ChatStorage.contacts.length === 0) {
+        const contactList = container.firstChild as HTMLDivElement;
+        contactList.innerHTML += '<span class="white">Подпишитесь на человека чтобы он появился у вас в контактах</span>';
+    }
+
     const backButton = container.querySelector('.contact-list__back-button');
     backButton?.addEventListener('click', closeContactList);
     window.addEventListener('keydown', closeContactList);
@@ -32,7 +37,7 @@ export const ContactList = () => {
         if (contactItem) {
             const username = contactItem.id.split('-')[1];
             if (username) {
-                navigate(username);
+                navigate(username).finally();
                 return;
             }
         }
@@ -42,7 +47,7 @@ export const ContactList = () => {
             if (contactItem) {
                 const username = contactItem.id.split('-')[1];
                 if (username) {
-                    navigate(username);
+                    navigate(username).finally();
                     return;
                 }
             }

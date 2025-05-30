@@ -1,0 +1,18 @@
+<div class="invitation-link">
+    <div class="invite-popup__link-label">Ссылка для приглашения:</div>
+    <div class="invite-popup__link-input" id="invite-link-{{id}}">{{link}}</div>
+    <div class="invitation-link__text{{#if exceeded}}_exceeded{{/if}}">
+        {{#if time_limit}}
+            Перестанет действовать {{time_limit}}
+        {{/if}}
+    </div>
+    <div class="invitation-link__text{{#if exceeded}}_exceeded{{/if}}">
+        {{#if has_usage_limit}}
+            Использовано {{usage_count}} из {{usage_limit}} приглашений
+        {{/if}}
+    </div>
+    {{#if noLimit}}
+        <div class="hidden">placeholder</div>
+    {{/if}}
+    <img src="/public/icons/delete-black.svg" alt="delete invitation" class="invitation-link__delete-button">
+</div>

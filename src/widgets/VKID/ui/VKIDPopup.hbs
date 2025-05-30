@@ -2,10 +2,13 @@
 <div class="VKID-popup" id="popup">
     <div>
         <h1 class="auth-page-header">Почти готово</h1>
-        <label for='' class="subheader">Еще немного и вы с flow</label>
+        <div class="subheader">Еще немного и вы с flow</div>
     </div>
-    <form id="username-form">
+    <form id="username-form" class="VKID-form">
         <div class="input-placeholder"></div>
+        {{#if second}}
+            <div class="input-placeholder"></div>
+        {{/if}}
     </form>
     <button
             class="VKID-popup__button"

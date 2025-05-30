@@ -12,30 +12,17 @@
         background-color: #252525;
         padding: 32px 68px;
         color: $white;
-
-        .input-container {
-            margin-top: $spacing-md;
-        }
-
         transform: translate(100%, 0);
         animation: FadeInHorizontalRight 0.3s ease-out forwards;
 
         @keyframes FadeInHorizontalRight {
-            from {
-                transform: translateX(100%);
-            }
-            to {
-                transform: translateX(0);
-            }
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
         }
 
         @keyframes FadeOutHorizontalRight {
-            from {
-                transform: translateX(0);
-            }
-            to {
-                transform: translateX(100%);
-            }
+            from { transform: translateX(0); }
+            to { transform: translateX(100%); }
         }
     }
 
@@ -53,7 +40,7 @@
         margin-top: $spacing-sm;
     }
 
-    &__delete-button, &__confirm-button {
+    &__delete-button, &__confirm-button, &__invite-button, &__link-management {
         @include button;
         cursor: pointer;
         display: flex;
@@ -75,7 +62,7 @@
         border: none;
         border-radius: $border-radius;
         transition: all ease 0.3s;
-        margin-top: 120px;
+        margin-top: $spacing-xxl;
 
         &:hover {
             color: $black;
@@ -84,6 +71,7 @@
     }
 
     &__close-button {
+        @include icon;
         cursor: pointer;
     }
 
@@ -92,11 +80,34 @@
     }
 }
 
+.coauthors-section {
+    margin-top: $spacing-lg;
+    margin-bottom: $spacing-lg;
+
+    &__title {
+        font-size: 18px;
+        margin-bottom: $spacing-md;
+    }
+
+    &__list {
+        @include popup-scroll(#252525, #888);
+        max-height: 250px;
+        overflow-y: auto;
+        padding-right: $spacing-xs;
+    }
+}
+
 @media (max-width: $mobile-width) {
     .board-settings {
         &-container {
             width: 100vw;
             padding: 32px $mobile-horizontal-padding;
+            display: flex;
+            justify-content: center;
+        }
+
+        &-wrapper {
+            width: clamp(200px, 90%, 440px);
         }
     }
 }

@@ -9,55 +9,55 @@
     border-radius: $border-radius;
     padding: 16px;
     position: relative;
-    
+
     &__avatar {
         @include profile-picture-small;
         @include flex-center;
     }
-    
+
     &__short-username {
         color: #fff;
         font-weight: bold;
     }
-    
+
     &__content {
         flex-grow: 1;
     }
-    
+
     &__header {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
         margin-bottom: 8px;
     }
-    
+
     &__author-info {
         display: flex;
         align-items: baseline;
         gap: 8px;
     }
-    
+
     &__author {
         font-weight: bold;
         font-size: 16px;
     }
-    
+
     &__username {
         color: #999;
         font-size: 14px;
     }
-    
+
     &__actions {
         position: relative;
     }
-    
+
     &__actions-icon {
         @include icon;
         width: 16px;
         height: 16px;
         cursor: pointer;
     }
-    
+
     &__actions-menu {
         position: absolute;
         top: 100%;
@@ -72,26 +72,26 @@
     &__actions-menu.active {
         display: block;
     }
-    
+
     &__action-item {
         border-radius: $border-radius;
         padding: 8px 16px;
         cursor: pointer;
-        
+
         &:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
     }
-    
+
     &__action-delete {
         color: #ff6b6b;
     }
-    
+
     &__text {
         margin-bottom: 12px;
         white-space: pre-wrap;
     }
-    
+
     &__footer {
         display: flex;
         justify-content: space-between;
@@ -99,7 +99,7 @@
         color: #999;
         font-size: 14px;
     }
-    
+
     &__like-button {
         @include button;
         display: flex;
@@ -107,11 +107,11 @@
         gap: 8px;
         cursor: pointer;
     }
-    
+
     &__like-count {
         min-width: 20px;
     }
-    
+
     &__date {
         font-size: 12px;
     }
@@ -136,10 +136,13 @@
     .comments-section {
         padding: 0 $mobile-horizontal-padding;
     }
-    
+
     .comment-form {
         flex-direction: column;
-        
+
+    .comment {
+        flex-direction: column;
+
         &__avatar {
             align-self: flex-start;
         }

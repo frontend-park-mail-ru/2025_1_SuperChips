@@ -1,16 +1,38 @@
 import { debounce } from 'shared/utils';
 import { toggleInputError } from 'shared/components/input';
-import { validateUsername } from 'shared/validation';
+import { validateEmail, validateUsername } from 'shared/validation';
 
-const VKIDButtonHandler = () => {
+const VKIDValidate = () => {
     const submitButton = document.querySelector<HTMLButtonElement>('.VKID-popup__button');
     const usernameInput = document.querySelector<HTMLInputElement>('#VKID-username');
-    const container = usernameInput?.closest('.input-container');
-    if (!usernameInput || !container || !submitButton) return;
+    const usernameContainer = usernameInput?.closest('.input-container');
+    const emailInput = document.querySelector<HTMLInputElement>('#VKID-email');
+    const emailContainer = emailInput?.closest('.input-container');
 
-    const result = validateUsername(usernameInput.value);
-    toggleInputError(container, result);
-    submitButton.disabled = !result.isValid;
+    if (!usernameInput || !usernameContainer || !submitButton || !emailContainer || !emailInput) return;
+
+    const usernameResult = validateUsername(usernameInput.value);
+    const emailResult = validateEmail(emailInput.value);
+
+    toggleInputError(usernameContainer, usernameResult);
+    toggleInputError(emailContainer, emailResult);
+    submitButton.disabled = !(usernameResult.isValid && emailResult.isValid);
 };
 
-export const debouncedVKIDButtonHandler = debounce(VKIDButtonHandler, 300);
+export const VKIDValidation = debounce(VKIDValidate, 300);
+
+
+const VKIDValidateUsername = () => {
+    const submitButton = document.querySelector<HTMLButtonElement>('.VKID-popup__button');
+    const usernameInput = document.querySelector<HTMLInputElement>('#VKID-username');
+    const usernameContainer = usernameInput?.closest('.input-container');
+
+    if (!usernameInput || !usernameContainer || !submitButton) return;
+
+    const usernameResult = validateUsername(usernameInput.value);
+
+    toggleInputError(usernameContainer, usernameResult);
+    submitButton.disabled = !usernameResult.isValid;
+};
+
+export const VKIDUsernameValidation = debounce(VKIDValidateUsername, 300);
