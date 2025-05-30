@@ -19,13 +19,13 @@ interface ICoauthorCardProps {
 export const CoauthorCard = (props: ICoauthorCardProps) => {
     if (!Auth.userData) return;
 
-    const { isCreator, boardId, userId, onRemove } = props;
+    const { isCreator, boardId, username, onRemove } = props;
     
     const card = document.createElement('div');
     card.classList.add('coauthor-card');
 
-    const currentUserId = Auth?.userData?.id;
-    const isCurrentUser = currentUserId === userId;
+    const currentUsername = Auth?.userData?.username;
+    const isCurrentUser = currentUsername === username;
 
     const config = {
         ...props,
@@ -39,7 +39,7 @@ export const CoauthorCard = (props: ICoauthorCardProps) => {
     const actionButton = card.querySelector('.coauthor-card__action');
     if (config.canRemove && actionButton) {
         actionButton.addEventListener('click', async () => {
-            const response = await API.delete(`/boards/${boardId}/coauthors`, { name: userId });
+            const response = await API.delete(`/boards/${boardId}/coauthors`, { name: username });
             if (response instanceof Response && response.ok) {
                 Toast('Соавтор удален', 'success');
                 if (onRemove) onRemove();
