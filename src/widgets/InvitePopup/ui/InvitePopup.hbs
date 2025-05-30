@@ -8,6 +8,8 @@
         <div class="invite-popup__link-container">
             <div class="invite-popup__link-label">Ссылка для приглашения:</div>
             <div class="invite-popup__link-input" id="invite-link"></div>
+            {{#if noLink}}
+                <span class="invite-popup__link-label" id="invite-warning">Соавторам будут видны приватные flow на этой доске</span>{{/if}}
         </div>
 
         <button class="invite-popup__create-button" id="create-link-button">

@@ -17,7 +17,7 @@ export const Board = (params: IBoardProps) => {
 
     const config = {
         ...params,
-        preview: ['', '', ''],
+        preview: [{ link: '', is_nsfw: false }, {}, {}],
         is_private: params.is_private && params.own,
         mutable: params.own && !params.permanent && isAuthor,
         flowCountPluralized: '',
@@ -31,7 +31,8 @@ export const Board = (params: IBoardProps) => {
             if (!params.preview[i].media_url.includes(URL)) {
                 params.preview[i].media_url = URL + params.preview[i].media_url;
             }
-            config.preview[i] = (params.preview[i].media_url);
+            config.preview[i].link = (params.preview[i].media_url);
+            config.preview[i].is_nsfw = (params.preview[i].is_nsfw);
         }
     }
 

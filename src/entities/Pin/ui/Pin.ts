@@ -22,8 +22,6 @@ export const Pin = (params: IPinProps) => {
         mobile: appState.mobile,
     };
 
-
-
     container.innerHTML = template(config);
 
     const pin = container.querySelector('.pin') as HTMLDivElement;
@@ -36,8 +34,7 @@ export const Pin = (params: IPinProps) => {
             NSFWPopup(config.pinID);
             return;
         }
-        const URI = params.boardID ? `flow/${config.pinID}?boardID=${params.boardID}` : `flow/${config.pinID}`;
-        navigate(URI).finally();
+        navigate(`flow/${config.pinID}`).finally();
     });
 
 

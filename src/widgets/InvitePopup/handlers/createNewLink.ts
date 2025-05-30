@@ -3,7 +3,7 @@ import { API } from 'shared/api';
 
 const errorMessage = 'Ошибка при создании новой ссылки';
 
-export const createNewLink = async (boardID: number) => {
+export const createNewLink = async (boardID: number, hasLinks: boolean = false) => {
     const popup = document.querySelector('.invite-popup');
     const linkField = popup?.querySelector('.invite-popup__link-input');
 
@@ -47,15 +47,16 @@ export const createNewLink = async (boardID: number) => {
         return;
     }
 
-    const newFullInviteLink = `${window.location.origin}/invite/${newInviteId}`;
-    if (linkField) {
-        linkField.textContent = newFullInviteLink;
-        Toast('Новая ссылка создана', 'success');
+    linkField.textContent = `${window.location.origin}/invite/${newInviteId}`;
+    Toast('Новая ссылка создана', 'success');
 
-        const copyButton = popup.querySelector<HTMLButtonElement>('#copy-button');
-        if (copyButton) {
-            copyButton.disabled = false;
-        }
-        return;
+    if (!hasLinks) {
+        document.querySelector('#invite-warning')?.classList.add('hidden');
     }
+
+    const copyButton = popup.querySelector<HTMLButtonElement>('#copy-button');
+    if (copyButton) {
+        copyButton.disabled = false;
+    }
+    return;
 };

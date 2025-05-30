@@ -12,7 +12,18 @@ export const InvitePopup = async (boardID: number) => {
     BoardSettingsState.createMenuOpen = true;
 
     const popup = document.createElement('div');
-    popup.innerHTML = popupTemplate({});
+
+    const response = await API.get(`/boards/${boardID}/invites`);
+    let inviteId = '';
+
+    if ((response instanceof Response && response.ok)) {
+        const body = await response.json();
+        if (body.data?.links?.length > 0) {
+            inviteId = body.data.links[0]?.link;
+        }
+    }
+
+    popup.innerHTML = popupTemplate({ noLink: !(response instanceof Response && response.ok) });
 
     const advancedToggle = popup.querySelector('.invite-popup__advanced-toggle');
     const settingsSection = popup.querySelector<HTMLElement>('.invite-popup__settings');
@@ -25,15 +36,6 @@ export const InvitePopup = async (boardID: number) => {
         }
     });
 
-    const response = await API.get(`/boards/${boardID}/invites`);
-    let inviteId = '';
-
-    if ((response instanceof Response && response.ok)) {
-        const body = await response.json();
-        if (body.data?.links?.length > 0) {
-            inviteId = body.data.links[0]?.link;
-        }
-    }
 
     const link = `${window.location.origin}/invite/${inviteId}`;
     const linkField = popup.querySelector('#invite-link');
