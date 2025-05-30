@@ -4,14 +4,14 @@ import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
 import './CoauthorCard.scss';
 import template from './CoauthorCard.hbs';
+import { navigate } from 'shared/router';
 
 
 interface ICoauthorCardProps {
     username: string;
     avatar?: string;
-    isCreator: boolean;
+    creator: string;
     boardId: number;
-    userId: string;
     onRemove?: () => void;
 }
 
@@ -19,13 +19,14 @@ interface ICoauthorCardProps {
 export const CoauthorCard = (props: ICoauthorCardProps) => {
     if (!Auth.userData) return;
 
-    const { isCreator, boardId, username, onRemove } = props;
+    const { creator, boardId, username, onRemove } = props;
     
     const card = document.createElement('div');
     card.classList.add('coauthor-card');
 
-    const currentUsername = Auth?.userData?.username;
+    const currentUsername = Auth.userData.username;
     const isCurrentUser = currentUsername === username;
+    const isCreator = creator === currentUsername;
 
     const config = {
         ...props,
@@ -53,6 +54,11 @@ export const CoauthorCard = (props: ICoauthorCardProps) => {
             showLeaveConfirmation(boardId, onRemove);
         });
     }
+
+    card.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).classList.contains('coauthor-card__action')) return;
+        navigate(`${props.username}`).finally();
+    });
 
     return card;
 };

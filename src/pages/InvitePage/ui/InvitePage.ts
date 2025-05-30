@@ -62,7 +62,8 @@ export const InvitePage = async () => {
         BoardStorage.fetchUserBoards().finally();
         const body = await response.json();
         if (body?.data?.board_id) {
-            navigate(`/board/${body.data.board_id}`, true).finally();
+            navigate(`board/${body.data.board_id}`, true).finally();
+            return; 
         }
         navigate(`${Auth.userData.username}/boards`).finally();
     }

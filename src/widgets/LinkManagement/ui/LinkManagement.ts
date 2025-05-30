@@ -1,6 +1,7 @@
 import { formatDateToReadable } from 'shared/utils';
 import { Toast } from 'shared/components/Toast';
 import { API } from 'shared/api';
+import { BoardSettingsState } from 'widgets/BoardSettings';
 import './LinkManagement.scss';
 import template from './LinkManagement.hbs';
 
@@ -68,7 +69,7 @@ export const LinkManagement = async (boardID: number) => {
         return;
     }
 
-
+    BoardSettingsState.invitesOpen = true;
     popup.innerHTML += template(config);
 
     popup.addEventListener('click', async (e) => {
@@ -89,16 +90,15 @@ export const LinkManagement = async (boardID: number) => {
                 popup.insertAdjacentHTML('beforeend', '<div>У вас нет активных приглашений</div>');
             }
             return;
-        } else {
-            // todo remove
-            Toast('Окак', 'message');
         }
     });
 
     const close = (e: Event) => {
+        e.stopPropagation();
         if (!popup.contains(e.target as Node)) {
             popup.remove();
             document.removeEventListener('click', close);
+            BoardSettingsState.invitesOpen = false;
         }
     };
     document.addEventListener('click', close);
@@ -106,7 +106,9 @@ export const LinkManagement = async (boardID: number) => {
     const closeButton = popup.querySelector('.popup__close');
     closeButton?.addEventListener('click', (e) => {
         e.stopPropagation();
+        document.removeEventListener('click', close);
         popup.remove();
+        BoardSettingsState.invitesOpen = false;
     });
 
     return popup;

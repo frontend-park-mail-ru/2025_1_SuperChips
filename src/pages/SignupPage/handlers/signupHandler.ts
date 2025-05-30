@@ -1,5 +1,4 @@
 import { validateSignup } from '../lib/signupValidation';
-import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { getInputData } from '../lib/getInputData';
 
@@ -32,7 +31,7 @@ export const signupHandler = async (event: SubmitEvent): Promise<void> => {
         emailIcon.classList.remove('hidden');
         usernameIcon.classList.remove('hidden');
     } else {
-        navigate('feed').finally();
+        history.back();
         return;
     }
 };

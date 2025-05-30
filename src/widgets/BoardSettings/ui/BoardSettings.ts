@@ -15,6 +15,17 @@ import template from './BoardSettings.hbs';
 import './BoardSettings.scss';
 
 
+export const BoardSettingsState = {
+    invitesOpen: false,
+    createMenuOpen: false,
+};
+
+interface ICoauthorModel {
+    username: string;
+    public_name: string;
+    avatar: string;
+}
+
 export const BoardSettings = () => {
     const settings = document.createElement('div');
     settings.id = 'board-settings';
@@ -61,7 +72,8 @@ export const BoardSettings = () => {
         confirmBoardDelete(board.id)
             .then(() => navigate(`${Auth?.userData?.username}/boards`, true).finally())
             .catch(() => {
-            });
+            }
+            );
     });
 
     const submitButton = settings.querySelector('.board-settings__submit-button');
@@ -73,6 +85,7 @@ export const BoardSettings = () => {
 
     const linkManageButton = settings.querySelector('#links');
     linkManageButton?.addEventListener('click', async () => {
+        if (BoardSettingsState.invitesOpen) return;
         const linkManageWidget = await LinkManagement(board.id);
         if (linkManageWidget) {
             document.querySelector('#root')?.appendChild(linkManageWidget);
@@ -99,7 +112,7 @@ const loadCoauthors = async (boardId: number, container: HTMLElement) => {
     // Clear existing coauthors
     coauthorsList.innerHTML = '';
 
-    if (body?.data?.names.length === 0) {
+    if (!body.data?.coauthors) {
         const emptyMessage = document.createElement('div');
         emptyMessage.textContent = 'У этой доски пока нет соавторов';
         emptyMessage.style.color = '#999';
@@ -109,14 +122,15 @@ const loadCoauthors = async (boardId: number, container: HTMLElement) => {
     }
 
     // Render all coauthors
-    if (!body.data?.names) return;
-    body.data.names.forEach((coauthor: string) => {
+    if (!body.data?.coauthors) return;
+    const creator = body.data.author.username;
+
+    body.data.coauthors.forEach((item: ICoauthorModel) => {
         const coauthorCard = CoauthorCard({
-            username: coauthor,
-            avatar: '', // API doesn't provide avatar information
-            isCreator: false,
+            username: item.username,
+            avatar: item.avatar,
+            creator: creator,
             boardId: boardId,
-            userId: coauthor,
             onRemove: () => loadCoauthors(boardId, container) // Reload coauthors after removal
         });
 

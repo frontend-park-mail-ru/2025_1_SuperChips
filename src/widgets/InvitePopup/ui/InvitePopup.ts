@@ -2,15 +2,18 @@ import { createNewLink } from '../handlers/createNewLink';
 import { Toast } from 'shared/components/Toast';
 import { API } from 'shared/api';
 import { root } from 'app/app';
+import { BoardSettingsState } from 'widgets/BoardSettings';
 import popupTemplate from './InvitePopup.hbs';
 import './InvitePopup.scss';
 
 
 export const InvitePopup = async (boardID: number) => {
+    if (BoardSettingsState.createMenuOpen) return;
+    BoardSettingsState.createMenuOpen = true;
+
     const popup = document.createElement('div');
     popup.innerHTML = popupTemplate({});
 
-    const closeButton = popup.querySelector('.invite-popup__close-button');
     const advancedToggle = popup.querySelector('.invite-popup__advanced-toggle');
     const settingsSection = popup.querySelector<HTMLElement>('.invite-popup__settings');
     const createButton = popup.querySelector('#create-link-button');
@@ -20,10 +23,6 @@ export const InvitePopup = async (boardID: number) => {
         if (settingsSection) {
             settingsSection.style.display = settingsSection.style.display === 'none' ? 'block' : 'none';
         }
-    });
-
-    closeButton?.addEventListener('click', () => {
-        popup.remove();
     });
 
     const response = await API.get(`/boards/${boardID}/invites`);
@@ -69,12 +68,21 @@ export const InvitePopup = async (boardID: number) => {
     });
 
     const close = (e: Event) => {
+        e.stopPropagation();
         if (!popup.contains(e.target as Node)) {
             popup.remove();
             document.removeEventListener('click', close);
+            BoardSettingsState.createMenuOpen = false;
         }
     };
     document.addEventListener('click', close);
+
+    const closeButton = popup.querySelector('.invite-popup__close-button');
+    closeButton?.addEventListener('click', () => {
+        document.removeEventListener('click', close);
+        BoardSettingsState.createMenuOpen = false;
+        popup.remove();
+    });
 
     root.appendChild(popup);
 };
