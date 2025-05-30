@@ -1,17 +1,15 @@
 import { Toast } from 'shared/components/Toast';
 import { API } from 'shared/api';
-import { BoardStorage } from 'features/boardLoader';
 
-
-export const showLeaveConfirmation = (boardId: number) => {
+export const showRemoveConfirmation = (boardID: number, card: HTMLElement, username: string) => {
     const popup = document.createElement('div');
     popup.className = 'leave-confirmation-popup';
 
     popup.innerHTML = `
-    <div class="leave-confirmation__message">Вы уверены, что хотите покинуть доску?</div>
+    <div class="leave-confirmation__message">Вы уверены, что хотите удалить соавтора?</div>
     <div class="leave-confirmation__buttons">
         <div class="leave-confirmation__button--cancel">Отмена</div>
-        <div class="leave-confirmation__button--confirm">Покинуть</div>
+        <div class="leave-confirmation__button--confirm">Удалить</div>
     </div>        
     `;
 
@@ -22,17 +20,16 @@ export const showLeaveConfirmation = (boardId: number) => {
 
     const confirmButton = popup.querySelector('.leave-confirmation__button--confirm');
     confirmButton?.addEventListener('click', async () => {
-        const response = await API.delete(`/boards/${boardId}/coauthoring`);
+        const response = await API.delete(`/boards/${boardID}/coauthors`, { name: username });
         if (response instanceof Response && response.ok) {
-            Toast('Вы покинули доску', 'success');
-            document.querySelector('.board-settings__close-button')?.dispatchEvent(new Event('click'));
-            document.querySelector('.board__settings-button')?.remove();
-            BoardStorage.removeBoard(boardId);
+            Toast('Соавтор удален', 'success');
+            card.remove();
         } else {
-            Toast('Ошибка при выходе из доски', 'error');
+            Toast('Ошибка при удалении соавтора', 'error');
         }
         popup.remove();
     });
 
     document.body.appendChild(popup);
 };
+

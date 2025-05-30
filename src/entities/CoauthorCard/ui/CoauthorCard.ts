@@ -1,7 +1,6 @@
-import { Toast } from 'shared/components/Toast';
 import { showLeaveConfirmation } from '../handlers/showLeaveConfirmation';
+import { showRemoveConfirmation } from '../handlers/showRemoveConfirmation';
 import { navigate } from 'shared/router';
-import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
 import './CoauthorCard.scss';
 import template from './CoauthorCard.hbs';
@@ -19,7 +18,7 @@ interface ICoauthorCardProps {
 export const CoauthorCard = (props: ICoauthorCardProps) => {
     if (!Auth.userData) return;
 
-    const { creator, boardId, username, onRemove } = props;
+    const { creator, boardId, username } = props;
     
     const card = document.createElement('div');
     card.classList.add('coauthor-card');
@@ -41,14 +40,7 @@ export const CoauthorCard = (props: ICoauthorCardProps) => {
     const actionButton = card.querySelector('.coauthor-card__action');
     if (config.canRemove && actionButton) {
         actionButton.addEventListener('click', async () => {
-            const response = await API.delete(`/boards/${boardId}/coauthors`, { name: username });
-            if (response instanceof Response && response.ok) {
-                Toast('Соавтор удален', 'success');
-                if (onRemove) onRemove();
-                card.remove();
-            } else {
-                Toast('Ошибка при удалении соавтора', 'error');
-            }
+            showRemoveConfirmation(boardId, card, username);
         });
     } else if (config.canLeave && actionButton) {
         actionButton.addEventListener('click', () => {
