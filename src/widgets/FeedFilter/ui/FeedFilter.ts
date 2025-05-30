@@ -1,7 +1,6 @@
 import { clearSearch, search } from 'widgets/navbar';
 import { handleFeedRadioButtons } from '../handlers/handleFeedRadioButtons';
 import { handleResetFilters } from '../handlers/handleResetFilters';
-import { searchFeedState } from 'pages/FeedPage';
 import { appState } from 'shared/router';
 import './FeedFilter.scss';
 import template from './FeedFilter.hbs';
@@ -13,7 +12,7 @@ export const FeedFilter = () => {
     container.classList.add('active');
     container.id = 'feed-filter';
 
-    const filter = searchFeedState.filter;
+    const filter = appState.search.filter;
 
     const config = {
         mobile: appState.mobile,

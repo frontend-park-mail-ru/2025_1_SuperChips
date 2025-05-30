@@ -1,14 +1,17 @@
 import { Masonry } from 'shared/models/Masonry';
 import type { IUser } from 'entities/User';
+import type { IPinProps } from 'entities/Pin';
+import type { IBoardProps } from 'entities/Board';
+import type { IUserCardProps } from 'entities/UserCard';
 import { omit } from 'shared/utils';
 import { findMatch } from './findMatch';
 import { updateBars } from './updateBars';
 import { closeFilter, closeNotifications, openFilter } from 'widgets/navbar';
-import { searchFeedState } from 'pages/FeedPage';
 import { root } from 'app/app';
 import { config } from 'shared/config/router';
 import { removeScrollHandler } from 'features/scrollHandler';
 
+export type FilterType = 'boards' | 'flows' | 'users';
 
 interface AppState {
     lastPage: string | null,
@@ -37,8 +40,20 @@ interface AppState {
     sharing: {
         open: boolean,
         id: string | null,
-    }
+    },
+    search: {
+        page: number
+        query: string,
+        lastQuery: string,
+        filter: FilterType,
+        notFound: boolean,
+        isFiltered: boolean,
+        loadedPins: IPinProps[],
+        loadedBoards: IBoardProps[],
+        loadedUsers: IUserCardProps[]
+    },
 }
+
 
 export const appState: AppState = {
     lastPage: null,
@@ -67,6 +82,17 @@ export const appState: AppState = {
     notification: {
         open: false,
         hasUnread: false,
+    },
+    search: {
+        page: 1,
+        query: '',
+        lastQuery: '',
+        filter: 'flows',
+        notFound: false,
+        isFiltered: false,
+        loadedPins: [],
+        loadedBoards: [],
+        loadedUsers: [],
     },
 };
 
@@ -192,8 +218,9 @@ const cleanup = (newHref: string) => {
 
     const searchInput = document.querySelector<HTMLInputElement>('#search');
     if (searchInput && appState.lastPage === 'feed') {
+        appState.search.lastQuery = searchInput.value;
         searchInput.value = '';
-        searchFeedState.query = '';
+        appState.search.query = '';
         document.querySelector('.search-form__clear')?.classList.add('hidden');
     }
 
