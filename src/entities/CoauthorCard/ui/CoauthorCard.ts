@@ -52,7 +52,7 @@ export const CoauthorCard = (props: ICoauthorCardProps) => {
         });
     } else if (config.canLeave && actionButton) {
         actionButton.addEventListener('click', () => {
-            showLeaveConfirmation(boardId, onRemove);
+            showLeaveConfirmation(boardId);
         });
     }
 

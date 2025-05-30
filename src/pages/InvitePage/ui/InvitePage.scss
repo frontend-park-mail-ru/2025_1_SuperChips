@@ -35,7 +35,7 @@
     }
 
     &__accept, &__decline {
-        width: 80px;
+        width: 120px;
         height: 44px;
         border-radius: $border-radius;
         display: flex;
@@ -52,8 +52,3 @@
         background-color: #eee;
     }
 }
-
-//            <div class="invite-page__buttons">
-//                <div class="invite-page__accept" id="accept">ОК</div>
-//                <div class="invite-page__decline" id="decline">Окак</div>
-//            </div>

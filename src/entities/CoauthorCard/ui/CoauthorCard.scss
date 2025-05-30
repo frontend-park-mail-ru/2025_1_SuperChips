@@ -51,22 +51,26 @@
 }
 
 .leave-confirmation {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
+    &-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 320px;
+        height: auto;
+        border-radius: $border-radius;
+        padding: $spacing-lg $spacing-md;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+    }
 
     &__message {
         background-color: $white;
         color: $black;
-        padding: $spacing-lg;
         border-radius: $border-radius;
         text-align: center;
         font-size: 18px;
@@ -77,24 +81,26 @@
     &__buttons {
         display: flex;
         gap: $spacing-md;
+        width: 100%;
+        justify-content: space-evenly;
     }
 
-    &__button {
+    &__button--cancel, &__button--confirm {
         padding: $spacing-sm $spacing-md;
         border-radius: $border-radius;
         border: none;
         cursor: pointer;
         font-weight: bold;
+    }
 
-        &--cancel {
-            background-color: $disabled-color;
-            color: $black;
-        }
+    &__button--cancel {
+        background-color: $disabled-color;
+        color: $black;
+    }
 
-        &--confirm {
-            background-color: $error-color;
-            color: $white;
-        }
+    &__button--confirm {
+        background-color: $error-color;
+        color: $white;
     }
 }
 
@@ -119,8 +125,6 @@
 
     .leave-confirmation {
         &__message {
-            padding: $spacing-md;
-            font-size: 16px;
             max-width: 300px;
         }
     }

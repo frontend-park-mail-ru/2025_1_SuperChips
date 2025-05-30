@@ -35,8 +35,25 @@ export const findMatch = async (page: string) => {
     if (match === 'profile' || match === 'profilePins' || match === 'profileBoards') {
         const username = page.split('/')[0];
 
-        const userExists = await API.head(`/api/v1/users/${username}`);
+        const userExists = await API.head(`/users/${username}`);
         if (userExists instanceof Error || !userExists.ok) {
+            match = 'notFound';
+        }
+    }
+
+    if (match === 'board') {
+        const board = page.split('/')[1];
+        const boardExists = await API.get(`/boards/${board}`);
+        if (boardExists instanceof Error || !boardExists.ok) {
+            match = 'notFound';
+        }
+    }
+
+    if (match === 'pin') {
+        const pin = page.split('/')[1].split('?')[0];
+
+        const pinExists = await API.get(`/flows?id=${pin}`);
+        if (pinExists instanceof Error || !pinExists.ok) {
             match = 'notFound';
         }
     }

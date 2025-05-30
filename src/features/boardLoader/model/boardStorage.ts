@@ -51,6 +51,9 @@ class boardStorage {
 
     //  Удаляет доску из хранилища
     removeBoard(boardID: number) {
+        if (this.boardToSave === this.getBoardByID(boardID)?.name) {
+            this.boardToSave = USER_SAVED_PINS_BOARD;
+        }
         this.ownBoardList = this.ownBoardList.filter((item: IBoardProps) => item.id !== boardID);
     }
 
