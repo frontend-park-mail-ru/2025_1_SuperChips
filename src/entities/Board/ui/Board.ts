@@ -2,6 +2,7 @@ import type { IBoardProps } from '../model/types';
 import { pluralize } from 'shared/utils';
 import { BoardPopup } from 'widgets/BoardPopup';
 import { appState, navigate } from 'shared/router';
+import { Auth } from 'features/authorization';
 import BoardTemplate from './Board.hbs';
 import './Board.scss';
 
@@ -12,11 +13,13 @@ import './Board.scss';
 export const Board = (params: IBoardProps) => {
     const container = document.createElement('div');
 
+    const isAuthor = Auth.userData?.id === params?.author_id;
+
     const config = {
         ...params,
         preview: ['', '', ''],
         is_private: params.is_private && params.own,
-        mutable: params.own && !params.permanent,
+        mutable: params.own && !params.permanent && isAuthor,
         flowCountPluralized: '',
         mobile: appState.mobile,
     };
