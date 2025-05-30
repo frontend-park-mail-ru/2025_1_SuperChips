@@ -6,7 +6,6 @@
     justify-content: center;
     min-height: 100vh;
     padding: 20px;
-    background-color: $white;
 
     &__content {
         text-align: center;
@@ -28,4 +27,33 @@
             margin: 0;
         }
     }
-} 
+
+    &__buttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__accept, &__decline {
+        width: 80px;
+        height: 44px;
+        border-radius: $border-radius;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    &__decline {
+        border: solid 2px $error-color
+    }
+
+    &__accept {
+        background-color: #eee;
+    }
+}
+
+//            <div class="invite-page__buttons">
+//                <div class="invite-page__accept" id="accept">ОК</div>
+//                <div class="invite-page__decline" id="decline">Окак</div>
+//            </div>

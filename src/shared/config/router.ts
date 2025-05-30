@@ -131,9 +131,6 @@ export const config: RouterConfig = {
             href: /^invite\/[a-zA-Z0-9-]+$/,
             title: 'Приглашение',
             render: InvitePage,
-            noNavbar: true,
-            noSidebar: true,
-            noBackButton: true,
         },
         notFound: {
             href: '/page/404',

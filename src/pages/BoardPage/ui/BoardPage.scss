@@ -48,7 +48,7 @@
     animation: gradientBG 8s ease infinite;
 
     &:hover::after {
-        content: "Попробуйте добавить flow на доску - цвет изменится";
+        content: "Добавьте flow на доску и цвет изменится";
         position: absolute;
         top: 150%;
         padding: 5px 10px;

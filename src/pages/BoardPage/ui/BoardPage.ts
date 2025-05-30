@@ -81,8 +81,10 @@ export const BoardPage = async (boardID: string) => {
     const scrollButton = page.querySelector<HTMLDivElement>('.scroll-to-top');
     scrollButton?.addEventListener('click', toTop);
 
+    const flag = body.data?.is_editable && body.data?.author_username === Auth.userData?.username;
+
     const settingsButton = page.querySelector('.board__settings-button');
-    settingsButton?.addEventListener('click', openBoardSettings);
+    settingsButton?.addEventListener('click', () => openBoardSettings(flag));
 
     const divider = page.querySelector<HTMLElement>('.divider');
     if (divider) {

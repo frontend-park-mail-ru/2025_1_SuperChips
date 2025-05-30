@@ -20,16 +20,24 @@
 .chat-list {
     @include flex-column;
     @include popup-scroll($gradient-dark, #888);
-    gap: 24px;
     height: 100%;
     overflow-y: scroll;
+    max-height: calc(100vh - $navbar-height);
 
     &-item {
         width: 100%;
         display: grid;
         grid-template-areas: 'pfp preview';
-        grid-template-columns: calc($profile-picture-size + $spacing-lg) 1fr;
+        grid-template-columns: calc($profile-picture-size + $spacing-lg) auto;
         cursor: pointer;
+
+        padding: $spacing-md;
+        border-radius: $border-radius;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: $semi-transparent;
+        }
     }
 
     &__profile-picture {

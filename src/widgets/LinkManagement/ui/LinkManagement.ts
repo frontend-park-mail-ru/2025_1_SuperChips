@@ -4,6 +4,7 @@ import { API } from 'shared/api';
 import { BoardSettingsState } from 'widgets/BoardSettings';
 import './LinkManagement.scss';
 import template from './LinkManagement.hbs';
+import { OneLink } from './OneLink';
 
 
 interface ILinkModel {
@@ -14,10 +15,11 @@ interface ILinkModel {
     usage_count?: number,
 }
 
-interface ILinkProps extends ILinkModel {
+export interface ILinkProps extends ILinkModel {
     id: string,
     exceeded: boolean,
     expired: boolean,
+    boardID: number,
 }
 
 
@@ -48,9 +50,10 @@ export const LinkManagement = async (boardID: number) => {
                 id: item.link,
                 link: `${window.location.origin}/invite/${item.link}`,
                 time_limit: item.time_limit ? formatDateToReadable(item.time_limit) : null,
-                usage_limit: item.usage_limit && item.usage_count,
+                has_usage_limit: !!item.usage_limit,
                 exceeded: (item.usage_limit && item.usage_count) && (item.usage_count >= item.usage_limit),
                 expired: item.time_limit ? new Date > new Date(item.time_limit) : null,
+                boardID: boardID,
             };
         })
     };
@@ -72,25 +75,8 @@ export const LinkManagement = async (boardID: number) => {
     BoardSettingsState.invitesOpen = true;
     popup.innerHTML += template(config);
 
-    popup.addEventListener('click', async (e) => {
-        const target = e.target as HTMLElement;
-        if (!target.classList.contains('invitation-link__delete-button')) return;
-
-        const id = target.id;
-
-        const response = await API.delete(`/boards/${boardID}/invites/${id}`);
-
-        if (!(response instanceof Response && response.ok)) {
-            Toast('Ошибка при удалении ссылки');
-            return;
-        } else if (response instanceof Response && response.ok) {
-            Toast('Ссылка успешно удалена', 'success');
-            target.closest('.invitation-link')?.remove();
-            if (document.querySelectorAll('.invitation-link').length === 0) {
-                popup.insertAdjacentHTML('beforeend', '<div>У вас нет активных приглашений</div>');
-            }
-            return;
-        }
+    config.links.forEach((item: ILinkProps) => {
+        popup.appendChild(OneLink(item));
     });
 
     const close = (e: Event) => {
@@ -110,6 +96,7 @@ export const LinkManagement = async (boardID: number) => {
         popup.remove();
         BoardSettingsState.invitesOpen = false;
     });
+
 
     return popup;
 };

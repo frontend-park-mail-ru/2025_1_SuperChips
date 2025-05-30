@@ -26,27 +26,38 @@ interface ICoauthorModel {
     avatar: string;
 }
 
-export const BoardSettings = () => {
+
+export const BoardSettings = (isAuthor: boolean) => {
     const settings = document.createElement('div');
     settings.id = 'board-settings';
-    const config = {};
+    const config = { isAuthor };
 
     settings.innerHTML = template(config);
 
     const inputPlaceholder = settings.querySelector('.input-placeholder');
     if (inputPlaceholder) {
-        inputPlaceholder.replaceWith(Input({
+        const newInput = Input({
             type: 'text',
             id: 'board-name',
             inputLabel: 'Название доски',
             errorMessage: '',
             maxlength: 63,
-        }));
+        });
+        const input = newInput.querySelector('input');
+        if (input) {
+            input.disabled = !isAuthor;
+        }
+        inputPlaceholder.replaceWith(newInput);
     }
 
     const togglePlaceholder = settings.querySelector('.toggle-placeholder');
     if (togglePlaceholder) {
-        togglePlaceholder.replaceWith(Toggle('isPrivate'));
+        const toggle = Toggle('isPrivate');
+        const checkbox = toggle.querySelector('input');
+        if (checkbox) {
+            checkbox.disabled = !isAuthor;
+        }
+        togglePlaceholder.replaceWith(toggle);
     }
 
     const closeButton = settings.querySelector('.board-settings__close-button');
@@ -72,8 +83,7 @@ export const BoardSettings = () => {
         confirmBoardDelete(board.id)
             .then(() => navigate(`${Auth?.userData?.username}/boards`, true).finally())
             .catch(() => {
-            }
-            );
+            });
     });
 
     const submitButton = settings.querySelector('.board-settings__submit-button');
@@ -97,6 +107,7 @@ export const BoardSettings = () => {
 
 
 const loadCoauthors = async (boardId: number, container: HTMLElement) => {
+    if (!Auth.userData) return;
     const response = await API.get(`/boards/${boardId}/coauthors`);
 
     if (!(response instanceof Response && response.ok)) {
@@ -124,6 +135,20 @@ const loadCoauthors = async (boardId: number, container: HTMLElement) => {
     // Render all coauthors
     if (!body.data?.coauthors) return;
     const creator = body.data.author.username;
+
+    if (body.data.author.username !== Auth.userData.username) {
+        const coauthorCard = CoauthorCard({
+            username: creator,
+            avatar: body.data.author.avatar,
+            creator: creator,
+            boardId: boardId,
+            onRemove: () => loadCoauthors(boardId, container) // Reload coauthors after removal
+        });
+
+        if (coauthorCard) {
+            coauthorsList.appendChild(coauthorCard);
+        }
+    }
 
     body.data.coauthors.forEach((item: ICoauthorModel) => {
         const coauthorCard = CoauthorCard({

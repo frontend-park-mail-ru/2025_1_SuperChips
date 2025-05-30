@@ -12,6 +12,7 @@
 
     &__avatar {
         @include profile-picture-small;
+        cursor: pointer;
 
         span {
             @include short-username;
@@ -22,6 +23,7 @@
         flex-grow: 1;
         font-size: 16px;
         color: $white;
+        cursor: pointer;
     }
 
     &__badge {

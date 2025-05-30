@@ -41,10 +41,7 @@ export const InvitePopup = async (boardID: number) => {
         linkField.textContent = link;
     }
 
-    const copyButton = popup.querySelector<HTMLButtonElement>('#copy-button');
-
-    copyButton?.addEventListener('click', () => {
-        if (copyButton.disabled) return;
+    linkField?.addEventListener('click', () => {
         const linkField = popup.querySelector<HTMLDivElement>('#invite-link');
         const link = linkField ? linkField.textContent : null;
 
@@ -58,10 +55,6 @@ export const InvitePopup = async (boardID: number) => {
                 });
         }
     });
-
-    if (!inviteId && copyButton) {
-        copyButton.disabled = true;
-    }
 
     createButton?.addEventListener('click', () => {
         createNewLink(boardID);

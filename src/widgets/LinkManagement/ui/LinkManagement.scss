@@ -22,14 +22,13 @@
 }
 
 .invitation-link {
-    background-color: #eee;
+    position: relative;
+    border: solid 2px #eee;
     border-radius: $border-radius;
     padding: $spacing-md $spacing-sm;
 
     &__link-field {
-        background-color: #fff;
         border-radius: $border-radius;
-        padding: $spacing-sm;
     }
 
     &__text {
@@ -41,13 +40,17 @@
     }
 
     &__delete-button {
-        color: $error-color;
+        position: absolute;
+        bottom: $spacing-md;
+        right: $spacing-sm;
         cursor: pointer;
     }
 }
 
 @media (max-width: $mobile-width) {
     .link-management {
-        width: clamp(200px, 90%, 440px);
+        width: 90vw;
+        padding: 24px;
+        max-height: 85vh;
     }
 }

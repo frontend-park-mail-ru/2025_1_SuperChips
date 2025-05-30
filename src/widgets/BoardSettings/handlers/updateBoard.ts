@@ -5,16 +5,18 @@ import { BoardStorage } from 'features/boardLoader';
 export const updateBoard = async () => {
     const input = document.querySelector<HTMLInputElement>('#board-name');
     const privateCheckbox = document.querySelector<HTMLInputElement>('#isPrivate');
-    const boardName = document.querySelector('#header');
-    if (!input || !privateCheckbox || !boardName) return;
+    const header = document.querySelector<HTMLSpanElement>('#board-header-text');
+    if (!input || !privateCheckbox || !header) return;
 
-    const board = BoardStorage.getBoardByName(boardName.textContent?.trim());
-    if (!board) return;
+    const boardName = header.textContent?.trim();
+    const board = BoardStorage.getBoardByName(boardName);
+
+    if (!board || !boardName) return;
 
     const newName = input.value.trim();
 
     const body = {
-        name: newName !== '' ? newName : boardName,
+        name: newName !== '' ? newName : header,
         is_private: privateCheckbox.checked,
     };
 
@@ -28,8 +30,8 @@ export const updateBoard = async () => {
     if (response instanceof Response && response.ok) {
         BoardStorage.updateBoard(board.id, { is_private: privateCheckbox.checked });
         if (boardName && newName !== '') {
-            BoardStorage.updateBoard(board.id, { is_private: privateCheckbox.checked });
-            boardName.textContent = newName;
+            BoardStorage.updateBoard(board.id, { name: newName });
+            header.innerHTML = newName;
         }
         Toast('Доска успешно обновлена', 'success');
     }

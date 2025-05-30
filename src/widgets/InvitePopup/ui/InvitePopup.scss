@@ -53,12 +53,6 @@
         margin-bottom: 8px;
     }
 
-    &__link-box {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-    }
-
     &__link-input {
         flex-grow: 1;
         height: $input-height;
@@ -71,6 +65,7 @@
         align-items: center;
         word-break: break-all;
         overflow-x: auto;
+        cursor: pointer;
 
         &::-webkit-scrollbar {
             height: 6px;
@@ -94,6 +89,10 @@
 
         scrollbar-width: thin;
         scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+
+        &:hover {
+            background-color: #eee;
+        }
     }
 
     &__copy-button {
@@ -157,9 +156,7 @@
         font-size: 14px;
         cursor: pointer;
         text-decoration: underline;
-        //padding: 8px 0;
         user-select: none;
-        //border-bottom: 1px solid #999;
         width: fit-content;
 
         &:hover {

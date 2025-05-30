@@ -62,7 +62,7 @@ class auth {
         if (login instanceof Response && login.ok) {
             const body = await login.json();
             await this.initUser(body.data.csrf_token);
-            await navigate('feed');
+            history.back();
         }
 
         return login;
@@ -97,7 +97,7 @@ class auth {
         if (register instanceof Response && register.ok) {
             const body = await register.json();
             await this.initUser(body.data.csrf_token);
-            navigate('feed').finally();
+            history.back();
         }
 
         return register;

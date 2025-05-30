@@ -24,15 +24,31 @@ export const InvitePage = async () => {
         return null;
     }
 
-    // todo -- добавляется только после выполнения всех запросов, из-за чего не имеет смысла
-    // Создаем интерфейс загрузки
     const container = document.createElement('div');
-    // container.innerHTML = `
-    //     <div class="invite-page__content">
-    //         <h1>Присоединение к доске</h1>
-    //         <p>Пожалуйста, подождите...</p>
-    //     </div>
-    // `;
+    container.innerHTML = `
+    <div class="invite-page">
+        <div class="invite-page__content">
+            <h1>Вас пригласили стать соавтором доски</h1>
+            <div class="invite-page__buttons">
+                <div class="invite-page__decline" id="decline">Отклонить</div>
+                <div class="invite-page__accept" id="accept">Принять</div>
+            </div>
+        </div>
+    </div>
+    `;
+
+    container.querySelector('.invite-page__accept')?.addEventListener('click', () => {
+        acceptHandler(inviteId);
+    });
+    container.querySelector('.invite-page__decline')?.addEventListener('click', () => {
+        navigate('feed', true);
+    });
+
+    return container;
+};
+
+const acceptHandler = async (inviteId: string) => {
+    if (!Auth.userData) return;
 
     const response = await API.post(`/join/${inviteId}`);
 
@@ -52,10 +68,10 @@ export const InvitePage = async () => {
         redirect = true;
     } else if (response.status === 410) {
         Toast('Срок действия ссылки истек', 'error');
-        navigate('feed').finally();
+        navigate('feed', true).finally();
     } else {
         Toast('Ошибка при присоединении к доске. Попробуйте позже');
-        navigate('feed').finally();
+        navigate('feed', true).finally();
     }
 
     if (redirect) {
@@ -63,10 +79,8 @@ export const InvitePage = async () => {
         const body = await response.json();
         if (body?.data?.board_id) {
             navigate(`board/${body.data.board_id}`, true).finally();
-            return; 
+            return;
         }
-        navigate(`${Auth.userData.username}/boards`).finally();
+        navigate(`${Auth.userData.username}/boards`, true).finally();
     }
-
-    return container;
-}; 
+};

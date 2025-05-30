@@ -1,10 +1,10 @@
 import { Toast } from 'shared/components/Toast';
 import { showLeaveConfirmation } from '../handlers/showLeaveConfirmation';
+import { navigate } from 'shared/router';
 import { API } from 'shared/api';
 import { Auth } from 'features/authorization';
 import './CoauthorCard.scss';
 import template from './CoauthorCard.hbs';
-import { navigate } from 'shared/router';
 
 
 interface ICoauthorCardProps {
@@ -33,6 +33,7 @@ export const CoauthorCard = (props: ICoauthorCardProps) => {
         shortUsername: props.username[0].toUpperCase(),
         canRemove: isCreator && !isCurrentUser,
         canLeave: !isCreator && isCurrentUser,
+        isCreator: props.creator === props.username,
     };
 
     card.innerHTML = template(config);

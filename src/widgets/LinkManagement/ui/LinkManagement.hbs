@@ -1,19 +1,2 @@
 <div class="header bold">Пригласительные ссылки</div>
 <img src="/public/icons/cross-grey.svg" alt="" class="popup__close">
-{{#each links}}
-    <div class="invitation-link">
-        <div class="invitation-link__link-field">{{this.link}}</div>
-
-        {{#if this.time_limit}}
-            <div class="invitation-link__text{{#if this.expired}}exceeded{{/if}}">
-                Истекает {{this.time_limit}}
-            </div>
-        {{/if}}
-        {{#if this.usage_limit}}
-            <div class="invitation-link__text{{#if this.exceeded}}_exceeded{{/if}}">
-                Использовано {{this.usage_count}} из {{this.usage_count}} приглашений
-            </div>
-        {{/if}}
-        <span class="invitation-link__delete-button" id="{{this.id}}">Удалить приглашение</span>
-    </div>
-{{/each}}
