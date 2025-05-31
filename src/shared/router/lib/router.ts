@@ -7,9 +7,9 @@ import { omit } from 'shared/utils';
 import { findMatch } from './findMatch';
 import { updateBars } from './updateBars';
 import { closeFilter, closeNotifications, openFilter } from 'widgets/navbar';
+import { removeScrollHandler } from 'features/scrollHandler';
 import { root } from 'app/app';
 import { config } from 'shared/config/router';
-import { removeScrollHandler } from 'features/scrollHandler';
 
 export type FilterType = 'boards' | 'flows' | 'users';
 
@@ -107,6 +107,10 @@ export const navigate = async (
 ): Promise<void> => {
     const match = await findMatch(page);
     const route = config.menu[match];
+
+    // if (appState.activePage !== 'feed' && appState.lastPage !== 'feed' && feedState.loadedPins.length > 0) {
+    //     feedState.loadedPins = feedState.loadedPins.slice(feedState.loadedPins.length - 120);
+    // }
 
     appState.lastPage = appState.activePage;
     appState.activePage = match;

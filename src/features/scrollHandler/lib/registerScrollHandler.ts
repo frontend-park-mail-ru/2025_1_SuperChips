@@ -1,10 +1,10 @@
 import { scrollHandler } from './scrollHandler';
-import { debounce } from 'shared/utils';
+import { throttle } from 'shared/utils';
 import { appState } from 'shared/router';
 
 
 export const registerScrollHandler = (filler: () => Promise<void | undefined | null>) => {
-    const handler = debounce((() => scrollHandler(filler)), 75);
+    const handler = throttle((() => scrollHandler(filler)), 150);
 
     if (appState.scrollHandler) {
         window.removeEventListener('scroll', appState.scrollHandler);
