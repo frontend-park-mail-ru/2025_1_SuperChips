@@ -49,6 +49,7 @@ export const Chat = async (chatID: string) => {
     const config = {
         ...chat,
         shortUsername: chat.username[0].toUpperCase(),
+        username: chat.public_name,
     };
 
     const chatWidget = document.createElement('div');
