@@ -1,6 +1,9 @@
 import { WEBSOCKET_URL } from 'shared/config/constants';
 import { NotificationStorage } from 'features/notification';
 import { ChatStorage } from 'features/chat';
+// import { API } from 'shared/api';
+// import { checkAvatar } from 'shared/utils';
+
 
 class WSInstance {
     ws: WebSocket;
@@ -11,7 +14,7 @@ class WSInstance {
     }
 
     initWS() {
-        this.ws.onmessage = (event: MessageEvent) => {
+        this.ws.onmessage = async (event: MessageEvent) => {
             try {
                 const body = JSON.parse(event.data);
                 if (body.type === 'message') {
@@ -22,6 +25,11 @@ class WSInstance {
                         timestamp: new Date(body.content.timestamp),
                     }).finally();
                 } else if (body.type === 'notification') {
+                    // if (!body.content.username.includes('https://sun1-97.userapi.com')) {
+                    //     if (!body.content.username.includes('https://yourflow.ru/static/avatars')) {
+                    //         body.content.username = 'https://yourflow.ru/static/avatars' + body.content.username;
+                    //     }
+                    // }
                     NotificationStorage.getNotification({
                         id: body.content.id.toString(),
                         timestamp: new Date(body.content.created_at),
