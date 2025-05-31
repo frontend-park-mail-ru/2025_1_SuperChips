@@ -7,7 +7,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: $board-popup-width;
-    height: $board-popup-height;
+    min-height: $board-popup-height;
     border-radius: $border-radius;
     padding: $spacing-xl $spacing-xxl;
     z-index: 1500;
@@ -34,20 +34,21 @@
             background-color: $disabled-color;
         }
     }
+}
 
-    .input-container {
-        margin-top: $spacing-sm;
-    }
+.VKID-form {
+    margin-top: $spacing-sm;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    width: 100%;
+    height: auto;
 }
 
 
 @media (max-width: $mobile-width) {
     .VKID-popup {
-        width: clamp(350px, 90%, 560px);
+        width: clamp(350px, 90%, 440px + 2 * $spacing-xl);
         padding: $spacing-lg $spacing-xl;
-
-        .input-container {
-            margin-top: $spacing-xl;
-        }
     }
 }

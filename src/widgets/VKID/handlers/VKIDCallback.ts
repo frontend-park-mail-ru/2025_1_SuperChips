@@ -13,8 +13,8 @@ export const VKIDOnSuccess = async (data: Omit<VKID.TokenResult, 'id_token'>) =>
         };
 
         const response = await Auth.VKIDLogin(body);
-        if (response instanceof Response && response.status === 404) {
-            VKIDPopup(data.access_token);
+        if (response instanceof Response && (response.status === 404 || response.status === 418)) {
+            VKIDPopup(data.access_token, response.status);
         } else if (!(response instanceof Response && response.ok)) {
             Toast('Ошибка при авторизации, попробуйте немного позже', 'error', 5000);
         }

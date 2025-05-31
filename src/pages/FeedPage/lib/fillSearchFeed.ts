@@ -2,48 +2,38 @@ import type { IUser } from 'entities/User';
 import type { IPicture } from 'features/imageLoader';
 import type { IPinProps } from 'entities/Pin';
 import { Pin } from 'entities/Pin';
+import type { FilterType } from 'shared/router';
+import { appState } from 'shared/router';
 import type { IBoardProps } from 'entities/Board';
 import { Board } from 'entities/Board';
+import type { IUserCardProps } from 'entities/UserCard';
+import { UserCard } from 'entities/UserCard';
 import { Masonry } from 'shared/models/Masonry';
 import { Toast } from 'shared/components/Toast';
-import { UserCard } from 'entities/UserCard';
 import { registerScrollHandler, removeScrollHandler } from 'features/scrollHandler';
 import { API } from 'shared/api';
-import { appState } from 'shared/router';
 import { Auth } from 'features/authorization';
-
-
-type FilterType = 'boards' | 'flows' | 'users';
-
-
-export const searchFeedState = {
-    page: 1,
-    query: '',
-    filter: 'flows',
-    notFound: false,
-    isFiltered: false,
-};
 
 
 export const fillSearchFeed = async () => {
     const feed = document.querySelector<HTMLElement>('#feed');
     if (!feed) return;
 
-    searchFeedState.isFiltered = true;
-    if (searchFeedState.page === 1) {
+    appState.search.isFiltered = true;
+    if (appState.search.page === 1) {
         window.scrollTo({ top: 0 });
         document.querySelector('.scroll-to-top')?.classList.add('hidden');
         registerScrollHandler(fillSearchFeed);
     }
 
-    const URI = `/search/${searchFeedState.filter}?query=${searchFeedState.query}&page=${searchFeedState.page}&size=20`;
+    const URI = `/search/${appState.search.filter}?query=${appState.search.query}&page=${appState.search.page}&size=20`;
     const response = await API.get(URI);
 
-
     if (response instanceof Response && response.status === 404) {
-        if (searchFeedState.page > 1) {
+        if (appState.search.page > 1) {
             Toast('По данному запросу больше ничего не найдено', 'message');
         }
+        appState.search.notFound = true;
         removeScrollHandler();
         return;
     } else if (!(response instanceof Response && response.ok)) {
@@ -51,7 +41,7 @@ export const fillSearchFeed = async () => {
         return;
     }
 
-    if (searchFeedState.page === 1) {
+    if (appState.search.page === 1) {
         feed.innerHTML = '';
         const selectorMap: Record<FilterType, string> = {
             boards: '.board-container',
@@ -59,7 +49,7 @@ export const fillSearchFeed = async () => {
             users: '.user-card',
         };
 
-        const filter = searchFeedState.filter as FilterType;
+        const filter = appState.search.filter;
         const itemSelector = selectorMap[filter];
 
         appState.masonryInstance?.destroy();
@@ -74,7 +64,7 @@ export const fillSearchFeed = async () => {
     let followingResponse;
     let followingUsers: IUser[] = [];
 
-    if (searchFeedState.filter === 'users') {
+    if (appState.search.filter === 'users') {
         followingResponse = await API.get('/profile/following?page=1&size=20');
         if (followingResponse instanceof Response && followingResponse.ok) {
             const followingData = await followingResponse.json();
@@ -83,7 +73,7 @@ export const fillSearchFeed = async () => {
     }
 
     requestAnimationFrame(async () => {
-        switch (searchFeedState.filter) {
+        switch (appState.search.filter) {
         case 'flows':
             body.data.forEach((item: IPicture) => {
                 const config: IPinProps = {
@@ -91,13 +81,16 @@ export const fillSearchFeed = async () => {
                     pinID: item.flow_id,
                     width: item.width,
                     height: item.height,
+                    is_nsfw: item.is_nsfw,
                 };
                 feed.appendChild(Pin(config));
+                appState.search.loadedPins.push(config);
             });
             break;
         case 'boards':
             body.data.forEach((board: IBoardProps) => {
                 feed.appendChild(Board(board));
+                appState.search.loadedBoards.push(board);
             });
             break;
         case 'users':
@@ -106,7 +99,7 @@ export const fillSearchFeed = async () => {
                 if (followingUsers) {
                     isSubscribed = followingUsers.some(followingUser => followingUser.username === user.username);
                 }
-                const userWithSubscription = {
+                const userWithSubscription: IUserCardProps = {
                     username: user.username,
                     public_name: user.public_name,
                     avatar: user.avatar || null,
@@ -116,10 +109,11 @@ export const fillSearchFeed = async () => {
                     own: Auth.userData?.username === user.username
                 };
                 feed.appendChild(UserCard(userWithSubscription));
+                appState.search.loadedUsers.push(userWithSubscription);
             });
             break;
         }
 
     });
-    searchFeedState.page++;
+    appState.search.page++;
 };

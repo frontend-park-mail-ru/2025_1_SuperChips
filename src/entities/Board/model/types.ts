@@ -8,4 +8,5 @@ export interface IBoardProps {
     own: boolean,
     preview: IPicture[],
     permanent?: boolean,
+    author_id?: number,
 }

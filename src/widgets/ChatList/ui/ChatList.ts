@@ -36,7 +36,7 @@ export const ChatList = (rerender: boolean = false) => {
     const chats = ChatStorage.chatList.map((item: IChat) => {
         const isLastOwn = currentUser === item?.last_message?.sender;
         const config: IChatConfig = {
-            username: item.username,
+            username: item.public_name,
             avatar: item.avatar,
             shortUsername: item.username[0].toUpperCase(),
             id: item.id,
@@ -72,6 +72,11 @@ export const ChatList = (rerender: boolean = false) => {
         const container = document.createElement('div');
         container.innerHTML = template({ chats });
 
+        if (ChatStorage.chatList.length === 0) {
+            const chatList = container.firstChild as HTMLDivElement;
+            chatList.innerHTML += '<span class="white">У вас пока нет чатов</span>';
+        }
+
         const newChat = container.querySelector('.create-chat-button');
         newChat?.addEventListener('click', createNewChat);
 
@@ -86,12 +91,12 @@ export const ChatList = (rerender: boolean = false) => {
                     const chatId = chatItem.id.split('-')[1];
                     const chat = ChatStorage.getChatByID(chatId);
                     if (chat) {
-                        navigate(chat.username);
+                        navigate(chat.username).finally();
                         return;
                     }
                 }
             }
-            openChat(event);
+            openChat(event).finally();
         });
 
         return container.firstChild as HTMLDivElement;

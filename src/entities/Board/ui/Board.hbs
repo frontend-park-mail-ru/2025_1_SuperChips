@@ -3,9 +3,9 @@
         {{#each preview}}
             <div class="img-{{@index}}">
                 <img
-                        src="{{this}}"
+                        src="{{this.link}}"
                         alt="preview image"
-                        class="img-{{@index}}"
+                        class="img-{{@index}} {{#if this.is_nsfw}}nsfw{{/if}}"
                 >
             </div>
         {{/each}}

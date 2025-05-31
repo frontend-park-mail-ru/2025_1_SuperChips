@@ -76,7 +76,7 @@
     &__char-counter {
         position: absolute;
         top: 8px;
-        right: 30px;
+        right: 8px;
         font-size: 12px;
         color: $text-gray;
         display: none;
@@ -85,6 +85,7 @@
     &__send-button {
         position: absolute;
         right: 10px;
+        margin: 4px;
         bottom: 10px;
         width: 18px;
         height: 18px;
@@ -103,7 +104,6 @@
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-
 .comments-list {
     display: flex;
     flex-direction: column;
@@ -117,135 +117,6 @@
     padding: 20px 0;
 }
 
-.comment {
-    display: flex;
-    gap: 16px;
-    border: 1px solid rgba(70, 70, 70, 0.5);
-    border-radius: $border-radius;
-    padding: 16px;
-    position: relative;
-
-    &__avatar {
-        @include profile-picture-small;
-        @include flex-center;
-    }
-
-    &__short-username {
-        color: #fff;
-        font-weight: bold;
-    }
-
-    &__content {
-        flex-grow: 1;
-    }
-
-    &__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 8px;
-    }
-
-    &__author-info {
-        display: flex;
-        align-items: baseline;
-        gap: 8px;
-    }
-
-    &__author {
-        font-weight: bold;
-        font-size: 16px;
-    }
-
-    &__username {
-        color: #999;
-        font-size: 14px;
-    }
-
-    &__actions {
-        position: relative;
-    }
-
-    &__actions-icon {
-        @include icon;
-        width: 16px;
-        height: 16px;
-        cursor: pointer;
-    }
-
-    &__actions-menu {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        background-color: #333;
-        border-radius: $border-radius;
-        min-width: 120px;
-        z-index: 10;
-        display: none;
-    }
-
-    &__actions:hover &__actions-menu {
-        display: block;
-    }
-
-    &__action-item {
-        border-radius: $border-radius;
-        padding: 8px 16px;
-        cursor: pointer;
-
-        &:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-    }
-
-    &__action-delete {
-        color: #ff6b6b;
-    }
-
-    &__text {
-        margin-bottom: 12px;
-        white-space: pre-wrap;
-    }
-
-    &__footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: #999;
-        font-size: 14px;
-    }
-
-    &__like-button {
-        @include button;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-    }
-
-    &__like-count {
-        min-width: 20px;
-    }
-
-    &__date {
-        font-size: 12px;
-    }
-}
-
-.comment-like, .comment-like_active {
-    @include icon;
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-}
-
-.comment-like {
-    content: url("/public/icons/like.svg");
-}
-
-.comment-like_active {
-    content: url("/public/icons/like-filled.svg");
-}
 
 @media (max-width: $mobile-width) {
     .comments-section {
@@ -253,14 +124,6 @@
     }
 
     .comment-form {
-        flex-direction: column;
-
-        &__avatar {
-            align-self: flex-start;
-        }
-    }
-
-    .comment {
         flex-direction: column;
 
         &__avatar {

@@ -7,6 +7,7 @@ import { getWidthBySelector } from 'shared/utils';
 import { Auth } from 'features/authorization';
 import { BoardStorage } from 'features/boardLoader';
 import { USER_SAVED_PINS_BOARD } from 'shared/config/constants';
+import { NSFWPopup } from 'widgets/NSFWPopup';
 import './Pin.scss';
 import template from './Pin.hbs';
 
@@ -21,11 +22,20 @@ export const Pin = (params: IPinProps) => {
         mobile: appState.mobile,
     };
 
-
     container.innerHTML = template(config);
 
     const pin = container.querySelector('.pin') as HTMLDivElement;
-    pin.addEventListener('click', () => navigate(`flow/${config.pinID}`));
+    // Обработка клика на пин
+    pin.addEventListener('click', (event) => {
+        // Проверяем, является ли пин NSFW и имеет ли класс nsfw (блюр)
+        const pinImage = pin.querySelector('.pin__picture');
+        if (config.is_nsfw && pinImage?.classList.contains('nsfw')) {
+            event.stopPropagation();
+            NSFWPopup(config.pinID);
+            return;
+        }
+        navigate(`flow/${config.pinID}`).finally();
+    });
 
 
     const pinWidth = getWidthBySelector('.pin');

@@ -1,5 +1,6 @@
-import { fillSearchFeed, searchFeedState } from 'pages/FeedPage';
+import { fillSearchFeed } from 'pages/FeedPage';
 import { Toast } from 'shared/components/Toast';
+import { appState } from 'shared/router';
 
 export const handleFeedRadioButtons = async (event: Event) => {
     const target = event.target as HTMLElement;
@@ -8,33 +9,33 @@ export const handleFeedRadioButtons = async (event: Event) => {
     if (target.tagName !== 'INPUT' || !input) return;
 
     let changed = false;
-    const previousFilter = searchFeedState.filter;
+    const previousFilter = appState.search.filter;
 
     switch (target.id) {
     case 'filter-flows':
-        changed = searchFeedState.filter !== 'flows';
-        searchFeedState.filter = 'flows';
+        changed = appState.search.filter !== 'flows';
+        appState.search.filter = 'flows';
         break;
     case 'filter-boards':
-        changed = searchFeedState.filter !== 'boards';
-        searchFeedState.filter = 'boards';
+        changed = appState.search.filter !== 'boards';
+        appState.search.filter = 'boards';
         break;
     case 'filter-users':
-        changed = searchFeedState.filter !== 'users';
-        searchFeedState.filter = 'users';
+        changed = appState.search.filter !== 'users';
+        appState.search.filter = 'users';
         break;
     }
 
     if (changed) {
-        searchFeedState.page = 1;
-        searchFeedState.query = input.value;
+        appState.search.page = 1;
+        appState.search.query = input.value;
 
         if (input.value !== '') {
             try {
                 await fillSearchFeed();
-                Toast(`Показаны результаты в категории "${getFilterName(searchFeedState.filter)}"`, 'message', 2000);
+                Toast(`Показаны результаты в категории "${getFilterName(appState.search.filter)}"`, 'message', 2000);
             } catch {
-                searchFeedState.filter = previousFilter;
+                appState.search.filter = previousFilter;
                 Toast('Произошла ошибка при смене фильтра', 'error');
             }
         }

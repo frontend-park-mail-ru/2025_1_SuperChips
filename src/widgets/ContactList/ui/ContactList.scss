@@ -6,7 +6,7 @@
     @include popup-scroll($gradient-dark, #888);
     height: 100%;
     overflow-y: scroll;
-    gap: $spacing-lg;
+    max-height: calc(100vh - $navbar-height);
 
     &__header {
         width: 100%;

@@ -13,11 +13,13 @@ import './PinPage.scss';
 import template from './PinPage.hbs';
 
 
-export const PinPage = async (pinID: string) => {
+export const PinPage = async (pinID: string, boardID: string | null = null) => {
     const container = document.createElement('div');
     container.classList.add('one-pin-page-wrapper');
 
-    const pinRequest = await API.get(`/flows?id=${pinID}`);
+    const URI = boardID ? `/boards/${boardID}/flows/${pinID}` : `/flows?id=${pinID}`;
+    const pinRequest = await API.get(URI);
+
     if (pinRequest instanceof Error || !pinRequest.ok) {
         return null;
     }
@@ -42,8 +44,12 @@ export const PinPage = async (pinID: string) => {
         boardToSave: BoardStorage.getBoardToSave(),
         mobile: appState.mobile,
     };
+    
+
 
     container.innerHTML = template(config);
+
+
 
     const dropdownButton = container.querySelector('#dropdown-button');
     dropdownButton?.addEventListener('click', (event) => {

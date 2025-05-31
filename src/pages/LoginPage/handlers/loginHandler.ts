@@ -1,4 +1,3 @@
-import { navigate } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { validateEmail, validatePassword } from 'shared/validation';
 
@@ -29,7 +28,7 @@ export const handleLogin = async (event: Event) => {
     if (response instanceof Error) return;
 
     if (response.ok) {
-        navigate('feed').finally();
+        history.back();
     }
     else {
         const icon = document.querySelector('#password-error-icon');

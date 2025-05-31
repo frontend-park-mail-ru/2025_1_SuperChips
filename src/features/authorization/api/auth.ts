@@ -62,7 +62,7 @@ class auth {
         if (login instanceof Response && login.ok) {
             const body = await login.json();
             await this.initUser(body.data.csrf_token);
-            await navigate('feed');
+            history.back();
         }
 
         return login;
@@ -97,7 +97,7 @@ class auth {
         if (register instanceof Response && register.ok) {
             const body = await register.json();
             await this.initUser(body.data.csrf_token);
-            navigate('feed').finally();
+            history.back();
         }
 
         return register;
@@ -171,6 +171,13 @@ class auth {
         this.API.setCSRFToken(csrf_token);
         await this.fetchUserData();
         await Navbar();
+
+        const redirect = sessionStorage.getItem('redirectAfterAuth');
+        if (redirect) {
+            navigate(redirect).finally();
+            sessionStorage.setItem('redirectAfterAuth', '');
+        }
+
         BoardStorage.boardToSave = USER_SAVED_PINS_BOARD;
         document.querySelector('.sidebar__button-container')?.classList.remove('hidden');
         ChatStorage.fetchContactList().finally();

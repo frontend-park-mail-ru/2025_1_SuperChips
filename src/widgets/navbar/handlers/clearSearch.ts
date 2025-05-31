@@ -1,4 +1,4 @@
-import { feedState, fillFeed, searchFeedState } from 'pages/FeedPage';
+import { feedState, fillFeed } from 'pages/FeedPage';
 import { registerScrollHandler } from 'features/scrollHandler';
 import { closeFilter } from './closeFilter';
 import { Masonry } from 'shared/models/Masonry';
@@ -8,16 +8,14 @@ import { appState } from 'shared/router';
 export const clearSearch = async () => {
     document.querySelector('.search-form__clear')?.classList.add('hidden');
     const input = document.querySelector<HTMLInputElement>('#search');
-    searchFeedState.isFiltered = false;
+    appState.search.isFiltered = false;
 
     if (input) {
         input.value = '';
     }
 
-    if (searchFeedState.page > 1) {
-        searchFeedState.filter = 'flows';
-        searchFeedState.query = '';
-        searchFeedState.page = 1;
+    if (appState.search.page > 1) {
+        Object.assign(appState.search, { filter: 'flows', query: '', page: 1 });
 
         feedState.pageNum = 1;
 

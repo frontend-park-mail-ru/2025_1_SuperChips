@@ -4,6 +4,22 @@ import { Footer } from 'shared/components/Footer';
 import { loadFeedPictures } from 'features/imageLoader';
 import { feedState } from '../ui/FeedPage';
 
+const createAdBlock = () => {
+    const adContainer = document.createElement('div');
+    adContainer.className = 'pin';
+    adContainer.style.width = '210px';
+
+    const iframe = document.createElement('iframe');
+    iframe.className = 'slot';
+    iframe.style.border = 'none';
+    iframe.title = 'Slot preview';
+    iframe.width = '210';
+    iframe.height = '300';
+    iframe.src = 'https://re-target.ru/api/v1/adv/iframe/1f4b7a98-c800-4d2a-a8a8-881ef6847faf';
+
+    adContainer.appendChild(iframe);
+    return adContainer;
+};
 
 /**
  * Загружает и создает чанк картинок для ленты
@@ -34,9 +50,17 @@ export const fillFeed = async () => {
             pinID: item.flow_id,
             width: item.width,
             height: item.height,
+            is_nsfw: item.is_nsfw,
         };
+
+
+        feedState.loadedPins.push(config);
         feed.appendChild(Pin(config));
     });
+
+    if (feedState.pageNum % 3 === 0) {
+        feed.appendChild(createAdBlock());
+    }
 
     feedState.isLoading = false;
     feedState.pageNum++;

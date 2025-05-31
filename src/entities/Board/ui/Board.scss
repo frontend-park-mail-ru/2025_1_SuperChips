@@ -13,6 +13,10 @@
 
         [class*="img-"] {
             filter: brightness(0.8);
+
+            .nsfw {
+                filter: blur(10px) brightness(0.8);
+            }
         }
     }
 
@@ -99,6 +103,10 @@
     }
 }
 
+.nsfw {
+    filter: blur(10px);
+    transition: filter 0.3s ease;
+}
 
 @media (max-width: $mobile-width) {
     .board-container {

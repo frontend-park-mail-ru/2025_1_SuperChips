@@ -1,4 +1,4 @@
-import { appState, navigate } from 'shared/router';
+import { appState } from 'shared/router';
 import { Auth } from 'features/authorization';
 import { Toast } from 'shared/components/Toast';
 
@@ -24,7 +24,6 @@ export const logoutHandler = async (event: Event) => {
         Toast('Вы уверены что хотите выйти?', 'message', 3000, 'logout-toast');
     } else {
         await Auth.logout();
-        navigate('feed', true).finally();
         const popup = document.querySelector('#logout-toast');
         popup?.remove();
     }

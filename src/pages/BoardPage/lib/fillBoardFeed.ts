@@ -38,6 +38,8 @@ export const fillBoardFeed = async () => {
             saved: own,
             width: item.width,
             height: item.height,
+            boardID: boardFeedState.boardID,
+            is_nsfw: item.is_nsfw,
         };
         feed.insertBefore(Pin(config), feed.firstChild);
     });

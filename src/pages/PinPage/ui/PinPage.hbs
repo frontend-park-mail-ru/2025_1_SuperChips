@@ -13,6 +13,12 @@
         {{#if hasText}}
             <div class="one-pin__box-2__text-area">
                 <div class="one-pin-header">{{header}}</div>
+                {{#if is_nsfw}}
+                <div class="pin__nsfw-warning">
+                    <img src="/public/icons/error.svg" alt="Warning">
+                    <span>Осторожно, возможен нецензурный контент. <br>Этот flow будет проверен модерацией.</span>
+                </div>
+                {{/if}}
                 <div class="one-pin-description">{{description}}</div>
             </div>
         {{/if}}

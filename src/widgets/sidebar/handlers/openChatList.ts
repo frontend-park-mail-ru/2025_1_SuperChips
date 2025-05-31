@@ -11,6 +11,7 @@ export const openChatList = () => {
 
     appState.chat.open = true;
     ChatStorage.sortChatList();
+    ChatStorage.fetchContactList().finally();
 
     const container = document.createElement('div');
     container.classList.add('chat-container');
