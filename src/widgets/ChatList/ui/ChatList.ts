@@ -36,7 +36,7 @@ export const ChatList = (rerender: boolean = false) => {
     const chats = ChatStorage.chatList.map((item: IChat) => {
         const isLastOwn = currentUser === item?.last_message?.sender;
         const config: IChatConfig = {
-            username: item.username,
+            username: item.public_name,
             avatar: item.avatar,
             shortUsername: item.username[0].toUpperCase(),
             id: item.id,

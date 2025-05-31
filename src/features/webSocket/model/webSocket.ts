@@ -15,7 +15,7 @@ class WSInstance {
             try {
                 const body = JSON.parse(event.data);
                 if (body.type === 'message') {
-                    ChatStorage.getMessage(body.sender, {
+                    ChatStorage.getMessage(body.content.sender, {
                         ...body.content,
                         username: body.content.recipient,
                         id: body.content.message_id.toString(),
